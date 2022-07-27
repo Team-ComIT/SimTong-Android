@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "SimTong-Android"
-include ':app'
+include (":app")
