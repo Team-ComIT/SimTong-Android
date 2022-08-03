@@ -54,4 +54,10 @@ dependencies {
     implementation(Dependency.Kotlin.KOTLIN_STDLIB)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)
     implementation(Dependency.Kotlin.COROUTINES_CORE)
+
+    testImplementation(Dependency.UnitTest.JUNIT)
+    testImplementation(Dependency.UnitTest.MOCKITO)
+
+    androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
+    androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 }

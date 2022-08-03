@@ -45,4 +45,10 @@ dependencies {
 
     implementation(Dependency.Kotlin.COROUTINES_CORE)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)
+
+    testImplementation(Dependency.UnitTest.JUNIT)
+    testImplementation(Dependency.UnitTest.MOCKITO)
+
+    androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
+    androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 }

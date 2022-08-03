@@ -62,11 +62,11 @@ dependencies {
     implementation(Dependency.Compose.COMPOSE_LANDSCAPIST)
     implementation(Dependency.Compose.COMPOSE_HILT_NAV)
 
-    testImplementation(Dependency.UnitTest.JUNIT)
-    testImplementation(Dependency.UnitTest.MOCKITO)
-
     implementation(Dependency.Hilt.HILT_ANDROID)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
+
+    testImplementation(Dependency.UnitTest.JUNIT)
+    testImplementation(Dependency.UnitTest.MOCKITO)
 
     androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
     androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
