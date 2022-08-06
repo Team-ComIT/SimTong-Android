@@ -50,7 +50,7 @@ dependencies {
     implementation(Dependency.Kotlin.COROUTINES_CORE)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)
 
-    androidTestImplementation(Dependency.UnitTest.JUNIT)
-    androidTestImplementation(Dependency.UnitTest.MOCKITO)
+    testImplementation(Dependency.UnitTest.JUNIT)
+    testImplementation(Dependency.UnitTest.MOCKITO)
 
 }
