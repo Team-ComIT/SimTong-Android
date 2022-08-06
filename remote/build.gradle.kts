@@ -1,6 +1,6 @@
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY_PLUGIN)
-    id(BuildPlugins.KOTLIN_ANDROID_PLUGIN)
+    id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
 }
 
@@ -50,7 +50,4 @@ dependencies {
 
     testImplementation(Dependency.UnitTest.JUNIT)
     testImplementation(Dependency.UnitTest.MOCKITO)
-
-    androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
-    androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 }

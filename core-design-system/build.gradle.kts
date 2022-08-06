@@ -61,10 +61,4 @@ dependencies {
     implementation(Dependency.Ui.CONSTRAINT_LAYOUT)
     implementation(Dependency.Ui.MATERIAL)
     implementation(Dependency.Ui.CORE_KTX)
-
-    testImplementation(Dependency.UnitTest.JUNIT)
-    testImplementation(Dependency.UnitTest.MOCKITO)
-
-    androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
-    androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 }
