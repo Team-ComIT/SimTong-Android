@@ -7,10 +7,10 @@ object ProjectProperties{
     const val APPLICATION_ID =  "com.comit.simtong"
 
     const val GRADLE_ANDROID = "7.2.1"
-    const val GRADLE_KOTLIN = "1.6.10"
+    const val GRADLE_KOTLIN = "1.6.21"
 
     val JAVA_VERSION = JavaVersion.VERSION_1_8
-    const val KOTLIN_VERSION = "1.6.10"
+    const val KOTLIN_VERSION = "1.6.21"
     const val KOTLINX_COROUTINES = "1.6.0"
 
     const val BUILD_GRADLE = "4.2.1"
