@@ -14,12 +14,14 @@ dependencyResolutionManagement {
 }
 rootProject.name = "SimTong-Android"
 include (":app")
+include(":feature")
 include(":common")
 include(":core")
 include(":core-design-system")
-include(":feature-auth")
+include(":feature:feature-auth")
 include(":domain")
 include(":data")
 include(":local")
 include(":remote")
 include(":navigator")
+include(":di")
