@@ -48,6 +48,14 @@ android {
 }
 
 dependencies {
+    implementation(project(":navigator"))
+    implementation(project(":local"))
+    implementation(project(":remote"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(project(":di"))
+    implementation(project(":feature:feature-auth"))
+
     implementation(Dependency.Logger.TIMBER)
 
     implementation(Dependency.Hilt.HILT_ANDROID)
