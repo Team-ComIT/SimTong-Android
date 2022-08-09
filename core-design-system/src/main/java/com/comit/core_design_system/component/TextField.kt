@@ -13,7 +13,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -163,13 +162,13 @@ fun SimTongTextField(
 @Preview
 @Composable
 fun PreviewMoizaTextField() {
-    var value by remember { mutableStateOf(String()) }
-    var value2 by remember { mutableStateOf(String()) }
-    var value3 by remember { mutableStateOf(String()) }
-    var value4 by remember { mutableStateOf(String()) }
-    var value5 by remember { mutableStateOf(String()) }
-    var value6 by remember { mutableStateOf(String()) }
-    var value7 by remember { mutableStateOf(String()) }
+    var value by remember { mutableStateOf<String?>(null) }
+    var value2 by remember { mutableStateOf<String?>(null) }
+    var value3 by remember { mutableStateOf<String?>(null) }
+    var value4 by remember { mutableStateOf<String?>(null) }
+    var value5 by remember { mutableStateOf<String?>(null) }
+    var value6 by remember { mutableStateOf<String?>(null) }
+    var value7 by remember { mutableStateOf<String?>(null) }
 
     Column(
         modifier = Modifier.padding(horizontal = 20.dp),
@@ -177,27 +176,27 @@ fun PreviewMoizaTextField() {
     ) {
         // default text field
         SimTongTextField(
-            value = value,
+            value = value ?: "",
             onValueChange = { value = it }
         )
 
         // password text field
         SimTongTextField(
-            value = value2,
+            value = value2 ?: "",
             onValueChange = { value2 = it },
             isPassword = true
         )
 
         // error text field
         SimTongTextField(
-            value = value3,
+            value = value3 ?: "",
             onValueChange = { value3 = it },
             error = "특수문자는 사용할 수 없습니다!"
         )
 
         // description text field
         SimTongTextField(
-            value = value4,
+            value = value4 ?: "",
             onValueChange = { value4 = it },
             description = "비밀번호는 4자리 이상 입력해주세요.",
             hint = "비밀번호"
@@ -205,7 +204,7 @@ fun PreviewMoizaTextField() {
 
         // side btn text field
         SimTongTextField(
-            value = value5,
+            value = value5 ?: "",
             onValueChange = { value5 = it },
             enabledSideBtn = true,
             sideBtnText = "인증"
@@ -213,14 +212,14 @@ fun PreviewMoizaTextField() {
 
         // custom background
         SimTongTextField(
-            value = value6,
+            value = value6 ?: "",
             onValueChange = { value6 = it },
             backgroundColor = SimTongColor.Gray200
         )
 
         // custom background & side btn
         SimTongTextField(
-            value = value7,
+            value = value7 ?: "",
             onValueChange = { value7 = it },
             backgroundColor = SimTongColor.Gray200,
             sideBtnText = "인증",

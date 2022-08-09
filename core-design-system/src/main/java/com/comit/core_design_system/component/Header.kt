@@ -26,11 +26,11 @@ fun Header(
     enabledPlusBtn: Boolean = true,
     enabledBeilBtn: Boolean = true,
     enabledPeopleBtn: Boolean = true,
-    onPrevious: () -> Unit = {},
-    onMenu: () -> Unit = {},
-    onPlus: () -> Unit = {},
-    onBeil: () -> Unit = {},
-    onMyPage: () -> Unit = {},
+    onPrevious: (() -> Unit)? = null,
+    onMenu: (() -> Unit)? = null,
+    onPlus: (() -> Unit)? = null,
+    onBeil: (() -> Unit)? = null,
+    onMyPage: (() -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -40,7 +40,7 @@ fun Header(
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (enabledBackBtn) {
-            IconButton(onClick = onPrevious, modifier = Modifier.size(21.dp)) {
+            IconButton(onClick = onPrevious ?: {}, modifier = Modifier.size(21.dp)) {
                 Icon(
                     painter = painterResource(id = SimTongIcons.Back(true)),
                     contentDescription = stringResource(
@@ -57,7 +57,7 @@ fun Header(
         Spacer(modifier = Modifier.width(8.dp))
 
         if (enabledMoreBtn) {
-            IconButton(onClick = onMenu, modifier = Modifier.size(17.dp)) {
+            IconButton(onClick = onMenu ?: {}, modifier = Modifier.size(17.dp)) {
                 Icon(
                     painter = painterResource(id = SimTongIcons.More),
                     contentDescription = stringResource(id = R.string.description_ic_more)
@@ -69,7 +69,7 @@ fun Header(
         Spacer(modifier = Modifier.weight(1f))
 
         if (enabledPlusBtn) {
-            IconButton(onClick = onPlus, modifier = Modifier.size(21.dp)) {
+            IconButton(onClick = onPlus ?: {}, modifier = Modifier.size(21.dp)) {
                 Icon(
                     painter = painterResource(id = SimTongIcons.Plus),
                     contentDescription = stringResource(id = R.string.description_ic_plus)
@@ -80,7 +80,7 @@ fun Header(
         Spacer(modifier = Modifier.width(20.dp))
 
         if (enabledBeilBtn) {
-            IconButton(onClick = onBeil, modifier = Modifier.size(21.dp)) {
+            IconButton(onClick = onBeil ?: {}, modifier = Modifier.size(21.dp)) {
                 Image(
                     painter = painterResource(id = SimTongIcons.Beil(beilState)),
                     contentDescription = stringResource(id = if (beilState) R.string.description_ic_beil_on else R.string.description_ic_beil_off)
@@ -91,7 +91,7 @@ fun Header(
         Spacer(modifier = Modifier.width(20.dp))
 
         if (enabledPeopleBtn) {
-            IconButton(onClick = onMyPage, modifier = Modifier.size(21.dp)) {
+            IconButton(onClick = onMyPage ?: {}, modifier = Modifier.size(21.dp)) {
                 Icon(
                     painter = painterResource(id = SimTongIcons.MyPage),
                     contentDescription = stringResource(
