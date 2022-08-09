@@ -19,6 +19,7 @@ object SimTongColor {
     val Gray600 = Color(0xFF929292)
     val Gray700 = Color(0xFF7C7C7C)
     val Gray800 = Color(0xFF505050)
+    val Gray900 = Color(0xFF242424)
 
     val SubColor100 = Color(0xFFED666A)
     val SubColor200 = Color(0xFFC32328)
