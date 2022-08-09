@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    이미지 설명-->
+    <string name="description_ic_back">뒤로가기 버튼</string>
+    <string name="description_ic_more">더보기 버튼</string>
+    <string name="description_ic_plus">추가 버튼</string>
+    <string name="description_ic_beil_on">새 메시지 활성화</string>
+    <string name="description_ic_beil_off">새 메시지 비활성화</string>
+    <string name="description_ic_my_page">마이페이지</string>
+    <string name="descriptiom_ic_password_visible">비밀번호 활성화</string>
+    <string name="descriptiom_ic_password_invisible">비밀번호 비활성화</string>
+
+    <!--    용어 정의-->
+    <string name="all_points">전체지점</string>
+</resources>

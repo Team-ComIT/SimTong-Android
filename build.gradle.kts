@@ -1,3 +1,7 @@
+plugins {
+    id(BuildPlugins.KT_LINT) version Versions.KT_LINT
+}
+
 buildscript {
     repositories {
         google()
@@ -5,11 +9,12 @@ buildscript {
     }
 
     dependencies {
-        classpath (Dependency.GradlePlugin.GRADLE_ANDROID)
-        classpath (Dependency.GradlePlugin.GRADLE_KOTLIN)
-        classpath (Dependency.GradlePlugin.GRADLE_HILT)
+        classpath(Dependency.GradlePlugin.GRADLE_ANDROID)
+        classpath(Dependency.GradlePlugin.GRADLE_KOTLIN)
+        classpath(Dependency.GradlePlugin.GRADLE_HILT)
     }
 }
+
 
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)

@@ -1,7 +1,7 @@
 package com.comit.simtong.root
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.comit.simtong.R
 
 class MainActivity : AppCompatActivity() {
