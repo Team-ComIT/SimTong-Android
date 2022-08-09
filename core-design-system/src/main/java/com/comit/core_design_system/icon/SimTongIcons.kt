@@ -18,7 +18,6 @@ object SimTongIcons {
     }
 
     val Add = R.drawable.ic_add
-    val Back = R.drawable.ic_back
     val Comment = R.drawable.ic_comment
     val Image = R.drawable.ic_image
     val Link = R.drawable.ic_link
@@ -28,13 +27,19 @@ object SimTongIcons {
     val Photo = R.drawable.ic_photo
     val Plus = R.drawable.ic_plus
     val Send = R.drawable.ic_send
-    
-    val ThinOption = R.drawable.ic_option_thin
-    val BoldOption = R.drawable.ic_option_bold
+
+    fun Password(visible: Boolean) =
+        if (visible) R.drawable.ic_password_visible else R.drawable.ic_password_invisible
+
+    fun Option(isThin: Boolean) =
+        if (isThin) R.drawable.ic_option_thin else R.drawable.ic_option_bold
+
+    fun Back(isSmail: Boolean) =
+        if (isSmail) R.drawable.ic_back_small else R.drawable.ic_back_big
 
     fun Beil(state: Boolean) =
-        if(state) R.drawable.ic_beil_on else R.drawable.ic_beil_off
+        if (state) R.drawable.ic_beil_on else R.drawable.ic_beil_off
 
     fun Heart(state: Boolean) =
-        if(state) R.drawable.ic_heart_on else R.drawable.ic_heart_off
+        if (state) R.drawable.ic_heart_on else R.drawable.ic_heart_off
 }
