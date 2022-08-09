@@ -1,4 +1,6 @@
 object Versions {
+    const val KT_LINT = "10.2.0"
+
     const val CONSTRAINT_LAYOUT = "1.1.3"
     const val CORE_KTX = "1.5.0"
     const val APP_COMPAT = "1.3.0"

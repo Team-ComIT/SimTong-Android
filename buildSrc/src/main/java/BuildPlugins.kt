@@ -5,5 +5,6 @@ object BuildPlugins {
     const val DAGGER_HILT_PLUGIN = "dagger.hilt.android.plugin"
     const val KOTLIN_ANDROID = "kotlin-android"
     const val KOTLIN_KAPT = "kotlin-kapt"
+    const val KT_LINT = "org.jlleitschuh.gradle.ktlint"
 
 }
