@@ -33,7 +33,7 @@ fun ChoosePlace(
     modifier: Modifier = Modifier,
     onClick:(Int) -> Unit,
     list: List<String>,
-    painter: Painter = painterResource(id = R.drawable.img_place_choose)
+    painter: Painter = painterResource(id = R.drawable.ic_check)
 ){
 
     val isNeedExpansion = rememberSaveable{ mutableStateOf(0) }
