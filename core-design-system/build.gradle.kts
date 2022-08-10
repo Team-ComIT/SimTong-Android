@@ -52,6 +52,9 @@ dependencies {
     implementation(Dependency.Compose.COMPOSE_ANI_NAV)
     implementation(Dependency.Compose.COMPOSE_UI_TOOL)
 
+    implementation(Dependency.Pager.PAGER)
+    implementation(Dependency.Pager.PAGER_INDICATOR)
+
     androidTestImplementation(Dependency.Compose.COMPOSE_TEST)
     debugImplementation(Dependency.Compose.COMPOSE_UI_TOOL)
 

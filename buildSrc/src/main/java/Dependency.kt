@@ -110,4 +110,9 @@ object Dependency {
         const val ORBIT_VIEWMODEL = "org.orbit-mvi:orbit-viewmodel:${Versions.ORBIT}"
         const val ORBIT_TEST = "org.orbit-mvi:orbit-test:${Versions.ORBIT}"
     }
+
+    object Pager {
+        const val PAGER = "com.google.accompanist:accompanist-pager:${Versions.PAGER}"
+        const val PAGER_INDICATOR = "com.google.accompanist:accompanist-pager-indicators:${Versions.PAGER}"
+    }
 }
