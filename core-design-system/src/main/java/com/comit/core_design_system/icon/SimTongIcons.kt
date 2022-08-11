@@ -1,5 +1,6 @@
 package com.comit.core_design_system.icon
 
+import androidx.compose.ui.res.painterResource
 import com.comit.core_design_system.R
 
 object SimTongIcons {
@@ -27,6 +28,7 @@ object SimTongIcons {
     val Photo = R.drawable.ic_photo
     val Plus = R.drawable.ic_plus
     val Send = R.drawable.ic_send
+    val Trash = R.drawable.ic_trash
 
     fun Password(visible: Boolean) =
         if (visible) R.drawable.ic_password_visible else R.drawable.ic_password_invisible
