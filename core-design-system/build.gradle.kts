@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":common"))
+
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
     implementation(Dependency.Compose.COMPOSE_MATERIAL)
     implementation(Dependency.Compose.COMPOSE_PREVIEW)
