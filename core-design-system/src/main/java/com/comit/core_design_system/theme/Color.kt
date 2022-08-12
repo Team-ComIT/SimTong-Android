@@ -42,4 +42,5 @@ object OtherColor {
 
     val GrayB3 = Color(0xFFB3B3B3)
     val GrayDF = Color(0xFFDFDFDF)
+    val GrayD9 = Color(0xFFD9D9D9)
 }

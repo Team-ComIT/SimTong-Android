@@ -115,4 +115,8 @@ object Dependency {
         const val PAGER = "com.google.accompanist:accompanist-pager:${Versions.PAGER}"
         const val PAGER_INDICATOR = "com.google.accompanist:accompanist-pager-indicators:${Versions.PAGER}"
     }
+
+    object Util {
+        const val Util = "androidx.compose.ui:ui-util:${Versions.COMPOSE}"
+    }
 }
