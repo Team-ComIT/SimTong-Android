@@ -111,7 +111,6 @@ fun TextCheckBox(
     }
 }
 
-
 @Preview
 @Composable
 fun PreviewCheckBox() {
@@ -125,5 +124,4 @@ fun PreviewCheckBox() {
 
         TextCheckBox(text = "설명설명", checked = value2, onCheckedChange = { value2 = it })
     }
-
 }

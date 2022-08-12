@@ -45,13 +45,11 @@ object SimTongTypography {
         fontSize = 24.sp,
     )
 
-
     val body1 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
     )
-
 
     val body2 = TextStyle(
         fontFamily = notoSansFamily,
@@ -118,7 +116,6 @@ object SimTongTypography {
         fontWeight = FontWeight.Normal,
         fontSize = 9.sp
     )
-
 }
 
 @Composable

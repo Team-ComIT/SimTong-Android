@@ -53,7 +53,7 @@ fun DraggableNotification(
         transitionSpec = { tween(durationMillis = ANIMATION_DURATION) },
         targetValueByState = { if (isRevealed) cardOffset else 0f },
 
-        )
+    )
 
     Notification(
         modifier = modifier
@@ -123,7 +123,6 @@ fun Notification(
                     contentDescription = null
                 )
             }
-
         }
 
         Spacer(modifier = Modifier.width(12.dp))

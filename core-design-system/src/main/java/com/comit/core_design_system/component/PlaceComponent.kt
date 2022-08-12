@@ -31,15 +31,15 @@ shape = RoundedCornerShape(20.dp)*/
 @Composable
 fun ChoosePlace(
     modifier: Modifier = Modifier,
-    onClick:(Int) -> Unit,
+    onClick: (Int) -> Unit,
     list: List<String>,
     painter: Painter = painterResource(id = R.drawable.ic_check)
-){
+) {
 
-    val isNeedExpansion = rememberSaveable{ mutableStateOf(0) }
+    val isNeedExpansion = rememberSaveable { mutableStateOf(0) }
 
     LazyColumn(modifier = modifier) {
-        itemsIndexed(list){ index, text->
+        itemsIndexed(list) { index, text ->
             ChoosePlaceItem(
                 isNeedExpansion = isNeedExpansion,
                 onClick = onClick,
@@ -58,8 +58,8 @@ fun ChoosePlaceItem(
     text: String,
     index: Int,
     painter: Painter
-){
-    if(index != 0){
+) {
+    if (index != 0) {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
@@ -102,8 +102,8 @@ fun ChoosePlaceItem(
 }
 
 @Composable
-fun CheckImage(isNeedExpansion: Int, painter: Painter, index: Int){
-    if(isNeedExpansion == index){
+fun CheckImage(isNeedExpansion: Int, painter: Painter, index: Int) {
+    if (isNeedExpansion == index) {
         Image(
             painter = painter,
             contentDescription = "",

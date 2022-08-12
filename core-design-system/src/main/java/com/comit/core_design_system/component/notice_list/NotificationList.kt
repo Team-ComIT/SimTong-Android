@@ -23,7 +23,6 @@ import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.SimTongColor
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
 const val CARD_HEIGHT = 56
 const val CARD_OFFSET = -56f
 
@@ -83,8 +82,6 @@ fun NotificationList(
                         },
                         notificationModel = item
                     )
-
-
                 }
             }
         }

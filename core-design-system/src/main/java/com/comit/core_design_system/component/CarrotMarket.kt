@@ -25,10 +25,9 @@ import com.comit.core_design_system.theme.Body6
 import com.comit.core_design_system.theme.notoSansFamily
 import java.text.DecimalFormat
 
-
 @Composable
-fun CarrotLazyVerticalGrid(list: List<CarrotMarketData>){
-    LazyVerticalGrid(columns = GridCells.Fixed(2)){
+fun CarrotLazyVerticalGrid(list: List<CarrotMarketData>) {
+    LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(list) {
             CarrotMarketItemCard(it)
         }
@@ -36,9 +35,9 @@ fun CarrotLazyVerticalGrid(list: List<CarrotMarketData>){
 }
 
 @Composable
-fun CarrotMarketItemCard(data: CarrotMarketData){
+fun CarrotMarketItemCard(data: CarrotMarketData) {
 
-    val heartClick = rememberSaveable{ mutableStateOf(data.like) }
+    val heartClick = rememberSaveable { mutableStateOf(data.like) }
 
     Card(
         modifier = Modifier
@@ -55,16 +54,19 @@ fun CarrotMarketItemCard(data: CarrotMarketData){
                     .height(150.dp)
             )
 
-            Body6(text = data.productName,
-                modifier = Modifier.padding(20.dp,5.dp,0.dp,0.dp)
+            Body6(
+                text = data.productName,
+                modifier = Modifier.padding(20.dp, 5.dp, 0.dp, 0.dp)
             )
 
-            Body10(text = data.place + " " + "•" + " " + data.time,
-                modifier = Modifier.padding(20.dp,3.dp)
+            Body10(
+                text = data.place + " " + "•" + " " + data.time,
+                modifier = Modifier.padding(20.dp, 3.dp)
             )
 
             val decimalFormat = DecimalFormat("#,###")
-            Text(text = decimalFormat.format(data.price),
+            Text(
+                text = decimalFormat.format(data.price),
                 color = Color.Black,
                 fontSize = 15.sp,
                 fontFamily = notoSansFamily,
@@ -74,16 +76,16 @@ fun CarrotMarketItemCard(data: CarrotMarketData){
                     .wrapContentHeight(align = Alignment.Bottom)
                     .padding(20.dp, 0.dp, 0.dp, 25.dp)
             )
-
         }
 
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .wrapContentHeight(align = Alignment.Bottom)
-            .fillMaxWidth()
-            .wrapContentWidth(align = Alignment.End)
-            .padding(0.dp, 0.dp, 20.dp, 25.dp)
-            .clickable { heartClick.value = !heartClick.value }
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .wrapContentHeight(align = Alignment.Bottom)
+                .fillMaxWidth()
+                .wrapContentWidth(align = Alignment.End)
+                .padding(0.dp, 0.dp, 20.dp, 25.dp)
+                .clickable { heartClick.value = !heartClick.value }
         ) {
             SimTongIcons.Heart(heartClick.value)
         }

@@ -4,7 +4,6 @@ plugins {
     id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
 }
-
 android {
     compileSdk = ProjectProperties.COMPILE_SDK_VERSION
 

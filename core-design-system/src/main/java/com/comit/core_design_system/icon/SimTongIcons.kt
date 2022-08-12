@@ -1,6 +1,5 @@
 package com.comit.core_design_system.icon
 
-import androidx.compose.ui.res.painterResource
 import com.comit.core_design_system.R
 
 object SimTongIcons {

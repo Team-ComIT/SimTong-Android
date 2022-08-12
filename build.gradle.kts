@@ -2,6 +2,12 @@ plugins {
     id(BuildPlugins.KT_LINT) version Versions.KT_LINT
 }
 
+allprojects {
+    apply {
+        plugin("org.jlleitschuh.gradle.ktlint")
+    }
+}
+
 buildscript {
     repositories {
         google()

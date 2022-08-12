@@ -27,7 +27,7 @@ data class FoodListDataSample(
 )
 
 @Composable
-fun FoodListLazyRow(list: List<FoodListDataSample>){
+fun FoodListLazyRow(list: List<FoodListDataSample>) {
     LazyRow() {
         val currentTime = Calendar.getInstance().time
         val date = SimpleDateFormat("yyyy.MM.dd (EE)", Locale.KOREA).format(currentTime)
@@ -39,8 +39,9 @@ fun FoodListLazyRow(list: List<FoodListDataSample>){
 }
 
 @Composable
-fun FoodListItem(foodListDataSample: FoodListDataSample, date: String){
-    Card(shape = RoundedCornerShape(10.dp),
+fun FoodListItem(foodListDataSample: FoodListDataSample, date: String) {
+    Card(
+        shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .width(150.dp)
             .height(160.dp)
@@ -52,12 +53,14 @@ fun FoodListItem(foodListDataSample: FoodListDataSample, date: String){
             )
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
-            Card(shape = RoundedCornerShape(10.dp),
+            Card(
+                shape = RoundedCornerShape(10.dp),
                 backgroundColor = SimTongColor.MainColor,
                 modifier = Modifier
                     .padding(10.dp, 13.dp, 0.dp, 0.dp)
             ) {
-                Text(text = foodListDataSample.time,
+                Text(
+                    text = foodListDataSample.time,
                     fontSize = 10.sp,
                     fontFamily = notoSansFamily,
                     fontWeight = FontWeight.SemiBold,
@@ -70,16 +73,16 @@ fun FoodListItem(foodListDataSample: FoodListDataSample, date: String){
                 )
             }
 
-
             Body9(
                 text = foodListDataSample.menu,
                 modifier = Modifier
                     .height(96.dp)
-                    .padding(10.dp,10.dp,10.dp,0.dp)
+                    .padding(10.dp, 10.dp, 10.dp, 0.dp)
             )
         }
 
-        Text(text = date,
+        Text(
+            text = date,
             color = OtherColor.GrayB3,
             fontSize = 9.sp,
             fontFamily = notoSansFamily,

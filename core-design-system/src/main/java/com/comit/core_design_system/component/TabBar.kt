@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalPagerApi
 @Composable
-fun TabBar(modifier: Modifier = Modifier, filters: List<String>, onClick:(Int) -> Unit){
+fun TabBar(modifier: Modifier = Modifier, filters: List<String>, onClick: (Int) -> Unit) {
 
     val pagerState = rememberPagerState(filters.size)
     val scope = rememberCoroutineScope()

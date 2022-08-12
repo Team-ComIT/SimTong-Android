@@ -23,18 +23,21 @@ fun TextHeart(
     heartModifier: Modifier,
     checkClick: Boolean = false,
     onClick: () -> Unit
-){
-    val checkClick = rememberSaveable{ mutableStateOf(checkClick) }
-    val textColor : Color = if(checkClick.value) SimTongColor.MainColor else textColor
+) {
+    val checkClick = rememberSaveable { mutableStateOf(checkClick) }
+    val textColor: Color = if (checkClick.value) SimTongColor.MainColor else textColor
 
-    Row(modifier = Modifier
-        .clickable {
-            onClick()
-            checkClick.value = !checkClick.value
-        }
+    Row(
+        modifier = Modifier
+            .clickable {
+                onClick()
+                checkClick.value = !checkClick.value
+            }
     ) {
-        Image(painter = painterResource(
-            id = SimTongIcons.Heart(checkClick.value)),
+        Image(
+            painter = painterResource(
+                id = SimTongIcons.Heart(checkClick.value)
+            ),
             contentDescription = "",
             modifier = heartModifier
         )
@@ -52,24 +55,27 @@ fun TextHeart(
     heartModifier: Modifier,
     checkClick: Boolean = false,
     onClick: () -> Unit
-){
-    val checkClick = rememberSaveable{ mutableStateOf(checkClick) }
-    val textColor : Color = if(checkClick.value) SimTongColor.MainColor else textColor
-    val text = rememberSaveable{ mutableStateOf(text) }
+) {
+    val checkClick = rememberSaveable { mutableStateOf(checkClick) }
+    val textColor: Color = if (checkClick.value) SimTongColor.MainColor else textColor
+    val text = rememberSaveable { mutableStateOf(text) }
 
-    Row(modifier = Modifier
-        .clickable {
-            onClick()
-            checkClick.value = !checkClick.value
-            if(checkClick.value){
-                text.value++
-            }else{
-                text.value--
+    Row(
+        modifier = Modifier
+            .clickable {
+                onClick()
+                checkClick.value = !checkClick.value
+                if (checkClick.value) {
+                    text.value++
+                } else {
+                    text.value--
+                }
             }
-        }
     ) {
-        Image(painter = painterResource(
-            id = SimTongIcons.Heart(checkClick.value)),
+        Image(
+            painter = painterResource(
+                id = SimTongIcons.Heart(checkClick.value)
+            ),
             contentDescription = "",
             modifier = heartModifier
         )

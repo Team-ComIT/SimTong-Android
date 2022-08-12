@@ -62,7 +62,7 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
                 }
             }
 
-            //Line
+            // Line
             if (isCurrent) {
                 LinearProgressIndicator(
                     progress = animatedProgress,
@@ -82,7 +82,7 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
                 )
             }
 
-            //Circle
+            // Circle
             Box(
                 modifier = Modifier
                     .size(viewSize)
