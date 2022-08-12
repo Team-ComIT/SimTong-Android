@@ -116,6 +116,18 @@ object SimTongTypography {
         fontWeight = FontWeight.Normal,
         fontSize = 9.sp
     )
+
+    val body13 = TextStyle(
+        fontFamily = notoSansFamily,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 10.sp
+    )
+
+    val body14 = TextStyle(
+        fontFamily = notoSansFamily,
+        fontWeight = FontWeight.Normal,
+        fontSize = 10.sp
+    )
 }
 
 @Composable
@@ -528,6 +540,62 @@ fun Body12(
         modifier = modifier,
         color = color,
         style = SimTongTypography.body12,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        lineHeight = lineHeight,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout,
+    )
+}
+
+@Composable
+fun Body13(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        color = color,
+        style = SimTongTypography.body13,
+        textDecoration = textDecoration,
+        textAlign = textAlign,
+        lineHeight = lineHeight,
+        overflow = overflow,
+        softWrap = softWrap,
+        maxLines = maxLines,
+        onTextLayout = onTextLayout,
+    )
+}
+
+@Composable
+fun Body14(
+    text: String,
+    modifier: Modifier = Modifier,
+    color: Color = Color.Unspecified,
+    textDecoration: TextDecoration? = null,
+    textAlign: TextAlign? = null,
+    lineHeight: TextUnit = TextUnit.Unspecified,
+    overflow: TextOverflow = TextOverflow.Clip,
+    softWrap: Boolean = true,
+    maxLines: Int = Int.MAX_VALUE,
+    onTextLayout: (TextLayoutResult) -> Unit = {},
+) {
+    Text(
+        text = text,
+        modifier = modifier,
+        color = color,
+        style = SimTongTypography.body14,
         textDecoration = textDecoration,
         textAlign = textAlign,
         lineHeight = lineHeight,
