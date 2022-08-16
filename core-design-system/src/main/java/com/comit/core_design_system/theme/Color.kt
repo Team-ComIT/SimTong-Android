@@ -39,9 +39,14 @@ object SimTongColor {
 }
 
 object OtherColor {
+
+    val RedFFE7E7 = Color(0xFFFFE7E7)
+
     val Black34 = Color(0xFF343434)
 
+    val GrayA = Color(0xFFAAAAAA)
     val GrayB3 = Color(0xFFB3B3B3)
     val GrayDF = Color(0xFFDFDFDF)
     val GrayD9 = Color(0xFFD9D9D9)
+    val Gray96 = Color(0xFF969696)
 }

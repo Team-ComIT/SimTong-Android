@@ -43,4 +43,14 @@ object SimTongIcons {
 
     fun Heart(state: Boolean) =
         if (state) R.drawable.ic_heart_on else R.drawable.ic_heart_off
+
+    fun Heart(state: Boolean, isGray: Boolean) =
+        if (isGray){
+            if(state) R.drawable.ic_heart_on else R.drawable.ic_heart_off_gray
+        }else{
+            if(state) R.drawable.ic_heart_on else R.drawable.ic_heart_off
+        }
+
+    fun Comment(isGray: Boolean) =
+        if(isGray) R.drawable.ic_comment_gray else R.drawable.ic_comment
 }
