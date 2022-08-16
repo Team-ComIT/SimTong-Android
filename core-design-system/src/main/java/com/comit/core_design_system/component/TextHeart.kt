@@ -18,31 +18,33 @@ import com.comit.core_design_system.theme.SimTongColor
 fun TextHeart(
     text: String,
     textStyle: TextStyle,
-    textModifier: Modifier = Modifier,
     textColor: Color,
-    heartModifier: Modifier,
-    checkClick: Boolean = false,
-    onClick: () -> Unit
-) {
-    val checkClick = rememberSaveable { mutableStateOf(checkClick) }
-    val textColor: Color = if (checkClick.value) SimTongColor.MainColor else textColor
+    click: Boolean = false,
+    isGray: Boolean,
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    heartModifier: Modifier = Modifier
+    ) {
+
+    val checkClickWatcher = rememberSaveable { mutableStateOf(click) }
+    val textColorWatcher: Color = if (checkClickWatcher.value) SimTongColor.MainColor else textColor
 
     Row(
         modifier = Modifier
             .clickable {
                 onClick()
-                checkClick.value = !checkClick.value
+                checkClickWatcher.value = !checkClickWatcher.value
             }
     ) {
         Image(
             painter = painterResource(
-                id = SimTongIcons.Heart(checkClick.value)
+                id = SimTongIcons.Heart(checkClickWatcher.value,isGray)
             ),
             contentDescription = "",
             modifier = heartModifier
         )
 
-        Text(text = text, style = textStyle, color = textColor, modifier = textModifier)
+        Text(text = text, style = textStyle, color = textColorWatcher, modifier = modifier)
     }
 }
 
@@ -52,34 +54,35 @@ fun TextHeart(
     textStyle: TextStyle,
     textModifier: Modifier = Modifier,
     textColor: Color,
-    heartModifier: Modifier,
-    checkClick: Boolean = false,
-    onClick: () -> Unit
+    modifier: Modifier = Modifier,
+    heartModifier: Modifier = Modifier,
+    click: Boolean = false,
+    onClick: () -> Unit = {}
 ) {
-    val checkClick = rememberSaveable { mutableStateOf(checkClick) }
-    val textColor: Color = if (checkClick.value) SimTongColor.MainColor else textColor
-    val text = rememberSaveable { mutableStateOf(text) }
+    val checkClickWatcher = rememberSaveable { mutableStateOf(click) }
+    val textColorWatcher: Color = if (checkClickWatcher.value) SimTongColor.MainColor else textColor
+    val textWatcher = rememberSaveable { mutableStateOf(text) }
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .clickable {
                 onClick()
-                checkClick.value = !checkClick.value
-                if (checkClick.value) {
-                    text.value++
+                checkClickWatcher.value = !checkClickWatcher.value
+                if (checkClickWatcher.value) {
+                    textWatcher.value++
                 } else {
-                    text.value--
+                    textWatcher.value--
                 }
             }
     ) {
         Image(
             painter = painterResource(
-                id = SimTongIcons.Heart(checkClick.value)
+                id = SimTongIcons.Heart(checkClickWatcher.value)
             ),
             contentDescription = "",
             modifier = heartModifier
         )
 
-        Text(text = text.toString(), style = textStyle, color = textColor, modifier = textModifier)
+        Text(text = textWatcher.value.toString(), style = textStyle, color = textColorWatcher, modifier = textModifier)
     }
 }
