@@ -16,17 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body10
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.notoSansFamily
+import com.comit.core_design_system.theme.*
 import java.text.DecimalFormat
 
 @Composable
-fun CarrotLazyVerticalGrid(list: List<CarrotMarketData>) {
+fun CarrotMarketLazyVerticalGrid(list: List<CarrotMarketData>) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(list) {
             CarrotMarketItemCard(it)
@@ -56,18 +55,20 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
 
             Body6(
                 text = data.productName,
-                modifier = Modifier.padding(20.dp, 5.dp, 0.dp, 0.dp)
+                color = SimTongColor.Black,
+                modifier = Modifier.padding(20.dp, 15.dp, 0.dp, 0.dp)
             )
 
             Body10(
                 text = data.place + " " + "•" + " " + data.time,
+                color = OtherColor.GrayA,
                 modifier = Modifier.padding(20.dp, 3.dp)
             )
 
             val decimalFormat = DecimalFormat("#,###")
             Text(
                 text = decimalFormat.format(data.price),
-                color = Color.Black,
+                color = SimTongColor.Black,
                 fontSize = 15.sp,
                 fontFamily = notoSansFamily,
                 fontWeight = FontWeight.SemiBold,
@@ -78,7 +79,9 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
             )
         }
 
-        Box(
+        Image(painter = painterResource(
+            id = SimTongIcons.Heart(heartClick.value)),
+            contentDescription = "",
             modifier = Modifier
                 .fillMaxHeight()
                 .wrapContentHeight(align = Alignment.Bottom)
@@ -86,9 +89,7 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
                 .wrapContentWidth(align = Alignment.End)
                 .padding(0.dp, 0.dp, 20.dp, 25.dp)
                 .clickable { heartClick.value = !heartClick.value }
-        ) {
-            SimTongIcons.Heart(heartClick.value)
-        }
+        )
     }
 }
 
@@ -99,3 +100,38 @@ data class CarrotMarketData(
     val price: Int,
     val like: Boolean
 )
+
+@Preview
+@Composable
+fun CarrotMarket(){
+    CarrotMarketLazyVerticalGrid(list = listOf(
+        CarrotMarketData(
+            "제품",
+            "본점",
+            "1시간 전",
+            100000,
+            false
+        ),
+        CarrotMarketData(
+            "제품",
+            "본점",
+            "1시간 전",
+            100000,
+            false
+        ),
+        CarrotMarketData(
+            "제품",
+            "본점",
+            "1시간 전",
+            100000,
+            false
+        ),
+        CarrotMarketData(
+            "제품",
+            "본점",
+            "1시간 전",
+            100000,
+            false
+        )
+    ))
+}
