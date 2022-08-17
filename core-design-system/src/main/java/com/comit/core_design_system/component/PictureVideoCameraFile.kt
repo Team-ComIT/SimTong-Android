@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body6
@@ -26,7 +27,7 @@ sealed class PictureVideoCameraFileData(val icon: Int, val text: String) {
 fun PictureVideoCameraFileList(
     modifier: Modifier = Modifier,
     list: List<PictureVideoCameraFileData>,
-    onClick: (Int) -> Unit
+    onClick: (Int) -> Unit = {}
 ) {
     LazyColumn() {
         itemsIndexed(list) { index, data ->
@@ -82,8 +83,21 @@ fun PictureVideoCameraFileItem(
             text = pictureVideoCameraFileData.text,
             modifier = Modifier
                 .fillMaxHeight()
+
                 .wrapContentHeight(Alignment.CenterVertically)
                 .padding(12.dp, 0.dp, 0.dp, 0.dp)
         )
     }
+}
+
+@Preview
+@Composable
+fun PictureVideoCameraFile(){
+    PictureVideoCameraFileList(
+        list = listOf(
+            PictureVideoCameraFileData.Picture,
+            PictureVideoCameraFileData.Camera,
+            PictureVideoCameraFileData.File
+        )
+    )
 }
