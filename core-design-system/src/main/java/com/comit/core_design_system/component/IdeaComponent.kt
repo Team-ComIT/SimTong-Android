@@ -128,8 +128,6 @@ fun IdeaItem(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Bottom)
-                .padding(0.dp,0.dp,0.dp,3.dp)
-                .height(3.dp)
         ) {
             val canvasWidth = size.width
             val canvasHeight = size.height
@@ -137,7 +135,8 @@ fun IdeaItem(
             drawLine(
                 start = Offset(x = 0f, y = canvasHeight),
                 end = Offset(x = canvasWidth, y = canvasHeight),
-                color = SimTongColor.Gray300
+                color = OtherColor.GrayD8,
+                strokeWidth = 5f
             )
         }
     }
