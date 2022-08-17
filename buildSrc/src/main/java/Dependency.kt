@@ -119,4 +119,8 @@ object Dependency {
     object Util {
         const val Util = "androidx.compose.ui:ui-util:${Versions.COMPOSE}"
     }
+
+    object Glide {
+        const val Glide = "com.github.skydoves:landscapist-glide:${Versions.GLIDE}"
+    }
 }

@@ -31,6 +31,8 @@ object Versions {
 
     const val PAGER = "0.13.0"
 
+    const val GLIDE = "1.6.1"
+
     const val NAV = "2.4.1"
     const val ANI_NAV = "0.24.5-alpha"
     const val LANDSCAPIST = "1.4.7"
