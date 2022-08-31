@@ -7,10 +7,10 @@ import androidx.compose.material.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.theme.Body5
-import com.comit.core_design_system.theme.OtherColor
 import com.comit.core_design_system.theme.SimTongColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
@@ -21,7 +21,11 @@ import kotlinx.coroutines.launch
 fun TabBar(
     modifier: Modifier = Modifier,
     filters: List<String>,
-    onClick: (Int) -> Unit = {}
+    onClick: (Int) -> Unit = {},
+    backgroundColor: Color = SimTongColor.White,
+    contentColor: Color = SimTongColor.MainColor,
+    selectedContentColor: Color  = SimTongColor.OtherColor.Black34,
+    unselectedContentColor: Color = SimTongColor.OtherColor.GrayB3
 ) {
 
     val pagerState = rememberPagerState(filters.size)
@@ -29,8 +33,8 @@ fun TabBar(
 
     TabRow(
         selectedTabIndex = pagerState.currentPage,
-        backgroundColor = SimTongColor.White,
-        contentColor = SimTongColor.MainColor,
+        backgroundColor = backgroundColor,
+        contentColor = contentColor,
         modifier = modifier
     ) {
         filters.forEachIndexed { index, filter ->
@@ -45,8 +49,8 @@ fun TabBar(
                 },
                 text = { Body5(text = filter) },
 
-                selectedContentColor = OtherColor.Black34,
-                unselectedContentColor = OtherColor.GrayB3,
+                selectedContentColor = selectedContentColor,
+                unselectedContentColor = unselectedContentColor
             )
         }
     }
