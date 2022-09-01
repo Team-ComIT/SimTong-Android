@@ -17,6 +17,10 @@ object SimTongIcons {
         val Post = R.drawable.ic_alarm_post
     }
 
+    object Others {
+        val Check = R.drawable.ic_check
+    }
+
     val Add = R.drawable.ic_add
     val Comment = R.drawable.ic_comment
     val Image = R.drawable.ic_image
