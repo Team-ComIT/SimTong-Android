@@ -33,7 +33,20 @@ android {
     kotlinOptions {
         jvmTarget = ProjectProperties.JAVA_VERSION.toString()
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
+        kotlinCompilerVersion = ProjectProperties.KOTLIN_VERSION
+    }
 }
 
 dependencies {
+    implementation(Dependency.Compose.COMPOSE_ACTIVITY)
+    implementation(Dependency.Compose.COMPOSE_MATERIAL)
+    implementation(Dependency.Compose.COMPOSE_UI)
+    implementation(Dependency.Compose.COMPOSE_UI_TOOL)
 }
