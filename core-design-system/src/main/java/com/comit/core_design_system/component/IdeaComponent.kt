@@ -60,6 +60,9 @@ fun IdeaItem(
 ){
     Column(
         modifier = modifier
+            .fillMaxWidth()
+            .height(91.dp)
+            .background(SimTongColor.White)
     ) {
 
         Body6(
@@ -70,7 +73,7 @@ fun IdeaItem(
 
         Body14(
             text = data.body,
-            color = OtherColor.Gray96,
+            color = SimTongColor.OtherColor.Gray96,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
@@ -80,7 +83,7 @@ fun IdeaItem(
 
         Body14(
             text = data.userName+" • "+data.time+"분 전",
-            color = OtherColor.Gray96,
+            color = SimTongColor.OtherColor.Gray96,
             modifier = Modifier
                 .padding(30.dp,5.dp,0.dp,0.dp)
         )
@@ -95,7 +98,7 @@ fun IdeaItem(
             TextHeart(
                 text = "공감",
                 textStyle = SimTongTypography.body14,
-                textColor = OtherColor.Gray96,
+                textColor = SimTongColor.OtherColor.Gray96,
                 onClick = onClickHeart,
                 isGray = true,
                 modifier = Modifier
@@ -114,7 +117,7 @@ fun IdeaItem(
             
             Body14(
                 text = data.commentCount.toString(),
-                color = OtherColor.Gray96,
+                color = SimTongColor.OtherColor.Gray96,
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)
@@ -135,7 +138,7 @@ fun IdeaItem(
             drawLine(
                 start = Offset(x = 0f, y = canvasHeight),
                 end = Offset(x = canvasWidth, y = canvasHeight),
-                color = OtherColor.GrayD8,
+                color = SimTongColor.OtherColor.GrayD8,
                 strokeWidth = 5f
             )
         }
@@ -146,10 +149,6 @@ fun IdeaItem(
 @Composable
 fun IdeaComponent(){
     IdeaLazyColumn(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(91.dp)
-            .background(SimTongColor.White),
         list = listOf(
             IdeaData("안녕하세요","안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk","유저 이름",5,false, 0),
             IdeaData("안녕하세요","안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk","유저 이름",5,false, 0)
