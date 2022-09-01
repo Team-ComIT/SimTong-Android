@@ -2,6 +2,7 @@ package com.comit.core_design_system.component
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,48 +11,75 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.OtherColor
+import com.comit.core_design_system.theme.SimTongColor
 
-sealed class PictureVideoCameraFileData(val icon: Int, val text: String) {
-    object Picture : PictureVideoCameraFileData(SimTongIcons.Image, "사진/동영상")
-    object Camera : PictureVideoCameraFileData(SimTongIcons.Photo, "카메라")
-    object File : PictureVideoCameraFileData(SimTongIcons.Link, "파일")
-}
+data class IconListData(
+    val icon: Painter,
+    val text: String,
+)
 
 @Composable
 fun PictureVideoCameraFileList(
     modifier: Modifier = Modifier,
-    list: List<PictureVideoCameraFileData>,
-    onClick: (Int) -> Unit = {}
+    list: List<IconListData>,
+    onClick: (Int) -> Unit = {},
+    height: Dp = 32.dp,
+    background: Color = SimTongColor.White,
+    imageHeight: Dp = 18.dp,
+    lineHeight: Float = 2F,
+    lineColor: Color = SimTongColor.OtherColor.GrayDF,
+    textColor: Color = SimTongColor.Black,
+    imagePaddingStart: Dp = 14.dp,
+    textPaddingStart: Dp = 12.dp,
 ) {
-    LazyColumn() {
+    LazyColumn(
+        modifier = modifier
+    ) {
         itemsIndexed(list) { index, data ->
             PictureVideoCameraFileItem(
-                modifier = modifier,
+                height = height,
+                background = background,
+                imageHeight = imageHeight,
+                lineHeight = lineHeight,
+                lineColor = lineColor,
+                textColor = textColor,
                 index = index,
-                pictureVideoCameraFileData = data,
-                onClick = onClick
+                icon = data.icon,
+                text = data.text,
+                onClick = onClick,
+                imagePaddingStart = imagePaddingStart,
+                textPaddingStart = textPaddingStart,
             )
         }
     }
 }
 @Composable
 fun PictureVideoCameraFileItem(
-    modifier: Modifier = Modifier,
+    height: Dp = 32.dp,
+    background: Color = SimTongColor.White,
+    imageHeight: Dp = 18.dp,
+    lineHeight: Float = 2F,
+    lineColor: Color = SimTongColor.OtherColor.GrayDF,
+    textColor: Color = SimTongColor.Black,
     index: Int,
-    pictureVideoCameraFileData: PictureVideoCameraFileData,
-    onClick: (Int) -> Unit
+    icon: Painter,
+    text: String,
+    onClick: (Int) -> Unit,
+    imagePaddingStart: Dp = 14.dp,
+    textPaddingStart: Dp = 12.dp,
 ) {
     if (index != 0) {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(0.5.dp)
         ) {
             val canvasWidth = size.width
             val canvasHeight = size.height
@@ -59,7 +87,8 @@ fun PictureVideoCameraFileItem(
             drawLine(
                 start = Offset(x = 0f, y = canvasHeight),
                 end = Offset(x = canvasWidth, y = canvasHeight),
-                color = OtherColor.GrayDF
+                color = lineColor,
+                strokeWidth = lineHeight,
             )
         }
     }
@@ -67,25 +96,26 @@ fun PictureVideoCameraFileItem(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(32.dp)
+            .height(height)
+            .background(background)
             .clickable { onClick(index) }
     ) {
         Image(
-            painter = painterResource(id = pictureVideoCameraFileData.icon), contentDescription = "",
+            painter = icon, contentDescription = "",
             modifier = Modifier
+                .padding(imagePaddingStart, 0.dp, 0.dp, 0.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
-                .height(18.dp)
-                .padding(14.dp, 0.dp, 0.dp, 0.dp)
+                .height(imageHeight)
         )
 
         Body6(
-            text = pictureVideoCameraFileData.text,
+            text = text,
+            color = textColor,
             modifier = Modifier
+                .padding(textPaddingStart, 0.dp, 0.dp, 0.dp)
                 .fillMaxHeight()
-
                 .wrapContentHeight(Alignment.CenterVertically)
-                .padding(12.dp, 0.dp, 0.dp, 0.dp)
         )
     }
 }
@@ -95,9 +125,9 @@ fun PictureVideoCameraFileItem(
 fun PictureVideoCameraFile(){
     PictureVideoCameraFileList(
         list = listOf(
-            PictureVideoCameraFileData.Picture,
-            PictureVideoCameraFileData.Camera,
-            PictureVideoCameraFileData.File
-        )
+            IconListData(painterResource(id = SimTongIcons.Image), "사진/동영상"),
+            IconListData(painterResource(id = SimTongIcons.Photo), "카메라"),
+            IconListData(painterResource(id = SimTongIcons.Link), "링크"),
+            )
     )
 }
