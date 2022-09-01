@@ -17,32 +17,60 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.*
 import java.text.DecimalFormat
 
+data class CarrotMarketData(
+    val productName: String,
+    val place: String,
+    val time: String,
+    val price: Int,
+    val like: Boolean
+)
+
 @Composable
-fun CarrotMarketLazyVerticalGrid(list: List<CarrotMarketData>) {
+fun CarrotMarketLazyVerticalGrid(
+    modifier: Modifier = Modifier,
+    list: List<CarrotMarketData>,
+    imageHeight: Dp = 150.dp,
+    heartClick: () -> Unit = {},
+    cardClick: () -> Unit = {}
+) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(list) {
-            CarrotMarketItemCard(it)
+            CarrotMarketItemCard(
+                modifier = modifier,
+                data = it,
+                imageHeight = imageHeight,
+                heartClick = heartClick,
+                cardClick = cardClick
+            )
         }
     }
 }
 
 @Composable
-fun CarrotMarketItemCard(data: CarrotMarketData) {
+fun CarrotMarketItemCard(
+    modifier: Modifier,
+    data: CarrotMarketData,
+    imageHeight: Dp,
+    heartClick: () -> Unit,
+    cardClick: () -> Unit
+) {
 
-    val heartClick = rememberSaveable { mutableStateOf(data.like) }
+    val heartClickCheck = rememberSaveable { mutableStateOf(data.like) }
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .width(150.dp)
             .height(255.dp)
-            .clickable { }
+            .clickable { cardClick() }
     ) {
         Column(modifier = Modifier.fillMaxSize()) {
             Image(
@@ -50,7 +78,7 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp)
+                    .height(imageHeight)
             )
 
             Body6(
@@ -61,7 +89,7 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
 
             Body10(
                 text = data.place + " " + "•" + " " + data.time,
-                color = OtherColor.GrayA,
+                color = SimTongColor.OtherColor.GrayA,
                 modifier = Modifier.padding(20.dp, 3.dp)
             )
 
@@ -80,7 +108,7 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
         }
 
         Image(painter = painterResource(
-            id = SimTongIcons.Heart(heartClick.value)),
+            id = SimTongIcons.Heart(heartClickCheck.value)),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxHeight()
@@ -88,23 +116,19 @@ fun CarrotMarketItemCard(data: CarrotMarketData) {
                 .fillMaxWidth()
                 .wrapContentWidth(align = Alignment.End)
                 .padding(0.dp, 0.dp, 20.dp, 25.dp)
-                .clickable { heartClick.value = !heartClick.value }
+                .noRippleClickable {
+                    heartClickCheck.value = !heartClickCheck.value
+                    heartClick()
+                }
         )
     }
 }
 
-data class CarrotMarketData(
-    val productName: String,
-    val place: String,
-    val time: String,
-    val price: Int,
-    val like: Boolean
-)
-
 @Preview
 @Composable
 fun CarrotMarket(){
-    CarrotMarketLazyVerticalGrid(list = listOf(
+    CarrotMarketLazyVerticalGrid(
+        list = listOf(
         CarrotMarketData(
             "제품",
             "본점",
