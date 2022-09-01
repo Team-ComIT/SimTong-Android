@@ -1,5 +1,6 @@
 package com.comit.core_design_system.component
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -19,34 +20,56 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @Composable
-fun FoodListLazyRow(list: List<String>) {
-    val time = SimpleDateFormat("hhmm").format(Date(System.currentTimeMillis())).toInt()
-    var timeCheck = 0
+fun FoodListLazyRow(
+    modifier: Modifier = Modifier,
+    backgroundImageBase: Int,
+    backgroundImageCheck: Int,
+    textColorBase: Color,
+    textColorCheck: Color,
+    lineHeight: Int,
+    timeCheck: Int,
+    list: List<String>,
+) {
 
-    if(time > 1500){
-        timeCheck = 2
-    }
-    else if(time > 1000){
-        timeCheck = 1
-    }
-
-    LazyRow() {
-        itemsIndexed(list) {index,it->
-            FoodListItem(index, it, timeCheck)
+    LazyRow {
+        itemsIndexed(list) { index, it ->
+            FoodListItem(
+                modifier = modifier,
+                index = index,
+                menu = it,
+                timeCheck = timeCheck,
+                backgroundImageBase = backgroundImageBase,
+                backgroundImageCheck = backgroundImageCheck,
+                textColorBase = textColorBase,
+                textColorCheck = textColorCheck,
+                lineHeight = lineHeight
+            )
         }
     }
 }
 
 @Composable
-fun FoodListItem(index: Int, menu: String, timeCheck: Int) {
+fun FoodListItem(
+    modifier: Modifier = Modifier,
+    index: Int,
+    menu: String,
+    timeCheck: Int,
+    backgroundImageBase: Int,
+    backgroundImageCheck: Int,
+    textColorBase: Color,
+    textColorCheck: Color,
+    lineHeight: Int
+) {
 
-    val textColor: Color = if(timeCheck == index) SimTongColor.White else SimTongColor.Black
-    val backgroundImage: Int = if(timeCheck == index) R.drawable.img_food_red else R.drawable.img_food
+    val textColor: Color =
+        if(timeCheck == index) textColorCheck else textColorBase
+    val backgroundImage: Int =
+        if(timeCheck == index) backgroundImageCheck else backgroundImageBase
 
     Card(
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = Color(0xFF00FF0000),
-        modifier = Modifier
+        backgroundColor = SimTongColor.White,
+        modifier = modifier
             .width(140.dp)
             .height(160.dp)
             .padding(15.dp, 0.dp, 15.dp, 0.dp)
@@ -54,7 +77,7 @@ fun FoodListItem(index: Int, menu: String, timeCheck: Int) {
         Box(modifier = Modifier.fillMaxSize()){
             Image(
                 painter = painterResource(id = backgroundImage),
-                contentDescription = "",
+                contentDescription = "FoodList Image",
                 modifier = Modifier
                     .fillMaxSize()
             )
@@ -62,7 +85,7 @@ fun FoodListItem(index: Int, menu: String, timeCheck: Int) {
             Body13(
                 text = menu,
                 color = textColor,
-                lineHeight = 23.sp,
+                lineHeight = lineHeight.sp,
                 modifier = Modifier
                     .padding(12.dp, 15.dp, 10.dp, 0.dp)
             )
@@ -73,9 +96,30 @@ fun FoodListItem(index: Int, menu: String, timeCheck: Int) {
 @Preview
 @Composable
 fun FoodList(){
-    FoodListLazyRow(list = listOf(
+
+    FoodListLazyRow(
+        backgroundImageBase = R.drawable.img_food,
+        backgroundImageCheck = R.drawable.img_food_red,
+        textColorBase = SimTongColor.Black,
+        textColorCheck = SimTongColor.White,
+        lineHeight = 23,
+        timeCheck = time(),
+        list = listOf(
         "누룽지\n돼지불고기\n마늘쫑건새우볶음\n배추김치\n달콤한붓세빵\n바나나/딸기우유",
         "돼지불고기",
-        "배추김치")
+        "배추김치"
+        )
     )
+}
+
+@SuppressLint("SimpleDateFormat")
+private fun time(): Int{
+    val time = SimpleDateFormat("hhmm").format(Date(System.currentTimeMillis())).toInt()
+    var timeCheck = 0
+
+    if(time > 1500) timeCheck = 2
+
+    else if(time > 1000){ timeCheck = 1 }
+
+    return timeCheck
 }
