@@ -3,11 +3,12 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -20,8 +21,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.R
+import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body5
 import com.comit.core_design_system.theme.SimTongColor
 
@@ -29,21 +31,48 @@ import com.comit.core_design_system.theme.SimTongColor
 @Composable
 fun ChoosePlace(
     modifier: Modifier = Modifier,
+    lazyColumnHeight: Dp = 200.dp,
+    backgroundColor: Color = SimTongColor.White,
+    backgroundShape: Dp = 20.dp,
+    paddingSide: Dp = 24.7.dp,
+    textColor: Color = SimTongColor.Black,
     onClick: (Int) -> Unit = {},
     list: List<String>,
-    painter: Painter = painterResource(id = R.drawable.ic_check)
+    painter: Painter = painterResource(id = SimTongIcons.Others.Check),
+    haveCheckImage: Boolean = true,
+    lineHeight: Float = 2.5F,
+    lineColor: Color = SimTongColor.Gray300,
+    bodyHeight: Dp = 50.dp,
+    startPaddingHeight: Dp = 20.dp,
 ) {
 
     val isNeedExpansion = rememberSaveable { mutableStateOf(0) }
 
-    LazyColumn(modifier = modifier) {
+    LazyColumn(
+        modifier = modifier
+            .padding(0.24.dp, 0.dp, 0.24.dp, 0.dp)
+            .fillMaxWidth()
+            .height(lazyColumnHeight)
+            .background(
+                color = backgroundColor,
+                shape = RoundedCornerShape(backgroundShape)
+            )
+    ) {
         itemsIndexed(list) { index, text ->
             ChoosePlaceItem(
+                backgroundColor = backgroundColor,
                 isNeedExpansion = isNeedExpansion,
                 onClick = onClick,
                 text = text,
+                textColor = textColor,
                 index = index,
-                painter = painter
+                painter = painter,
+                haveCheckImage = haveCheckImage,
+                lineHeight = lineHeight,
+                lineColor = lineColor,
+                bodyHeight = bodyHeight,
+                paddingSide = paddingSide,
+                startPaddingHeight = startPaddingHeight
             )
         }
     }
@@ -51,18 +80,25 @@ fun ChoosePlace(
 
 @Composable
 fun ChoosePlaceItem(
+    backgroundColor: Color,
     isNeedExpansion: MutableState<Int>,
     onClick: (Int) -> Unit,
     text: String,
+    textColor: Color,
     index: Int,
-    painter: Painter
+    painter: Painter,
+    haveCheckImage: Boolean,
+    lineHeight: Float,
+    lineColor: Color,
+    bodyHeight: Dp,
+    paddingSide: Dp,
+    startPaddingHeight: Dp
 ) {
     if (index != 0) {
         Canvas(
             modifier = Modifier
+                .padding(paddingSide, 0.dp, paddingSide, 0.dp)
                 .fillMaxWidth()
-                .height(0.5.dp)
-                .padding(24.dp, 10.dp, 24.dp, 0.dp)
         ) {
             val canvasWidth = size.width
             val canvasHeight = size.height
@@ -70,64 +106,85 @@ fun ChoosePlaceItem(
             drawLine(
                 start = Offset(x = 0f, y = canvasHeight),
                 end = Offset(x = canvasWidth, y = canvasHeight),
-                color = SimTongColor.Gray300
+                color = lineColor,
+                strokeWidth = lineHeight
             )
         }
+    } else {
+        Spacer(
+            modifier = Modifier
+                .padding(0.dp, startPaddingHeight, 0.dp, 0.dp)
+        )
     }
 
-    Row(
+    Box(
         modifier = Modifier
-            .padding(0.dp, 20.dp, 0.dp, 0.dp)
             .fillMaxWidth()
-            .height(35.dp)
-            .clickable {
+            .wrapContentWidth(Alignment.Start)
+            .height(bodyHeight)
+    ) {
+        Button(
+            modifier = Modifier.fillMaxSize(),
+            onClick = {
                 onClick(index)
                 isNeedExpansion.value = index
             },
-    ) {
-        Body5(
-            text = text,
-            modifier = Modifier
-                .fillMaxHeight()
-                .wrapContentHeight(CenterVertically)
-                .padding(24.dp, 0.dp, 0.dp, 0.dp)
-        )
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = backgroundColor,
+            ),
+            elevation = ButtonDefaults.elevation(
+                defaultElevation = 0.dp,
+                pressedElevation = 0.dp
+            )
+        ) {}
+        Row() {
+            Body5(
+                text = text,
+                color = textColor,
+                modifier = Modifier
+                    .padding(paddingSide, 0.dp, 0.dp, 0.dp)
+                    .fillMaxHeight()
+                    .wrapContentHeight(CenterVertically)
+            )
 
-        CheckImage(
-            isNeedExpansion = isNeedExpansion.value,
-            painter = painter,
-            index = index
-        )
+            if (haveCheckImage) {
+                CheckImage(
+                    isNeedExpansion = isNeedExpansion.value,
+                    painter = painter,
+                    index = index,
+                    paddingSide = paddingSide
+                )
+            }
+        }
     }
+
 }
 
 @Composable
-fun CheckImage(isNeedExpansion: Int, painter: Painter, index: Int) {
+fun CheckImage(
+    isNeedExpansion: Int,
+    painter: Painter,
+    index: Int,
+    paddingSide: Dp
+) {
     if (isNeedExpansion == index) {
         Image(
             painter = painter,
             contentDescription = "",
             modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(align = Alignment.End)
+                .padding(0.dp, 0.dp, paddingSide, 0.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(CenterVertically)
-                .padding(0.dp, 0.dp, 24.dp, 0.dp)
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.End)
         )
     }
 }
 
 @Preview
 @Composable
-fun PlaceComponent(){
+fun PlaceComponent() {
     ChoosePlace(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(200.dp)
-            .background(
-                color = Color.White,
-                shape = RoundedCornerShape(20.dp)
-            )
-            .padding(0.7.dp, 5.dp, 0.7.dp, 0.dp),
-        list = listOf("\uD83D\uDC5C      전체 지점","\uD83D\uDCBB      근무 지점"))
+        list = listOf("\uD83D\uDC5C      전체 지점", "\uD83D\uDCBB      근무 지점")
+    )
 }
