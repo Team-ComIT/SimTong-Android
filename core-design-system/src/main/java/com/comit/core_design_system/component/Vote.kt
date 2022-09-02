@@ -47,12 +47,24 @@ data class VoteListData(
 
 @Composable
 fun VoteLazyColumn(
+    modifier: Modifier = Modifier,
     list: List<VoteData>,
+    onHeartClick: () -> Unit = {},
+    onCommentClick: () -> Unit = {},
+    onItemClick: (Int) -> Unit = {}
 ){
-    LazyColumn(modifier = Modifier.background(SimTongColor.White)){
+    LazyColumn(
+        modifier = Modifier
+            .background(SimTongColor.White
+            )
+    ){
         items(list){
             VotePage(
+                modifier = modifier,
                 data = it,
+                onHeartClick = onHeartClick,
+                onCommentClick = onCommentClick,
+                onItemClick = onItemClick
             )
         }
     }
@@ -60,13 +72,15 @@ fun VoteLazyColumn(
 
 @Composable
 fun VotePage(
+    modifier: Modifier,
     data: VoteData,
-    onHeartClick: () -> Unit = {},
-    onCommentClick: () -> Unit = {},
-    onItemClick: (Int) -> Unit = {}
+    onHeartClick: () -> Unit,
+    onCommentClick: () -> Unit,
+    onItemClick: (Int) -> Unit
 ){
 
-    Card(modifier = Modifier
+    Card(
+        modifier = modifier
         .fillMaxWidth()
         .background(SimTongColor.White)
     ){
@@ -74,7 +88,8 @@ fun VotePage(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
-            Column(modifier = Modifier
+            Column(
+                modifier = Modifier
                 .fillMaxWidth()
                 .padding(25.dp, 0.dp, 25.dp, 0.dp)
                 .background(SimTongColor.White)
@@ -161,7 +176,7 @@ fun VotePage(
                 drawLine(
                     start = Offset(x = 0f, y = canvasHeight),
                     end = Offset(x = canvasWidth, y = canvasHeight),
-                    color = OtherColor.GrayD8,
+                    color = SimTongColor.OtherColor.GrayD8,
                     strokeWidth = 5f
                 )
             }
@@ -197,6 +212,8 @@ fun VoteItem(
     val chooseState = rememberSaveable{ mutableStateOf(data.check) }
     val shapeColor : Color = if(chooseState.value) SimTongColor.MainColor else SimTongColor.Gray200
     val textColor : Color = if(chooseState.value) SimTongColor.White else SimTongColor.Black
+    val textNumColor : Color = if(chooseState.value) SimTongColor.MainColor else SimTongColor.Gray600
+
 
     var total  = data.total
     val voteNum = rememberSaveable{ mutableStateOf(data.voteNum) }
@@ -247,7 +264,7 @@ fun VoteItem(
 
         Body12(
             text = voteNum.value.toString()+"명",
-            color = shapeColor,
+            color = textNumColor,
             modifier = Modifier
                 .padding(0.dp, 0.dp, 10.dp, 0.dp)
                 .fillMaxHeight()
