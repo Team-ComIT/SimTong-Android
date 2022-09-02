@@ -3,7 +3,6 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
@@ -21,10 +20,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body9
-import com.comit.core_design_system.theme.OtherColor
 import com.comit.core_design_system.theme.SimTongColor
 import com.comit.core_design_system.theme.notoSansFamily
 
@@ -39,13 +38,26 @@ data class CommentData(
 @ExperimentalFoundationApi
 @Composable
 fun CommentItemLazyColumn(
+    modifier: Modifier = Modifier,
     list: List<CommentData>,
     longClick: (Int) -> Unit = {},
-    onCLickCancel: (Int) -> Unit = {}
+    onCLickCancel: (Int) -> Unit = {},
+    likeClickUp: (Int) -> Unit = {},
+    likeClickDown: (Int) -> Unit = {},
+    commentClick: (Int) -> Unit = {}
 ){
     LazyColumn(){
-        itemsIndexed(list){index, it->
-            CommentItem(it, index, longClick, onCLickCancel)
+        itemsIndexed(list){ index, it ->
+            CommentItem(
+                modifier = modifier,
+                data = it,
+                index = index,
+                longClick = longClick,
+                onCLickCancel = onCLickCancel,
+                likeClickUp = likeClickUp,
+                likeClickDown = likeClickDown,
+                commentClick = commentClick
+            )
         }
     }
 }
@@ -53,19 +65,24 @@ fun CommentItemLazyColumn(
 @ExperimentalFoundationApi
 @Composable
 fun CommentItem(
+    modifier: Modifier,
     data: CommentData,
     index: Int,
-    longClick: (Int) -> Unit = {},
-    onCLickCancel: (Int) -> Unit = {}
+    longClick: (Int) -> Unit,
+    onCLickCancel: (Int) -> Unit,
+    likeClickUp: (Int) -> Unit,
+    likeClickDown: (Int) -> Unit,
+    commentClick: (Int) -> Unit
 ){
 
     val like = rememberSaveable { mutableStateOf(data.like) }
+    val likeNum = rememberSaveable{ mutableStateOf(data.likeNum) }
 
     val onCLickCheck = rememberSaveable{ mutableStateOf(false) }
-    val backgroundColor = if(onCLickCheck.value) OtherColor.RedFFE7E7 else SimTongColor.White
+    val backgroundColor = if(onCLickCheck.value) SimTongColor.OtherColor.RedFFE7E7 else SimTongColor.White
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(50.dp)
             .combinedClickable(
@@ -126,7 +143,7 @@ fun CommentItem(
                     CommentText(text = data.time)
 
                     CommentText(
-                        text = "좋아요 "+data.likeNum+"개",
+                        text = "좋아요 "+likeNum.value+"개",
                         modifier = Modifier
                             .padding(15.dp,0.dp,0.dp,0.dp)
                     )
@@ -134,7 +151,8 @@ fun CommentItem(
                     CommentText(
                         text = "댓글 쓰기",
                         modifier = Modifier
-                            .padding(15.dp,0.dp,0.dp,0.dp)
+                            .padding(15.dp, 0.dp, 0.dp, 0.dp)
+                            .clickable { commentClick(index) }
                     )
                 }
             }
@@ -151,7 +169,17 @@ fun CommentItem(
                     .padding(0.dp, 0.dp, 20.dp, 0.dp)
                     .height(10.dp)
                     .width(10.dp)
-                    .clickable { like.value = !like.value }
+                    .noRippleClickable {
+                        if (like.value) {
+                            likeClickDown(index)
+                            likeNum.value --
+                        } else {
+                            likeClickUp(index)
+                            likeNum.value ++
+                        }
+                        like.value = !like.value
+
+                    }
             )
         }
 
@@ -168,7 +196,7 @@ fun CommentText(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 9.sp,
-        color = OtherColor.Black34,
+        color = SimTongColor.OtherColor.Black34,
         modifier = modifier
     )
 }
