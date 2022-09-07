@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,12 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
+import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.theme.Body11
 import com.comit.core_design_system.theme.Body5
-import com.comit.core_design_system.theme.OtherColor
 import com.comit.core_design_system.theme.SimTongColor
 import com.google.accompanist.pager.*
 import kotlinx.coroutines.delay
@@ -32,19 +37,42 @@ import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
-fun NoticeBoardLazyColumn(list: List<NoticeBoardData>) {
+fun NoticeBoardLazyColumn(
+    modifier: Modifier = Modifier,
+    list: List<NoticeBoardData>,
+    menuClick: () -> Unit = {},
+    heartClick: () -> Unit = {},
+    commentClick: () -> Unit = {}
+) {
     LazyColumn() {
         items(list) {
-            NoticeBoardItem()
+            NoticeBoardItem(
+                modifier = modifier,
+                data = it,
+                menuClick = menuClick,
+                heartClick = heartClick,
+                commentClick = commentClick
+            )
         }
     }
 }
 
 @ExperimentalPagerApi
 @Composable
-fun NoticeBoardItem() {
+fun NoticeBoardItem(
+    modifier: Modifier,
+    data: NoticeBoardData,
+    menuClick: () -> Unit,
+    heartClick: () -> Unit,
+    commentClick: () -> Unit
+) {
+    val like = rememberSaveable { mutableStateOf(data.like) }
+
     Card() {
-        Column(modifier = Modifier.fillMaxWidth()) {
+        Column(
+            modifier = modifier
+                .fillMaxWidth()
+        ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -64,7 +92,7 @@ fun NoticeBoardItem() {
                 ) {
                     Image(
                         painter = painterResource(
-                            id = R.drawable.img_item_carrot
+                            id = R.drawable.img_notice_board_rectangle
                         ),
                         contentDescription = "",
                         modifier = Modifier
@@ -76,11 +104,23 @@ fun NoticeBoardItem() {
                 }
 
                 Body5(
-                    text = "로쏘(주) 전체 지점 ",
+                    text = data.title + " • "+data.time,
                     modifier = Modifier
                         .padding(15.dp, 0.dp, 0.dp, 0.dp)
                         .fillMaxHeight()
                         .wrapContentHeight(Alignment.CenterVertically)
+                )
+
+                Image(painter = painterResource(
+                    id = SimTongIcons.Option(true)),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.End)
+                        .fillMaxHeight()
+                        .wrapContentHeight(Alignment.CenterVertically)
+                        .padding(0.dp, 0.dp, 20.dp, 0.dp)
+                        .clickable { menuClick() }
                 )
             }
             ViewPagerSliderNoticeBoard()
@@ -90,8 +130,17 @@ fun NoticeBoardItem() {
                     .padding(20.dp, 10.dp, 0.dp, 10.dp)
                     .fillMaxWidth()
             ) {
-                // HeartBtn(check = false, firstSize = 26.dp, secondSize = 28.dp)
-                SimTongIcons.Heart(false)
+
+                Image(painter = painterResource(
+                    id = SimTongIcons.Heart(like.value)
+                ),
+                    contentDescription = "",
+                    modifier = Modifier
+                        .noRippleClickable {
+                            like.value = !like.value
+                            heartClick()
+                        }
+                )
 
                 Image(
                     painter = painterResource(
@@ -101,7 +150,18 @@ fun NoticeBoardItem() {
                     modifier = Modifier
                         .padding(15.dp, 0.dp, 0.dp, 0.dp)
                         .width(26.dp)
-                        .clickable { }
+                        .noRippleClickable { commentClick() }
+                )
+            }
+
+            Row(
+                modifier = Modifier
+            ) {
+                PeopleImageList(
+                    itemWidth = 20.dp,
+                    nullPainter =  painterResource(id = R.drawable.img_notice_board_rectangle),
+                    showImage = R.drawable.img_notice_board_rectangle,
+                    list = listOf("1","2","3")
                 )
             }
         }
@@ -179,9 +239,32 @@ fun ViewPagerSliderNoticeBoard() {
                 }
             }
         }
-        HorizontalPagerIndicator(
+
+        Box(
+            modifier = Modifier
+                .padding(0.dp, 0.dp, 0.dp, 10.dp)
+                .fillMaxHeight()
+                .wrapContentHeight(Alignment.Bottom)
+                .height(24.dp)
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally)
+                .width(48.dp)
+                .background(
+                    color = SimTongColor.Black.copy(alpha = 0.1f),
+                    shape = RoundedCornerShape(20.dp)
+                )
+        ){
+            Body11(
+                text = (pagerState.currentPage+1).toString() +"/" + pagerState.pageCount,
+                color = SimTongColor.White,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize()
+            )
+        }
+        /*HorizontalPagerIndicator(
             activeColor = SimTongColor.MainColor,
-            inactiveColor = OtherColor.GrayD9,
+            inactiveColor = SimTongColor.OtherColor.GrayD9,
             pagerState = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
@@ -189,21 +272,31 @@ fun ViewPagerSliderNoticeBoard() {
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Bottom)
                 .padding(16.dp)
-        )
+        )*/
     }
 }
 
 data class NoticeBoardData(
-    val title: String
-)
-
-data class NoticeBoardImageData(
-    val imageUri: Int
+    val title: String,
+    val time: String,
+    val like: Boolean
 )
 
 val viewPagerNoticeBoardImageList = listOf(
-    /*NoticeBoardImageData(
-        R.drawable.img_notice_board_rectangle
-    )*/
+    R.drawable.img_notice_board_rectangle,
+    R.drawable.img_notice_board_rectangle,
+    R.drawable.img_notice_board_rectangle,
     R.drawable.img_notice_board_rectangle
 )
+
+@ExperimentalPagerApi
+@Preview
+@Composable
+fun NoticeBoard(){
+    NoticeBoardLazyColumn(
+        list = listOf(NoticeBoardData(
+        "제목",
+        "1시간 전",
+        false
+    )))
+}
