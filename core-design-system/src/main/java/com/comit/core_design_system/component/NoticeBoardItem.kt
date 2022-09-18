@@ -4,7 +4,19 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -30,7 +42,10 @@ import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body11
 import com.comit.core_design_system.theme.Body5
 import com.comit.core_design_system.theme.SimTongColor
-import com.google.accompanist.pager.*
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.calculateCurrentOffsetForPage
+import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.yield
 import kotlin.math.absoluteValue
@@ -104,15 +119,17 @@ fun NoticeBoardItem(
                 }
 
                 Body5(
-                    text = data.title + " • "+data.time,
+                    text = data.title + " • " + data.time,
                     modifier = Modifier
                         .padding(15.dp, 0.dp, 0.dp, 0.dp)
                         .fillMaxHeight()
                         .wrapContentHeight(Alignment.CenterVertically)
                 )
 
-                Image(painter = painterResource(
-                    id = SimTongIcons.Option(true)),
+                Image(
+                    painter = painterResource(
+                        id = SimTongIcons.Option(true)
+                    ),
                     contentDescription = "",
                     modifier = Modifier
                         .fillMaxWidth()
@@ -131,9 +148,10 @@ fun NoticeBoardItem(
                     .fillMaxWidth()
             ) {
 
-                Image(painter = painterResource(
-                    id = SimTongIcons.Heart(like.value)
-                ),
+                Image(
+                    painter = painterResource(
+                        id = SimTongIcons.Heart(like.value)
+                    ),
                     contentDescription = "",
                     modifier = Modifier
                         .noRippleClickable {
@@ -159,9 +177,9 @@ fun NoticeBoardItem(
             ) {
                 PeopleImageList(
                     itemWidth = 20.dp,
-                    nullPainter =  painterResource(id = R.drawable.img_notice_board_rectangle),
+                    nullPainter = painterResource(id = R.drawable.img_notice_board_rectangle),
                     showImage = R.drawable.img_notice_board_rectangle,
-                    list = listOf("1","2","3")
+                    list = listOf("1", "2", "3")
                 )
             }
         }
@@ -253,9 +271,9 @@ fun ViewPagerSliderNoticeBoard() {
                     color = SimTongColor.Black.copy(alpha = 0.1f),
                     shape = RoundedCornerShape(20.dp)
                 )
-        ){
+        ) {
             Body11(
-                text = (pagerState.currentPage+1).toString() +"/" + pagerState.pageCount,
+                text = (pagerState.currentPage + 1).toString() + "/" + pagerState.pageCount,
                 color = SimTongColor.White,
                 modifier = Modifier
                     .fillMaxSize()
@@ -292,11 +310,14 @@ val viewPagerNoticeBoardImageList = listOf(
 @ExperimentalPagerApi
 @Preview
 @Composable
-fun NoticeBoard(){
+fun NoticeBoard() {
     NoticeBoardLazyColumn(
-        list = listOf(NoticeBoardData(
-        "제목",
-        "1시간 전",
-        false
-    )))
+        list = listOf(
+            NoticeBoardData(
+                "제목",
+                "1시간 전",
+                false
+            )
+        )
+    )
 }

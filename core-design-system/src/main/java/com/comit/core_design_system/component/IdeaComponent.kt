@@ -4,25 +4,29 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.icon.SimTongIcons.Heart
-import com.comit.core_design_system.theme.*
-import org.w3c.dom.Comment
+import com.comit.core_design_system.theme.Body14
+import com.comit.core_design_system.theme.Body6
+import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.theme.SimTongTypography
 
 data class IdeaData(
     val title: String,
@@ -38,9 +42,9 @@ fun IdeaLazyColumn(
     list: List<IdeaData>,
     onClickHeart: () -> Unit = {},
     onClickComment: () -> Unit = {}
-){
-    LazyColumn(){
-        items(list){
+) {
+    LazyColumn() {
+        items(list) {
             IdeaItem(
                 modifier = modifier,
                 data = it,
@@ -55,9 +59,9 @@ fun IdeaLazyColumn(
 fun IdeaItem(
     modifier: Modifier = Modifier,
     data: IdeaData,
-    onClickHeart: ()-> Unit = {},
+    onClickHeart: () -> Unit = {},
     onClickComment: () -> Unit = {}
-){
+) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -68,7 +72,7 @@ fun IdeaItem(
         Body6(
             text = data.title,
             modifier = Modifier
-            .padding(30.dp,10.dp,0.dp,0.dp)
+                .padding(30.dp, 10.dp, 0.dp, 0.dp)
         )
 
         Body14(
@@ -82,10 +86,10 @@ fun IdeaItem(
         )
 
         Body14(
-            text = data.userName+" • "+data.time+"분 전",
+            text = data.userName + " • " + data.time + "분 전",
             color = SimTongColor.OtherColor.Gray96,
             modifier = Modifier
-                .padding(30.dp,5.dp,0.dp,0.dp)
+                .padding(30.dp, 5.dp, 0.dp, 0.dp)
         )
 
         Row(
@@ -111,10 +115,10 @@ fun IdeaItem(
                 painter = painterResource(id = SimTongIcons.Comment(true)),
                 contentDescription = "",
                 modifier = Modifier
-                    .padding(35.dp,0.dp,0.dp,0.dp)
+                    .padding(35.dp, 0.dp, 0.dp, 0.dp)
                     .clickable { onClickComment() }
             )
-            
+
             Body14(
                 text = data.commentCount.toString(),
                 color = SimTongColor.OtherColor.Gray96,
@@ -123,7 +127,6 @@ fun IdeaItem(
                     .wrapContentHeight(CenterVertically)
                     .padding(10.dp, 0.dp, 0.dp, 0.dp)
             )
-
         }
 
         Canvas(
@@ -147,11 +150,11 @@ fun IdeaItem(
 
 @Preview
 @Composable
-fun IdeaComponent(){
+fun IdeaComponent() {
     IdeaLazyColumn(
         list = listOf(
-            IdeaData("안녕하세요","안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk","유저 이름",5,false, 0),
-            IdeaData("안녕하세요","안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk","유저 이름",5,false, 0)
+            IdeaData("안녕하세요", "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk", "유저 이름", 5, false, 0),
+            IdeaData("안녕하세요", "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk", "유저 이름", 5, false, 0)
         )
     )
 }

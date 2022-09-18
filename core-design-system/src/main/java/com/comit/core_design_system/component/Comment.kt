@@ -1,7 +1,20 @@
 package com.comit.core_design_system.component
 
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -30,7 +43,7 @@ import com.comit.core_design_system.theme.notoSansFamily
 data class CommentData(
     val name: String,
     val content: String,
-    val time : String,
+    val time: String,
     val likeNum: Int,
     val like: Boolean
 )
@@ -45,9 +58,9 @@ fun CommentItemLazyColumn(
     likeClickUp: (Int) -> Unit = {},
     likeClickDown: (Int) -> Unit = {},
     commentClick: (Int) -> Unit = {}
-){
-    LazyColumn(){
-        itemsIndexed(list){ index, it ->
+) {
+    LazyColumn() {
+        itemsIndexed(list) { index, it ->
             CommentItem(
                 modifier = modifier,
                 data = it,
@@ -73,13 +86,13 @@ fun CommentItem(
     likeClickUp: (Int) -> Unit,
     likeClickDown: (Int) -> Unit,
     commentClick: (Int) -> Unit
-){
+) {
 
     val like = rememberSaveable { mutableStateOf(data.like) }
-    val likeNum = rememberSaveable{ mutableStateOf(data.likeNum) }
+    val likeNum = rememberSaveable { mutableStateOf(data.likeNum) }
 
-    val onCLickCheck = rememberSaveable{ mutableStateOf(false) }
-    val backgroundColor = if(onCLickCheck.value) SimTongColor.OtherColor.RedFFE7E7 else SimTongColor.White
+    val onCLickCheck = rememberSaveable { mutableStateOf(false) }
+    val backgroundColor = if (onCLickCheck.value) SimTongColor.OtherColor.RedFFE7E7 else SimTongColor.White
 
     Card(
         modifier = modifier
@@ -96,12 +109,15 @@ fun CommentItem(
                 }
             )
     ) {
-        Row(modifier = Modifier
-            .fillMaxSize()
-            .background(backgroundColor)
+        Row(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(backgroundColor)
         ) {
-            Image(painter = painterResource(
-                id = R.drawable.img_notice_board_rectangle),
+            Image(
+                painter = painterResource(
+                    id = R.drawable.img_notice_board_rectangle
+                ),
                 contentDescription = "",
                 modifier = Modifier
                     .padding(20.dp, 0.dp, 0.dp, 0.dp)
@@ -113,7 +129,7 @@ fun CommentItem(
 
             Column(
                 Modifier
-                .padding(10.dp,9.dp,0.dp,9.dp)
+                    .padding(10.dp, 9.dp, 0.dp, 9.dp)
             ) {
                 Row {
                     Body9(
@@ -135,17 +151,18 @@ fun CommentItem(
                     )
                 }
 
-                Row(modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.Bottom)
+                Row(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .wrapContentHeight(Alignment.Bottom)
                 ) {
 
                     CommentText(text = data.time)
 
                     CommentText(
-                        text = "좋아요 "+likeNum.value+"개",
+                        text = "좋아요 " + likeNum.value + "개",
                         modifier = Modifier
-                            .padding(15.dp,0.dp,0.dp,0.dp)
+                            .padding(15.dp, 0.dp, 0.dp, 0.dp)
                     )
 
                     CommentText(
@@ -159,7 +176,8 @@ fun CommentItem(
 
             Image(
                 painter = painterResource(
-                    id = SimTongIcons.Heart(like.value)),
+                    id = SimTongIcons.Heart(like.value)
+                ),
                 contentDescription = "",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -178,11 +196,9 @@ fun CommentItem(
                             likeNum.value ++
                         }
                         like.value = !like.value
-
                     }
             )
         }
-
     }
 }
 
@@ -190,7 +206,7 @@ fun CommentItem(
 fun CommentText(
     text: String,
     modifier: Modifier = Modifier
-){
+) {
     Text(
         text = text,
         fontFamily = notoSansFamily,
@@ -204,15 +220,15 @@ fun CommentText(
 @ExperimentalFoundationApi
 @Preview
 @Composable
-fun Comment(){
+fun Comment() {
     CommentItemLazyColumn(
         list = listOf(
-            CommentData("장석연","아이고..그런..","1시간",0,false),
-            CommentData("장석연","아이고..그런..사연이사연사연사연사연","1시간",0,false),
-            CommentData("장석연","아이고..그런..사연이..","1시간",0,false),
-            CommentData("장석연","아이고..그런..사연이..","1시간",0,false),
-            CommentData("장석연","아이고..그런..사연이..","1시간",0,false),
-            CommentData("장석연","아이고..그런..사연이..","1시간",0,false)
-            )
+            CommentData("장석연", "아이고..그런..", "1시간", 0, false),
+            CommentData("장석연", "아이고..그런..사연이사연사연사연사연", "1시간", 0, false),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false)
+        )
     )
 }

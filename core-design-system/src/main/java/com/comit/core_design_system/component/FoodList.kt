@@ -2,7 +2,11 @@ package com.comit.core_design_system.component
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,9 +19,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
-import com.comit.core_design_system.theme.*
+import com.comit.core_design_system.theme.Body13
+import com.comit.core_design_system.theme.SimTongColor
+import java.sql.Date
 import java.text.SimpleDateFormat
-import java.util.*
 
 @Composable
 fun FoodListLazyRow(
@@ -62,9 +67,9 @@ fun FoodListItem(
 ) {
 
     val textColor: Color =
-        if(timeCheck == index) textColorCheck else textColorBase
+        if (timeCheck == index) textColorCheck else textColorBase
     val backgroundImage: Int =
-        if(timeCheck == index) backgroundImageCheck else backgroundImageBase
+        if (timeCheck == index) backgroundImageCheck else backgroundImageBase
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -74,7 +79,7 @@ fun FoodListItem(
             .height(160.dp)
             .padding(15.dp, 0.dp, 15.dp, 0.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()){
+        Box(modifier = Modifier.fillMaxSize()) {
             Image(
                 painter = painterResource(id = backgroundImage),
                 contentDescription = "FoodList Image",
@@ -95,7 +100,7 @@ fun FoodListItem(
 
 @Preview
 @Composable
-fun FoodList(){
+fun FoodList() {
 
     FoodListLazyRow(
         backgroundImageBase = R.drawable.img_food,
@@ -105,21 +110,21 @@ fun FoodList(){
         lineHeight = 23,
         timeCheck = time(),
         list = listOf(
-        "누룽지\n돼지불고기\n마늘쫑건새우볶음\n배추김치\n달콤한붓세빵\n바나나/딸기우유",
-        "돼지불고기",
-        "배추김치"
+            "누룽지\n돼지불고기\n마늘쫑건새우볶음\n배추김치\n달콤한붓세빵\n바나나/딸기우유",
+            "돼지불고기",
+            "배추김치"
         )
     )
 }
 
 @SuppressLint("SimpleDateFormat")
-private fun time(): Int{
+private fun time(): Int {
     val time = SimpleDateFormat("hhmm").format(Date(System.currentTimeMillis())).toInt()
     var timeCheck = 0
 
-    if(time > 1500) timeCheck = 2
+    if (time > 1500) timeCheck = 2
 
-    else if(time > 1000){ timeCheck = 1 }
+    else if (time > 1000) { timeCheck = 1 }
 
     return timeCheck
 }

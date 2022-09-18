@@ -62,7 +62,7 @@ dependencies {
     androidTestImplementation(Dependency.Compose.COMPOSE_TEST)
     debugImplementation(Dependency.Compose.COMPOSE_UI_TOOL)
 
-    implementation (Dependency.Glide.Glide)
+    implementation(Dependency.Glide.Glide)
 
     implementation(Dependency.Ui.APP_COMPAT)
     implementation(Dependency.Ui.CORE_KTX)

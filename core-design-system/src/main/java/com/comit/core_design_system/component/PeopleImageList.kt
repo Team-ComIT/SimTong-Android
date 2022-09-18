@@ -2,7 +2,15 @@ package com.comit.core_design_system.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,12 +36,13 @@ fun PeopleImageList(
     showImage: Int,
     showListSize: Boolean = false,
     showListSizePainter: Painter = painterResource(
-        id = R.drawable.img_notice_board_rectangle),
+        id = R.drawable.img_notice_board_rectangle
+    ),
     paddingEnd: Double = 15.0
-){
+) {
     Box(modifier = modifier) {
-        if(list != null){
-            if(showListSize && list.size > showImage){
+        if (list != null) {
+            if (showListSize && list.size > showImage) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -47,15 +56,15 @@ fun PeopleImageList(
                         nullPainter = showListSizePainter,
                         paddingEnd = paddingEnd
                     )
-                    if(list.size - showImage <= 99){
+                    if (list.size - showImage <= 99) {
                         Body12(
-                            text = (list.size - showImage).toString()+"+",
+                            text = (list.size - showImage).toString() + "+",
                             color = SimTongColor.White,
                             modifier = Modifier
                                 .fillMaxSize()
                                 .wrapContentSize(Alignment.Center)
                         )
-                    }else{
+                    } else {
                         Body12(
                             text = "99+",
                             color = SimTongColor.White,
@@ -65,10 +74,9 @@ fun PeopleImageList(
                         )
                     }
                 }
-
             }
 
-            repeat(showImage){
+            repeat(showImage) {
                 LoadImage(
                     list = list,
                     itemWidth = itemWidth,
@@ -88,7 +96,7 @@ private fun LoadImage(
     index: Int,
     nullPainter: Painter,
     paddingEnd: Double
-){
+) {
     Box(
         modifier = Modifier
             .padding(0.dp, 0.dp, ((index + 1) * paddingEnd).dp, 0.dp)
@@ -101,7 +109,7 @@ private fun LoadImage(
                 SimTongColor.White
             )
     ) {
-        if(index == -1){
+        if (index == -1) {
             Image(
                 painter = nullPainter,
                 contentDescription = "",
@@ -111,7 +119,7 @@ private fun LoadImage(
                     .size(itemWidth - 2.dp)
                     .clip(CircleShape)
             )
-        }else{
+        } else {
             GlideImage(
                 imageModel = list[index],
                 contentScale = ContentScale.Crop,
@@ -138,14 +146,14 @@ private fun LoadImage(
 
 @Preview
 @Composable
-private fun Show(){
+private fun Show() {
     PeopleImageList(
         nullPainter = painterResource(id = R.drawable.img_notice_board_rectangle),
         showImage = 2,
         modifier = Modifier
             .height(21.dp),
         itemWidth = 21.dp,
-        list = listOf("1","2","3","4","5","6"),
+        list = listOf("1", "2", "3", "4", "5", "6"),
         paddingEnd = 15.0,
         showListSize = true
     )

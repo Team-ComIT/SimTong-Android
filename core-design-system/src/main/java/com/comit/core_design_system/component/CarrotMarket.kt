@@ -2,7 +2,15 @@ package com.comit.core_design_system.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -13,7 +21,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -23,7 +30,10 @@ import androidx.compose.ui.unit.sp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.*
+import com.comit.core_design_system.theme.Body10
+import com.comit.core_design_system.theme.Body6
+import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.theme.notoSansFamily
 import java.text.DecimalFormat
 
 data class CarrotMarketData(
@@ -107,8 +117,10 @@ fun CarrotMarketItemCard(
             )
         }
 
-        Image(painter = painterResource(
-            id = SimTongIcons.Heart(heartClickCheck.value)),
+        Image(
+            painter = painterResource(
+                id = SimTongIcons.Heart(heartClickCheck.value)
+            ),
             contentDescription = "",
             modifier = Modifier
                 .fillMaxHeight()
@@ -126,36 +138,37 @@ fun CarrotMarketItemCard(
 
 @Preview
 @Composable
-fun CarrotMarket(){
+fun CarrotMarket() {
     CarrotMarketLazyVerticalGrid(
         list = listOf(
-        CarrotMarketData(
-            "제품",
-            "본점",
-            "1시간 전",
-            100000,
-            false
-        ),
-        CarrotMarketData(
-            "제품",
-            "본점",
-            "1시간 전",
-            100000,
-            false
-        ),
-        CarrotMarketData(
-            "제품",
-            "본점",
-            "1시간 전",
-            100000,
-            false
-        ),
-        CarrotMarketData(
-            "제품",
-            "본점",
-            "1시간 전",
-            100000,
-            false
+            CarrotMarketData(
+                "제품",
+                "본점",
+                "1시간 전",
+                100000,
+                false
+            ),
+            CarrotMarketData(
+                "제품",
+                "본점",
+                "1시간 전",
+                100000,
+                false
+            ),
+            CarrotMarketData(
+                "제품",
+                "본점",
+                "1시간 전",
+                100000,
+                false
+            ),
+            CarrotMarketData(
+                "제품",
+                "본점",
+                "1시간 전",
+                100000,
+                false
+            )
         )
-    ))
+    )
 }

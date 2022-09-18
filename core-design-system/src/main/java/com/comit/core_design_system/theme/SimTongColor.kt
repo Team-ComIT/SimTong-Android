@@ -50,5 +50,4 @@ object SimTongColor {
         val GrayD9 = Color(0xFFD9D9D9)
         val Gray96 = Color(0xFF969696)
     }
-
 }

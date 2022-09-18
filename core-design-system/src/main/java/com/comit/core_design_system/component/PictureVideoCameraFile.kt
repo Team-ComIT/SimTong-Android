@@ -4,7 +4,12 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -122,12 +127,12 @@ fun PictureVideoCameraFileItem(
 
 @Preview
 @Composable
-fun PictureVideoCameraFile(){
+fun PictureVideoCameraFile() {
     PictureVideoCameraFileList(
         list = listOf(
             IconListData(painterResource(id = SimTongIcons.Image), "사진/동영상"),
             IconListData(painterResource(id = SimTongIcons.Photo), "카메라"),
             IconListData(painterResource(id = SimTongIcons.Link), "링크"),
-            )
+        )
     )
 }

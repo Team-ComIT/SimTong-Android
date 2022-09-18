@@ -6,7 +6,15 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,7 +32,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.*
+import com.comit.core_design_system.theme.Body1
+import com.comit.core_design_system.theme.Body10
+import com.comit.core_design_system.theme.Body12
+import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.theme.SimTongTypography
 
 data class VoteData(
     val title: String,
@@ -44,7 +56,6 @@ data class VoteListData(
     val check: Boolean
 )
 
-
 @Composable
 fun VoteLazyColumn(
     modifier: Modifier = Modifier,
@@ -52,13 +63,14 @@ fun VoteLazyColumn(
     onHeartClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
     onItemClick: (Int) -> Unit = {}
-){
+) {
     LazyColumn(
         modifier = Modifier
-            .background(SimTongColor.White
+            .background(
+                SimTongColor.White
             )
-    ){
-        items(list){
+    ) {
+        items(list) {
             VotePage(
                 modifier = modifier,
                 data = it,
@@ -77,34 +89,34 @@ fun VotePage(
     onHeartClick: () -> Unit,
     onCommentClick: () -> Unit,
     onItemClick: (Int) -> Unit
-){
+) {
 
     Card(
         modifier = modifier
-        .fillMaxWidth()
-        .background(SimTongColor.White)
-    ){
+            .fillMaxWidth()
+            .background(SimTongColor.White)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
         ) {
             Column(
                 modifier = Modifier
-                .fillMaxWidth()
-                .padding(25.dp, 0.dp, 25.dp, 0.dp)
-                .background(SimTongColor.White)
+                    .fillMaxWidth()
+                    .padding(25.dp, 0.dp, 25.dp, 0.dp)
+                    .background(SimTongColor.White)
             ) {
                 Body1(
                     text = data.title,
                     modifier = Modifier
-                        .padding(0.dp,25.dp,0.dp,0.dp)
+                        .padding(0.dp, 25.dp, 0.dp, 0.dp)
                 )
 
                 Body10(
-                    text = data.place+" ・ "+data.time,
+                    text = data.place + " ・ " + data.time,
                     color = SimTongColor.Gray400,
                     modifier = Modifier
-                        .padding(0.dp,0.dp,0.dp,20.dp)
+                        .padding(0.dp, 0.dp, 0.dp, 20.dp)
                 )
 
                 VoteItemLazyColumn(
@@ -135,7 +147,8 @@ fun VotePage(
 
                     Image(
                         painter = painterResource(
-                            id = SimTongIcons.Comment),
+                            id = SimTongIcons.Comment
+                        ),
                         contentDescription = "",
                         modifier = Modifier
                             .padding(25.dp, 0.dp, 0.dp, 0.dp)
@@ -154,7 +167,8 @@ fun VotePage(
                     PeopleImageList(
                         itemWidth = 23.dp,
                         nullPainter = painterResource(
-                            id = R.drawable.img_notice_board_rectangle),
+                            id = R.drawable.img_notice_board_rectangle
+                        ),
                         showImage = 2,
                         showListSize = true,
                         list = data.imageList,
@@ -182,16 +196,15 @@ fun VotePage(
             }
         }
     }
-
 }
 
 @Composable
 fun VoteItemLazyColumn(
     list: List<VoteListData>,
     onItemClick: (Int) -> Unit = {}
-){
+) {
     Column {
-        repeat(list.size){
+        repeat(list.size) {
             VoteItem(
                 data = list[it],
                 onItemClick = onItemClick,
@@ -201,56 +214,55 @@ fun VoteItemLazyColumn(
     }
 }
 
-
 @Composable()
 fun VoteItem(
     data: VoteListData,
     onItemClick: (Int) -> Unit = {},
     index: Int
-){
+) {
 
-    val chooseState = rememberSaveable{ mutableStateOf(data.check) }
-    val shapeColor : Color = if(chooseState.value) SimTongColor.MainColor else SimTongColor.Gray200
-    val textColor : Color = if(chooseState.value) SimTongColor.White else SimTongColor.Black
-    val textNumColor : Color = if(chooseState.value) SimTongColor.MainColor else SimTongColor.Gray600
+    val chooseState = rememberSaveable { mutableStateOf(data.check) }
+    val shapeColor: Color = if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray200
+    val textColor: Color = if (chooseState.value) SimTongColor.White else SimTongColor.Black
+    val textNumColor: Color = if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray600
 
-
-    var total  = data.total
-    val voteNum = rememberSaveable{ mutableStateOf(data.voteNum) }
-
+    var total = data.total
+    val voteNum = rememberSaveable { mutableStateOf(data.voteNum) }
 
     val animationProgress: Float by animateFloatAsState(
         targetValue = voteNum.value.toFloat() / total.toFloat(),
         tween(2000)
     )
 
-    Box(modifier = Modifier
-        .padding(0.dp, 0.dp, 0.dp, 10.dp)
-        .fillMaxWidth()
-        .height(32.dp)
-        .background(
-            color = SimTongColor.Gray100,
-            shape = RoundedCornerShape(4.dp)
-        )
-        .clickable {
-            chooseState.value = !chooseState.value
-            if (chooseState.value) {
-                total++
-                voteNum.value++
-            } else {
-                total--
-                voteNum.value--
-            }
-            onItemClick(index)
-        }
-    ) {
-        Box(modifier = Modifier
-            .fillMaxHeight()
-            .fillMaxWidth(animationProgress)
+    Box(
+        modifier = Modifier
+            .padding(0.dp, 0.dp, 0.dp, 10.dp)
+            .fillMaxWidth()
+            .height(32.dp)
             .background(
-                color = shapeColor,
+                color = SimTongColor.Gray100,
                 shape = RoundedCornerShape(4.dp)
             )
+            .clickable {
+                chooseState.value = !chooseState.value
+                if (chooseState.value) {
+                    total++
+                    voteNum.value++
+                } else {
+                    total--
+                    voteNum.value--
+                }
+                onItemClick(index)
+            }
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxHeight()
+                .fillMaxWidth(animationProgress)
+                .background(
+                    color = shapeColor,
+                    shape = RoundedCornerShape(4.dp)
+                )
         )
 
         Body10(
@@ -263,7 +275,7 @@ fun VoteItem(
         )
 
         Body12(
-            text = voteNum.value.toString()+"명",
+            text = voteNum.value.toString() + "명",
             color = textNumColor,
             modifier = Modifier
                 .padding(0.dp, 0.dp, 10.dp, 0.dp)
@@ -273,12 +285,11 @@ fun VoteItem(
                 .wrapContentWidth(Alignment.End)
         )
     }
-
 }
 
 @Preview
 @Composable
-fun Vote(){
+fun Vote() {
 
     val list = listOf(
         VoteData(
@@ -314,7 +325,7 @@ fun Vote(){
                     check = true
                 )
             ),
-            imageList = listOf("1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2","1","2")
+            imageList = listOf("1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2")
         ),
         VoteData(
             title = "점심 메뉴 투표",
@@ -349,7 +360,7 @@ fun Vote(){
                     check = true
                 )
             ),
-            imageList = listOf("1","2","3")
+            imageList = listOf("1", "2", "3")
         )
     )
 

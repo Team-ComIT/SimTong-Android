@@ -24,7 +24,7 @@ fun TextHeart(
     onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     heartModifier: Modifier = Modifier
-    ) {
+) {
 
     val checkClickWatcher = rememberSaveable { mutableStateOf(click) }
     val textColorWatcher: Color = if (checkClickWatcher.value) SimTongColor.MainColor else textColor
@@ -38,7 +38,7 @@ fun TextHeart(
     ) {
         Image(
             painter = painterResource(
-                id = SimTongIcons.Heart(checkClickWatcher.value,isGray)
+                id = SimTongIcons.Heart(checkClickWatcher.value, isGray)
             ),
             contentDescription = "",
             modifier = heartModifier

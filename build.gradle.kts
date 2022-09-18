@@ -4,7 +4,7 @@ plugins {
 }
 
 dependencies {
-    detekt ("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
+    detekt("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 }
 
 allprojects {

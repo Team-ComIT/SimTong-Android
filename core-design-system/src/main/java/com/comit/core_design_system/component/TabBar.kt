@@ -24,7 +24,7 @@ fun TabBar(
     onClick: (Int) -> Unit = {},
     backgroundColor: Color = SimTongColor.White,
     contentColor: Color = SimTongColor.MainColor,
-    selectedContentColor: Color  = SimTongColor.OtherColor.Black34,
+    selectedContentColor: Color = SimTongColor.OtherColor.Black34,
     unselectedContentColor: Color = SimTongColor.OtherColor.GrayB3
 ) {
 
@@ -59,10 +59,10 @@ fun TabBar(
 @ExperimentalPagerApi
 @Preview
 @Composable
-fun TabBar(){
+fun TabBar() {
     TabBar(
         modifier = Modifier
             .height(35.dp),
-        filters = listOf("아이디어 제안","사내 고충 게시판","추가")
+        filters = listOf("아이디어 제안", "사내 고충 게시판", "추가")
     )
 }
