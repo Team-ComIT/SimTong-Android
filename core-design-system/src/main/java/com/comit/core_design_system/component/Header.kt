@@ -1,7 +1,14 @@
 package com.comit.core_design_system.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -82,7 +89,10 @@ fun Header(
             IconButton(onClick = onBeil ?: {}, modifier = Modifier.size(21.dp)) {
             Image(
                 painter = painterResource(id = SimTongIcons.Beil(beilState)),
-                contentDescription = stringResource(id = if (beilState) R.string.description_ic_beil_on else R.string.description_ic_beil_off)
+                contentDescription = stringResource(
+                    id = if (beilState) R.string.description_ic_beil_on
+                    else R.string.description_ic_beil_off
+                )
             )
         }
         }

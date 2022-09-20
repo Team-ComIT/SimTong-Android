@@ -20,6 +20,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -106,6 +107,7 @@ fun VotePage(
                     .padding(25.dp, 0.dp, 25.dp, 0.dp)
                     .background(SimTongColor.White)
             ) {
+
                 Body1(
                     text = data.title,
                     modifier = Modifier
@@ -130,6 +132,7 @@ fun VotePage(
                         .fillMaxWidth()
                         .height(21.dp)
                 ) {
+
                     TextHeart(
                         text = data.heartNum,
                         textStyle = SimTongTypography.body10,
@@ -214,7 +217,10 @@ fun VoteItemLazyColumn(
     }
 }
 
-@Composable()
+@Stable
+private val VoteItemAnimationProgressTween: Int = 2000
+
+@Composable
 fun VoteItem(
     data: VoteListData,
     onItemClick: (Int) -> Unit = {},
@@ -231,7 +237,7 @@ fun VoteItem(
 
     val animationProgress: Float by animateFloatAsState(
         targetValue = voteNum.value.toFloat() / total.toFloat(),
-        tween(2000)
+        tween(VoteItemAnimationProgressTween)
     )
 
     Box(
@@ -275,7 +281,7 @@ fun VoteItem(
         )
 
         Body12(
-            text = voteNum.value.toString() + "명",
+            text = voteNum.toString() + "명",
             color = textNumColor,
             modifier = Modifier
                 .padding(0.dp, 0.dp, 10.dp, 0.dp)
@@ -311,21 +317,12 @@ fun Vote() {
                     total = 17,
                     voteNum = 8,
                     check = false
-                ),
-                VoteListData(
-                    menu = "성심당",
-                    total = 17,
-                    voteNum = 5,
-                    check = false
-                ),
-                VoteListData(
-                    menu = "점심 ㄴ",
-                    total = 17,
-                    voteNum = 3,
-                    check = true
                 )
             ),
-            imageList = listOf("1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2", "1", "2")
+            imageList = listOf(
+                "1", "2", "1", "2", "1", "2", "1",
+                "2", "1", "2", "1", "2", "1", "2", "1", "2", "1",
+            )
         ),
         VoteData(
             title = "점심 메뉴 투표",
@@ -346,18 +343,6 @@ fun Vote() {
                     total = 17,
                     voteNum = 8,
                     check = false
-                ),
-                VoteListData(
-                    menu = "성심당",
-                    total = 17,
-                    voteNum = 5,
-                    check = false
-                ),
-                VoteListData(
-                    menu = "점심 ㄴ",
-                    total = 17,
-                    voteNum = 3,
-                    check = true
                 )
             ),
             imageList = listOf("1", "2", "3")

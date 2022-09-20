@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +27,9 @@ import com.comit.core_design_system.R
 import com.comit.core_design_system.theme.Body12
 import com.comit.core_design_system.theme.SimTongColor
 import com.skydoves.landscapist.glide.GlideImage
+
+@Stable
+private val PeopleImageListMax: Int = 99
 
 @Composable
 fun PeopleImageList(
@@ -56,7 +60,7 @@ fun PeopleImageList(
                         nullPainter = showListSizePainter,
                         paddingEnd = paddingEnd
                     )
-                    if (list.size - showImage <= 99) {
+                    if (list.size - showImage <= PeopleImageListMax) {
                         Body12(
                             text = (list.size - showImage).toString() + "+",
                             color = SimTongColor.White,
@@ -144,12 +148,15 @@ private fun LoadImage(
     }
 }
 
+@Stable
+private val PreviewShowImage: Int = 2
+
 @Preview
 @Composable
-private fun Show() {
+fun Show() {
     PeopleImageList(
         nullPainter = painterResource(id = R.drawable.img_notice_board_rectangle),
-        showImage = 2,
+        showImage = PreviewShowImage,
         modifier = Modifier
             .height(21.dp),
         itemWidth = 21.dp,

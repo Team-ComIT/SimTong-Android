@@ -1,14 +1,30 @@
 package com.comit.core_design_system.component
 
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -18,6 +34,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.theme.Body4
 import com.comit.core_design_system.theme.SimTongColor
+
+@Stable
+private val BasicCheckBoxAnimatedVisibilityEnter: Int = 50
+
+@Stable
+private val BasicCheckBoxAnimatedVisibilityExit: Int = 50
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -56,8 +78,8 @@ fun BasicCheckBox(
 
         AnimatedVisibility(
             visible = checked,
-            enter = scaleIn(tween(50)),
-            exit = scaleOut(tween(50)),
+            enter = scaleIn(tween(BasicCheckBoxAnimatedVisibilityEnter)),
+            exit = scaleOut(tween(BasicCheckBoxAnimatedVisibilityExit)),
             modifier = Modifier.fillMaxSize()
         ) {
             Box(

@@ -39,19 +39,14 @@ import com.comit.core_design_system.theme.SimTongColor
 @Composable
 fun ChoosePlace(
     modifier: Modifier = Modifier,
-    lazyColumnHeight: Dp = 200.dp,
     backgroundColor: Color = SimTongColor.White,
-    backgroundShape: Dp = 20.dp,
-    paddingSide: Dp = 24.7.dp,
     textColor: Color = SimTongColor.Black,
     onClick: (Int) -> Unit = {},
     list: List<String>,
     painter: Painter = painterResource(id = SimTongIcons.Others.Check),
     haveCheckImage: Boolean = true,
     lineHeight: Float = 2.5F,
-    lineColor: Color = SimTongColor.Gray300,
-    bodyHeight: Dp = 50.dp,
-    startPaddingHeight: Dp = 20.dp,
+    lineColor: Color = SimTongColor.Gray300
 ) {
 
     val isNeedExpansion = rememberSaveable { mutableStateOf(0) }
@@ -60,10 +55,10 @@ fun ChoosePlace(
         modifier = modifier
             .padding(0.24.dp, 0.dp, 0.24.dp, 0.dp)
             .fillMaxWidth()
-            .height(lazyColumnHeight)
+            .height(200.dp)
             .background(
                 color = backgroundColor,
-                shape = RoundedCornerShape(backgroundShape)
+                shape = RoundedCornerShape(20.dp)
             )
     ) {
         itemsIndexed(list) { index, text ->
@@ -78,9 +73,6 @@ fun ChoosePlace(
                 haveCheckImage = haveCheckImage,
                 lineHeight = lineHeight,
                 lineColor = lineColor,
-                bodyHeight = bodyHeight,
-                paddingSide = paddingSide,
-                startPaddingHeight = startPaddingHeight
             )
         }
     }
@@ -98,10 +90,12 @@ fun ChoosePlaceItem(
     haveCheckImage: Boolean,
     lineHeight: Float,
     lineColor: Color,
-    bodyHeight: Dp,
-    paddingSide: Dp,
-    startPaddingHeight: Dp
 ) {
+
+    val paddingSide = 24.7.dp
+    val startPaddingHeight = 20.dp
+    val bodyHeight = 50.dp
+
     if (index != 0) {
         Canvas(
             modifier = Modifier

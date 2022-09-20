@@ -60,10 +60,10 @@ fun CommentItemLazyColumn(
     commentClick: (Int) -> Unit = {}
 ) {
     LazyColumn() {
-        itemsIndexed(list) { index, it ->
+        itemsIndexed(list) { index, data ->
             CommentItem(
                 modifier = modifier,
-                data = it,
+                data = data,
                 index = index,
                 longClick = longClick,
                 onCLickCancel = onCLickCancel,

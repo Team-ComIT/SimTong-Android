@@ -17,6 +17,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -136,6 +137,9 @@ fun CarrotMarketItemCard(
     }
 }
 
+@Stable
+private val CarrotMarketPrice: Int = 100000
+
 @Preview
 @Composable
 fun CarrotMarket() {
@@ -145,28 +149,28 @@ fun CarrotMarket() {
                 "제품",
                 "본점",
                 "1시간 전",
-                100000,
+                CarrotMarketPrice,
                 false
             ),
             CarrotMarketData(
                 "제품",
                 "본점",
                 "1시간 전",
-                100000,
+                CarrotMarketPrice,
                 false
             ),
             CarrotMarketData(
                 "제품",
                 "본점",
                 "1시간 전",
-                100000,
+                CarrotMarketPrice,
                 false
             ),
             CarrotMarketData(
                 "제품",
                 "본점",
                 "1시간 전",
-                100000,
+                CarrotMarketPrice,
                 false
             )
         )
