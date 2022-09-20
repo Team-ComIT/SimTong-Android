@@ -2,6 +2,7 @@ package com.comit.core_design_system.icon
 
 import com.comit.core_design_system.R
 
+@Suppress("FunctionNaming")
 object SimTongIcons {
 
     object Navi {
@@ -17,6 +18,10 @@ object SimTongIcons {
         val Post = R.drawable.ic_alarm_post
     }
 
+    object Others {
+        val Check = R.drawable.ic_check
+    }
+
     val Add = R.drawable.ic_add
     val Comment = R.drawable.ic_comment
     val Image = R.drawable.ic_image
@@ -27,6 +32,7 @@ object SimTongIcons {
     val Photo = R.drawable.ic_photo
     val Plus = R.drawable.ic_plus
     val Send = R.drawable.ic_send
+    val Trash = R.drawable.ic_trash
 
     fun Password(visible: Boolean) =
         if (visible) R.drawable.ic_password_visible else R.drawable.ic_password_invisible
@@ -42,4 +48,14 @@ object SimTongIcons {
 
     fun Heart(state: Boolean) =
         if (state) R.drawable.ic_heart_on else R.drawable.ic_heart_off
+
+    fun Heart(state: Boolean, isGray: Boolean) =
+        if (isGray) {
+            if (state) R.drawable.ic_heart_on else R.drawable.ic_heart_off_gray
+        } else {
+            if (state) R.drawable.ic_heart_on else R.drawable.ic_heart_off
+        }
+
+    fun Comment(isGray: Boolean) =
+        if (isGray) R.drawable.ic_comment_gray else R.drawable.ic_comment
 }

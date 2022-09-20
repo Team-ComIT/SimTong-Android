@@ -44,6 +44,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":common"))
+
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
     implementation(Dependency.Compose.COMPOSE_MATERIAL)
     implementation(Dependency.Compose.COMPOSE_PREVIEW)
@@ -52,8 +54,15 @@ dependencies {
     implementation(Dependency.Compose.COMPOSE_ANI_NAV)
     implementation(Dependency.Compose.COMPOSE_UI_TOOL)
 
+    implementation(Dependency.Pager.PAGER)
+    implementation(Dependency.Pager.PAGER_INDICATOR)
+
+    implementation(Dependency.Util.Util)
+
     androidTestImplementation(Dependency.Compose.COMPOSE_TEST)
     debugImplementation(Dependency.Compose.COMPOSE_UI_TOOL)
+
+    implementation(Dependency.Glide.Glide)
 
     implementation(Dependency.Ui.APP_COMPAT)
     implementation(Dependency.Ui.CORE_KTX)

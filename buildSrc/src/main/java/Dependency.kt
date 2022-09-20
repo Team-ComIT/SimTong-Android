@@ -110,4 +110,17 @@ object Dependency {
         const val ORBIT_VIEWMODEL = "org.orbit-mvi:orbit-viewmodel:${Versions.ORBIT}"
         const val ORBIT_TEST = "org.orbit-mvi:orbit-test:${Versions.ORBIT}"
     }
+
+    object Pager {
+        const val PAGER = "com.google.accompanist:accompanist-pager:${Versions.PAGER}"
+        const val PAGER_INDICATOR = "com.google.accompanist:accompanist-pager-indicators:${Versions.PAGER}"
+    }
+
+    object Util {
+        const val Util = "androidx.compose.ui:ui-util:${Versions.COMPOSE}"
+    }
+
+    object Glide {
+        const val Glide = "com.github.skydoves:landscapist-glide:${Versions.GLIDE}"
+    }
 }

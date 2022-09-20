@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 object SimTongColor {
     val White = Color(0xFFFFFFFF)
     val Black = Color(0xFF000000)
+    val SkyBlue = Color(0xFFE2ECFF)
     val Primary = Color(0xFF242424)
 
     val FocusBlue = Color(0xFF006EFF)
@@ -35,4 +36,18 @@ object SimTongColor {
     val MainColor700 = Color(0xFFC32328)
     val MainColor800 = Color(0xFF971D20)
     val MainColor900 = Color(0xFF4D0002)
+
+    object OtherColor {
+
+        val RedFFE7E7 = Color(0xFFFFE7E7)
+
+        val Black34 = Color(0xFF343434)
+
+        val GrayA = Color(0xFFAAAAAA)
+        val GrayB3 = Color(0xFFB3B3B3)
+        val GrayDF = Color(0xFFDFDFDF)
+        val GrayD8 = Color(0xFFD8D8D8)
+        val GrayD9 = Color(0xFFD9D9D9)
+        val Gray96 = Color(0xFF969696)
+    }
 }

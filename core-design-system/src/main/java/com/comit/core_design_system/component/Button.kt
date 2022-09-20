@@ -1,6 +1,7 @@
 package com.comit.core_design_system.component
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -123,7 +124,6 @@ fun GraySideButton(
     )
 }
 
-
 @Composable
 fun RedIconButton(
     modifier: Modifier = Modifier,
@@ -152,43 +152,33 @@ fun ButtonPreview() {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         SmallRedRoundButton(text = "NEXT") {
-
         }
 
         SmallRedRoundButton(text = "NEXT", enabled = false) {
-
         }
 
         BigRedRoundButton(text = "NEXT") {
-
         }
 
         BigRedRoundButton(text = "NEXT", enabled = false) {
-
         }
 
         ThinRedRoundButton(text = "NEXT") {
-
         }
 
         ThinRedRoundButton(text = "NEXT", enabled = false) {
-
         }
 
         RedSideButton(text = "Text") {
-
         }
 
         RedSideButton(text = "Text", enabled = false) {
-
         }
 
         RedIconButton(painter = painterResource(id = SimTongIcons.Next), contentDescription = null) {
-
         }
 
         RedIconButton(painter = painterResource(id = SimTongIcons.Next), contentDescription = null, enabled = false) {
-
         }
     }
 }

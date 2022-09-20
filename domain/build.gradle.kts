@@ -52,5 +52,4 @@ dependencies {
 
     testImplementation(Dependency.UnitTest.JUNIT)
     testImplementation(Dependency.UnitTest.MOCKITO)
-
 }
