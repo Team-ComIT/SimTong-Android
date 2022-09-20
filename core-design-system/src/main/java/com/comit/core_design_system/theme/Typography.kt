@@ -1,4 +1,4 @@
-@file:Suppress("unused")
+@file:Suppress("TooManyFunctions")
 
 package com.comit.core_design_system.theme
 
@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 
-// TODO("메서드 18 -> 11개로 변경 해야함")
 val notoSansFamily = FontFamily(
     Font(R.font.noto_sans_kr_black, FontWeight.Black),
     Font(R.font.noto_sans_kr_bold, FontWeight.Bold),
