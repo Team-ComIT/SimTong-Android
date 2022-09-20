@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.comit.core_design_system.theme
 
 import androidx.compose.material.Text
