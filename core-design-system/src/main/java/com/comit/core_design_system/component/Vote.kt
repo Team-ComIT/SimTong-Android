@@ -230,7 +230,8 @@ fun VoteItem(
     val chooseState = rememberSaveable { mutableStateOf(data.check) }
     val shapeColor: Color = if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray200
     val textColor: Color = if (chooseState.value) SimTongColor.White else SimTongColor.Black
-    val textNumColor: Color = if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray600
+    val textNumColor: Color =
+        if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray600
 
     var total = data.total
     val voteNum = rememberSaveable { mutableStateOf(data.voteNum) }
