@@ -19,6 +19,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -42,6 +43,12 @@ import com.comit.core_design_system.theme.Body8
 import com.comit.core_design_system.theme.Error
 import com.comit.core_design_system.theme.SimTongColor
 import com.comit.core_design_system.theme.SimTongTypography
+
+@Stable
+private val TextFieldFractionIf: Float = 0.75f
+
+@Stable
+private val TextFieldFractionElse: Float = 0.9f
 
 @Composable
 fun SimTongTextField(
@@ -74,7 +81,9 @@ fun SimTongTextField(
         mutableStateOf(false)
     }
 
-    val textFieldFraction = if (enabledSideBtn) 0.75f else 0.9f
+    val textFieldFraction =
+        if (enabledSideBtn) TextFieldFractionIf
+        else TextFieldFractionElse
 
     Column {
         Box(
@@ -113,7 +122,10 @@ fun SimTongTextField(
                         keyboardType = keyboardType,
                         imeAction = imeAction
                     ),
-                    visualTransformation = if (!passwordVisible && isPassword) PasswordVisualTransformation() else VisualTransformation.None,
+                    visualTransformation =
+                    if (!passwordVisible && isPassword)
+                        PasswordVisualTransformation()
+                    else VisualTransformation.None,
                     maxLines = 1,
                     textStyle = SimTongTypography.body6,
                     decorationBox = { innerTextField ->
@@ -152,7 +164,11 @@ fun SimTongTextField(
                                 indication = null
                             ) { passwordVisible = !passwordVisible },
                         painter = painterResource(id = SimTongIcons.Password(passwordVisible)),
-                        contentDescription = stringResource(if (passwordVisible) R.string.descriptiom_ic_password_visible else R.string.descriptiom_ic_password_invisible),
+                        contentDescription =
+                        stringResource(
+                            if (passwordVisible) R.string.descriptiom_ic_password_visible
+                            else R.string.descriptiom_ic_password_invisible
+                        ),
                         alpha = if (value.isNotEmpty()) 1f else 0f
                     )
                 }

@@ -13,6 +13,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,15 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.theme.SimTongColor
 import kotlinx.coroutines.delay
 
+@Stable
+private val StepsProgressBarWeight: Float = 1F
+
+@Stable
+private val StepsProgressBarIsFirst: Int = 1
+
+@Stable
+private val StepsProgressBarDelay: Long = 10
+
 @Composable
 fun StepsProgressBar(modifier: Modifier = Modifier, numberOfSteps: Int, currentStep: Int) {
     Row(
@@ -34,14 +44,20 @@ fun StepsProgressBar(modifier: Modifier = Modifier, numberOfSteps: Int, currentS
     ) {
         for (step in 1..numberOfSteps) {
             Step(
-                modifier = Modifier.weight(1F),
+                modifier = Modifier.weight(StepsProgressBarWeight),
                 isCompete = step <= currentStep,
                 isCurrent = step == currentStep,
-                isFirst = step == 1
+                isFirst = step == StepsProgressBarIsFirst
             )
         }
     }
 }
+
+@Stable
+private val StepMutableStateProgress: Float = 0.1f
+
+@Stable
+private val StepAddProgress: Float = 0.01f
 
 @Composable
 fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, isFirst: Boolean) {
@@ -58,7 +74,7 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
     } else {
         Box(modifier = modifier) {
 
-            var progress by remember { mutableStateOf(0.1f) }
+            var progress by remember { mutableStateOf(StepMutableStateProgress) }
 
             val animatedProgress by animateFloatAsState(
                 targetValue = progress,
@@ -66,8 +82,8 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
 
             LaunchedEffect(true) {
                 while ((progress < 1)) {
-                    progress += 0.01f
-                    delay(10)
+                    progress += StepAddProgress
+                    delay(StepsProgressBarDelay)
                 }
             }
 
@@ -103,10 +119,13 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
     }
 }
 
+@Stable
+private val StepsProgressBarPreviewMutableStateCurrentStep: Int = 3
+
 @Preview
 @Composable
 fun StepsProgressBarPreview() {
-    val currentStep = remember { mutableStateOf(3) }
+    val currentStep = remember { mutableStateOf(StepsProgressBarPreviewMutableStateCurrentStep) }
 
     StepsProgressBar(
         modifier = Modifier.fillMaxWidth(),

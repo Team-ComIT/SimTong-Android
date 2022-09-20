@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
@@ -55,6 +56,9 @@ fun IdeaLazyColumn(
     }
 }
 
+@Stable
+private val IdeaItemDataBodyWidth: Float = 0.5f
+
 @Composable
 fun IdeaItem(
     modifier: Modifier = Modifier,
@@ -81,7 +85,7 @@ fun IdeaItem(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .fillMaxWidth(0.5f)
+                .fillMaxWidth(IdeaItemDataBodyWidth)
                 .padding(30.dp, 3.dp, 0.dp, 0.dp)
         )
 
@@ -148,13 +152,33 @@ fun IdeaItem(
     }
 }
 
+@Stable
+private val PreViewTime: Int = 5
+
+@Stable
+private val PreViewCommentCount: Int = 0
+
 @Preview
 @Composable
 fun IdeaComponent() {
     IdeaLazyColumn(
         list = listOf(
-            IdeaData("안녕하세요", "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk", "유저 이름", 5, false, 0),
-            IdeaData("안녕하세요", "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk", "유저 이름", 5, false, 0)
+            IdeaData(
+                "안녕하세요",
+                "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk",
+                "유저 이름",
+                PreViewTime,
+                false,
+                PreViewCommentCount
+            ),
+            IdeaData(
+                "안녕하세요",
+                "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk",
+                "유저 이름",
+                PreViewTime,
+                false,
+                PreViewCommentCount
+            )
         )
     )
 }

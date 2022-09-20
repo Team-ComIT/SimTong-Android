@@ -40,3 +40,5 @@ naming:
     active: false
   VariableNaming:
     active: false
+  PackageNaming:
+    active: false

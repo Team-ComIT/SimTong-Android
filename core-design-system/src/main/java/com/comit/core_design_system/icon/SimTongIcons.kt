@@ -2,6 +2,7 @@ package com.comit.core_design_system.icon
 
 import com.comit.core_design_system.R
 
+@Suppress("FunctionNaming")
 object SimTongIcons {
 
     object Navi {

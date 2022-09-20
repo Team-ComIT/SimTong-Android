@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -27,27 +28,21 @@ import java.text.SimpleDateFormat
 @Composable
 fun FoodListLazyRow(
     modifier: Modifier = Modifier,
-    backgroundImageBase: Int,
-    backgroundImageCheck: Int,
     textColorBase: Color,
     textColorCheck: Color,
-    lineHeight: Int,
     timeCheck: Int,
     list: List<String>,
 ) {
 
     LazyRow {
-        itemsIndexed(list) { index, it ->
+        itemsIndexed(list) { index, data ->
             FoodListItem(
                 modifier = modifier,
                 index = index,
-                menu = it,
+                menu = data,
                 timeCheck = timeCheck,
-                backgroundImageBase = backgroundImageBase,
-                backgroundImageCheck = backgroundImageCheck,
                 textColorBase = textColorBase,
-                textColorCheck = textColorCheck,
-                lineHeight = lineHeight
+                textColorCheck = textColorCheck
             )
         }
     }
@@ -59,17 +54,14 @@ fun FoodListItem(
     index: Int,
     menu: String,
     timeCheck: Int,
-    backgroundImageBase: Int,
-    backgroundImageCheck: Int,
     textColorBase: Color,
-    textColorCheck: Color,
-    lineHeight: Int
+    textColorCheck: Color
 ) {
 
     val textColor: Color =
         if (timeCheck == index) textColorCheck else textColorBase
     val backgroundImage: Int =
-        if (timeCheck == index) backgroundImageCheck else backgroundImageBase
+        if (timeCheck == index) R.drawable.img_food_red else R.drawable.img_food
 
     Card(
         shape = RoundedCornerShape(10.dp),
@@ -90,7 +82,7 @@ fun FoodListItem(
             Body13(
                 text = menu,
                 color = textColor,
-                lineHeight = lineHeight.sp,
+                lineHeight = 23.sp,
                 modifier = Modifier
                     .padding(12.dp, 15.dp, 10.dp, 0.dp)
             )
@@ -103,11 +95,8 @@ fun FoodListItem(
 fun FoodList() {
 
     FoodListLazyRow(
-        backgroundImageBase = R.drawable.img_food,
-        backgroundImageCheck = R.drawable.img_food_red,
         textColorBase = SimTongColor.Black,
         textColorCheck = SimTongColor.White,
-        lineHeight = 23,
         timeCheck = time(),
         list = listOf(
             "누룽지\n돼지불고기\n마늘쫑건새우볶음\n배추김치\n달콤한붓세빵\n바나나/딸기우유",
@@ -117,14 +106,20 @@ fun FoodList() {
     )
 }
 
+@Stable
+private val Time1000: Int = 1000
+
+@Stable
+private val Time1500: Int = 1500
+
 @SuppressLint("SimpleDateFormat")
 private fun time(): Int {
     val time = SimpleDateFormat("hhmm").format(Date(System.currentTimeMillis())).toInt()
     var timeCheck = 0
 
-    if (time > 1500) timeCheck = 2
+    if (time > Time1500) timeCheck = 2
 
-    else if (time > 1000) { timeCheck = 1 }
+    else if (time > Time1000) { timeCheck = 1 }
 
     return timeCheck
 }
