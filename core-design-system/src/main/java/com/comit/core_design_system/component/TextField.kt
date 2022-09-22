@@ -53,6 +53,7 @@ private val TextFieldFractionElse: Float = 0.9f
 @Composable
 fun SimTongTextField(
     modifier: Modifier = Modifier,
+    hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
     backgroundColor: Color = Color.Transparent,
     value: String,
     enabledSideBtn: Boolean = false,
@@ -81,9 +82,15 @@ fun SimTongTextField(
         mutableStateOf(false)
     }
 
+    val hintBgColor: Color =
+        hintBackgroundColor ?: Color.Transparent
+
     val textFieldFraction =
         if (enabledSideBtn) TextFieldFractionIf
         else TextFieldFractionElse
+
+    val bgColor: Color =
+        if (value.isEmpty() && hint != null) hintBgColor else backgroundColor
 
     Column {
         Box(
@@ -91,7 +98,7 @@ fun SimTongTextField(
                 .height(44.dp)
                 .wrapContentHeight(Alignment.CenterVertically)
                 .background(
-                    color = backgroundColor,
+                    color = bgColor,
                     shape = RoundedCornerShape(round),
                 )
                 .border(
