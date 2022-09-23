@@ -56,7 +56,7 @@ private val BasicTextFieldStartPadding = 14.dp
  * @param value text to display
  * @param onValueChange Callback to be invoked when new text is entered
  * @param backgroundColor backgroundColor in SimTongTextField
- * @param onClick Callback to be invoked when a button is clicked
+ * @param onClick Callback to be invoked when a textField is clicked
  * @param hint hint message in SimTongTextField
  * @param hintBackgroundColor backgroundColor with Hint
  * @param enabledSideBtn whether side button is used
