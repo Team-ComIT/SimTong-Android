@@ -1,3 +1,5 @@
+@file:NoLiveLiterals
+
 package com.comit.core_design_system.component
 
 import androidx.compose.foundation.Image
@@ -5,25 +7,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -45,33 +33,68 @@ import com.comit.core_design_system.theme.SimTongColor
 import com.comit.core_design_system.theme.SimTongTypography
 
 @Stable
-private val TextFieldFractionIf: Float = 0.75f
+private val TextFieldEnabledFraction: Float = 0.75f
 
 @Stable
-private val TextFieldFractionElse: Float = 0.9f
+private val TextFieldDisabledFraction: Float = 0.9f
 
+@Stable
+private val TextFieldHeight: Dp = 44.dp
+
+@Stable
+private val TextFieldMessagePadding = PaddingValues(start = 3.dp, top = 6.dp)
+
+@Stable
+private val BasicTextFieldStartPadding = 14.dp
+
+/**
+ * SimTong Design System TextField [SimTongTextField].
+ * The current implementation method is not abstracted from [SimTongTextField].
+ * Therefore, it is necessary to create and abstract SimTongBasicTextField later.
+ *
+ * @param modifier [Modifier] to use to draw the SimTongTextField
+ * @param value text to display
+ * @param onValueChange Callback to be invoked when new text is entered
+ * @param backgroundColor backgroundColor in SimTongTextField
+ * @param onClick Callback to be invoked when a button is clicked
+ * @param hint hint message in SimTongTextField
+ * @param hintBackgroundColor backgroundColor with Hint
+ * @param enabledSideBtn whether side button is used
+ * @param sideBtnText text of side button
+ * @param sideBtnTextColor text of side button's text
+ * @param sideBtnBackgroundColor backgroundColor of side button
+ * @param sideBtnPressedBackgroundColor backgroundColor when side button is pressed
+ * @param sideBtnDisabledTextColor color of side button's text when side button is disabled
+ * @param round radius of SimTongTextField
+ * @param onSideBtnClick Callback to be invoked when a side button is clicked
+ * @param error message when an error occurs
+ * @param isPassword Whether to enable password functionality
+ * @param keyboardType keyboardType in SimTongTextField
+ * @param imeAction ImeAction in SimTongTextField
+ * @param description description in SimTongTextField
+ */
 @Composable
 fun SimTongTextField(
     modifier: Modifier = Modifier,
-    hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
-    backgroundColor: Color = Color.Transparent,
     value: String,
+    onValueChange: (String) -> Unit,
+    backgroundColor: Color = Color.Transparent,
+    onClick: (() -> Unit)? = null,
+    hint: String? = null,
+    hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
     enabledSideBtn: Boolean = false,
     sideBtnText: String? = null,
+    sideBtnTextColor: Color = SimTongColor.White,
     sideBtnBackgroundColor: Color = SimTongColor.MainColor,
     sideBtnPressedBackgroundColor: Color = SimTongColor.MainColor600,
     sideBtnDisabledBackgroundColor: Color = SimTongColor.MainColor200,
-    sideBtnTextColor: Color = SimTongColor.White,
-    round: Dp = 5.dp,
     sideBtnDisabledTextColor: Color = SimTongColor.White,
+    round: Dp = 5.dp,
     onSideBtnClick: (() -> Unit)? = null,
-    onValueChange: (String) -> Unit,
     error: String? = null,
     isPassword: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
-    onClick: (() -> Unit)? = null,
-    hint: String? = null,
     description: String? = null
 ) {
     val interactionSource = remember { MutableInteractionSource() }
@@ -86,8 +109,8 @@ fun SimTongTextField(
         hintBackgroundColor ?: Color.Transparent
 
     val textFieldFraction =
-        if (enabledSideBtn) TextFieldFractionIf
-        else TextFieldFractionElse
+        if (enabledSideBtn) TextFieldEnabledFraction
+        else TextFieldDisabledFraction
 
     val bgColor: Color =
         if (value.isEmpty() && hint != null) hintBgColor else backgroundColor
@@ -95,7 +118,7 @@ fun SimTongTextField(
     Column {
         Box(
             modifier = modifier
-                .height(44.dp)
+                .height(TextFieldHeight)
                 .wrapContentHeight(Alignment.CenterVertically)
                 .background(
                     color = bgColor,
@@ -122,7 +145,7 @@ fun SimTongTextField(
                 BasicTextField(
                     modifier = Modifier
                         .fillMaxWidth(textFieldFraction)
-                        .padding(start = 14.dp),
+                        .padding(start = BasicTextFieldStartPadding),
                     value = value,
                     onValueChange = onValueChange,
                     keyboardOptions = KeyboardOptions(
@@ -185,14 +208,14 @@ fun SimTongTextField(
         if (error != null) {
             Error(
                 text = error,
-                modifier = Modifier.padding(start = 3.dp, top = 6.dp)
+                modifier = Modifier.padding(TextFieldMessagePadding)
             )
         }
 
         if (description != null) {
             Body8(
                 text = description,
-                modifier = Modifier.padding(start = 3.dp, top = 6.dp),
+                modifier = Modifier.padding(TextFieldMessagePadding),
                 color = SimTongColor.Gray700
             )
         }
