@@ -28,8 +28,10 @@ import java.text.SimpleDateFormat
 @Composable
 fun FoodListLazyRow(
     modifier: Modifier = Modifier,
-    textColorBase: Color,
-    textColorCheck: Color,
+    textColorBase: Color = SimTongColor.Black,
+    textColorCheck: Color = SimTongColor.White,
+    background: Int = R.drawable.img_food,
+    backgroundCheck: Int = R.drawable.img_food_red,
     timeCheck: Int,
     list: List<String>,
 ) {
@@ -42,7 +44,9 @@ fun FoodListLazyRow(
                 menu = data,
                 timeCheck = timeCheck,
                 textColorBase = textColorBase,
-                textColorCheck = textColorCheck
+                textColorCheck = textColorCheck,
+                background = background,
+                backgroundCheck = backgroundCheck
             )
         }
     }
@@ -55,13 +59,15 @@ fun FoodListItem(
     menu: String,
     timeCheck: Int,
     textColorBase: Color,
-    textColorCheck: Color
+    textColorCheck: Color,
+    background: Int,
+    backgroundCheck: Int
 ) {
 
     val textColor: Color =
         if (timeCheck == index) textColorCheck else textColorBase
     val backgroundImage: Int =
-        if (timeCheck == index) R.drawable.img_food_red else R.drawable.img_food
+        if (timeCheck == index) backgroundCheck else background
 
     Card(
         shape = RoundedCornerShape(10.dp),
