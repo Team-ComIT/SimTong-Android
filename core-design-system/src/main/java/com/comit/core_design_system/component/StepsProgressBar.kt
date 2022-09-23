@@ -31,38 +31,63 @@ import kotlinx.coroutines.delay
 private val StepsProgressBarWeight: Float = 1F
 
 @Stable
-private val StepsProgressBarIsFirst: Int = 1
-
-@Stable
 private val StepsProgressBarDelay: Long = 10
 
+private const val StepsProgressFirstStep = 1
+
+/**
+ * Implement [StepsProgressBar], a Progress Bar in Step form.
+ *
+ * @param modifier [Modifier] to use to draw the StepsProgressBar
+ * @param numberOfSteps number of step
+ * @param currentStep current step
+ */
 @Composable
-fun StepsProgressBar(modifier: Modifier = Modifier, numberOfSteps: Int, currentStep: Int) {
+fun StepsProgressBar(
+    modifier: Modifier = Modifier,
+    numberOfSteps: Int,
+    currentStep: Int
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
     ) {
         for (step in 1..numberOfSteps) {
-            Step(
+            BasicStep(
                 modifier = Modifier.weight(StepsProgressBarWeight),
                 isCompete = step <= currentStep,
                 isCurrent = step == currentStep,
-                isFirst = step == StepsProgressBarIsFirst
+                isFirst = step == StepsProgressFirstStep
             )
         }
     }
 }
 
 @Stable
-private val StepMutableStateProgress: Float = 0.1f
+private val BasicStepProgressSize: Float = 0.1f
 
 @Stable
-private val StepAddProgress: Float = 0.01f
+private val BasicStepProgressIncrease: Float = 0.01f
+
+@Stable
+private val BasicStepBigSize = 11.dp
+
+@Stable
+private val BasicStepSmallSize = 7.dp
+
+@Stable
+private val BasicStepLinearSize = 2.dp
 
 @Composable
-fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, isFirst: Boolean) {
+fun BasicStep(
+    modifier: Modifier = Modifier,
+    isCompete: Boolean,
+    isCurrent: Boolean,
+    isFirst: Boolean
+) {
+
     val color = if (isCompete) SimTongColor.MainColor else SimTongColor.Gray400
-    val viewSize = if (isCurrent) 11.dp else 7.dp
+    val viewSize = if (isCurrent) BasicStepBigSize else BasicStepSmallSize
 
     if (isFirst) {
         Box(
@@ -74,7 +99,7 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
     } else {
         Box(modifier = modifier) {
 
-            var progress by remember { mutableStateOf(StepMutableStateProgress) }
+            var progress by remember { mutableStateOf(BasicStepProgressSize) }
 
             val animatedProgress by animateFloatAsState(
                 targetValue = progress,
@@ -82,18 +107,17 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
 
             LaunchedEffect(true) {
                 while ((progress < 1)) {
-                    progress += StepAddProgress
+                    progress += BasicStepProgressIncrease
                     delay(StepsProgressBarDelay)
                 }
             }
 
-            // Line
             if (isCurrent) {
                 LinearProgressIndicator(
                     progress = animatedProgress,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(2.dp)
+                        .height(BasicStepLinearSize)
                         .align(CenterStart),
                     color = color
                 )
@@ -103,11 +127,10 @@ fun Step(modifier: Modifier = Modifier, isCompete: Boolean, isCurrent: Boolean, 
                         .align(Alignment.CenterStart)
                         .animateContentSize(),
                     color = color,
-                    thickness = 2.dp
+                    thickness = BasicStepLinearSize
                 )
             }
 
-            // Circle
             Box(
                 modifier = Modifier
                     .size(viewSize)
