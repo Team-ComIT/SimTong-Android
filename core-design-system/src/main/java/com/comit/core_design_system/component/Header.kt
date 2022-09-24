@@ -1,17 +1,11 @@
 package com.comit.core_design_system.component
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -23,6 +17,30 @@ import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body1
 import com.comit.core_design_system.theme.Body3
 
+@Stable
+private val HeaderHeight = 38.dp
+
+@Stable
+private val HeaderHorizontalPadding = PaddingValues(horizontal = 20.dp)
+
+/**
+ * Implement the [Header] of the SimTongDesignSystem.
+ * Default form of Header component
+ *
+ * @param modifier [Modifier] to use to draw the SimTongTextField
+ * @param beilState the state of beil
+ * @param headerText text in Header
+ * @param enabledBackBtn Whether the back button is enabled
+ * @param enabledMoreBtn Whether the more button is enabled
+ * @param enabledPlusBtn Whether the plus button is enabled
+ * @param enabledBeilBtn Whether the beil button is enabled
+ * @param enabledPeopleBtn Whether the people button is enabled
+ * @param onPrevious Callback to be invoked when a back button is clicked
+ * @param onMenu Callback to be invoked when a menu button is clicked
+ * @param onPlus Callback to be invoked when a plus button is clicked
+ * @param onBeil Callback to be invoked when a beil button is clicked
+ * @param onMyPage Callback to be invoked when a MyPage button is clicked
+ */
 @Composable
 fun Header(
     modifier: Modifier = Modifier,
@@ -42,8 +60,8 @@ fun Header(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(38.dp)
-            .padding(horizontal = 20.dp),
+            .height(HeaderHeight)
+            .padding(HeaderHorizontalPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (enabledBackBtn) {
@@ -112,6 +130,20 @@ fun Header(
     }
 }
 
+@Stable
+private val BigHeaderHeight = 60.dp
+
+@Stable
+private val BigHeaderHorizontalPadding = PaddingValues(horizontal = 26.dp)
+
+/**
+ * Implement the [BigHeader] of the SimTongDesignSystem.
+ * Large form of Header component
+ *
+ * @param modifier [Modifier] to use to draw the SimTongTextField
+ * @param text text in BigHeader
+ * @param onPrevious Callback to be invoked when a back button is clicked
+ */
 @Composable
 fun BigHeader(
     modifier: Modifier = Modifier,
@@ -121,8 +153,8 @@ fun BigHeader(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .height(60.dp)
-            .padding(horizontal = 26.dp),
+            .height(BigHeaderHeight)
+            .padding(BigHeaderHorizontalPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = onPrevious, modifier = Modifier.size(24.dp)) {
