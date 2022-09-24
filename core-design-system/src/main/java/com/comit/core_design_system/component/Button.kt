@@ -69,7 +69,7 @@ fun SmallRedRoundButton(
 private val BigRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
 
 /**
- * SmallRedRoundButton을 구현합니다.
+ * BigRedRoundButton 구현합니다.
  * default round 는 [BigRedRoundButtonDefaultRound] 로 설정되어 있습니다.
  *
  * @param modifier [Modifier] to use to draw the BigRedRoundButton
@@ -107,7 +107,7 @@ fun BigRedRoundButton(
 private val ThinRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
 
 /**
- * SmallRedRoundButton을 구현합니다.
+ * ThinRedRoundButton 구현합니다.
  * default round 는 [ThinRedRoundButtonDefaultRound] 로 설정되어 있습니다.
  *
  * @param modifier [Modifier] to use to draw the ThinRedRoundButton
@@ -145,7 +145,7 @@ fun ThinRedRoundButton(
 private val RedSideButtonDefaultRound = ButtonDefaultRound.Medium
 
 /**
- * SmallRedRoundButton을 구현합니다.
+ * RedSideButton 구현합니다.
  * 뷰 사이드에 위치하는 용도로 구현된 빨간색의 사이드 버튼입니다.
  * default round 는 [RedSideButtonDefaultRound] 로 설정되어 있습니다.
  *
