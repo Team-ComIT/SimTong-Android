@@ -35,11 +35,41 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.theme.Body4
 import com.comit.core_design_system.theme.SimTongColor
 
-@Stable
-private val BasicCheckBoxAnimatedVisibilityEnter: Int = 50
+/**
+ * Defines the size of the SimTongCheckBox
+ */
+object CheckBoxSize {
+    val Small = 15.dp
+    val Medium = 20.dp
+    val Large = 25.dp
+}
 
 @Stable
-private val BasicCheckBoxAnimatedVisibilityExit: Int = 50
+private val BasicCheckBoxScaleInTweenMillis: Int = 50
+
+@Stable
+private val BasicCheckBoxScaleOutTweenMillis: Int = 50
+
+@Stable
+private val BasicCheckBoxDefaultSize = CheckBoxSize.Medium
+
+@Stable
+private val BasicCheckBoxContentPadding = 4.dp
+
+@Stable
+private val BasicCheckBoxBorderWidth = 1.dp
+
+/**
+ * Implement [BasicCheckBox], the lowest component of the CheckBox.
+ *
+ * @param modifier [Modifier] to use to draw the SimTongTextField,
+ * @param checked check status
+ * @param onCheckedChange Callback to be invoked if checked
+ * @param checkBoxSize checkBoxSize in BasicCheckBox,
+ * @param borderColor color in BasicCheckBox's border
+ * @param disableBorderColor disabled color in BasicCheckBox's border
+ * @param backgroundColor backgroundColor in BasicCheckBox
+ */
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -47,7 +77,7 @@ fun BasicCheckBox(
     modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
-    checkBoxSize: Dp = 20.dp,
+    checkBoxSize: Dp = BasicCheckBoxDefaultSize,
     borderColor: Color = SimTongColor.MainColor,
     disableBorderColor: Color = SimTongColor.Gray400,
     backgroundColor: Color = SimTongColor.MainColor,
@@ -62,7 +92,7 @@ fun BasicCheckBox(
             .clip(CircleShape)
             .size(checkBoxSize)
             .border(
-                width = 1.dp,
+                width = BasicCheckBoxBorderWidth,
                 shape = CircleShape,
                 color = borderColor
             )
@@ -78,13 +108,13 @@ fun BasicCheckBox(
 
         AnimatedVisibility(
             visible = checked,
-            enter = scaleIn(tween(BasicCheckBoxAnimatedVisibilityEnter)),
-            exit = scaleOut(tween(BasicCheckBoxAnimatedVisibilityExit)),
+            enter = scaleIn(tween(BasicCheckBoxScaleInTweenMillis)),
+            exit = scaleOut(tween(BasicCheckBoxScaleOutTweenMillis)),
             modifier = Modifier.fillMaxSize()
         ) {
             Box(
                 modifier = Modifier
-                    .padding(4.dp)
+                    .padding(BasicCheckBoxContentPadding)
                     .clip(CircleShape)
                     .background(backgroundColor)
             )
@@ -92,14 +122,27 @@ fun BasicCheckBox(
     }
 }
 
+@Stable
+private val TextCheckBoxDefaultSize = CheckBoxSize.Medium
+
+@Stable
+private val TextCheckBoxSpacerWidth = 8.dp
+
+/**
+ * SimTongDesignSystem의 [TextCheckBox] 를 구현합니다.
+ * [BasicCheckBox]와 [Body4]가 혼합된 형식의 컴포넌트입니다.
+ *
+ * @param text text in TextCheckBox
+ * @param textColor color of TextCheckBox's text
+ */
 @Composable
 fun TextCheckBox(
+    modifier: Modifier = Modifier,
     text: String,
     textColor: Color = SimTongColor.Gray800,
-    modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckedChange: ((Boolean) -> Unit)?,
-    checkBoxSize: Dp = 20.dp,
+    checkBoxSize: Dp = TextCheckBoxDefaultSize,
     borderColor: Color = SimTongColor.MainColor,
     disableBorderColor: Color = SimTongColor.Gray400,
     backgroundColor: Color = SimTongColor.MainColor,
@@ -127,7 +170,7 @@ fun TextCheckBox(
             backgroundColor = backgroundColor
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(TextCheckBoxSpacerWidth))
 
         Body4(text = text, color = textColor)
     }
