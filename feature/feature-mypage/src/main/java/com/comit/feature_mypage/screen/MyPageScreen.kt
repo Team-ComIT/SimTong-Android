@@ -59,9 +59,7 @@ object MyPageFakeData {
  * 이는 추후에 개선되어야 합니다.
  */
 @Composable
-fun MyPageScreen(
-    composeNavigator: NavController
-) {
+fun MyPageScreen() {
     SimTongTheme(
         darkTheme = false
     ) {
@@ -239,5 +237,5 @@ fun MyPageEditModeMenu(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
-    MyPageScreen(composeNavigator = rememberNavController())
+    MyPageScreen()
 }
