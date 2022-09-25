@@ -1,13 +1,24 @@
 package com.comit.core_design_system.component
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -16,12 +27,14 @@ import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body1
 import com.comit.core_design_system.theme.Body3
+import com.comit.core_design_system.theme.Body6
+import com.comit.core_design_system.theme.SimTongColor
 
 @Stable
 private val HeaderHeight = 38.dp
 
 @Stable
-private val HeaderHorizontalPadding = PaddingValues(horizontal = 20.dp)
+private val HeaderHorizontalPadding = PaddingValues(horizontal = 0.dp)
 
 /**
  * Implement the [Header] of the SimTongDesignSystem.
@@ -46,16 +59,18 @@ fun Header(
     modifier: Modifier = Modifier,
     beilState: Boolean = false,
     headerText: String,
-    enabledBackBtn: Boolean = true,
-    enabledMoreBtn: Boolean = true,
-    enabledPlusBtn: Boolean = true,
-    enabledBeilBtn: Boolean = true,
-    enabledPeopleBtn: Boolean = true,
+    sideBtnText: String? = null,
+    enabledBackBtn: Boolean = false,
+    enabledMoreBtn: Boolean = false,
+    enabledPlusBtn: Boolean = false,
+    enabledBeilBtn: Boolean = false,
+    enabledPeopleBtn: Boolean = false,
     onPrevious: (() -> Unit)? = null,
     onMenu: (() -> Unit)? = null,
     onPlus: (() -> Unit)? = null,
     onBeil: (() -> Unit)? = null,
     onMyPage: (() -> Unit)? = null,
+    onTextBtnClicked: (() -> Unit)? = null,
 ) {
     Row(
         modifier = modifier
@@ -127,6 +142,17 @@ fun Header(
             )
         }
         }
+
+        if (sideBtnText != null) {
+            Body6(
+                modifier = Modifier.clickable {
+                    if (onTextBtnClicked != null) {
+                        onTextBtnClicked()
+                    }
+                }.padding(6.dp),
+                text = "수정", color = SimTongColor.MainColor
+            )
+        }
     }
 }
 
@@ -175,12 +201,32 @@ fun BigHeader(
 @Preview
 @Composable
 fun PreviewHeader() {
-    Column {
-        Header(headerText = "전체 지점", beilState = true)
+    val context = LocalContext.current
+
+    Column() {
+        Header(headerText = "전체 지점", beilState = true, enabledBackBtn = true)
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        Header(headerText = "전체 지점", enabledBackBtn = false, enabledPlusBtn = false)
+        Header(
+            headerText = "전체 지점",
+            enabledBackBtn = true,
+            enabledMoreBtn = true,
+            enabledBeilBtn = true,
+            enabledPeopleBtn = true,
+            enabledPlusBtn = true
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Header(
+            headerText = "전체 지점",
+            sideBtnText = "수정",
+            enabledBackBtn = true,
+            onTextBtnClicked = {
+                Toast.makeText(context, "text btn clicked!", Toast.LENGTH_SHORT).show()
+            }
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 

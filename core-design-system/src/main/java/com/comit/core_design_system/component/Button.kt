@@ -119,7 +119,7 @@ private val ThinRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
 @Composable
 fun ThinRedRoundButton(
     modifier: Modifier = Modifier,
-    round: Dp = 5.dp,
+    round: Dp = ThinRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
