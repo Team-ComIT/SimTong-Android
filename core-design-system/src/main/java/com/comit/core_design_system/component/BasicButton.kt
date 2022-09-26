@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +28,18 @@ import com.comit.core_design_system.theme.Body10
 import com.comit.core_design_system.theme.Body3
 import com.comit.core_design_system.theme.Body5
 
+/**
+ * The lowest component of SimTongButtons
+ *
+ * @param modifier [Modifier] to use to draw the SimTongTextField
+ * @param shape shape in BasicButton
+ * @param enabled activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ * @param backgroundColor backgroundColor in BasicButton
+ * @param pressedBackgroundColor backgroundColor when side button is pressed
+ * @param disabledBackgroundColor color of side button's text when side button is disabled
+ * @param content BasicButton's internal composable
+ */
 @Composable
 fun BasicButton(
     modifier: Modifier = Modifier,
@@ -64,6 +77,18 @@ fun BasicButton(
     }
 }
 
+/**
+ * Height value in [BasicBigButton]
+ */
+@Stable
+private val BasicBigButtonHeight = 42.dp
+
+/**
+ * Basic 버튼의 [BasicBigButton] 을 구현합니다.
+ * 다른 Basic 버튼들과 동일 버튼이며
+ * 차이점은 버튼 사이즈가 큽니다. 이 때문에
+ * [fillMaxWidth] 로 처리해주었습니다.
+ */
 @Composable
 fun BasicBigButton(
     text: String,
@@ -82,7 +107,7 @@ fun BasicBigButton(
     BasicButton(
         modifier = modifier
             .fillMaxWidth()
-            .height(42.dp),
+            .height(BasicBigButtonHeight),
         shape = shape,
         enabled = enabled,
         onClick = onClick,
@@ -94,6 +119,24 @@ fun BasicBigButton(
     }
 }
 
+/**
+ * Horizontal padding in [BasicSmallButton]
+ */
+@Stable
+private val BasicSmallButtonHorizontalPadding = 40.dp
+
+/**
+ * Height value in [BasicSmallButton]
+ */
+@Stable
+private val BasicSmallButtonHeight = 36.dp
+
+/**
+ * Basic 버튼의 [BasicSmallButton] 을 구현합니다.
+ * 다른 Basic 버튼들과 동일 버튼이며
+ * 차이점은 버튼 사이즈를 작게 구현하였습니다.
+ * 따라서 horizontal padding 값을 [BasicSmallButtonHorizontalPadding] 만큼 주었습니다.
+ */
 @Composable
 fun BasicSmallButton(
     text: String,
@@ -112,8 +155,8 @@ fun BasicSmallButton(
     BasicButton(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 40.dp)
-            .height(36.dp),
+            .padding(horizontal = BasicSmallButtonHorizontalPadding)
+            .height(BasicSmallButtonHeight),
         shape = shape,
         enabled = enabled,
         onClick = onClick,
@@ -125,6 +168,26 @@ fun BasicSmallButton(
     }
 }
 
+/**
+ * Horizontal padding in [BasicSmallButton]
+ */
+@Stable
+private val BasicThinButtonHorizontalPadding = 30.dp
+
+/**
+ * Height value in [BasicSmallButton]
+ */
+@Stable
+private val BasicThinButtonHeight = 30.dp
+
+/**
+ * Basic 버튼의 [BasicThinButton] 을 구현합니다.
+ * 다른 Basic 버튼들과 동일 버튼이며
+ * 차이점은 버튼 사이즈를 얇게 구현하였습니다.
+ *
+ * 따라서 horizontal padding 을 [BasicThinButtonHorizontalPadding] 만큼
+ * button height 를 [BasicThinButtonHeight] 만큼 설정하였습니다.
+ */
 @Composable
 fun BasicThinButton(
     text: String,
@@ -143,8 +206,8 @@ fun BasicThinButton(
     BasicButton(
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 30.dp)
-            .height(30.dp),
+            .padding(horizontal = BasicThinButtonHorizontalPadding)
+            .height(BasicThinButtonHeight),
         shape = shape,
         enabled = enabled,
         onClick = onClick,
@@ -156,6 +219,26 @@ fun BasicThinButton(
     }
 }
 
+/**
+ * Width value in [BasicSmallButton]
+ */
+@Stable
+private val BasicSideButtonWidth = 69.dp
+
+/**
+ * Height value in [BasicSmallButton]
+ */
+@Stable
+private val BasicSideButtonHeight = 40.dp
+
+/**
+ * Basic 버튼의 [BasicSideButton] 을 구현합니다.
+ * TextField 등에 사이드 버튼으로 사용될 용도로 제작되어
+ * 작은 사이즈로 구현하여 사이즈가 정적으로 박힌 버튼입니다.
+ *
+ * Width - [BasicSideButtonWidth]
+ * Height - [BasicSideButtonHeight]
+ */
 @Composable
 fun BasicSideButton(
     text: String,
@@ -173,8 +256,8 @@ fun BasicSideButton(
 
     BasicButton(
         modifier = modifier
-            .width(69.dp)
-            .height(40.dp),
+            .width(BasicSideButtonWidth)
+            .height(BasicSideButtonHeight),
         shape = shape,
         enabled = enabled,
         onClick = onClick,
@@ -186,6 +269,12 @@ fun BasicSideButton(
     }
 }
 
+/**
+ * Basic 버튼의 [BasicRoundSideButton] 을 구현합니다.
+ * 다른 버튼과 기능을 동일하지만 둥근 모양을 가진 버튼입니다.
+ *
+ * @param round round in BasicRoundSideButton
+ */
 @Composable
 fun BasicRoundSideButton(
     text: String,
@@ -220,6 +309,14 @@ fun BasicRoundSideButton(
     )
 }
 
+/**
+ * Basic 버튼의 [BasicIconButton] 을 구현합니다.
+ * 둥근 모양에 아이콘이 있는 버튼입니다.
+ *
+ * @param painter [Painter] to go into button
+ * @param contentDescription description of the BasicIconButton
+ * @param shpae shape of BasicIconButton
+ */
 @Composable
 fun BasicIconButton(
     painter: Painter,

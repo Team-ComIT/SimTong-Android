@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -14,10 +15,35 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.SimTongColor
 
+/**
+ * Defines the round of the SimTongButtons
+ */
+object ButtonDefaultRound {
+    val Small = 3.dp
+    val Medium = 5.dp
+    val Large = 8.dp
+}
+
+/**
+ * default round in [SmallRedRoundButton]
+ */
+@Stable
+private val SmallRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
+
+/**
+ * SmallRedRoundButton을 구현합니다.
+ * default round 는 [SmallRedRoundButtonDefaultRound] 로 설정되어 있습니다.
+ *
+ * @param modifier [Modifier] to use to draw the SmallRedRoundButton
+ * @param round round in SmallRedRoundButton
+ * @param text text in SmallRedRoundButton
+ * @param enalbed activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ */
 @Composable
 fun SmallRedRoundButton(
     modifier: Modifier = Modifier,
-    round: Dp = 5.dp,
+    round: Dp = SmallRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -36,10 +62,26 @@ fun SmallRedRoundButton(
     )
 }
 
+/**
+ * default round in [BigRedRoundButton]
+ */
+@Stable
+private val BigRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
+
+/**
+ * BigRedRoundButton 구현합니다.
+ * default round 는 [BigRedRoundButtonDefaultRound] 로 설정되어 있습니다.
+ *
+ * @param modifier [Modifier] to use to draw the BigRedRoundButton
+ * @param round round in BigRedRoundButton
+ * @param text text in BigRedRoundButton
+ * @param enalbed activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ */
 @Composable
 fun BigRedRoundButton(
     modifier: Modifier = Modifier,
-    round: Dp = 5.dp,
+    round: Dp = BigRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -58,10 +100,26 @@ fun BigRedRoundButton(
     )
 }
 
+/**
+ * default round in [ThinRedRoundButton]
+ */
+@Stable
+private val ThinRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
+
+/**
+ * ThinRedRoundButton 구현합니다.
+ * default round 는 [ThinRedRoundButtonDefaultRound] 로 설정되어 있습니다.
+ *
+ * @param modifier [Modifier] to use to draw the ThinRedRoundButton
+ * @param round round in ThinRedRoundButton
+ * @param text text in ThinRedRoundButton
+ * @param enalbed activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ */
 @Composable
 fun ThinRedRoundButton(
     modifier: Modifier = Modifier,
-    round: Dp = 5.dp,
+    round: Dp = ThinRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -80,10 +138,27 @@ fun ThinRedRoundButton(
     )
 }
 
+/**
+ * default round in [RedSideButton]
+ */
+@Stable
+private val RedSideButtonDefaultRound = ButtonDefaultRound.Medium
+
+/**
+ * RedSideButton 구현합니다.
+ * 뷰 사이드에 위치하는 용도로 구현된 빨간색의 사이드 버튼입니다.
+ * default round 는 [RedSideButtonDefaultRound] 로 설정되어 있습니다.
+ *
+ * @param modifier [Modifier] to use to draw the RedSideButton
+ * @param round round in RedSideButton
+ * @param text text in RedSideButton
+ * @param enalbed activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ */
 @Composable
 fun RedSideButton(
     modifier: Modifier = Modifier,
-    round: Dp = 5.dp,
+    round: Dp = RedSideButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -102,10 +177,27 @@ fun RedSideButton(
     )
 }
 
+/**
+ * default round in [GraySideButton]
+ */
+@Stable
+private val GraySideButtonDefaultRound = ButtonDefaultRound.Medium
+
+/**
+ * GraySideButton 구현합니다.
+ * 뷰 사이드에 위치하는 용도로 구현된 빨간색의 사이드 버튼입니다.
+ * default round 는 [GraySideButtonDefaultRound] 로 설정되어 있습니다.
+ *
+ * @param modifier [Modifier] to use to draw the GraySideButton
+ * @param round round in GraySideButton
+ * @param text text in GraySideButton
+ * @param enalbed activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ */
 @Composable
 fun GraySideButton(
     modifier: Modifier = Modifier,
-    round: Dp = 5.dp,
+    round: Dp = GraySideButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
     onClick: () -> Unit
@@ -124,6 +216,15 @@ fun GraySideButton(
     )
 }
 
+/**
+ * RedIconButton 구현합니다.
+ *
+ * @param modifier [Modifier] to use to draw the RedIconButton
+ * @param painter [Painter] to go into button
+ * @param contentDescription description of the BasicIconButton
+ * @param enalbed activation status of button
+ * @param onClick Callback to be invoked when a button is clicked
+ */
 @Composable
 fun RedIconButton(
     modifier: Modifier = Modifier,
