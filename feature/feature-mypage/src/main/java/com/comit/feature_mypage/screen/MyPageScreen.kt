@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -91,7 +92,6 @@ fun MyPageScreen() {
                     title = stringResource(id = R.string.kr_name),
                     content = MyPageFakeData.name
                 )
-
                 MyPageDescription(
                     title = stringResource(id = R.string.kr_nickname),
                     content = MyPageFakeData.nickname
@@ -125,15 +125,16 @@ fun MyPageScreen() {
                     MyPageEditModeMenu(
                         title = stringResource(id = R.string.kr_my_page_edit_my_information),
                         content = stringResource(id = R.string.kr_my_page_edit_my_information_description),
-                        enabledNextIcon = true
+                        enabledNextIcon = true,
                     ) {
                     }
 
                     MyPageEditModeMenu(
                         title = stringResource(id = R.string.kr_my_page_sign_in),
+                        titleColor = SimTongColor.MainColor,
                         content = stringResource(
                             id = R.string.kr_my_page_sign_in_description
-                        )
+                        ),
                     )
                 }
             }
@@ -203,9 +204,10 @@ fun MyPageDescription(
 @Composable
 fun MyPageEditModeMenu(
     title: String,
+    titleColor: Color = SimTongColor.Black,
     content: String,
     enabledNextIcon: Boolean = false,
-    onClick: (() -> Unit)? = null
+    onClick: (() -> Unit)? = null,
 ) {
     Box(
         modifier = Modifier
@@ -215,7 +217,7 @@ fun MyPageEditModeMenu(
         Column(
             modifier = Modifier.align(Alignment.CenterStart)
         ) {
-            Body5(text = title)
+            Body5(text = title, color = titleColor)
 
             Spacer(modifier = Modifier.height(4.dp))
 
