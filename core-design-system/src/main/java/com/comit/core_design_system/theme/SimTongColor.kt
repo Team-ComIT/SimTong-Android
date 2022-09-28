@@ -1,6 +1,5 @@
 package com.comit.core_design_system.theme
 
-import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
 object SimTongColor {
