@@ -72,7 +72,7 @@ fun FoodListItem(
 
     Card(
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = Color(0xFF00FF0000),
+        backgroundColor = SimTongColor.Transparent,
         elevation = 0.dp,
         modifier = modifier
             .width(140.dp)

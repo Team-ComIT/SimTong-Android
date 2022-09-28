@@ -1,5 +1,6 @@
 package com.comit.core_design_system.theme
 
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.graphics.Color
 
 object SimTongColor {
@@ -36,6 +37,8 @@ object SimTongColor {
     val MainColor700 = Color(0xFFC32328)
     val MainColor800 = Color(0xFF971D20)
     val MainColor900 = Color(0xFF4D0002)
+
+    val Transparent = Color(0x00000000)
 
     object OtherColor {
 
