@@ -1,6 +1,7 @@
 package com.comit.core_design_system.component
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +15,7 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +28,7 @@ import java.sql.Date
 import java.text.SimpleDateFormat
 
 @Composable
-fun FoodListLazyRow(
+fun FoodList(
     modifier: Modifier = Modifier,
     textColorBase: Color = SimTongColor.Black,
     textColorCheck: Color = SimTongColor.White,
@@ -71,19 +73,18 @@ fun FoodListItem(
 
     Card(
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = SimTongColor.White,
+        backgroundColor = Color(0xFF00FF0000),
+        elevation = 0.dp,
         modifier = modifier
             .width(140.dp)
             .height(160.dp)
             .padding(15.dp, 0.dp, 15.dp, 0.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = backgroundImage),
-                contentDescription = "FoodList Image",
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .paint(painterResource(id = backgroundImage))
+        ) {
 
             Body13(
                 text = menu,
@@ -98,9 +99,9 @@ fun FoodListItem(
 
 @Preview
 @Composable
-fun FoodList() {
+fun FoodListPreview() {
 
-    FoodListLazyRow(
+    FoodList(
         textColorBase = SimTongColor.Black,
         textColorCheck = SimTongColor.White,
         timeCheck = time(),
@@ -113,19 +114,21 @@ fun FoodList() {
 }
 
 @Stable
-private val Time1000: Int = 1000
+private val Time900: Int = 900
 
 @Stable
-private val Time1500: Int = 1500
+private val Time1700: Int = 1700
 
 @SuppressLint("SimpleDateFormat")
-private fun time(): Int {
-    val time = SimpleDateFormat("hhmm").format(Date(System.currentTimeMillis())).toInt()
+fun time(): Int {
+    val time = SimpleDateFormat("HHmm").format(Date(System.currentTimeMillis())).toInt()
+    Log.d("TAG", "time: $time")
+
     var timeCheck = 0
 
-    if (time > Time1500) timeCheck = 2
+    if (time > Time1700) timeCheck = 2
 
-    else if (time > Time1000) { timeCheck = 1 }
+    else if (time > Time900) { timeCheck = 1 }
 
     return timeCheck
 }
