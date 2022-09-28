@@ -27,7 +27,6 @@ import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.core_design_system.theme.Title3
 import com.example.feature_home.R
 
-
 object HomeFakeData {
     val foodList = listOf(
         "누룽지\n돼지불고기\n마늘\n배추김치\n달콤핫붓새빵\n바나나/딸기우유",
@@ -37,7 +36,7 @@ object HomeFakeData {
 }
 
 @Composable
-fun HomeScreen(){
+fun HomeScreen() {
     SimTongTheme(
         darkTheme = false
     ) {
@@ -63,7 +62,7 @@ fun HomeScreen(){
                         .fillMaxHeight()
                         .wrapContentHeight(Alignment.CenterVertically)
                 )
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Image(
@@ -81,7 +80,6 @@ fun HomeScreen(){
                 modifier = Modifier
                     .height(360.dp)
             ) {
-
             }
 
             Spacer(modifier = Modifier.height(9.dp))
