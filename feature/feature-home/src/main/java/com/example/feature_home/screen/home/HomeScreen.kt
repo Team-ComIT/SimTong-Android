@@ -47,13 +47,11 @@ fun HomeScreen(){
                 .verticalScroll(scrollState)
                 .padding(25.dp, 0.dp, 25.dp, 0.dp)
         ) {
-            Row(){
-                Header(
-                    headerText = "",
-                    enabledBeilBtn = true,
-                    enabledPeopleBtn = true,
-                )
-            }
+            Header(
+                headerText = "",
+                enabledBeilBtn = true,
+                enabledPeopleBtn = true,
+            )
             Row(
                 modifier = Modifier
                     .height(30.dp)
