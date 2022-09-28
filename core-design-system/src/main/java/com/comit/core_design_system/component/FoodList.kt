@@ -18,6 +18,8 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
@@ -53,6 +55,15 @@ fun FoodList(
     }
 }
 
+@Stable
+private val FoodListItemCardWidth: Dp = 140.dp
+
+@Stable
+private val FoodListItemCardHeight: Dp = 160.dp
+
+@Stable
+private val FoodListItemLineHeight: TextUnit = 23.sp
+
 @Composable
 fun FoodListItem(
     modifier: Modifier = Modifier,
@@ -75,8 +86,8 @@ fun FoodListItem(
         backgroundColor = SimTongColor.Transparent,
         elevation = 0.dp,
         modifier = modifier
-            .width(140.dp)
-            .height(160.dp)
+            .width(FoodListItemCardWidth)
+            .height(FoodListItemCardHeight)
             .padding(15.dp, 0.dp, 15.dp, 0.dp)
     ) {
         Box(
@@ -88,7 +99,7 @@ fun FoodListItem(
             Body13(
                 text = menu,
                 color = textColor,
-                lineHeight = 23.sp,
+                lineHeight = FoodListItemLineHeight,
                 modifier = Modifier
                     .padding(12.dp, 15.dp, 10.dp, 0.dp)
             )
@@ -113,21 +124,20 @@ fun FoodListPreview() {
 }
 
 @Stable
-private val Time900: Int = 900
+private val TimeLunch: Int = 900
 
 @Stable
-private val Time1700: Int = 1700
+private val TimeDinner: Int = 1700
 
 @SuppressLint("SimpleDateFormat")
 fun time(): Int {
     val time = SimpleDateFormat("HHmm").format(Date(System.currentTimeMillis())).toInt()
-    Log.d("TAG", "time: $time")
 
     var timeCheck = 0
 
-    if (time > Time1700) timeCheck = 2
+    if (time > TimeDinner) timeCheck = 2
 
-    else if (time > Time900) { timeCheck = 1 }
+    else if (time > TimeLunch) { timeCheck = 1 }
 
     return timeCheck
 }
