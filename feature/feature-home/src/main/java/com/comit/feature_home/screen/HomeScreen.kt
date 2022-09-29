@@ -1,4 +1,4 @@
-package com.example.feature_home.screen.home
+package com.comit.feature_home.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
