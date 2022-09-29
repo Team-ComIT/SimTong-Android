@@ -1,7 +1,6 @@
 package com.comit.core_design_system.component
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -14,19 +13,23 @@ import androidx.compose.material.Card
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.theme.Body13
 import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.util.time
 import java.sql.Date
 import java.text.SimpleDateFormat
 
 @Composable
-fun FoodListLazyRow(
+fun FoodList(
     modifier: Modifier = Modifier,
     textColorBase: Color = SimTongColor.Black,
     textColorCheck: Color = SimTongColor.White,
@@ -52,6 +55,15 @@ fun FoodListLazyRow(
     }
 }
 
+@Stable
+private val FoodListItemCardWidth: Dp = 140.dp
+
+@Stable
+private val FoodListItemCardHeight: Dp = 160.dp
+
+@Stable
+private val FoodListItemLineHeight: TextUnit = 23.sp
+
 @Composable
 fun FoodListItem(
     modifier: Modifier = Modifier,
@@ -71,24 +83,23 @@ fun FoodListItem(
 
     Card(
         shape = RoundedCornerShape(10.dp),
-        backgroundColor = SimTongColor.White,
+        backgroundColor = SimTongColor.Transparent,
+        elevation = 0.dp,
         modifier = modifier
-            .width(140.dp)
-            .height(160.dp)
+            .width(FoodListItemCardWidth)
+            .height(FoodListItemCardHeight)
             .padding(15.dp, 0.dp, 15.dp, 0.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            Image(
-                painter = painterResource(id = backgroundImage),
-                contentDescription = "FoodList Image",
-                modifier = Modifier
-                    .fillMaxSize()
-            )
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .paint(painterResource(id = backgroundImage))
+        ) {
 
             Body13(
                 text = menu,
                 color = textColor,
-                lineHeight = 23.sp,
+                lineHeight = FoodListItemLineHeight,
                 modifier = Modifier
                     .padding(12.dp, 15.dp, 10.dp, 0.dp)
             )
@@ -98,9 +109,9 @@ fun FoodListItem(
 
 @Preview
 @Composable
-fun FoodList() {
+fun FoodListPreview() {
 
-    FoodListLazyRow(
+    FoodList(
         textColorBase = SimTongColor.Black,
         textColorCheck = SimTongColor.White,
         timeCheck = time(),
@@ -110,22 +121,4 @@ fun FoodList() {
             "배추김치"
         )
     )
-}
-
-@Stable
-private val Time1000: Int = 1000
-
-@Stable
-private val Time1500: Int = 1500
-
-@SuppressLint("SimpleDateFormat")
-private fun time(): Int {
-    val time = SimpleDateFormat("hhmm").format(Date(System.currentTimeMillis())).toInt()
-    var timeCheck = 0
-
-    if (time > Time1500) timeCheck = 2
-
-    else if (time > Time1000) { timeCheck = 1 }
-
-    return timeCheck
 }
