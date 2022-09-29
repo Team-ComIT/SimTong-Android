@@ -67,7 +67,7 @@ fun HomeScreen() {
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_home_next),
-                    contentDescription = "",
+                    contentDescription = null,
                     modifier = Modifier
                         .fillMaxHeight()
                         .wrapContentHeight(Alignment.CenterVertically)

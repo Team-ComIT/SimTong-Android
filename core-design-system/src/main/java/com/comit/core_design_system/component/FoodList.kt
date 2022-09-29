@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.theme.Body13
 import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.util.time
 import java.sql.Date
 import java.text.SimpleDateFormat
 
@@ -120,23 +121,4 @@ fun FoodListPreview() {
             "배추김치"
         )
     )
-}
-
-@Stable
-private val TimeLunch: Int = 900
-
-@Stable
-private val TimeDinner: Int = 1700
-
-@SuppressLint("SimpleDateFormat")
-fun time(): Int {
-    val time = SimpleDateFormat("HHmm").format(Date(System.currentTimeMillis())).toInt()
-
-    var timeCheck = 0
-
-    if (time > TimeDinner) timeCheck = 2
-
-    else if (time > TimeLunch) { timeCheck = 1 }
-
-    return timeCheck
 }
