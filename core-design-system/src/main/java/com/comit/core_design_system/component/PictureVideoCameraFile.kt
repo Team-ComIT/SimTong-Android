@@ -27,7 +27,7 @@ import com.comit.core_design_system.theme.Body6
 import com.comit.core_design_system.theme.SimTongColor
 
 data class IconListData(
-    val icon: Painter,
+    val icon: Int,
     val text: String,
 )
 
@@ -37,7 +37,7 @@ fun PictureVideoCameraFileList(
     list: List<IconListData>,
     onClick: (Int) -> Unit = {},
     height: Dp = 32.dp,
-    background: Color = SimTongColor.White,
+    backgroundColor: Color = SimTongColor.White,
     imageHeight: Dp = 18.dp,
     lineHeight: Float = 2F,
     lineColor: Color = SimTongColor.OtherColor.GrayDF,
@@ -51,7 +51,7 @@ fun PictureVideoCameraFileList(
         itemsIndexed(list) { index, data ->
             PictureVideoCameraFileItem(
                 height = height,
-                background = background,
+                backgroundColor = backgroundColor,
                 imageHeight = imageHeight,
                 lineHeight = lineHeight,
                 lineColor = lineColor,
@@ -69,13 +69,13 @@ fun PictureVideoCameraFileList(
 @Composable
 fun PictureVideoCameraFileItem(
     height: Dp = 32.dp,
-    background: Color = SimTongColor.White,
+    backgroundColor: Color = SimTongColor.White,
     imageHeight: Dp = 18.dp,
     lineHeight: Float = 2F,
     lineColor: Color = SimTongColor.OtherColor.GrayDF,
     textColor: Color = SimTongColor.Black,
     index: Int,
-    icon: Painter,
+    icon: Int,
     text: String,
     onClick: (Int) -> Unit,
     imagePaddingStart: Dp = 14.dp,
@@ -102,11 +102,12 @@ fun PictureVideoCameraFileItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
-            .background(background)
+            .background(backgroundColor)
             .clickable { onClick(index) }
     ) {
         Image(
-            painter = icon, contentDescription = "",
+            painter = painterResource(id = icon),
+            contentDescription = "PictureVideoCameraFile Image",
             modifier = Modifier
                 .padding(imagePaddingStart, 0.dp, 0.dp, 0.dp)
                 .fillMaxHeight()
@@ -130,9 +131,9 @@ fun PictureVideoCameraFileItem(
 fun PictureVideoCameraFile() {
     PictureVideoCameraFileList(
         list = listOf(
-            IconListData(painterResource(id = SimTongIcons.Image), "사진/동영상"),
-            IconListData(painterResource(id = SimTongIcons.Photo), "카메라"),
-            IconListData(painterResource(id = SimTongIcons.Link), "링크"),
+            IconListData(SimTongIcons.Image, "사진/동영상"),
+            IconListData(SimTongIcons.Photo, "카메라"),
+            IconListData(SimTongIcons.Link, "링크"),
         )
     )
 }
