@@ -37,7 +37,7 @@ import com.comit.core_design_system.theme.Body5
 import com.comit.core_design_system.theme.SimTongColor
 
 @Composable
-fun ChoosePlace(
+fun PlaceComponent(
     modifier: Modifier = Modifier,
     backgroundColor: Color = SimTongColor.White,
     roundedCornerShape: Dp = 20.dp,
@@ -185,8 +185,8 @@ fun CheckImage(
 
 @Preview
 @Composable
-fun PlaceComponent() {
-    ChoosePlace(
+fun PreviewPlaceComponent() {
+    PlaceComponent(
         list = listOf("\uD83D\uDC5C      전체 지점", "\uD83D\uDCBB      근무 지점")
     )
 }
