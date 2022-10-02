@@ -23,6 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.theme.Body14
 import com.comit.core_design_system.theme.Body6
@@ -42,7 +43,8 @@ fun IdeaLazyColumn(
     modifier: Modifier = Modifier,
     list: List<IdeaData>,
     onClickHeart: () -> Unit = {},
-    onClickComment: () -> Unit = {}
+    onClickComment: () -> Unit = {},
+    onItemClick: () -> Unit = {}
 ) {
     LazyColumn() {
         items(list) {
@@ -50,7 +52,8 @@ fun IdeaLazyColumn(
                 modifier = modifier,
                 data = it,
                 onClickHeart = onClickHeart,
-                onClickComment = onClickComment
+                onClickComment = onClickComment,
+                onItemClick = onItemClick
             )
         }
     }
@@ -64,13 +67,15 @@ fun IdeaItem(
     modifier: Modifier = Modifier,
     data: IdeaData,
     onClickHeart: () -> Unit = {},
-    onClickComment: () -> Unit = {}
+    onClickComment: () -> Unit = {},
+    onItemClick: () -> Unit ={}
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
             .height(91.dp)
             .background(SimTongColor.White)
+            .noRippleClickable { onItemClick() }
     ) {
 
         Body6(
@@ -119,7 +124,7 @@ fun IdeaItem(
                 painter = painterResource(id = SimTongIcons.Comment(true)),
                 contentDescription = "comment image",
                 modifier = Modifier
-                    .padding(35.dp, 0.dp, 0.dp, 0.dp)
+                    .padding(30.dp, 0.dp, 0.dp, 0.dp)
                     .clickable { onClickComment() }
             )
 
@@ -176,7 +181,7 @@ fun IdeaComponent() {
                 "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk",
                 "유저 이름",
                 PreViewTime,
-                false,
+                true,
                 PreViewCommentCount
             )
         )
