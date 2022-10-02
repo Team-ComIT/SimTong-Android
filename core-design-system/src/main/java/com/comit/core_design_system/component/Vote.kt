@@ -152,7 +152,7 @@ fun VotePage(
                         painter = painterResource(
                             id = SimTongIcons.Comment
                         ),
-                        contentDescription = "",
+                        contentDescription = "comment image",
                         modifier = Modifier
                             .padding(25.dp, 0.dp, 0.dp, 0.dp)
                             .clickable { onCommentClick() }
@@ -282,7 +282,7 @@ fun VoteItem(
         )
 
         Body12(
-            text = voteNum.toString() + "명",
+            text = voteNum.value.toString() + "명",
             color = textNumColor,
             modifier = Modifier
                 .padding(0.dp, 0.dp, 10.dp, 0.dp)
