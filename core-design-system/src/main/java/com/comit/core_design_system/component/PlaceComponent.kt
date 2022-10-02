@@ -40,10 +40,11 @@ import com.comit.core_design_system.theme.SimTongColor
 fun ChoosePlace(
     modifier: Modifier = Modifier,
     backgroundColor: Color = SimTongColor.White,
+    roundedCornerShape: Dp = 20.dp,
     textColor: Color = SimTongColor.Black,
     onClick: (Int) -> Unit = {},
     list: List<String>,
-    painter: Painter = painterResource(id = SimTongIcons.Others.Check),
+    painter: Int = SimTongIcons.Others.Check,
     haveCheckImage: Boolean = true,
     lineHeight: Float = 2.5F,
     lineColor: Color = SimTongColor.Gray300
@@ -58,7 +59,7 @@ fun ChoosePlace(
             .height(200.dp)
             .background(
                 color = backgroundColor,
-                shape = RoundedCornerShape(20.dp)
+                shape = RoundedCornerShape(roundedCornerShape)
             )
     ) {
         itemsIndexed(list) { index, text ->
@@ -86,7 +87,7 @@ fun ChoosePlaceItem(
     text: String,
     textColor: Color,
     index: Int,
-    painter: Painter,
+    painter: Int,
     haveCheckImage: Boolean,
     lineHeight: Float,
     lineColor: Color,
@@ -164,13 +165,13 @@ fun ChoosePlaceItem(
 @Composable
 fun CheckImage(
     isNeedExpansion: Int,
-    painter: Painter,
+    painter: Int,
     index: Int,
     paddingSide: Dp
 ) {
     if (isNeedExpansion == index) {
         Image(
-            painter = painter,
+            painter = painterResource(id = painter),
             contentDescription = "",
             modifier = Modifier
                 .padding(0.dp, 0.dp, paddingSide, 0.dp)
