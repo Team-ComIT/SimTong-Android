@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -58,19 +59,14 @@ data class VoteListData(
 )
 
 @Composable
-fun VoteLazyColumn(
+fun Vote(
     modifier: Modifier = Modifier,
     list: List<VoteData>,
     onHeartClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
     onItemClick: (Int) -> Unit = {}
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .background(
-                SimTongColor.White
-            )
-    ) {
+    LazyColumn() {
         items(list) {
             VotePage(
                 modifier = modifier,
@@ -94,8 +90,6 @@ fun VotePage(
 
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .background(SimTongColor.White)
     ) {
         Column(
             modifier = Modifier
@@ -111,14 +105,14 @@ fun VotePage(
                 Body1(
                     text = data.title,
                     modifier = Modifier
-                        .padding(0.dp, 25.dp, 0.dp, 0.dp)
+                        .padding(0.dp, 20.dp, 0.dp, 0.dp)
                 )
 
                 Body10(
                     text = data.place + " ・ " + data.time,
                     color = SimTongColor.Gray400,
                     modifier = Modifier
-                        .padding(0.dp, 0.dp, 0.dp, 20.dp)
+                        .padding(0.dp, 4.dp, 0.dp, 20.dp)
                 )
 
                 VoteItemLazyColumn(
@@ -243,7 +237,6 @@ fun VoteItem(
 
     Box(
         modifier = Modifier
-            .padding(0.dp, 0.dp, 0.dp, 10.dp)
             .fillMaxWidth()
             .height(32.dp)
             .background(
@@ -292,11 +285,13 @@ fun VoteItem(
                 .wrapContentWidth(Alignment.End)
         )
     }
+    
+    Spacer(modifier = Modifier.height(10.dp))
 }
 
 @Preview
 @Composable
-fun Vote() {
+fun PreviewVote() {
 
     val list = listOf(
         VoteData(
@@ -320,10 +315,7 @@ fun Vote() {
                     check = false
                 )
             ),
-            imageList = listOf(
-                "1", "2", "1", "2", "1", "2", "1",
-                "2", "1", "2", "1", "2", "1", "2", "1", "2", "1",
-            )
+            imageList = null
         ),
         VoteData(
             title = "점심 메뉴 투표",
@@ -350,5 +342,6 @@ fun Vote() {
         )
     )
 
-    VoteLazyColumn(list = list)
+    Vote(
+        list = list)
 }
