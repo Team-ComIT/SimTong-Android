@@ -117,7 +117,7 @@ fun IdeaItem(
 
             Image(
                 painter = painterResource(id = SimTongIcons.Comment(true)),
-                contentDescription = "",
+                contentDescription = "comment image",
                 modifier = Modifier
                     .padding(35.dp, 0.dp, 0.dp, 0.dp)
                     .clickable { onClickComment() }

@@ -111,7 +111,7 @@ fun NoticeBoardItem(
                         painter = painterResource(
                             id = R.drawable.img_notice_board_rectangle
                         ),
-                        contentDescription = "",
+                        contentDescription = "profile image",
                         modifier = Modifier
                             .width(30.dp)
                             .height(30.dp)
@@ -132,7 +132,7 @@ fun NoticeBoardItem(
                     painter = painterResource(
                         id = SimTongIcons.Option(true)
                     ),
-                    contentDescription = "",
+                    contentDescription = "option image",
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(Alignment.End)
@@ -154,7 +154,7 @@ fun NoticeBoardItem(
                     painter = painterResource(
                         id = SimTongIcons.Heart(like.value)
                     ),
-                    contentDescription = "",
+                    contentDescription = "heart image",
                     modifier = Modifier
                         .noRippleClickable {
                             like.value = !like.value
@@ -166,7 +166,7 @@ fun NoticeBoardItem(
                     painter = painterResource(
                         id = SimTongIcons.Comment
                     ),
-                    contentDescription = "",
+                    contentDescription = "comment image",
                     modifier = Modifier
                         .padding(15.dp, 0.dp, 0.dp, 0.dp)
                         .width(26.dp)
@@ -176,6 +176,8 @@ fun NoticeBoardItem(
 
             Row(
                 modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentWidth(Alignment.Start)
             ) {
                 PeopleImageList(
                     itemWidth = 20.dp,
@@ -236,7 +238,7 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
                     painter = painterResource(
                         id = item
                     ),
-                    contentDescription = "image",
+                    contentDescription = "item image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()

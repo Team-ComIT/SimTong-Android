@@ -118,7 +118,7 @@ fun CommentItem(
                 painter = painterResource(
                     id = R.drawable.img_notice_board_rectangle
                 ),
-                contentDescription = "",
+                contentDescription = "profile image",
                 modifier = Modifier
                     .padding(20.dp, 0.dp, 0.dp, 0.dp)
                     .width(32.dp)
@@ -178,7 +178,7 @@ fun CommentItem(
                 painter = painterResource(
                     id = SimTongIcons.Heart(like.value)
                 ),
-                contentDescription = "",
+                contentDescription = "heart image",
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.End)

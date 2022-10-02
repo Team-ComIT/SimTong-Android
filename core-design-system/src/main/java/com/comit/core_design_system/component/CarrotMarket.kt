@@ -86,7 +86,7 @@ fun CarrotMarketItemCard(
         Column(modifier = Modifier.fillMaxSize()) {
             Image(
                 painterResource(id = R.drawable.img_item_carrot),
-                contentDescription = "",
+                contentDescription = "item image",
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(imageHeight)
@@ -122,7 +122,7 @@ fun CarrotMarketItemCard(
             painter = painterResource(
                 id = SimTongIcons.Heart(heartClickCheck.value)
             ),
-            contentDescription = "",
+            contentDescription = "heart image",
             modifier = Modifier
                 .fillMaxHeight()
                 .wrapContentHeight(align = Alignment.Bottom)

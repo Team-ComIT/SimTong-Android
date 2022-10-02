@@ -172,7 +172,7 @@ fun CheckImage(
     if (isNeedExpansion == index) {
         Image(
             painter = painterResource(id = painter),
-            contentDescription = "",
+            contentDescription = "check image",
             modifier = Modifier
                 .padding(0.dp, 0.dp, paddingSide, 0.dp)
                 .fillMaxHeight()
