@@ -3,7 +3,6 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -125,7 +124,7 @@ fun IdeaItem(
                 contentDescription = "comment image",
                 modifier = Modifier
                     .padding(30.dp, 0.dp, 0.dp, 0.dp)
-                    .clickable { onClickComment() }
+                    .noRippleClickable { onClickComment() }
             )
 
             Body14(
