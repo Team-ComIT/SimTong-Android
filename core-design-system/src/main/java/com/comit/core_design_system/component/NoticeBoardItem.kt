@@ -180,7 +180,7 @@ fun NoticeBoardItem(
                 PeopleImageList(
                     itemWidth = 20.dp,
                     nullPainter = painterResource(id = R.drawable.img_notice_board_rectangle),
-                    showImage = R.drawable.img_notice_board_rectangle,
+                    showImage = 3,
                     list = listOf("1", "2", "3")
                 )
             }
