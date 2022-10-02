@@ -15,8 +15,8 @@ data class AdditionAllSchedulesRequest(
     val content: String,
 
     @field:SerializedName("start_at")
-    val start_at: Date,
+    val startAt: Date,
 
     @field:SerializedName("end_at")
-    val end_at: Date,
+    val endAt: Date,
 )

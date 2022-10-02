@@ -10,9 +10,9 @@ data class SimpleSchedulesResponse(
     data class Schedules(
 
         @field:SerializedName("start_at")
-        val start_at: String,
+        val startAt: String,
 
         @field:SerializedName("end_at")
-        val end_at: String,
+        val endAt: String,
     )
 }

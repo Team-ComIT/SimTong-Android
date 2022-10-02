@@ -17,5 +17,5 @@ data class UsersInformationResponse(
     val spot: String,
 
     @field:SerializedName("profile_image_path")
-    val profile_image_path: String,
+    val profileImagePath: String,
 )

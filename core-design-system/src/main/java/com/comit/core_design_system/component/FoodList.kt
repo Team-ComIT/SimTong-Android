@@ -1,6 +1,5 @@
 package com.comit.core_design_system.component
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -25,8 +24,6 @@ import com.comit.core_design_system.R
 import com.comit.core_design_system.theme.Body13
 import com.comit.core_design_system.theme.SimTongColor
 import com.comit.core_design_system.util.time
-import java.sql.Date
-import java.text.SimpleDateFormat
 
 @Composable
 fun FoodList(

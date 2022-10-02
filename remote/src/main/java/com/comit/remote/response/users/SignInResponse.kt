@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class SignInResponse(
 
     @field:SerializedName("access_token")
-    val access_token: String,
+    val accessToken: String,
 
     @field:SerializedName("access_token_exp")
     val accessTokenExp: String,

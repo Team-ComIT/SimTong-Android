@@ -8,8 +8,8 @@ data class ReissueTokenResponse(
     val accessToken: String,
 
     @field:SerializedName("access_token_exp")
-    val access_token_exp: String,
+    val accessTokenExp: String,
 
     @field:SerializedName("refresh_token")
-    val refresh_token: String,
+    val refreshToken: String,
 )
