@@ -32,7 +32,7 @@ data class IconListData(
 )
 
 @Composable
-fun PictureVideoCameraFileList(
+fun PictureVideoCameraFile(
     modifier: Modifier = Modifier,
     list: List<IconListData>,
     onClick: (Int) -> Unit = {},
@@ -128,8 +128,8 @@ fun PictureVideoCameraFileItem(
 
 @Preview
 @Composable
-fun PictureVideoCameraFile() {
-    PictureVideoCameraFileList(
+fun PreviewPictureVideoCameraFile() {
+    PictureVideoCameraFile(
         list = listOf(
             IconListData(SimTongIcons.Image, "사진/동영상"),
             IconListData(SimTongIcons.Photo, "카메라"),
