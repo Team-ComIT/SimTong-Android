@@ -38,7 +38,7 @@ data class IdeaData(
     val commentCount: Int
 )
 @Composable
-fun IdeaLazyColumn(
+fun IdeaComponent(
     modifier: Modifier = Modifier,
     list: List<IdeaData>,
     onClickHeart: () -> Unit = {},
@@ -164,8 +164,8 @@ private val PreViewCommentCount: Int = 0
 
 @Preview
 @Composable
-fun IdeaComponent() {
-    IdeaLazyColumn(
+fun PreviewIdeaComponent() {
+    IdeaComponent(
         list = listOf(
             IdeaData(
                 "안녕하세요",
