@@ -45,12 +45,14 @@ data class CommentData(
     val content: String,
     val time: String,
     val likeNum: Int,
-    val like: Boolean
+    val like: Boolean,
+    val own: Boolean,
+    val profileImage: String?
 )
 
 @ExperimentalFoundationApi
 @Composable
-fun CommentItemLazyColumn(
+fun Comment(
     modifier: Modifier = Modifier,
     list: List<CommentData>,
     longClick: (Int) -> Unit = {},
@@ -104,8 +106,10 @@ fun CommentItem(
                     onCLickCheck.value = false
                 },
                 onLongClick = {
-                    longClick(index)
-                    onCLickCheck.value = true
+                    if(data.own) {
+                        longClick(index)
+                        onCLickCheck.value = true
+                    }
                 }
             )
     ) {
@@ -114,18 +118,22 @@ fun CommentItem(
                 .fillMaxSize()
                 .background(backgroundColor)
         ) {
-            Image(
-                painter = painterResource(
-                    id = R.drawable.img_notice_board_rectangle
-                ),
-                contentDescription = "profile image",
-                modifier = Modifier
-                    .padding(20.dp, 0.dp, 0.dp, 0.dp)
-                    .width(32.dp)
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically)
-                    .clip(CircleShape)
-            )
+            if(data.profileImage == null){
+                Image(
+                    painter = painterResource(
+                        id = R.drawable.img_notice_board_rectangle
+                    ),
+                    contentDescription = "profile image",
+                    modifier = Modifier
+                        .padding(20.dp, 0.dp, 0.dp, 0.dp)
+                        .width(32.dp)
+                        .fillMaxHeight()
+                        .wrapContentHeight(Alignment.CenterVertically)
+                        .clip(CircleShape)
+                )
+            }else{
+
+            }
 
             Column(
                 Modifier
@@ -169,7 +177,7 @@ fun CommentItem(
                         text = "댓글 쓰기",
                         modifier = Modifier
                             .padding(15.dp, 0.dp, 0.dp, 0.dp)
-                            .clickable { commentClick(index) }
+                            .noRippleClickable { commentClick(index) }
                     )
                 }
             }
@@ -220,15 +228,15 @@ fun CommentText(
 @ExperimentalFoundationApi
 @Preview
 @Composable
-fun Comment() {
-    CommentItemLazyColumn(
+fun PreviewComment() {
+    Comment(
         list = listOf(
-            CommentData("장석연", "아이고..그런..", "1시간", 0, false),
-            CommentData("장석연", "아이고..그런..사연이사연사연사연사연", "1시간", 0, false),
-            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false),
-            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false),
-            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false),
-            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false)
+            CommentData("장석연", "아이고..그런..", "1시간", 0, like = false, own = true, null),
+            CommentData("장석연", "아이고..그런..사연이사연사연사연사연", "1시간", 0, like = false, own = true, null),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false, own = true, null),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false, own = false, null),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false, own = false, null),
+            CommentData("장석연", "아이고..그런..사연이..", "1시간", 0, false, own = false, null)
         )
     )
 }
