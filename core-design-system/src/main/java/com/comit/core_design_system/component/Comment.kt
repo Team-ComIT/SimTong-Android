@@ -3,7 +3,6 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -106,7 +105,7 @@ fun CommentItem(
                     onCLickCheck.value = false
                 },
                 onLongClick = {
-                    if(data.own) {
+                    if (data.own) {
                         longClick(index)
                         onCLickCheck.value = true
                     }
@@ -118,7 +117,7 @@ fun CommentItem(
                 .fillMaxSize()
                 .background(backgroundColor)
         ) {
-            if(data.profileImage == null){
+            if (data.profileImage == null) {
                 Image(
                     painter = painterResource(
                         id = R.drawable.img_notice_board_rectangle
@@ -131,8 +130,7 @@ fun CommentItem(
                         .wrapContentHeight(Alignment.CenterVertically)
                         .clip(CircleShape)
                 )
-            }else{
-
+            } else {
             }
 
             Column(

@@ -22,9 +22,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
-import com.comit.core_design_system.component.time
 import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.core_design_system.theme.Title3
+import com.comit.core_design_system.util.time
 import com.example.feature_home.R
 
 object HomeFakeData {

@@ -84,7 +84,7 @@ fun CarrotMarketItemCard(
                 .fillMaxSize()
                 .padding(20.dp, 0.dp, 20.dp, 0.dp)
         ) {
-            
+
             Box(
                 modifier = Modifier
                     .background(
@@ -92,7 +92,7 @@ fun CarrotMarketItemCard(
                         shape = RoundedCornerShape(5.dp)
                     )
             ) {
-                if(data.imageUrl == null){
+                if (data.imageUrl == null) {
                     Image(
                         painterResource(id = R.drawable.ic_carrot_market_base),
                         contentDescription = "item image",
@@ -100,8 +100,7 @@ fun CarrotMarketItemCard(
                         modifier = Modifier
                             .padding(50.dp)
                     )
-                }else{
-
+                } else {
                 }
             }
 
@@ -114,7 +113,7 @@ fun CarrotMarketItemCard(
             Body10(
                 text = data.place + " " + "•" + " " + data.time,
                 color = SimTongColor.OtherColor.GrayA,
-                modifier = Modifier.padding(0.dp, 2.dp,0.dp,9.dp)
+                modifier = Modifier.padding(0.dp, 2.dp, 0.dp, 9.dp)
             )
 
             Row(
@@ -146,13 +145,9 @@ fun CarrotMarketItemCard(
                         }
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(24.dp))
-            
         }
-
-
-
     }
 }
 

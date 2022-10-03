@@ -67,7 +67,7 @@ fun IdeaItem(
     data: IdeaData,
     onClickHeart: () -> Unit = {},
     onClickComment: () -> Unit = {},
-    onItemClick: () -> Unit ={}
+    onItemClick: () -> Unit = {}
 ) {
     Column(
         modifier = modifier

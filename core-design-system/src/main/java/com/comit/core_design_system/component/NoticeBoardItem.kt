@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -40,12 +41,14 @@ import androidx.compose.ui.util.lerp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.theme.Body10
 import com.comit.core_design_system.theme.Body11
 import com.comit.core_design_system.theme.Body5
+import com.comit.core_design_system.theme.Body8
+import com.comit.core_design_system.theme.Body9
 import com.comit.core_design_system.theme.SimTongColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
@@ -118,6 +121,25 @@ fun NoticeBoardItem(
                     list = listOf("1", "2", "3")
                 )
             }
+
+            Row(
+                modifier = Modifier
+                    .height(20.dp)
+            ) {
+                Spacer(modifier = Modifier.width(20.dp))
+
+                Body9(text = data.placeName)
+
+                Body10(text = data.contentText)
+            }
+
+            Body8(
+                text = "댓글 " + 4.toString() + "개 모두 보기",
+                color = SimTongColor.Gray500,
+                modifier = Modifier
+                    .padding(20.dp, 4.dp, 0.dp, 0.dp)
+                    .noRippleClickable { }
+            )
         }
     }
 }
@@ -127,7 +149,7 @@ fun NoticeBoardItemRowTop(
     title: String,
     time: String,
     menuClick: (Int) -> Unit
-){
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -187,7 +209,7 @@ fun NoticeBoardItemHeartChat(
     dataLike: Boolean,
     heartClick: (Int) -> Unit,
     commentClick: (Int) -> Unit
-){
+) {
     val like = rememberSaveable { mutableStateOf(dataLike) }
 
     Row(
@@ -355,7 +377,9 @@ data class NoticeBoardData(
     val time: String,
     val like: Boolean,
     val imageList: List<String>?,
-    val peopleList: List<String>?
+    val peopleList: List<String>?,
+    val placeName: String,
+    val contentText: String
 )
 
 val viewPagerNoticeBoardImageList = listOf(
@@ -376,7 +400,9 @@ fun PreviewNoticeBoard() {
                 "1시간 전",
                 false,
                 null,
-                peopleList = null
+                peopleList = null,
+                placeName = "로쏘 (주) 전체 지점 ",
+                contentText = "본문"
             )
         )
     )
