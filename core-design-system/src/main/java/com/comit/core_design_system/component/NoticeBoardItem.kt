@@ -45,6 +45,7 @@ import com.comit.core_design_system.theme.Body5
 import com.comit.core_design_system.theme.SimTongColor
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
@@ -54,12 +55,12 @@ import kotlin.math.absoluteValue
 
 @ExperimentalPagerApi
 @Composable
-fun NoticeBoardLazyColumn(
+fun NoticeBoard(
     modifier: Modifier = Modifier,
     list: List<NoticeBoardData>,
-    menuClick: () -> Unit = {},
-    heartClick: () -> Unit = {},
-    commentClick: () -> Unit = {}
+    menuClick: (Int) -> Unit = {},
+    heartClick: (Int) -> Unit = {},
+    commentClick: (Int) -> Unit = {}
 ) {
     LazyColumn() {
         items(list) {
@@ -79,100 +80,31 @@ fun NoticeBoardLazyColumn(
 fun NoticeBoardItem(
     modifier: Modifier,
     data: NoticeBoardData,
-    menuClick: () -> Unit,
-    heartClick: () -> Unit,
-    commentClick: () -> Unit
+    menuClick: (Int) -> Unit,
+    heartClick: (Int) -> Unit,
+    commentClick: (Int) -> Unit
 ) {
-    val like = rememberSaveable { mutableStateOf(data.like) }
 
     Card() {
         Column(
             modifier = modifier
                 .fillMaxWidth()
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp)
-            ) {
-                Box(
-                    modifier = Modifier
-                        .padding(20.dp, 0.dp, 0.dp, 0.dp)
-                        .width(30.dp)
-                        .fillMaxHeight()
-                        .wrapContentHeight(Alignment.CenterVertically)
-                        .height(30.dp)
-                        .background(
-                            shape = CircleShape,
-                            color = Color.LightGray
-                        )
-                ) {
-                    Image(
-                        painter = painterResource(
-                            id = R.drawable.img_notice_board_rectangle
-                        ),
-                        contentDescription = "profile image",
-                        modifier = Modifier
-                            .width(30.dp)
-                            .height(30.dp)
-                            .clip(CircleShape)
-                        // contentScale = ContentScale.Crop
-                    )
-                }
+            NoticeBoardItemRowTop(
+                title = data.title,
+                time = data.time,
+                menuClick = menuClick
+            )
 
-                Body5(
-                    text = data.title + " • " + data.time,
-                    modifier = Modifier
-                        .padding(15.dp, 0.dp, 0.dp, 0.dp)
-                        .fillMaxHeight()
-                        .wrapContentHeight(Alignment.CenterVertically)
-                )
+            ViewPagerSliderNoticeBoard(
+                list = data.imageList
+            )
 
-                Image(
-                    painter = painterResource(
-                        id = SimTongIcons.Option(true)
-                    ),
-                    contentDescription = "option image",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.End)
-                        .fillMaxHeight()
-                        .wrapContentHeight(Alignment.CenterVertically)
-                        .padding(0.dp, 0.dp, 20.dp, 0.dp)
-                        .clickable { menuClick() }
-                )
-            }
-            ViewPagerSliderNoticeBoard()
-
-            Row(
-                modifier = Modifier
-                    .padding(20.dp, 10.dp, 0.dp, 10.dp)
-                    .fillMaxWidth()
-            ) {
-
-                Image(
-                    painter = painterResource(
-                        id = SimTongIcons.Heart(like.value)
-                    ),
-                    contentDescription = "heart image",
-                    modifier = Modifier
-                        .noRippleClickable {
-                            like.value = !like.value
-                            heartClick()
-                        }
-                )
-
-                Image(
-                    painter = painterResource(
-                        id = SimTongIcons.Comment
-                    ),
-                    contentDescription = "comment image",
-                    modifier = Modifier
-                        .padding(15.dp, 0.dp, 0.dp, 0.dp)
-                        .width(26.dp)
-                        .noRippleClickable { commentClick() }
-                )
-            }
+            NoticeBoardItemHeartChat(
+                dataLike = data.like,
+                heartClick = heartClick,
+                commentClick = commentClick
+            )
 
             Row(
                 modifier = Modifier
@@ -190,6 +122,105 @@ fun NoticeBoardItem(
     }
 }
 
+@Composable
+fun NoticeBoardItemRowTop(
+    title: String,
+    time: String,
+    menuClick: (Int) -> Unit
+){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .padding(20.dp, 0.dp, 0.dp, 0.dp)
+                .width(30.dp)
+                .fillMaxHeight()
+                .wrapContentHeight(Alignment.CenterVertically)
+                .height(30.dp)
+                .background(
+                    shape = CircleShape,
+                    color = Color.LightGray
+                )
+        ) {
+            Image(
+                painter = painterResource(
+                    id = R.drawable.img_notice_board_rectangle
+                ),
+                contentDescription = "profile image",
+                modifier = Modifier
+                    .width(30.dp)
+                    .height(30.dp)
+                    .clip(CircleShape)
+                // contentScale = ContentScale.Crop
+            )
+        }
+
+        Body5(
+            text = "$title • $time",
+            modifier = Modifier
+                .padding(15.dp, 0.dp, 0.dp, 0.dp)
+                .fillMaxHeight()
+                .wrapContentHeight(Alignment.CenterVertically)
+        )
+
+        Image(
+            painter = painterResource(
+                id = SimTongIcons.Option(true)
+            ),
+            contentDescription = "option image",
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.End)
+                .fillMaxHeight()
+                .wrapContentHeight(Alignment.CenterVertically)
+                .padding(0.dp, 0.dp, 20.dp, 0.dp)
+                .clickable { menuClick(1) }
+        )
+    }
+}
+
+@Composable
+fun NoticeBoardItemHeartChat(
+    dataLike: Boolean,
+    heartClick: (Int) -> Unit,
+    commentClick: (Int) -> Unit
+){
+    val like = rememberSaveable { mutableStateOf(dataLike) }
+
+    Row(
+        modifier = Modifier
+            .padding(20.dp, 10.dp, 0.dp, 10.dp)
+            .fillMaxWidth()
+    ) {
+
+        Image(
+            painter = painterResource(
+                id = SimTongIcons.Heart(like.value)
+            ),
+            contentDescription = "heart image",
+            modifier = Modifier
+                .noRippleClickable {
+                    like.value = !like.value
+                    heartClick(1)
+                }
+        )
+
+        Image(
+            painter = painterResource(
+                id = SimTongIcons.Comment
+            ),
+            contentDescription = "comment image",
+            modifier = Modifier
+                .padding(15.dp, 0.dp, 0.dp, 0.dp)
+                .width(26.dp)
+                .noRippleClickable { commentClick(1) }
+        )
+    }
+}
+
 @Stable
 private val ViewPageSliderNoticeBoardAnimationSpec: Int = 600
 
@@ -199,7 +230,8 @@ private val ViewPageSliderNoticeBoardDelay: Long = 2000
 @ExperimentalPagerApi
 @Composable
 fun ViewPagerSliderNoticeBoardHorizontalPager(
-    pagerState: PagerState
+    pagerState: PagerState,
+    list: List<String>?
 ) {
     HorizontalPager(
         state = pagerState,
@@ -228,6 +260,7 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
                 .fillMaxWidth()
         ) {
             val item = viewPagerNoticeBoardImageList[it]
+
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -236,7 +269,7 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
             ) {
                 Image(
                     painter = painterResource(
-                        id = item
+                        id = R.drawable.img_notice_board_rectangle
                     ),
                     contentDescription = "item image",
                     contentScale = ContentScale.Crop,
@@ -252,7 +285,9 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
 
 @ExperimentalPagerApi
 @Composable
-fun ViewPagerSliderNoticeBoard() {
+fun ViewPagerSliderNoticeBoard(
+    list: List<String>?
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -274,16 +309,19 @@ fun ViewPagerSliderNoticeBoard() {
             }
         }
 
-        ViewPagerSliderNoticeBoardHorizontalPager(pagerState = pagerState)
+        ViewPagerSliderNoticeBoardHorizontalPager(
+            pagerState = pagerState,
+            list = list
+        )
 
         Box(
             modifier = Modifier
-                .padding(0.dp, 0.dp, 0.dp, 10.dp)
+                .padding(0.dp, 0.dp, 19.dp, 17.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Bottom)
                 .height(24.dp)
                 .fillMaxWidth()
-                .wrapContentWidth(Alignment.CenterHorizontally)
+                .wrapContentWidth(Alignment.End)
                 .width(48.dp)
                 .background(
                     color = SimTongColor.Black.copy(alpha = 0.1f),
@@ -308,14 +346,16 @@ fun ViewPagerSliderNoticeBoard() {
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Bottom)
                 .padding(16.dp)
-        )*/
+        )*/ // 기존에 점으로 되어있는 코드 주석 양해 바랍니다 ㅎㅎ
     }
 }
 
 data class NoticeBoardData(
     val title: String,
     val time: String,
-    val like: Boolean
+    val like: Boolean,
+    val imageList: List<String>?,
+    val peopleList: List<String>?
 )
 
 val viewPagerNoticeBoardImageList = listOf(
@@ -328,13 +368,15 @@ val viewPagerNoticeBoardImageList = listOf(
 @ExperimentalPagerApi
 @Preview
 @Composable
-fun NoticeBoard() {
-    NoticeBoardLazyColumn(
+fun PreviewNoticeBoard() {
+    NoticeBoard(
         list = listOf(
             NoticeBoardData(
                 "제목",
                 "1시간 전",
-                false
+                false,
+                null,
+                peopleList = null
             )
         )
     )
