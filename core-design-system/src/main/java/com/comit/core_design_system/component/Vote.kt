@@ -285,7 +285,7 @@ fun VoteItem(
                 .wrapContentWidth(Alignment.End)
         )
     }
-    
+
     Spacer(modifier = Modifier.height(10.dp))
 }
 
@@ -343,5 +343,6 @@ fun PreviewVote() {
     )
 
     Vote(
-        list = list)
+        list = list
+    )
 }

@@ -2,8 +2,8 @@ package com.comit.core_design_system.util
 
 import android.annotation.SuppressLint
 import androidx.compose.runtime.Stable
+import java.sql.Date
 import java.text.SimpleDateFormat
-import java.util.*
 
 @Stable
 private val TimeLunch: Int = 900

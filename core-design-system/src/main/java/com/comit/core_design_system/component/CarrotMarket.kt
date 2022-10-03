@@ -100,7 +100,6 @@ fun CarrotMarketItemCard(
                         modifier = Modifier
                             .padding(50.dp)
                     )
-                } else {
                 }
             }
 

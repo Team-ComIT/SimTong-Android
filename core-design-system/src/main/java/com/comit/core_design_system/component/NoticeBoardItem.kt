@@ -100,7 +100,7 @@ fun NoticeBoardItem(
             )
 
             ViewPagerSliderNoticeBoard(
-                list = data.imageList
+                // list = data.imageList
             )
 
             NoticeBoardItemHeartChat(
@@ -253,7 +253,7 @@ private val ViewPageSliderNoticeBoardDelay: Long = 2000
 @Composable
 fun ViewPagerSliderNoticeBoardHorizontalPager(
     pagerState: PagerState,
-    list: List<String>?
+    // list: List<String>?
 ) {
     HorizontalPager(
         state = pagerState,
@@ -281,7 +281,7 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
                 }
                 .fillMaxWidth()
         ) {
-            val item = viewPagerNoticeBoardImageList[it]
+            // val item = viewPagerNoticeBoardImageList[it]
 
             Box(
                 modifier = Modifier
@@ -308,7 +308,7 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
 @ExperimentalPagerApi
 @Composable
 fun ViewPagerSliderNoticeBoard(
-    list: List<String>?
+    // list: List<String>?
 ) {
     Box(
         modifier = Modifier
@@ -332,8 +332,8 @@ fun ViewPagerSliderNoticeBoard(
         }
 
         ViewPagerSliderNoticeBoardHorizontalPager(
-            pagerState = pagerState,
-            list = list
+            pagerState = pagerState
+            // list = list
         )
 
         Box(

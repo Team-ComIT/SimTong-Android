@@ -130,7 +130,6 @@ fun CommentItem(
                         .wrapContentHeight(Alignment.CenterVertically)
                         .clip(CircleShape)
                 )
-            } else {
             }
 
             Column(
