@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.theme.Body13
 import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.util.time
+import com.comit.core_design_system.util.currentMealsTime
 
 @Composable
 fun FoodList(
@@ -111,7 +111,7 @@ fun FoodListPreview() {
     FoodList(
         textColorBase = SimTongColor.Black,
         textColorCheck = SimTongColor.White,
-        timeCheck = time(),
+        timeCheck = currentMealsTime(),
         list = listOf(
             "누룽지\n돼지불고기\n마늘쫑건새우볶음\n배추김치\n달콤한붓세빵\n바나나/딸기우유",
             "돼지불고기",
