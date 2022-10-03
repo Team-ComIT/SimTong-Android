@@ -5,4 +5,5 @@ import java.text.SimpleDateFormat
 import java.util.Date
 
 @SuppressLint("SimpleDateFormat")
-val currentTime = SimpleDateFormat("HHmm").format(Date(System.currentTimeMillis())).toInt()
+val currentTime =
+    SimpleDateFormat("HHmm").format(Date(System.currentTimeMillis())).toInt()
