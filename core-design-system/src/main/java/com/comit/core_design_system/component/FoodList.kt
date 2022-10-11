@@ -80,19 +80,19 @@ fun FoodListItem(
         modifier = modifier
             .width(FoodListItemCardWidth)
             .height(FoodListItemCardHeight)
-            .padding(15.dp, 0.dp, 15.dp, 0.dp)
+            .padding(15.dp, 0.dp, 15.dp, 0.dp),
     ) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .paint(painterResource(id = backgroundImage))
+                .paint(painterResource(id = backgroundImage)),
         ) {
 
             Body13(
                 text = menu,
                 color = textColor,
                 modifier = Modifier
-                    .padding(12.dp, 15.dp, 10.dp, 0.dp)
+                    .padding(12.dp, 15.dp, 10.dp, 0.dp),
             )
         }
     }
@@ -110,6 +110,6 @@ fun FoodListPreview() {
             "누룽지\n돼지불고기\n마늘쫑건새우볶음\n배추김치\n달콤한붓세빵\n바나나/딸기우유",
             "돼지불고기",
             "배추김치"
-        )
+        ),
     )
 }
