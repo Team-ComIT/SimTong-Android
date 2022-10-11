@@ -47,6 +47,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":core"))
     implementation(project(":core-design-system"))
+    implementation(project(":common"))
 
     implementation(Dependency.Ui.CORE_KTX)
     implementation(Dependency.Ui.APP_COMPAT)
