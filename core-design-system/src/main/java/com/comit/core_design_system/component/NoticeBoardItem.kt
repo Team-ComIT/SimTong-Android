@@ -39,10 +39,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body11
-import com.comit.core_design_system.theme.Body5
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.typography.Body11
+import com.comit.core_design_system.typography.Body5
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.PagerState

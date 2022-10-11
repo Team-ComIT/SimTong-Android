@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body10
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.theme.notoSansFamily
+import com.comit.core_design_system.typography.Body10
+import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.notoSansFamily
 import java.text.DecimalFormat
 
 data class CarrotMarketData(

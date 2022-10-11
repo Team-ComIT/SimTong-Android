@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.theme.SimTongTheme
-import com.comit.core_design_system.theme.Title3
+import com.comit.core_design_system.typography.Title3
 import com.comit.core_design_system.util.currentMealsTime
 import com.example.feature_home.R
 
