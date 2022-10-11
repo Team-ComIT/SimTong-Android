@@ -24,13 +24,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.noRippleClickable
-import com.comit.core_design_system.R
-import com.comit.core_design_system.component.BigRedRoundButton
+import com.comit.core_design_system.button.BigRedRoundButton
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body1
-import com.comit.core_design_system.theme.Body8
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.typography.Body1
+import com.comit.core_design_system.typography.Body8
+import com.comit.feature_auth.R
 
 @Stable
 val SignInTopRowHeight = 43.dp
@@ -39,16 +39,16 @@ val SignInTopRowHeight = 43.dp
 fun SignInScreen(
 
 ){
+    var id by remember { mutableStateOf<String?>(null) }
+    var password by remember { mutableStateOf<String?>(null) }
+    var idError by remember { mutableStateOf<String?>(null) }
+    var passwordError by remember { mutableStateOf<String?>(null) }
+    val buttonEnabled = !(id == null || id == "" || password == null || password == "")
+
     Column(
         modifier = Modifier
             .padding(40.dp, 107.5.dp, 40.dp, 30.dp)
     ) {
-
-        var id by remember { mutableStateOf<String?>(null) }
-        var password by remember { mutableStateOf<String?>(null) }
-        val idError by remember { mutableStateOf<String?>(null) }
-        val passwordError by remember { mutableStateOf<String?>(null) }
-        val buttonEnabled= !(id == null && password == null)
 
         SignInTopLogo()
 
@@ -56,10 +56,14 @@ fun SignInScreen(
         
         SimTongTextField(
             value = id ?: "",
-            onValueChange = { id = it },
+            onValueChange = {
+                id = it
+                idError = null
+                passwordError = null
+            },
             hintBackgroundColor = SimTongColor.Gray200,
             backgroundColor = SimTongColor.Gray100,
-            hint = "사원번호",
+            hint = stringResource(id = R.string.employee_number),
             error = idError
         )
 
@@ -67,10 +71,14 @@ fun SignInScreen(
 
         SimTongTextField(
             value = password ?: "",
-            onValueChange = { password = it },
+            onValueChange = {
+                password = it
+                idError = null
+                passwordError = null
+            },
             hintBackgroundColor = SimTongColor.Gray200,
             backgroundColor = SimTongColor.Gray100,
-            hint = "비밀번호",
+            hint = stringResource(id = R.string.password),
             isPassword = true,
             error = passwordError
         )
@@ -79,13 +87,17 @@ fun SignInScreen(
 
         BigRedRoundButton(
             text = "Log in",
-            onClick = {},
+            onClick = {
+                idError = ""
+                passwordError = "아이디나 비밀번호가 일치하지 않습니다."
+            },
             enabled = buttonEnabled,
             modifier = Modifier
                 .fillMaxWidth()
         )
 
         SignInBottomBtn()
+
     }
 }
 
@@ -104,15 +116,15 @@ fun SignInTopLogo(
     ) {
         Image(
             painter = painterResource(
-                id = SimTongIcons.Others.Sim),
-            contentDescription = stringResource(id = R.string.description_ic_logo)
+                id = R.drawable.ic_sim),
+            contentDescription = stringResource(id = R.string.description_ic_sim)
         )
 
         Image(
             painter = painterResource(
-                id = SimTongIcons.Others.Dang
+                id = R.drawable.ic_dang
             ),
-            contentDescription = stringResource(id = R.string.description_ic_logo)
+            contentDescription = stringResource(id = R.string.description_ic_dang)
         )
 
         Image(
@@ -139,7 +151,7 @@ fun SignInBottomBtn(
         .wrapContentSize(Alignment.BottomCenter)
     ) {
         Body8(
-            text = "회원가입",
+            text = stringResource(id = R.string.sign_up),
             color = SimTongColor.OtherColor.GrayB3,
             modifier = Modifier
                 .noRippleClickable { }
@@ -147,14 +159,14 @@ fun SignInBottomBtn(
         )
 
         Body8(
-            text = "|",
+            text = stringResource(id = R.string.contour),
             color = SimTongColor.OtherColor.GrayB3,
             modifier = Modifier
                 .padding(SignInBottomBtnTextPadding)
         )
 
         Body8(
-            text = "사원번호 • 비밀번호 찾기",
+            text = stringResource(id = R.string.find_employee_number_password),
             color = SimTongColor.OtherColor.GrayB3,
             modifier = Modifier
                 .noRippleClickable { }
