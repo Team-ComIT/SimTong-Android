@@ -16,11 +16,16 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch
 
+data class TabItem(
+    val title: String,
+    //val screen: Unit
+    )
+
 @ExperimentalPagerApi
 @Composable
 fun TabBar(
     modifier: Modifier = Modifier,
-    filters: List<String>,
+    filters: List<TabItem>,
     onClick: (Int) -> Unit = {},
     backgroundColor: Color = SimTongColor.White,
     contentColor: Color = SimTongColor.MainColor,
@@ -47,11 +52,13 @@ fun TabBar(
                     }
                     onClick(index)
                 },
-                text = { Body5(text = filter) },
+                text = { Body5(text = filter.title) },
 
                 selectedContentColor = selectedContentColor,
                 unselectedContentColor = unselectedContentColor
             )
+
+
         }
     }
 }
@@ -59,10 +66,10 @@ fun TabBar(
 @ExperimentalPagerApi
 @Preview
 @Composable
-fun TabBar() {
+fun PreviewTabBar() {
     TabBar(
         modifier = Modifier
             .height(35.dp),
-        filters = listOf("아이디어 제안", "사내 고충 게시판", "추가")
+        filters = listOf()
     )
 }

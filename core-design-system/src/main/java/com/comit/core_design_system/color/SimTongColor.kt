@@ -40,6 +40,7 @@ object SimTongColor {
     val Transparent = Color(0x00000000)
 
     object OtherColor {
+        val WhiteF2 = Color(0xFFF2F2F2)
 
         val RedFFE7E7 = Color(0xFFFFE7E7)
 
