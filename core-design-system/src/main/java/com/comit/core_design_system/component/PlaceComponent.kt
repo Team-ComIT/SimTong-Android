@@ -32,9 +32,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body5
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.typography.Body5
 
 @Composable
 fun ChoosePlace(
@@ -138,8 +138,9 @@ fun ChoosePlaceItem(
                 defaultElevation = 0.dp,
                 pressedElevation = 0.dp
             )
-        ) {}
-        Row() {
+        ) {
+        }
+        Row {
             Body5(
                 text = text,
                 color = textColor,

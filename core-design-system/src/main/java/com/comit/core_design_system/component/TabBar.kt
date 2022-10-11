@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.theme.Body5
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.typography.Body5
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.launch

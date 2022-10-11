@@ -26,14 +26,14 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.comit.core_design_system.button.RedIconButton
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
-import com.comit.core_design_system.component.RedIconButton
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body13
-import com.comit.core_design_system.theme.Body3
-import com.comit.core_design_system.theme.Body5
-import com.comit.core_design_system.theme.SimTongColor
 import com.comit.core_design_system.theme.SimTongTheme
+import com.comit.core_design_system.typography.Body13
+import com.comit.core_design_system.typography.Body3
+import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
 import com.skydoves.landscapist.glide.GlideImage
 

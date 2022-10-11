@@ -1,4 +1,4 @@
-package com.comit.core_design_system.component
+package com.comit.core_design_system.button
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.theme.Body10
-import com.comit.core_design_system.theme.Body3
-import com.comit.core_design_system.theme.Body5
+import com.comit.core_design_system.typography.Body10
+import com.comit.core_design_system.typography.Body3
+import com.comit.core_design_system.typography.Body5
 
 /**
  * The lowest component of SimTongButtons

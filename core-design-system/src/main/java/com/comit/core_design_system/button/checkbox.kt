@@ -1,4 +1,4 @@
-package com.comit.core_design_system.component
+package com.comit.core_design_system.button
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.theme.Body4
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.typography.Body4
 
 /**
  * Defines the size of the SimTongCheckBox

@@ -17,12 +17,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
-import com.comit.core_design_system.theme.Body13
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.util.currentMealsTime
 
 @Composable
@@ -57,9 +55,6 @@ private val FoodListItemCardWidth: Dp = 140.dp
 
 @Stable
 private val FoodListItemCardHeight: Dp = 160.dp
-
-@Stable
-private val FoodListItemLineHeight: TextUnit = 23.sp
 
 @Composable
 fun FoodListItem(
@@ -96,7 +91,6 @@ fun FoodListItem(
             Body13(
                 text = menu,
                 color = textColor,
-                lineHeight = FoodListItemLineHeight,
                 modifier = Modifier
                     .padding(12.dp, 15.dp, 10.dp, 0.dp)
             )

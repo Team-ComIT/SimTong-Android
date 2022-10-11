@@ -41,12 +41,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
+import com.comit.core_design_system.button.BasicRoundSideButton
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.Body8
-import com.comit.core_design_system.theme.Error
-import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.theme.SimTongTypography
+import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.Body8
+import com.comit.core_design_system.typography.Error
+import com.comit.core_design_system.typography.SimTongTypography
 
 @Stable
 private val TextFieldEnabledFraction: Float = 0.75f
