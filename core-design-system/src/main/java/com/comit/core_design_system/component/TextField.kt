@@ -120,7 +120,8 @@ fun SimTongTextField(
     imeAction: ImeAction = ImeAction.Default,
     description: String? = null
 ) {
-    val borderColor: Color = if (error == null) SimTongColor.Gray200 else SimTongColor.Error
+    val borderColor: Color =
+        if (!error.isNullOrEmpty()) SimTongColor.Gray200 else SimTongColor.Error
 
     var passwordVisible by remember {
         mutableStateOf(false)
@@ -214,21 +215,21 @@ fun SimTongTextField(
                             .simClickable(
                                 rippleEnabled = false,
                             ) {
-                              onValueChange("")
+                                onValueChange("")
                             },
                         painter = painterResource(id = R.drawable.ic_close),
                         contentDescription = null,
                     )
                 }
-                
+
                 if (isPassword) {
                     Image(
                         modifier = Modifier
-                            .simClickable (
+                            .simClickable(
                                 rippleEnabled = false,
                             ) {
                                 passwordVisible = !passwordVisible
-                              },
+                            },
                         painter = painterResource(id = SimTongIcons.Password(passwordVisible)),
                         contentDescription =
                         stringResource(
@@ -241,7 +242,7 @@ fun SimTongTextField(
             }
         }
 
-        if (error != null) {
+        if (!error.isNullOrEmpty()) {
             Error(
                 text = error,
                 modifier = Modifier.padding(TextFieldMessagePadding)
@@ -314,6 +315,12 @@ fun PreviewSimTongTextField() {
             value = value6 ?: "",
             onValueChange = { value6 = it },
             backgroundColor = SimTongColor.Gray200
+        )
+
+        SimTongTextField(
+            value = value7 ?: "",
+            onValueChange = { value7 = it },
+            error = ""
         )
 
         // custom background & side btn
