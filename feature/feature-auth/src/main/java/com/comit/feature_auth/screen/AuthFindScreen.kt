@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -18,6 +19,9 @@ import com.comit.core_design_system.component.TabItem
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.feature_auth.R
 import com.google.accompanist.pager.ExperimentalPagerApi
+
+@Stable
+val AuthFindScreenTabBarHeight = 35.dp
 
 @ExperimentalPagerApi
 @Composable
@@ -37,11 +41,11 @@ fun AuthFindScreen(
 
         TabBar(
             modifier = Modifier
-                .height(35.dp),
+                .height(AuthFindScreenTabBarHeight),
             backgroundColor = SimTongColor.OtherColor.WhiteF2,
             filters = listOf(
-                TabItem("사원번호 찾기"),
-                TabItem("비밀번호 찾기")
+                TabItem(stringResource(id = R.string.find_employee)),
+                TabItem(stringResource(id = R.string.find_password))
             )
         )
 

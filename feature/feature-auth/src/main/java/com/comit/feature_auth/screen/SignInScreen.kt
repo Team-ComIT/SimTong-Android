@@ -45,6 +45,8 @@ fun SignInScreen(
     var passwordError by remember { mutableStateOf<String?>(null) }
     val buttonEnabled = !(id == null || id == "" || password == null || password == "")
 
+    val errorMsg = stringResource(id = R.string.error_message)
+
     Column(
         modifier = Modifier
             .padding(40.dp, 107.5.dp, 40.dp, 30.dp)
@@ -86,10 +88,10 @@ fun SignInScreen(
         Spacer(modifier = Modifier.height(30.dp))
 
         BigRedRoundButton(
-            text = "Log in",
+            text = stringResource(id = R.string.log_in),
             onClick = {
                 idError = ""
-                passwordError = "아이디나 비밀번호가 일치하지 않습니다."
+                passwordError = errorMsg
             },
             enabled = buttonEnabled,
             modifier = Modifier
