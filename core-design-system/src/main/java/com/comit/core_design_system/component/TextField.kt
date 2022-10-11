@@ -30,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,12 +42,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
+import com.comit.core_design_system.button.BasicRoundSideButton
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.Body8
-import com.comit.core_design_system.theme.Error
-import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.theme.SimTongTypography
+import com.comit.core_design_system.modifier.simClickable
+import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.Body8
+import com.comit.core_design_system.typography.Error
+import com.comit.core_design_system.typography.SimTongTypography
+import com.comit.core_design_system.util.runIf
 
 @Stable
 private val TextFieldEnabledFraction: Float = 0.75f
@@ -115,7 +119,7 @@ fun SimTongTextField(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
 
-    val borderColor: Color = if (error == null) SimTongColor.Gray300 else SimTongColor.Error
+    val borderColor: Color = if (error == null) SimTongColor.Gray200 else SimTongColor.Error
 
     var passwordVisible by remember {
         mutableStateOf(false)
@@ -145,12 +149,13 @@ fun SimTongTextField(
                     color = borderColor,
                     shape = RoundedCornerShape(round)
                 )
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null
-                ) {
-                    if (onClick != null) {
-                        onClick()
+                .runIf(onClick != null) {
+                    composed {
+                        simClickable(
+                            rippleEnabled = false
+                        ) {
+                            onClick!!
+                        }
                     }
                 }
         ) {

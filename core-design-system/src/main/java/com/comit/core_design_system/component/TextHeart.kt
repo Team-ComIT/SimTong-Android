@@ -11,18 +11,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.SimTongColor
 
 @Composable
 fun TextHeart(
+    modifier: Modifier = Modifier,
     text: String,
     textStyle: TextStyle,
     textColor: Color,
     click: Boolean = false,
     isGray: Boolean,
     onClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
     heartModifier: Modifier = Modifier
 ) {
 
@@ -40,7 +40,7 @@ fun TextHeart(
             painter = painterResource(
                 id = SimTongIcons.Heart(checkClickWatcher.value, isGray)
             ),
-            contentDescription = "",
+            contentDescription = null,
             modifier = heartModifier
         )
 

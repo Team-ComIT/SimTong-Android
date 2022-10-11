@@ -1,4 +1,4 @@
-package com.comit.core_design_system.component
+package com.comit.core_design_system.button
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.theme.Body4
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.typography.Body4
 
 /**
  * Defines the size of the SimTongCheckBox
@@ -167,12 +167,15 @@ fun TextCheckBox(
             checkBoxSize = checkBoxSize,
             borderColor = borderColor,
             disableBorderColor = disableBorderColor,
-            backgroundColor = backgroundColor
+            backgroundColor = backgroundColor,
         )
 
         Spacer(modifier = Modifier.width(TextCheckBoxSpacerWidth))
 
-        Body4(text = text, color = textColor)
+        Body4(
+            text = text,
+            color = textColor,
+        )
     }
 }
 
@@ -183,10 +186,17 @@ fun PreviewCheckBox() {
     var value2 by remember { mutableStateOf(false) }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        BasicCheckBox(checked = value1, onCheckedChange = { value1 = it })
+        BasicCheckBox(
+            checked = value1,
+            onCheckedChange = { value1 = it },
+        )
 
-        TextCheckBox(text = "설명설명", checked = value2, onCheckedChange = { value2 = it })
+        TextCheckBox(
+            text = "설명설명",
+            checked = value2,
+            onCheckedChange = { value2 = it },
+        )
     }
 }
