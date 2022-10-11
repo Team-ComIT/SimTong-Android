@@ -1,4 +1,4 @@
-package com.comit.core_design_system.contans
+package com.comit.core_design_system.constans
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes
