@@ -9,7 +9,10 @@
     <string name="description_ic_my_page">마이페이지</string>
     <string name="descriptiom_ic_password_visible">비밀번호 활성화</string>
     <string name="descriptiom_ic_password_invisible">비밀번호 비활성화</string>
+    <string name="description_ic_logo">성심당 로고</string>
 
     <!--    용어 정의-->
     <string name="all_points">전체지점</string>
+    <string name="mind_share">마음을나누다</string>
+
 </resources>
