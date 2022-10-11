@@ -2,7 +2,6 @@ package com.comit.core_design_system.component
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
@@ -81,13 +81,13 @@ fun Header(
     ) {
         if (enabledBackBtn) {
             IconButton(onClick = onPrevious ?: {}, modifier = Modifier.size(21.dp)) {
-            Icon(
-                painter = painterResource(id = SimTongIcons.Back(true)),
-                contentDescription = stringResource(
-                    id = R.string.description_ic_back
+                Icon(
+                    painter = painterResource(id = SimTongIcons.Back(true)),
+                    contentDescription = stringResource(
+                        id = R.string.description_ic_back
+                    )
                 )
-            )
-        }
+            }
         }
 
         Spacer(modifier = Modifier.width(12.dp))
@@ -98,58 +98,62 @@ fun Header(
 
         if (enabledMoreBtn) {
             IconButton(onClick = onMenu ?: {}, modifier = Modifier.size(17.dp)) {
-            Icon(
-                painter = painterResource(id = SimTongIcons.More),
-                contentDescription = stringResource(id = R.string.description_ic_more)
-            )
-        }
+                Icon(
+                    painter = painterResource(id = SimTongIcons.More),
+                    contentDescription = stringResource(id = R.string.description_ic_more)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
 
         if (enabledPlusBtn) {
             IconButton(onClick = onPlus ?: {}, modifier = Modifier.size(21.dp)) {
-            Icon(
-                painter = painterResource(id = SimTongIcons.Plus),
-                contentDescription = stringResource(id = R.string.description_ic_plus)
-            )
-        }
+                Icon(
+                    painter = painterResource(id = SimTongIcons.Plus),
+                    contentDescription = stringResource(id = R.string.description_ic_plus)
+                )
+            }
         }
 
         Spacer(modifier = Modifier.width(20.dp))
 
         if (enabledBeilBtn) {
             IconButton(onClick = onBeil ?: {}, modifier = Modifier.size(21.dp)) {
-            Image(
-                painter = painterResource(id = SimTongIcons.Beil(beilState)),
-                contentDescription = stringResource(
-                    id = if (beilState) R.string.description_ic_beil_on
-                    else R.string.description_ic_beil_off
+                Image(
+                    painter = painterResource(id = SimTongIcons.Beil(beilState)),
+                    contentDescription = stringResource(
+                        id = if (beilState) R.string.description_ic_beil_on
+                        else R.string.description_ic_beil_off
+                    )
                 )
-            )
-        }
+            }
         }
 
         Spacer(modifier = Modifier.width(20.dp))
 
         if (enabledPeopleBtn) {
             IconButton(onClick = onMyPage ?: {}, modifier = Modifier.size(21.dp)) {
-            Icon(
-                painter = painterResource(id = SimTongIcons.MyPage),
-                contentDescription = stringResource(
-                    id = R.string.description_ic_my_page
+                Icon(
+                    painter = painterResource(id = SimTongIcons.MyPage),
+                    contentDescription = stringResource(
+                        id = R.string.description_ic_my_page
+                    )
                 )
-            )
-        }
+            }
         }
 
         if (sideBtnText != null) {
             Body6(
-                modifier = Modifier.clickable {
-                    if (onTextBtnClicked != null) {
-                        onTextBtnClicked()
+                modifier = Modifier
+                    .simClickable(
+                        rippleEnabled = false,
+                    ) {
+                        if (onTextBtnClicked != null) {
+                            onTextBtnClicked()
+                        }
                     }
-                }.padding(6.dp),
+                    .padding(6.dp),
                 text = "수정", color = SimTongColor.MainColor
             )
         }

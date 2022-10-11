@@ -46,7 +46,7 @@ fun SmallRedRoundButton(
     round: Dp = SmallRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BasicSmallButton(
         modifier = modifier,
@@ -58,7 +58,7 @@ fun SmallRedRoundButton(
         disabledBackgroundColor = SimTongColor.MainColor200,
         textColor = SimTongColor.White,
         disabledTextColor = SimTongColor.White,
-        enabled = enabled
+        enabled = enabled,
     )
 }
 
@@ -84,7 +84,7 @@ fun BigRedRoundButton(
     round: Dp = BigRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BasicBigButton(
         modifier = modifier,
@@ -96,7 +96,7 @@ fun BigRedRoundButton(
         disabledBackgroundColor = SimTongColor.MainColor200,
         textColor = SimTongColor.White,
         disabledTextColor = SimTongColor.White,
-        enabled = enabled
+        enabled = enabled,
     )
 }
 
@@ -122,7 +122,7 @@ fun ThinRedRoundButton(
     round: Dp = ThinRedRoundButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BasicThinButton(
         modifier = modifier,
@@ -134,7 +134,7 @@ fun ThinRedRoundButton(
         disabledBackgroundColor = SimTongColor.MainColor200,
         textColor = SimTongColor.White,
         disabledTextColor = SimTongColor.White,
-        enabled = enabled
+        enabled = enabled,
     )
 }
 
@@ -161,7 +161,7 @@ fun RedSideButton(
     round: Dp = RedSideButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BasicRoundSideButton(
         modifier = modifier,
@@ -173,7 +173,7 @@ fun RedSideButton(
         disabledBackgroundColor = SimTongColor.MainColor200,
         textColor = SimTongColor.White,
         disabledTextColor = SimTongColor.White,
-        enabled = enabled
+        enabled = enabled,
     )
 }
 
@@ -200,7 +200,7 @@ fun GraySideButton(
     round: Dp = GraySideButtonDefaultRound,
     text: String,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BasicRoundSideButton(
         modifier = modifier,
@@ -212,7 +212,7 @@ fun GraySideButton(
         disabledBackgroundColor = SimTongColor.Gray400,
         textColor = SimTongColor.White,
         disabledTextColor = SimTongColor.White,
-        enabled = enabled
+        enabled = enabled,
     )
 }
 
@@ -231,7 +231,7 @@ fun RedIconButton(
     painter: Painter,
     contentDescription: String?,
     enabled: Boolean = true,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     BasicIconButton(
         modifier = modifier,
@@ -241,7 +241,7 @@ fun RedIconButton(
         backgroundColor = SimTongColor.MainColor,
         pressedBackgroundColor = SimTongColor.MainColor600,
         disabledBackgroundColor = SimTongColor.MainColor200,
-        enabled = enabled
+        enabled = enabled,
     )
 }
 
@@ -250,7 +250,7 @@ fun RedIconButton(
 fun ButtonPreview() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
         SmallRedRoundButton(text = "NEXT") {
         }

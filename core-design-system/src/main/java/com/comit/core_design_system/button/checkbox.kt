@@ -167,12 +167,15 @@ fun TextCheckBox(
             checkBoxSize = checkBoxSize,
             borderColor = borderColor,
             disableBorderColor = disableBorderColor,
-            backgroundColor = backgroundColor
+            backgroundColor = backgroundColor,
         )
 
         Spacer(modifier = Modifier.width(TextCheckBoxSpacerWidth))
 
-        Body4(text = text, color = textColor)
+        Body4(
+            text = text,
+            color = textColor,
+        )
     }
 }
 
@@ -183,10 +186,17 @@ fun PreviewCheckBox() {
     var value2 by remember { mutableStateOf(false) }
 
     Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp)
+        verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        BasicCheckBox(checked = value1, onCheckedChange = { value1 = it })
+        BasicCheckBox(
+            checked = value1,
+            onCheckedChange = { value1 = it },
+        )
 
-        TextCheckBox(text = "설명설명", checked = value2, onCheckedChange = { value2 = it })
+        TextCheckBox(
+            text = "설명설명",
+            checked = value2,
+            onCheckedChange = { value2 = it },
+        )
     }
 }

@@ -40,7 +40,7 @@ fun TextHeart(
             painter = painterResource(
                 id = SimTongIcons.Heart(checkClickWatcher.value, isGray)
             ),
-            contentDescription = "",
+            contentDescription = null,
             modifier = heartModifier
         )
 
