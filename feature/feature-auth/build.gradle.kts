@@ -54,6 +54,9 @@ dependencies {
     implementation(Dependency.Ui.MATERIAL)
     implementation(Dependency.Ui.CONSTRAINT_LAYOUT)
 
+    implementation(Dependency.Pager.PAGER)
+    implementation(Dependency.Pager.PAGER_INDICATOR)
+
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
     implementation(Dependency.Compose.COMPOSE_MATERIAL)
     implementation(Dependency.Compose.COMPOSE_PREVIEW)
