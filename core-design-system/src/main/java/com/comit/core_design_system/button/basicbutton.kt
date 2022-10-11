@@ -65,12 +65,13 @@ fun BasicButton(
         modifier = modifier
             .background(
                 color = btnColor,
-                shape = shape
+                shape = shape,
             )
             .runIf(enabled) {
                 composed {
                     simClickable(
-                        rippleEnabled = false,
+                        rippleEnabled = true,
+                        rippleColor = pressedBackgroundColor,
                         onClick = onClick,
                     )
                 }

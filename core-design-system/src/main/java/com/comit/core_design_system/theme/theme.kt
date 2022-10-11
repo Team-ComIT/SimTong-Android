@@ -7,7 +7,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.contans.RoundShapes
+import com.comit.core_design_system.constans.RoundShapes
 
 @SuppressLint("ConflictingOnColor")
 private val LightColorPalette = lightColors(

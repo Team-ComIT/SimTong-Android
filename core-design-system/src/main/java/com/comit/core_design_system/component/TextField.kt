@@ -67,6 +67,9 @@ private val TextFieldMessagePadding = PaddingValues(start = 3.dp, top = 6.dp)
 @Stable
 private val BasicTextFieldStartPadding = 14.dp
 
+@Stable
+private val DefaultTextFieldRound: Dp = 5.dp
+
 /**
  * SimTong Design System TextField [SimTongTextField].
  * The current implementation method is not abstracted from [SimTongTextField].
@@ -98,7 +101,7 @@ fun SimTongTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    backgroundColor: Color = Color.Transparent,
+    backgroundColor: Color = Color.White,
     onClick: (() -> Unit)? = null,
     hint: String? = null,
     hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
@@ -109,7 +112,7 @@ fun SimTongTextField(
     sideBtnPressedBackgroundColor: Color = SimTongColor.MainColor600,
     sideBtnDisabledBackgroundColor: Color = SimTongColor.MainColor200,
     sideBtnDisabledTextColor: Color = SimTongColor.White,
-    round: Dp = 5.dp,
+    round: Dp = DefaultTextFieldRound,
     onSideBtnClick: (() -> Unit)? = null,
     error: String? = null,
     isPassword: Boolean = false,
@@ -117,9 +120,8 @@ fun SimTongTextField(
     imeAction: ImeAction = ImeAction.Default,
     description: String? = null
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val borderColor: Color = if (error == null) SimTongColor.Gray200 else SimTongColor.Error
+    val borderColor: Color =
+        if (!error.isNullOrEmpty()) SimTongColor.Gray200 else SimTongColor.Error
 
     var passwordVisible by remember {
         mutableStateOf(false)
@@ -181,7 +183,7 @@ fun SimTongTextField(
                     textStyle = SimTongTypography.body6,
                     decorationBox = { innerTextField ->
                         if (value.isEmpty() && hint != null) {
-                            Body6(text = hint, color = SimTongColor.Gray900)
+                            Body6(text = hint, color = SimTongColor.Gray400)
                         }
 
                         innerTextField()
@@ -207,13 +209,27 @@ fun SimTongTextField(
                     }
                 }
 
+                if (value.isNotEmpty()) {
+                    Image(
+                        modifier = Modifier
+                            .simClickable(
+                                rippleEnabled = false,
+                            ) {
+                                onValueChange("")
+                            },
+                        painter = painterResource(id = R.drawable.ic_close),
+                        contentDescription = null,
+                    )
+                }
+
                 if (isPassword) {
                     Image(
                         modifier = Modifier
-                            .clickable(
-                                interactionSource = interactionSource,
-                                indication = null
-                            ) { passwordVisible = !passwordVisible },
+                            .simClickable(
+                                rippleEnabled = false,
+                            ) {
+                                passwordVisible = !passwordVisible
+                            },
                         painter = painterResource(id = SimTongIcons.Password(passwordVisible)),
                         contentDescription =
                         stringResource(
@@ -226,7 +242,7 @@ fun SimTongTextField(
             }
         }
 
-        if (error != null) {
+        if (!error.isNullOrEmpty()) {
             Error(
                 text = error,
                 modifier = Modifier.padding(TextFieldMessagePadding)
@@ -299,6 +315,12 @@ fun PreviewSimTongTextField() {
             value = value6 ?: "",
             onValueChange = { value6 = it },
             backgroundColor = SimTongColor.Gray200
+        )
+
+        SimTongTextField(
+            value = value7 ?: "",
+            onValueChange = { value7 = it },
+            error = ""
         )
 
         // custom background & side btn
