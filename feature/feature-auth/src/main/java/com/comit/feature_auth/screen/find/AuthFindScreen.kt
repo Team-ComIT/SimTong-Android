@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen
+package com.comit.feature_auth.screen.find
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
