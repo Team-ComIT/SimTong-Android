@@ -121,7 +121,7 @@ fun SimTongTextField(
     description: String? = null
 ) {
     val borderColor: Color =
-        if (!error.isNullOrEmpty()) SimTongColor.Gray200 else SimTongColor.Error
+        if (error == null) SimTongColor.Gray200 else SimTongColor.Error
 
     var passwordVisible by remember {
         mutableStateOf(false)
