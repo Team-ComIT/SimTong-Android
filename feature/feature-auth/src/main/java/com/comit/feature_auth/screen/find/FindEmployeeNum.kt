@@ -42,6 +42,7 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.modifier.simSelectable
 import com.comit.core_design_system.typography.Body1
+import com.comit.core_design_system.typography.Body2
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R
@@ -128,6 +129,49 @@ fun FindEmployeeNum(
         )
     }
 
+}
+
+@Composable
+fun showEmployeeNum(
+
+){
+    Column() {
+        Spacer(modifier = Modifier.height(227.5.dp))
+
+        Body2(
+            text = "회원님의 사원번호는",
+            color = SimTongColor.Gray900,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
+        )
+
+        Body1(
+            text = "12345678",
+            color = SimTongColor.Gray900,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
+        )
+
+        Body2(
+            text = "입니다.",
+            color = SimTongColor.Gray900,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.CenterHorizontally),
+        )
+
+        BigRedRoundButton(
+            text = "로그인 창으로 돌아가기",
+            onClick = {},
+            modifier = Modifier
+                .fillMaxHeight()
+                .wrapContentHeight(Alignment.Bottom)
+                .padding(horizontal = 40.dp)
+                .padding(bottom = 50.dp)
+        )
+    }
 }
 
 @ExperimentalMaterialApi
@@ -277,6 +321,12 @@ fun findPlaceLazyColumn(
 @Composable
 fun PreviewFindEmployeeNumScreen() {
     FindEmployeeNum()
+}
+
+@Preview
+@Composable
+fun PreviewShowEmployeeScreen(){
+    showEmployeeNum()
 }
 
 @ExperimentalMaterialApi
