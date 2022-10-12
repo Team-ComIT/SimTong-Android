@@ -22,10 +22,12 @@ import com.comit.feature_auth.R
 fun FixPassword(
 
 ) {
-    var newPassword by remember { mutableStateOf<String?>(null) }
-    var newPasswordAgain by remember { mutableStateOf<String?>(null) }
+    var newPassword by remember { mutableStateOf("") }
+    var newPasswordAgain by remember { mutableStateOf("") }
     var newPasswordError by remember { mutableStateOf<String?>(null) }
     var newPasswordAgainError by remember { mutableStateOf<String?>(null) }
+    val buttonEnabled = !(newPassword == "" || newPasswordAgain == "")
+
     val errorMsg = stringResource(id = R.string.error_message)
 
     Column() {
@@ -74,7 +76,8 @@ fun FixPassword(
                 onClick = {
                     newPasswordError = ""
                     newPasswordAgainError = errorMsg
-                }
+                },
+                enabled = buttonEnabled
             )
         }
     }
