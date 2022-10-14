@@ -41,7 +41,7 @@ fun SignInScreen() {
     var password by remember { mutableStateOf<String?>(null) }
     var idError by remember { mutableStateOf<String?>(null) }
     var passwordError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(id == null || id == "" || password == null || password == "")
+    val buttonEnabled = !(id.isNullOrEmpty() || password.isNullOrEmpty())
 
     val errorMsg = stringResource(id = R.string.error_message)
 

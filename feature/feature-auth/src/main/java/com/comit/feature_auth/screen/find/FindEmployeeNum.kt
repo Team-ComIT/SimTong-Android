@@ -45,7 +45,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-private var placeName by mutableStateOf("근무 지점 선택")
+private var placeName by mutableStateOf(SignInDefault.DefaultPlaceName)
+
+object SignInDefault {
+    const val DefaultPlaceName = "근무 지점 선택"
+}
+
+fun String.isPlaceEmpty(): Boolean =
+    this == SignInDefault.DefaultPlaceName
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -58,10 +65,7 @@ fun FindEmployeeNum(
     var nameError by remember { mutableStateOf<String?>(null) }
     var workPlaceError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
-    val underButtonEnabled = !(
-        name == null || name == "" ||
-            placeName == stringResource(id = R.string.choose_work_place) || eMail == null || eMail == ""
-        )
+    val underButtonEnabled = !(name.isNullOrEmpty() || placeName.isPlaceEmpty() || eMail.isNullOrEmpty())
 
     val errorMsg = stringResource(id = R.string.error_message)
 
@@ -173,7 +177,6 @@ private const val DefaultSelected: Int = -1
 private const val BottomSheetStateHideDelay: Long = 400
 private const val ItemsSampleMapperStart: Int = 1
 private const val ItemsSampleMapperEnd: Int = 100
-
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

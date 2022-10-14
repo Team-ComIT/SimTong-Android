@@ -26,15 +26,14 @@ fun FindPassword() {
     var employeeNumError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
     var certificationNumberError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(employeeNum == null || employeeNum == "" || certificationNumber == null
-            || certificationNumber == "" || eMail == null || eMail == "")
+    val buttonEnabled = !(employeeNum.isNullOrEmpty()|| certificationNumber.isNullOrEmpty() || eMail.isNullOrEmpty())
 
     val sideBtnBackgroundColor =
-        if (eMail == null || eMail == "") SimTongColor.Gray300 else SimTongColor.MainColor
+        if (eMail.isNullOrEmpty()) SimTongColor.Gray300 else SimTongColor.MainColor
     val sideBtnDisabledBackgroundColor =
-        if (eMail == null || eMail == "") SimTongColor.Gray300 else SimTongColor.MainColor
+        if (eMail.isNullOrEmpty()) SimTongColor.Gray300 else SimTongColor.MainColor
     val sideBtnPressedBackgroundColor =
-        if (eMail == null || eMail == "") SimTongColor.Gray400 else SimTongColor.MainColor100
+        if (eMail.isNullOrEmpty()) SimTongColor.Gray400 else SimTongColor.MainColor100
 
     val errorMsg = stringResource(id = R.string.error_message)
 
