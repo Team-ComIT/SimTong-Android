@@ -19,9 +19,7 @@ import com.comit.core_design_system.typography.Body1
 import com.comit.feature_auth.R
 
 @Composable
-fun FixPassword(
-
-) {
+fun FixPassword() {
     var newPassword by remember { mutableStateOf("") }
     var newPasswordAgain by remember { mutableStateOf("") }
     var newPasswordError by remember { mutableStateOf<String?>(null) }

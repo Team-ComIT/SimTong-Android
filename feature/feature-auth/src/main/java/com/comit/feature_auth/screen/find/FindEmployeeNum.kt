@@ -2,7 +2,6 @@ package com.comit.feature_auth.screen.find
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,19 +16,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -40,7 +34,6 @@ import com.comit.core_design_system.button.BasicCheckBox
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
-import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.modifier.simSelectable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body2
@@ -49,43 +42,14 @@ import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 private var placeName by mutableStateOf("근무 지점 선택")
 
-fun Modifier.addFocusCleaner(focusManager: FocusManager, doOnClear: () -> Unit = {}): Modifier {
-    return this.pointerInput(Unit) {
-        detectTapGestures(onTap = {
-            doOnClear()
-            focusManager.clearFocus()
-        })
-    }
-}
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FindEmployeeNum(
-) {
-    val bottomSheetState = rememberModalBottomSheetState(
-        ModalBottomSheetValue.Hidden
-    )
-    val coroutineScope = rememberCoroutineScope()
-
-    SimBottomSheetDialog(
-        useHandle = true,
-        sheetState = bottomSheetState,
-        sheetContent = { FindPlaceLazyColumn() }
-    ) {
-        FindEmployeeNumBasic(
-            coroutineScope = coroutineScope,
-            bottomSheetState = bottomSheetState,
-        )
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun FindEmployeeNumBasic(
     coroutineScope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
 ) {
@@ -94,8 +58,10 @@ fun FindEmployeeNumBasic(
     var nameError by remember { mutableStateOf<String?>(null) }
     var workPlaceError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
-    val underButtonEnabled = !(name == null || name == ""
-            || placeName == stringResource(id = R.string.choose_work_place) || eMail == null || eMail == "")
+    val underButtonEnabled = !(
+        name == null || name == "" ||
+            placeName == stringResource(id = R.string.choose_work_place) || eMail == null || eMail == ""
+        )
 
     val errorMsg = stringResource(id = R.string.error_message)
 
@@ -140,8 +106,7 @@ fun FindEmployeeNumBasic(
                     width = 1.dp,
                     color = centerButtonBorderColor,
                     shape = RoundedCornerShape(5.dp)
-                )
-                .addFocusCleaner(localFocusManager),
+                ),
             shape = RoundedCornerShape(5.dp),
             enabled = true,
             onClick = {
@@ -185,7 +150,6 @@ fun FindEmployeeNumBasic(
 
         Spacer(modifier = Modifier.height(30.dp))
 
-
         BigRedRoundButton(
             text = stringResource(id = R.string.find_employee),
             onClick = {
@@ -197,7 +161,6 @@ fun FindEmployeeNumBasic(
             enabled = underButtonEnabled
         )
     }
-
 }
 
 data class FindPlaceDataSample(
@@ -207,8 +170,16 @@ data class FindPlaceDataSample(
 
 private const val DefaultSelected: Int = -1
 
+private const val BottomSheetStateHideDelay: Long = 400
+private const val ItemsSampleMapperStart: Int = 1
+private const val ItemsSampleMapperEnd: Int = 100
+
+
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FindPlaceLazyColumn(
+    coroutineScope: CoroutineScope,
+    bottomSheetState: ModalBottomSheetState
 ) {
     val scrollState = rememberScrollState()
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
@@ -216,11 +187,13 @@ fun FindPlaceLazyColumn(
     val isSelect: (Int) -> Boolean = { selectedValue == it }
 
     val items =
-        (1..100).map { FindPlaceDataSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층") }.toList()
+        (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
+            FindPlaceDataSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
+        }.toList()
 
     Column {
         Body1(
-            text = "지점 선택",
+            text = stringResource(id = R.string.choose_place),
             modifier = Modifier
                 .padding(start = 30.dp, top = 32.dp)
         )
@@ -241,6 +214,10 @@ fun FindPlaceLazyColumn(
                             onClick = {
                                 selectedValue = index
                                 placeName = item.name
+                                coroutineScope.launch {
+                                    delay(BottomSheetStateHideDelay)
+                                    bottomSheetState.hide()
+                                }
                             },
                             role = Role.RadioButton
                         )
@@ -286,6 +263,10 @@ fun FindPlaceLazyColumn(
                         onCheckedChange = {
                             selectedValue = index
                             placeName = item.name
+                            coroutineScope.launch {
+                                delay(BottomSheetStateHideDelay)
+                                bottomSheetState.hide()
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -301,9 +282,7 @@ fun FindPlaceLazyColumn(
 }
 
 @Composable
-fun ShowEmployeeNum(
-
-) {
+fun ShowEmployeeNum() {
     Column() {
         Spacer(modifier = Modifier.height(227.5.dp))
 
@@ -391,12 +370,6 @@ fun bottomSheet(
         }
     }
 }*/
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewFindEmployeeNumScreen() {
-    FindEmployeeNum()
-}
 
 @Preview
 @Composable

@@ -19,23 +19,22 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 
 @Composable
-fun FindPassword(
-
-){
+fun FindPassword() {
     var employeeNum by remember { mutableStateOf<String?>(null) }
     var eMail by remember { mutableStateOf<String?>(null) }
     var certificationNumber by remember { mutableStateOf<String?>(null) }
     var employeeNumError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
     var certificationNumberError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(employeeNum == null || employeeNum == "" || certificationNumber == null || certificationNumber == "" || eMail == null || eMail == "")
+    val buttonEnabled = !(employeeNum == null || employeeNum == "" || certificationNumber == null
+            || certificationNumber == "" || eMail == null || eMail == "")
 
     val sideBtnBackgroundColor =
-        if(eMail == null || eMail == "") SimTongColor.Gray300 else SimTongColor.MainColor
+        if (eMail == null || eMail == "") SimTongColor.Gray300 else SimTongColor.MainColor
     val sideBtnDisabledBackgroundColor =
-        if(eMail == null || eMail == "") SimTongColor.Gray300 else SimTongColor.MainColor
+        if (eMail == null || eMail == "") SimTongColor.Gray300 else SimTongColor.MainColor
     val sideBtnPressedBackgroundColor =
-        if(eMail == null || eMail == "") SimTongColor.Gray400 else SimTongColor.MainColor100
+        if (eMail == null || eMail == "") SimTongColor.Gray400 else SimTongColor.MainColor100
 
     val errorMsg = stringResource(id = R.string.error_message)
 
@@ -97,7 +96,6 @@ fun FindPassword(
         )
 
         Spacer(modifier = Modifier.height(30.dp))
-
 
         BigRedRoundButton(
             text = stringResource(id = R.string.find_password),

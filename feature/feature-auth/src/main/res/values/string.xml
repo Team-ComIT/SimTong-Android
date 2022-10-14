@@ -21,6 +21,7 @@
     <string name="find_password">비밀번호 찾기</string>
     <string name="certification_number">인증 번호(6자리 숫자)</string>
     <string name="choose_work_place">근무 지점 선택</string>
+    <string name="choose_place">지점 선택</string>
     <string name="certification">인증</string>
     <string name="next">다음</string>
     <string name="password_change">비밀번호 재설정</string>

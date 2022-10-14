@@ -36,9 +36,7 @@ import com.comit.feature_auth.R
 val SignInTopRowHeight = 43.dp
 
 @Composable
-fun SignInScreen(
-
-){
+fun SignInScreen() {
     var id by remember { mutableStateOf<String?>(null) }
     var password by remember { mutableStateOf<String?>(null) }
     var idError by remember { mutableStateOf<String?>(null) }
@@ -55,7 +53,7 @@ fun SignInScreen(
         SignInTopLogo()
 
         Spacer(modifier = Modifier.height(40.dp))
-        
+
         SimTongTextField(
             value = id ?: "",
             onValueChange = {
@@ -84,7 +82,7 @@ fun SignInScreen(
             isPassword = true,
             error = passwordError
         )
-        
+
         Spacer(modifier = Modifier.height(30.dp))
 
         BigRedRoundButton(
@@ -99,14 +97,11 @@ fun SignInScreen(
         )
 
         SignInBottomBtn()
-
     }
 }
 
 @Composable
-fun SignInTopLogo(
-
-){
+fun SignInTopLogo() {
     Body1(
         text = stringResource(id = R.string.mind_share),
         color = SimTongColor.OtherColor.Gray7E,
@@ -118,7 +113,8 @@ fun SignInTopLogo(
     ) {
         Image(
             painter = painterResource(
-                id = R.drawable.ic_sim),
+                id = R.drawable.ic_sim
+            ),
             contentDescription = stringResource(id = R.string.description_ic_sim)
         )
 
@@ -145,12 +141,11 @@ fun SignInTopLogo(
 val SignInBottomBtnTextPadding = 5.dp
 
 @Composable
-fun SignInBottomBtn(
-
-){
-    Row(modifier = Modifier
-        .fillMaxSize()
-        .wrapContentSize(Alignment.BottomCenter)
+fun SignInBottomBtn() {
+    Row(
+        modifier = Modifier
+            .fillMaxSize()
+            .wrapContentSize(Alignment.BottomCenter)
     ) {
         Body8(
             text = stringResource(id = R.string.sign_up),

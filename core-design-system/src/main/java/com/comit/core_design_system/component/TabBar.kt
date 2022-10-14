@@ -1,7 +1,6 @@
 
 package com.comit.core_design_system.component
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
 import androidx.compose.material.Tab
@@ -57,12 +56,12 @@ fun TabBar(
                 )
             }
         }
+
         HorizontalPager(
             state = pagerState
         ) {
-            changeScreen(pagerState.currentPage)
+            changeScreen(it)
         }
-
     }
 }
 
@@ -73,6 +72,6 @@ fun PreviewTabBar() {
     TabBar(
         modifier = Modifier
             .height(35.dp),
-        filters = listOf("",""),
+        filters = listOf("", ""),
     )
 }
