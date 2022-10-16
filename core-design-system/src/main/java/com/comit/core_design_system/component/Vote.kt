@@ -33,12 +33,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body1
-import com.comit.core_design_system.theme.Body10
-import com.comit.core_design_system.theme.Body12
-import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.theme.SimTongTypography
+import com.comit.core_design_system.typography.Body1
+import com.comit.core_design_system.typography.Body10
+import com.comit.core_design_system.typography.Body12
+import com.comit.core_design_system.typography.SimTongTypography
 
 data class VoteData(
     val title: String,
@@ -48,14 +48,14 @@ data class VoteData(
     val commentNum: Int,
     val heartCheck: Boolean,
     val voteList: List<VoteListData>,
-    val imageList: List<String?>?
+    val imageList: List<String?>?,
 )
 
 data class VoteListData(
     val menu: String,
     val total: Int,
     val voteNum: Int,
-    val check: Boolean
+    val check: Boolean,
 )
 
 @Composable
@@ -64,7 +64,7 @@ fun Vote(
     list: List<VoteData>,
     onHeartClick: () -> Unit = {},
     onCommentClick: () -> Unit = {},
-    onItemClick: (Int) -> Unit = {}
+    onItemClick: (Int) -> Unit = {},
 ) {
     LazyColumn() {
         items(list) {
@@ -73,7 +73,7 @@ fun Vote(
                 data = it,
                 onHeartClick = onHeartClick,
                 onCommentClick = onCommentClick,
-                onItemClick = onItemClick
+                onItemClick = onItemClick,
             )
         }
     }
@@ -85,7 +85,7 @@ fun VotePage(
     data: VoteData,
     onHeartClick: () -> Unit,
     onCommentClick: () -> Unit,
-    onItemClick: (Int) -> Unit
+    onItemClick: (Int) -> Unit,
 ) {
 
     Card(
@@ -93,13 +93,13 @@ fun VotePage(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxWidth(),
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(25.dp, 0.dp, 25.dp, 0.dp)
-                    .background(SimTongColor.White)
+                    .background(SimTongColor.White),
             ) {
 
                 Body1(
@@ -117,7 +117,7 @@ fun VotePage(
 
                 VoteItemLazyColumn(
                     list = data.voteList,
-                    onItemClick = onItemClick
+                    onItemClick = onItemClick,
                 )
 
                 Row(
@@ -139,7 +139,7 @@ fun VotePage(
                             .fillMaxHeight()
                             .wrapContentHeight(Alignment.CenterVertically),
                         onClick = onHeartClick,
-                        click = data.heartCheck
+                        click = data.heartCheck,
                     )
 
                     Image(
@@ -171,7 +171,7 @@ fun VotePage(
                         list = data.imageList,
                         paddingEnd = 18.0,
                         modifier = Modifier
-                            .height(23.dp)
+                            .height(23.dp),
                     )
                 }
             }
@@ -188,7 +188,7 @@ fun VotePage(
                     start = Offset(x = 0f, y = canvasHeight),
                     end = Offset(x = canvasWidth, y = canvasHeight),
                     color = SimTongColor.OtherColor.GrayD8,
-                    strokeWidth = 5f
+                    strokeWidth = 5f,
                 )
             }
         }
@@ -205,7 +205,7 @@ fun VoteItemLazyColumn(
             VoteItem(
                 data = list[it],
                 onItemClick = onItemClick,
-                index = it
+                index = it,
             )
         }
     }
@@ -241,7 +241,7 @@ fun VoteItem(
             .height(32.dp)
             .background(
                 color = SimTongColor.Gray100,
-                shape = RoundedCornerShape(4.dp)
+                shape = RoundedCornerShape(4.dp),
             )
             .clickable {
                 chooseState.value = !chooseState.value
@@ -262,7 +262,7 @@ fun VoteItem(
                 .background(
                     color = shapeColor,
                     shape = RoundedCornerShape(4.dp)
-                )
+                ),
         )
 
         Body10(
@@ -271,7 +271,7 @@ fun VoteItem(
             modifier = Modifier
                 .padding(10.dp, 0.dp, 0.dp, 0.dp)
                 .fillMaxHeight()
-                .wrapContentHeight(Alignment.CenterVertically)
+                .wrapContentHeight(Alignment.CenterVertically),
         )
 
         Body12(
@@ -282,7 +282,7 @@ fun VoteItem(
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
                 .fillMaxWidth()
-                .wrapContentWidth(Alignment.End)
+                .wrapContentWidth(Alignment.End),
         )
     }
 
@@ -338,7 +338,7 @@ fun PreviewVote() {
                     check = false
                 )
             ),
-            imageList = listOf("1", "2", "3")
+            imageList = listOf("1", "2", "3"),
         )
     )
 

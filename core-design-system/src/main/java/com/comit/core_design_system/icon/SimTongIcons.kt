@@ -20,6 +20,7 @@ object SimTongIcons {
 
     object Others {
         val Check = R.drawable.ic_check
+        val Logo = R.drawable.ic_logo
     }
 
     val Add = R.drawable.ic_add

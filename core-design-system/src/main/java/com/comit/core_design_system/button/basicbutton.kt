@@ -1,8 +1,7 @@
-package com.comit.core_design_system.component
+package com.comit.core_design_system.button
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
@@ -18,15 +17,18 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.theme.Body10
-import com.comit.core_design_system.theme.Body3
-import com.comit.core_design_system.theme.Body5
+import com.comit.core_design_system.modifier.simClickable
+import com.comit.core_design_system.typography.Body10
+import com.comit.core_design_system.typography.Body3
+import com.comit.core_design_system.typography.Body5
+import com.comit.core_design_system.util.runIf
 
 /**
  * The lowest component of SimTongButtons
@@ -49,7 +51,7 @@ fun BasicButton(
     backgroundColor: Color,
     pressedBackgroundColor: Color,
     disabledBackgroundColor: Color,
-    content: @Composable (isPressed: Boolean) -> Unit
+    content: @Composable (isPressed: Boolean) -> Unit,
 ) {
 
     val interactionSource = remember { MutableInteractionSource() }
@@ -63,14 +65,17 @@ fun BasicButton(
         modifier = modifier
             .background(
                 color = btnColor,
-                shape = shape
+                shape = shape,
             )
-            .clickable(
-                interactionSource = interactionSource,
-                indication = null,
-                onClick = onClick,
-                enabled = enabled
-            ),
+            .runIf(enabled) {
+                composed {
+                    simClickable(
+                        rippleEnabled = true,
+                        rippleColor = pressedBackgroundColor,
+                        onClick = onClick,
+                    )
+                }
+            },
         contentAlignment = Alignment.Center
     ) {
         content(isPressed.value)
@@ -100,9 +105,9 @@ fun BasicBigButton(
     pressedBackgroundColor: Color,
     disabledBackgroundColor: Color,
     textColor: Color,
-    disabledTextColor: Color
+    disabledTextColor: Color,
 ) {
-    val textColor = if (enabled) textColor else disabledTextColor
+    val contentColor = if (enabled) textColor else disabledTextColor
 
     BasicButton(
         modifier = modifier
@@ -115,7 +120,10 @@ fun BasicBigButton(
         pressedBackgroundColor = pressedBackgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
     ) {
-        Body3(text = text, color = textColor)
+        Body3(
+            text = text,
+            color = contentColor,
+        )
     }
 }
 
@@ -148,9 +156,9 @@ fun BasicSmallButton(
     pressedBackgroundColor: Color,
     disabledBackgroundColor: Color,
     textColor: Color,
-    disabledTextColor: Color
+    disabledTextColor: Color,
 ) {
-    val textColor = if (enabled) textColor else disabledTextColor
+    val contentColor = if (enabled) textColor else disabledTextColor
 
     BasicButton(
         modifier = modifier
@@ -164,7 +172,10 @@ fun BasicSmallButton(
         pressedBackgroundColor = pressedBackgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
     ) {
-        Body3(text = text, color = textColor)
+        Body3(
+            text = text,
+            color = contentColor,
+        )
     }
 }
 
@@ -199,9 +210,9 @@ fun BasicThinButton(
     pressedBackgroundColor: Color,
     disabledBackgroundColor: Color,
     textColor: Color,
-    disabledTextColor: Color
+    disabledTextColor: Color,
 ) {
-    val textColor = if (enabled) textColor else disabledTextColor
+    val contentColor = if (enabled) textColor else disabledTextColor
 
     BasicButton(
         modifier = modifier
@@ -215,7 +226,10 @@ fun BasicThinButton(
         pressedBackgroundColor = pressedBackgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
     ) {
-        Body5(text = text, color = textColor)
+        Body5(
+            text = text,
+            color = contentColor,
+        )
     }
 }
 
@@ -252,7 +266,7 @@ fun BasicSideButton(
     disabledTextColor: Color,
     onClick: () -> Unit,
 ) {
-    val textColor = if (enabled) textColor else disabledTextColor
+    val contentColor = if (enabled) textColor else disabledTextColor
 
     BasicButton(
         modifier = modifier
@@ -265,7 +279,10 @@ fun BasicSideButton(
         pressedBackgroundColor = pressedBackgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
     ) {
-        Body10(text = text, color = textColor)
+        Body10(
+            text = text,
+            color = contentColor,
+        )
     }
 }
 
@@ -286,7 +303,7 @@ fun BasicRoundSideButton(
     disabledBackgroundColor: Color,
     textColor: Color,
     disabledTextColor: Color,
-    onClick: () -> Unit
+    onClick: () -> Unit,
 ) {
     val shape = RoundedCornerShape(
         topStart = 0.dp,
@@ -305,7 +322,7 @@ fun BasicRoundSideButton(
         pressedBackgroundColor = pressedBackgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
         textColor = textColor,
-        disabledTextColor = disabledTextColor
+        disabledTextColor = disabledTextColor,
     )
 }
 
@@ -339,6 +356,9 @@ fun BasicIconButton(
         pressedBackgroundColor = pressedBackgroundColor,
         disabledBackgroundColor = disabledBackgroundColor
     ) {
-        Image(painter = painter, contentDescription = contentDescription)
+        Image(
+            painter = painter,
+            contentDescription = contentDescription,
+        )
     }
 }

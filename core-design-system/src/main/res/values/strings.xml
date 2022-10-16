@@ -10,6 +10,9 @@
     <string name="descriptiom_ic_password_visible">비밀번호 활성화</string>
     <string name="descriptiom_ic_password_invisible">비밀번호 비활성화</string>
 
+    <string name="fix">수정</string>
+
     <!--    용어 정의-->
     <string name="all_points">전체지점</string>
+
 </resources>

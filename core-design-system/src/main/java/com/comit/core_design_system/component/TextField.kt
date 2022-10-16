@@ -5,8 +5,6 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -30,6 +28,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -41,12 +40,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
+import com.comit.core_design_system.button.BasicRoundSideButton
+import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.Body8
-import com.comit.core_design_system.theme.Error
-import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.theme.SimTongTypography
+import com.comit.core_design_system.modifier.simClickable
+import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.Body8
+import com.comit.core_design_system.typography.Error
+import com.comit.core_design_system.typography.SimTongTypography
+import com.comit.core_design_system.util.runIf
 
 @Stable
 private val TextFieldEnabledFraction: Float = 0.75f
@@ -62,6 +64,9 @@ private val TextFieldMessagePadding = PaddingValues(start = 3.dp, top = 6.dp)
 
 @Stable
 private val BasicTextFieldStartPadding = 14.dp
+
+@Stable
+private val DefaultTextFieldRound: Dp = 5.dp
 
 /**
  * SimTong Design System TextField [SimTongTextField].
@@ -94,7 +99,7 @@ fun SimTongTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
-    backgroundColor: Color = Color.Transparent,
+    backgroundColor: Color = Color.White,
     onClick: (() -> Unit)? = null,
     hint: String? = null,
     hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
@@ -105,7 +110,7 @@ fun SimTongTextField(
     sideBtnPressedBackgroundColor: Color = SimTongColor.MainColor600,
     sideBtnDisabledBackgroundColor: Color = SimTongColor.MainColor200,
     sideBtnDisabledTextColor: Color = SimTongColor.White,
-    round: Dp = 5.dp,
+    round: Dp = DefaultTextFieldRound,
     onSideBtnClick: (() -> Unit)? = null,
     error: String? = null,
     isPassword: Boolean = false,
@@ -113,9 +118,8 @@ fun SimTongTextField(
     imeAction: ImeAction = ImeAction.Default,
     description: String? = null
 ) {
-    val interactionSource = remember { MutableInteractionSource() }
-
-    val borderColor: Color = if (error == null) SimTongColor.Gray300 else SimTongColor.Error
+    val borderColor: Color =
+        if (error == null) SimTongColor.Gray200 else SimTongColor.Error
 
     var passwordVisible by remember {
         mutableStateOf(false)
@@ -145,12 +149,13 @@ fun SimTongTextField(
                     color = borderColor,
                     shape = RoundedCornerShape(round)
                 )
-                .clickable(
-                    interactionSource = interactionSource,
-                    indication = null
-                ) {
-                    if (onClick != null) {
-                        onClick()
+                .runIf(onClick != null) {
+                    composed {
+                        simClickable(
+                            rippleEnabled = false
+                        ) {
+                            onClick!!
+                        }
                     }
                 }
         ) {
@@ -176,7 +181,7 @@ fun SimTongTextField(
                     textStyle = SimTongTypography.body6,
                     decorationBox = { innerTextField ->
                         if (value.isEmpty() && hint != null) {
-                            Body6(text = hint, color = SimTongColor.Gray900)
+                            Body6(text = hint, color = SimTongColor.Gray400)
                         }
 
                         innerTextField()
@@ -202,13 +207,27 @@ fun SimTongTextField(
                     }
                 }
 
+                if (value.isNotEmpty()) {
+                    Image(
+                        modifier = Modifier
+                            .simClickable(
+                                rippleEnabled = false,
+                            ) {
+                                onValueChange("")
+                            },
+                        painter = painterResource(id = R.drawable.ic_close),
+                        contentDescription = null,
+                    )
+                }
+
                 if (isPassword) {
                     Image(
                         modifier = Modifier
-                            .clickable(
-                                interactionSource = interactionSource,
-                                indication = null
-                            ) { passwordVisible = !passwordVisible },
+                            .simClickable(
+                                rippleEnabled = false,
+                            ) {
+                                passwordVisible = !passwordVisible
+                            },
                         painter = painterResource(id = SimTongIcons.Password(passwordVisible)),
                         contentDescription =
                         stringResource(
@@ -221,7 +240,7 @@ fun SimTongTextField(
             }
         }
 
-        if (error != null) {
+        if (!error.isNullOrEmpty()) {
             Error(
                 text = error,
                 modifier = Modifier.padding(TextFieldMessagePadding)
@@ -294,6 +313,12 @@ fun PreviewSimTongTextField() {
             value = value6 ?: "",
             onValueChange = { value6 = it },
             backgroundColor = SimTongColor.Gray200
+        )
+
+        SimTongTextField(
+            value = value7 ?: "",
+            onValueChange = { value7 = it },
+            error = ""
         )
 
         // custom background & side btn

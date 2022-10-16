@@ -19,15 +19,13 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body14
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.SimTongColor
-import com.comit.core_design_system.theme.SimTongTypography
+import com.comit.core_design_system.typography.Body14
+import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.SimTongTypography
 
 data class IdeaData(
     val title: String,
@@ -86,8 +84,6 @@ fun IdeaItem(
         Body14(
             text = data.body,
             color = SimTongColor.OtherColor.Gray96,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
                 .fillMaxWidth(IdeaItemDataBodyWidth)
                 .padding(30.dp, 3.dp, 0.dp, 0.dp)
