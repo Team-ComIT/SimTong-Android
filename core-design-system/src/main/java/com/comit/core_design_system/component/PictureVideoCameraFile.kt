@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body6
 
 data class IconListData(
@@ -102,7 +103,7 @@ fun PictureVideoCameraFileItem(
             .fillMaxWidth()
             .height(height)
             .background(backgroundColor)
-            .clickable { onClick(index) }
+            .simClickable { onClick(index) }
     ) {
         Image(
             painter = painterResource(id = icon),
