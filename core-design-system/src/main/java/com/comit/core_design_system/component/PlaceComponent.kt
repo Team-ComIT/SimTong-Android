@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body5
 
 @Composable
@@ -124,28 +125,24 @@ fun ChoosePlaceItem(
             .fillMaxWidth()
             .wrapContentWidth(Alignment.Start)
             .height(bodyHeight)
-    ) {
-        Button(
-            modifier = Modifier.fillMaxSize(),
-            onClick = {
+            .background(
+                color = backgroundColor
+            )
+            .simClickable {
                 onClick(index)
                 isNeedExpansion.value = index
-            },
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = backgroundColor,
-            ),
-            elevation = ButtonDefaults.elevation(
-                defaultElevation = 0.dp,
-                pressedElevation = 0.dp
-            )
+            }
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(bodyHeight)
         ) {
-        }
-        Row {
             Body5(
                 text = text,
                 color = textColor,
                 modifier = Modifier
-                    .padding(paddingSide, 0.dp, 0.dp, 0.dp)
+                    .padding(start = paddingSide)
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)
             )
@@ -174,7 +171,7 @@ fun CheckImage(
             painter = painterResource(id = painter),
             contentDescription = "check image",
             modifier = Modifier
-                .padding(0.dp, 0.dp, paddingSide, 0.dp)
+                .padding(end = paddingSide)
                 .fillMaxHeight()
                 .wrapContentHeight(CenterVertically)
                 .fillMaxWidth()
