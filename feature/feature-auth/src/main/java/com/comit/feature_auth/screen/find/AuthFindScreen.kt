@@ -23,6 +23,9 @@ import com.comit.core_design_system.component.TabBar
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.feature_auth.R
+import com.comit.feature_auth.screen.find.findemployeenum.FindEmployeeNum
+import com.comit.feature_auth.screen.find.findemployeenum.FindPlaceLazyColumn
+import com.comit.feature_auth.screen.find.password.FindPassword
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 

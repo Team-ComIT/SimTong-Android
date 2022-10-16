@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.find
+package com.comit.feature_auth.screen.find.findemployeenum
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
@@ -81,7 +81,9 @@ fun FindEmployeeNum(
     val localFocusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.padding(start = 40.dp, end = 40.dp)
+        modifier = Modifier
+            .fillMaxHeight()
+            .padding(horizontal = 40.dp)
     ) {
 
         Spacer(modifier = Modifier.height(25.dp))
