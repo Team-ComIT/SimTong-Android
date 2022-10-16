@@ -54,7 +54,7 @@ fun PlaceComponent(
 
     LazyColumn(
         modifier = modifier
-            .padding(0.24.dp, 0.dp, 0.24.dp, 0.dp)
+            .padding(horizontal = 0.24.dp)
             .fillMaxWidth()
             .height(200.dp)
             .background(

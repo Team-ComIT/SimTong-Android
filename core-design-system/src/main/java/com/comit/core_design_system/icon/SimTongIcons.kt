@@ -23,6 +23,11 @@ object SimTongIcons {
         val Logo = R.drawable.ic_logo
     }
 
+    object Profile {
+        fun ProfileComment(isSmall: Boolean) =
+            if (isSmall) R.drawable.ic_profile_small else R.drawable.ic_profile_big
+    }
+
     val Add = R.drawable.ic_add
     val Comment = R.drawable.ic_comment
     val Image = R.drawable.ic_image

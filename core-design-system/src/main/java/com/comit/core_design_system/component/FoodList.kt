@@ -56,6 +56,9 @@ private val FoodListItemCardWidth: Dp = 140.dp
 @Stable
 private val FoodListItemCardHeight: Dp = 160.dp
 
+@Stable
+private val FoodListItemRound: Dp = 10.dp
+
 @Composable
 fun FoodListItem(
     modifier: Modifier = Modifier,
@@ -74,13 +77,13 @@ fun FoodListItem(
         if (timeCheck == index) backgroundCheck else background
 
     Card(
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(FoodListItemRound),
         backgroundColor = SimTongColor.Transparent,
         elevation = 0.dp,
         modifier = modifier
             .width(FoodListItemCardWidth)
             .height(FoodListItemCardHeight)
-            .padding(15.dp, 0.dp, 15.dp, 0.dp),
+            .padding(horizontal = 15.dp),
     ) {
         Box(
             modifier = Modifier
@@ -91,8 +94,13 @@ fun FoodListItem(
             Body13(
                 text = menu,
                 color = textColor,
+                line,
                 modifier = Modifier
-                    .padding(12.dp, 15.dp, 10.dp, 0.dp),
+                    .padding(
+                        start = 12.dp,
+                        top = 15.dp,
+                        end = 10.dp
+                    )
             )
         }
     }

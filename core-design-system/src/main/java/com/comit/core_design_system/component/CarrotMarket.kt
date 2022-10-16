@@ -26,16 +26,16 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.theme.Body10
-import com.comit.core_design_system.theme.Body3
-import com.comit.core_design_system.theme.Body6
-import com.comit.core_design_system.theme.SimTongColor
+import com.comit.core_design_system.typography.Body10
+import com.comit.core_design_system.typography.Body3
+import com.comit.core_design_system.typography.Body6
 import java.text.DecimalFormat
 
 data class CarrotMarketData(
@@ -51,55 +51,60 @@ data class CarrotMarketData(
 fun CarrotMarket(
     modifier: Modifier = Modifier,
     list: List<CarrotMarketData>,
-    heartClick: () -> Unit = {},
-    cardClick: () -> Unit = {}
+    onHeartClicked: () -> Unit = {},
+    onCardClicked: () -> Unit = {}
 ) {
     LazyVerticalGrid(columns = GridCells.Fixed(2)) {
         items(list) {
             CarrotMarketItemCard(
                 modifier = modifier,
                 data = it,
-                heartClick = heartClick,
-                cardClick = cardClick
+                onHeartClicked = onHeartClicked,
+                onCardClicked = onCardClicked
             )
         }
     }
 }
 
+@Stable
+private val CarrotMarketItemCardRoundedCornerShape = 5.dp
+
+@Stable
+private val CarrotMarketItemCardImagePadding = 50.dp
+
 @Composable
 fun CarrotMarketItemCard(
     modifier: Modifier,
     data: CarrotMarketData,
-    heartClick: () -> Unit,
-    cardClick: () -> Unit
+    onHeartClicked: () -> Unit,
+    onCardClicked: () -> Unit
 ) {
 
     val heartClickCheck = rememberSaveable { mutableStateOf(data.like) }
 
     Card(
         modifier = modifier
-            .clickable { cardClick() }
+            .clickable { onCardClicked() }
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(20.dp, 0.dp, 20.dp, 0.dp)
+                .padding(horizontal = 20.dp)
         ) {
 
             Box(
                 modifier = Modifier
                     .background(
                         color = SimTongColor.Gray300,
-                        shape = RoundedCornerShape(5.dp)
+                        shape = RoundedCornerShape(CarrotMarketItemCardRoundedCornerShape)
                     )
             ) {
                 if (data.imageUrl == null) {
                     Image(
                         painterResource(id = R.drawable.ic_carrot_market_base),
-                        contentDescription = "item image",
-
+                        contentDescription = stringResource(id = R.string.description_ic_item),
                         modifier = Modifier
-                            .padding(50.dp)
+                            .padding(CarrotMarketItemCardImagePadding)
                     )
                 }
             }
@@ -107,19 +112,18 @@ fun CarrotMarketItemCard(
             Body6(
                 text = data.productName,
                 color = SimTongColor.Black,
-                modifier = Modifier.padding(0.dp, 10.dp, 0.dp, 0.dp)
+                modifier = Modifier.padding(top = 10.dp)
             )
 
             Body10(
                 text = data.place + " " + "•" + " " + data.time,
                 color = SimTongColor.OtherColor.GrayA,
-                modifier = Modifier.padding(0.dp, 2.dp, 0.dp, 9.dp)
+                modifier = Modifier.padding(top = 2.dp, bottom = 9.dp)
             )
 
             Row(
                 modifier = Modifier
                     .height(21.dp)
-                    .padding(0.dp, 0.dp, 0.dp, 0.dp)
             ) {
                 val decimalFormat = DecimalFormat("#,###")
 
@@ -135,13 +139,13 @@ fun CarrotMarketItemCard(
                     painter = painterResource(
                         id = SimTongIcons.Heart(heartClickCheck.value)
                     ),
-                    contentDescription = "heart image",
+                    contentDescription = stringResource(id = R.string.description_ic_heart),
                     modifier = Modifier
                         .fillMaxWidth()
                         .wrapContentWidth(align = Alignment.End)
                         .noRippleClickable {
                             heartClickCheck.value = !heartClickCheck.value
-                            heartClick()
+                            onHeartClicked()
                         }
                 )
             }
