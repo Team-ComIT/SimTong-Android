@@ -27,4 +27,5 @@
     <string name="password_change">비밀번호 재설정</string>
     <string name="find_employee_number_password">사원번호 • 비밀번호 찾기</string>
     <string name="error_message">정보가 일치하지 않습니다.</string>
+    <string name="certification_number_not_correct">인증번호가 일치하지 않습니다.</string>
 </resources>
