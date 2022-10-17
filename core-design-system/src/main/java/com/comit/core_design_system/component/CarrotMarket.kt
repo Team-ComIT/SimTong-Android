@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
@@ -137,7 +137,8 @@ fun CarrotMarketItemCard(
 
                 Image(
                     painter = painterResource(
-                        id = SimTongIcons.Heart(heartClickCheck.value)
+                        id = if (heartClickCheck.value) SimTongIcon.Heart_On.drawableId
+                        else SimTongIcon.Heart_Off.drawableId
                     ),
                     contentDescription = stringResource(id = R.string.description_ic_heart),
                     modifier = Modifier

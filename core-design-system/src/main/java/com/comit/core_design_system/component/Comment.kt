@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.notoSansFamily
@@ -138,7 +138,7 @@ fun CommentItem(
             if (data.profileImage == null) {
                 Image(
                     painter = painterResource(
-                        id = SimTongIcons.Profile.ProfileComment(false)
+                        id = SimTongIcon.Comment.drawableId // TODO("아이콘 체크 요함")
                     ),
                     contentDescription = stringResource(id = R.string.description_ic_profile),
                     modifier = Modifier
@@ -203,7 +203,8 @@ fun CommentItem(
 
             Image(
                 painter = painterResource(
-                    id = SimTongIcons.Heart(like.value)
+                    id = if (like.value) SimTongIcon.Heart_On.drawableId
+                    else SimTongIcon.Heart_Off.drawableId,
                 ),
                 contentDescription = stringResource(id = R.string.like),
                 modifier = Modifier
