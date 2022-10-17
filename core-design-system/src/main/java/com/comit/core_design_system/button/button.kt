@@ -280,7 +280,7 @@ fun ButtonPreview() {
             painter = painterResource(
                 id = SimTongIcon.Next.drawableId,
             ),
-            contentDescription = null,
+            contentDescription = SimTongIcon.Next.contentDescription,
         ) {
         }
 
@@ -288,7 +288,7 @@ fun ButtonPreview() {
             painter = painterResource(
                 id = SimTongIcon.Next.drawableId,
             ),
-            contentDescription = null,
+            contentDescription = SimTongIcon.Next.contentDescription,
             enabled = false,
         ) {
         }

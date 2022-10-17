@@ -71,8 +71,10 @@ fun NotificationList(
                         }
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_trash),
-                            contentDescription = null
+                            painter = painterResource(
+                                id = SimTongIcon.Trash.drawableId,
+                            ),
+                            contentDescription = SimTongIcon.Trash.contentDescription,
                         )
                     }
 

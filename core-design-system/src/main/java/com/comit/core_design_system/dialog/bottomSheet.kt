@@ -164,7 +164,7 @@ fun PreviewBottomSheetDialog() {
                 painter = painterResource(
                     id = SimTongIcon.More.drawableId,
                 ),
-                contentDescription = null
+                contentDescription = SimTongIcon.More.contentDescription,
             ) {
                 coroutineScope.launch {
                     bottomSheetState.show()

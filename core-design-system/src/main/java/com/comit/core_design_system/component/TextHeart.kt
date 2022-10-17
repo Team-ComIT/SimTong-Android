@@ -40,7 +40,8 @@ fun TextHeart(
                 id = if (checkClickWatcher.value) SimTongIcon.Heart_On.drawableId
                 else SimTongIcon.Gray_Heart_Off.drawableId,
             ),
-            contentDescription = null,
+            contentDescription = if (checkClickWatcher.value) SimTongIcon.Heart_On.contentDescription
+            else SimTongIcon.Gray_Heart_Off.contentDescription,
             modifier = heartModifier
         )
 

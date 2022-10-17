@@ -216,7 +216,7 @@ fun SimTongTextField(
                                 onValueChange("")
                             },
                         painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = null,
+                        contentDescription = "close icon",
                     )
                 }
 

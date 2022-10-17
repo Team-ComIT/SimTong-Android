@@ -154,8 +154,10 @@ fun MyPageProfileImage(
         GlideImage(imageModel = imageUrl, Modifier.clip(CircleShape))
 
         RedIconButton(
-            painter = painterResource(id = R.drawable.ic_my_page_plus),
-            contentDescription = null,
+            painter = painterResource(
+                id = R.drawable.ic_my_page_plus
+            ),
+            contentDescription = "mypage plus icon",
             modifier = Modifier
                 .size(24.dp)
                 .align(Alignment.BottomEnd)
@@ -230,7 +232,7 @@ fun MyPageEditModeMenu(
                 painter = painterResource(
                     id = SimTongIcon.Next.drawableId,
                 ),
-                contentDescription = null,
+                contentDescription = SimTongIcon.Next.contentDescription,
             )
         }
     }

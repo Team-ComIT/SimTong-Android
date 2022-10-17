@@ -123,7 +123,8 @@ fun CarrotMarketItemCard(
                 id = if (heartClickCheck.value) SimTongIcon.Heart_On.drawableId
                 else SimTongIcon.Heart_Off.drawableId,
             ),
-            contentDescription = null,
+            contentDescription = if (heartClickCheck.value) SimTongIcon.Heart_On.contentDescription
+            else SimTongIcon.Heart_Off.contentDescription,
             modifier = Modifier
                 .fillMaxHeight()
                 .wrapContentHeight(align = Alignment.Bottom)

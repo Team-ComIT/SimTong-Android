@@ -115,7 +115,7 @@ fun BasicIconCheckBox(
             painter = painterResource(
                 id = icon.drawableId,
             ),
-            contentDescription = null,
+            contentDescription = icon.contentDescription,
         )
     }
 }

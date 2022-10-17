@@ -109,7 +109,7 @@ fun Notification(
                 painter = painterResource(
                     id = notificationModel.icon.drawableId,
                 ),
-                contentDescription = null,
+                contentDescription = notificationModel.icon.contentDescription,
                 modifier = Modifier
                     .size(40.dp)
                     .align(Alignment.TopStart)
@@ -136,7 +136,7 @@ fun Notification(
                     painter = painterResource(
                         id = notificationModel.typeIcon.drawableId,
                     ),
-                    contentDescription = null
+                    contentDescription = notificationModel.typeIcon.contentDescription,
                 )
             }
         }
