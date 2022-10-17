@@ -1,24 +1,18 @@
 package com.comit.core_design_system.button
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
+import android.widget.CheckBox
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -27,176 +21,225 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
+import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.icon.SimTongIcon
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body4
+import com.comit.core_design_system.typography.Body5
+import com.comit.core_design_system.util.runIf
 
-/**
- * Defines the size of the SimTongCheckBox
- */
-object CheckBoxSize {
-    val Small = 15.dp
-    val Medium = 20.dp
-    val Large = 25.dp
-}
-
-@Stable
-private val BasicCheckBoxScaleInTweenMillis: Int = 50
-
-@Stable
-private val BasicCheckBoxScaleOutTweenMillis: Int = 50
-
-@Stable
-private val BasicCheckBoxDefaultSize = CheckBoxSize.Medium
-
-@Stable
-private val BasicCheckBoxContentPadding = 4.dp
-
-@Stable
-private val BasicCheckBoxBorderWidth = 1.dp
-
-/**
- * Implement [BasicCheckBox], the lowest component of the CheckBox.
- *
- * @param modifier [Modifier] to use to draw the SimTongTextField,
- * @param checked check status
- * @param onCheckedChange Callback to be invoked if checked
- * @param checkBoxSize checkBoxSize in BasicCheckBox,
- * @param borderColor color in BasicCheckBox's border
- * @param disableBorderColor disabled color in BasicCheckBox's border
- * @param backgroundColor backgroundColor in BasicCheckBox
- */
-
-@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun BasicCheckBox(
     modifier: Modifier = Modifier,
+    shape: Shape = RectangleShape,
     checked: Boolean,
-    onCheckedChange: ((Boolean) -> Unit)?,
-    checkBoxSize: Dp = BasicCheckBoxDefaultSize,
-    borderColor: Color = SimTongColor.MainColor,
-    disableBorderColor: Color = SimTongColor.Gray400,
-    backgroundColor: Color = SimTongColor.MainColor,
+    onCheckedChange: (Boolean) -> Unit,
+    selectedColor: Color,
+    unSelectedColor: Color,
+    disabledSelectedColor: Color,
+    disabledUnSelectedColor: Color,
+    enabled: Boolean = true,
+    content: @Composable () -> Unit,
 ) {
+    val backgroundColor: Color by animateColorAsState(
+        if (enabled) selectedColor else disabledSelectedColor
+    )
 
-    val interactionSources = remember { MutableInteractionSource() }
-
-    val borderColor = if (checked) borderColor else disableBorderColor
+    val borderColor: Color by animateColorAsState(
+        if (enabled) unSelectedColor else disabledUnSelectedColor
+    )
 
     Box(
         modifier = modifier
-            .clip(CircleShape)
-            .size(checkBoxSize)
-            .border(
-                width = BasicCheckBoxBorderWidth,
-                shape = CircleShape,
-                color = borderColor
+            .background(
+                color = if (checked) backgroundColor else Color.Transparent,
+                shape = shape,
             )
-            .clickable(
-                interactionSource = interactionSources,
-                indication = null
-            ) {
-                if (onCheckedChange != null) {
-                    onCheckedChange(!checked)
+            .runIf(!checked) {
+                composed {
+                    border(
+                        width = 2.dp,
+                        color = borderColor,
+                    )
                 }
             }
+            .runIf(enabled) {
+                composed {
+                    simClickable(
+                        rippleEnabled = enabled,
+                        rippleColor = null,
+                    ) {
+                        onCheckedChange(!checked)
+                    }
+                }
+            },
+        contentAlignment = Alignment.Center,
     ) {
-
-        AnimatedVisibility(
-            visible = checked,
-            enter = scaleIn(tween(BasicCheckBoxScaleInTweenMillis)),
-            exit = scaleOut(tween(BasicCheckBoxScaleOutTweenMillis)),
-            modifier = Modifier.fillMaxSize()
-        ) {
-            Box(
-                modifier = Modifier
-                    .padding(BasicCheckBoxContentPadding)
-                    .clip(CircleShape)
-                    .background(backgroundColor)
-            )
+        if (checked) {
+            content()
         }
     }
 }
 
-@Stable
-private val TextCheckBoxDefaultSize = CheckBoxSize.Medium
-
-@Stable
-private val TextCheckBoxSpacerWidth = 8.dp
-
-/**
- * SimTongDesignSystem의 [TextCheckBox] 를 구현합니다.
- * [BasicCheckBox]와 [Body4]가 혼합된 형식의 컴포넌트입니다.
- *
- * @param text text in TextCheckBox
- * @param textColor color of TextCheckBox's text
- */
 @Composable
-fun TextCheckBox(
+fun BasicIconCheckBox(
     modifier: Modifier = Modifier,
-    text: String,
-    textColor: Color = SimTongColor.Gray800,
+    shape: Shape = RectangleShape,
     checked: Boolean,
-    onCheckedChange: ((Boolean) -> Unit)?,
-    checkBoxSize: Dp = TextCheckBoxDefaultSize,
-    borderColor: Color = SimTongColor.MainColor,
-    disableBorderColor: Color = SimTongColor.Gray400,
-    backgroundColor: Color = SimTongColor.MainColor,
+    onCheckedChange: (Boolean) -> Unit,
+    selectedColor: Color,
+    unSelectedColor: Color,
+    disabledSelectedColor: Color,
+    disabledUnSelectedColor: Color,
+    enabled: Boolean = true,
+    icon: SimTongIcon = SimTongIcon.Check,
 ) {
-    val interactionSources = remember { MutableInteractionSource() }
-
-    Row(
-        modifier = modifier.clickable(
-            interactionSource = interactionSources,
-            indication = null
-        ) {
-            if (onCheckedChange != null) {
-                onCheckedChange(!checked)
-            }
-        },
-        verticalAlignment = Alignment.CenterVertically
+    BasicCheckBox(
+        modifier = modifier,
+        shape = shape,
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        selectedColor = selectedColor,
+        unSelectedColor = unSelectedColor,
+        disabledSelectedColor = disabledSelectedColor,
+        disabledUnSelectedColor = disabledUnSelectedColor,
+        enabled = enabled,
     ) {
-        BasicCheckBox(
+        Image(
+            painter = painterResource(
+                id = icon.drawableId,
+            ),
+            contentDescription = null,
+        )
+    }
+}
+
+@Composable
+fun BasicRoundIconCheckBox(
+    modifier: Modifier = Modifier,
+    round: Dp = 0.dp,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    selectedColor: Color,
+    unSelectedColor: Color,
+    disabledSelectedColor: Color,
+    disabledUnSelectedColor: Color,
+    enabled: Boolean = true,
+    icon: SimTongIcon = SimTongIcon.Check,
+) {
+    BasicIconCheckBox(
+        modifier = modifier,
+        shape = RoundedCornerShape(round),
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        selectedColor = selectedColor,
+        unSelectedColor = unSelectedColor,
+        disabledSelectedColor = disabledSelectedColor,
+        disabledUnSelectedColor = disabledUnSelectedColor,
+        enabled = enabled,
+        icon = icon,
+    )
+}
+
+@Stable
+private val DefaultCheckBoxRound = 2.dp
+
+@Stable
+private val DefaultCheckBoxSize = 24.dp
+
+@Composable
+fun SimCheckBox(
+    modifier: Modifier = Modifier,
+    round: Dp = DefaultCheckBoxRound,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true,
+) {
+    BasicRoundIconCheckBox(
+        modifier = modifier.size(DefaultCheckBoxSize),
+        round = round,
+        checked = checked,
+        onCheckedChange = onCheckedChange,
+        selectedColor = SimTongColor.MainColor,
+        unSelectedColor = SimTongColor.Gray500,
+        disabledSelectedColor = SimTongColor.Gray300,
+        disabledUnSelectedColor = SimTongColor.Gray200,
+        enabled = enabled,
+        icon = SimTongIcon.White_CheckBox,
+    )
+}
+
+private val TextCheckBoxYOffset: Dp = (-1.2).dp
+
+@Composable
+fun SimTextCheckBox(
+    modifier: Modifier = Modifier,
+    checked: Boolean,
+    onCheckedChange: (Boolean) -> Unit,
+    enabled: Boolean = true,
+    text: String,
+) {
+    Row(
+        modifier = modifier
+            .runIf(enabled) {
+                composed {
+                    simClickable(
+                        rippleEnabled = false,
+                        rippleColor = null,
+                    ) {
+                        onCheckedChange(!checked)
+                    }
+                }
+            },
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        SimCheckBox(
             modifier = modifier,
             checked = checked,
             onCheckedChange = onCheckedChange,
-            checkBoxSize = checkBoxSize,
-            borderColor = borderColor,
-            disableBorderColor = disableBorderColor,
-            backgroundColor = backgroundColor,
+            enabled = enabled,
         )
 
-        Spacer(modifier = Modifier.width(TextCheckBoxSpacerWidth))
+        Spacer(modifier = Modifier.width(15.dp))
 
-        Body4(
-            text = text,
-            color = textColor,
-        )
+        Box(
+            modifier = Modifier
+                .offset(
+                    y = TextCheckBoxYOffset,
+                ),
+        ) {
+            Body4(
+                text = text,
+                color = SimTongColor.Gray800,
+            )
+        }
     }
 }
 
 @Preview
 @Composable
 fun PreviewCheckBox() {
-    var value1 by remember { mutableStateOf(false) }
-    var value2 by remember { mutableStateOf(false) }
+    var checked by remember { mutableStateOf(false) }
+    var checked2 by remember { mutableStateOf(false) }
 
-    Column(
-        verticalArrangement = Arrangement.spacedBy(8.dp),
-    ) {
-        BasicCheckBox(
-            checked = value1,
-            onCheckedChange = { value1 = it },
+    Column {
+        SimCheckBox(
+            checked = checked,
+            onCheckedChange = { checked = !checked },
         )
 
-        TextCheckBox(
-            text = "설명설명",
-            checked = value2,
-            onCheckedChange = { value2 = it },
+        SimTextCheckBox(
+            checked = checked2,
+            onCheckedChange = { checked2 = !checked2 },
+            text = "체크박스 테스트입니다.",
         )
     }
 }
