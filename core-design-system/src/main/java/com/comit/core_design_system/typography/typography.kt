@@ -11,6 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
@@ -32,6 +33,7 @@ object SimTongTypography {
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
+        lineHeight = 51.sp,
     )
 
     @Stable
@@ -39,13 +41,15 @@ object SimTongTypography {
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 28.sp,
+        lineHeight = 45.sp,
     )
 
     @Stable
     val title3 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
+        fontSize = 21.sp,
+        lineHeight = 34.sp,
     )
 
     @Stable
@@ -53,6 +57,7 @@ object SimTongTypography {
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
+        lineHeight = 29.sp,
     )
 
     @Stable
@@ -60,90 +65,103 @@ object SimTongTypography {
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 18.sp,
+        lineHeight = 29.sp,
     )
 
     @Stable
     val body3 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 15.sp
+        fontSize = 15.sp,
+        lineHeight = 24.sp,
     )
 
     @Stable
     val body4 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 15.sp
+        fontSize = 15.sp,
+        lineHeight = 24.sp,
     )
 
     @Stable
     val body5 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 13.sp
+        fontSize = 13.sp,
+        lineHeight = 21.sp,
     )
 
     @Stable
     val body6 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 13.sp
+        fontSize = 13.sp,
+        lineHeight = 21.sp,
     )
 
     @Stable
     val body7 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 11.sp
+        fontSize = 11.sp,
+        lineHeight = 18.sp,
     )
 
     @Stable
     val body8 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        lineHeight = 19.sp,
     )
 
     @Stable
     val body9 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 12.sp
+        fontSize = 12.sp,
+        lineHeight = 19.sp,
     )
 
     @Stable
     val body10 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 11.sp
+        fontSize = 11.sp,
+        lineHeight = 18.sp,
     )
 
     @Stable
     val body11 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 9.sp
+        fontSize = 9.sp,
+        lineHeight = 14.sp,
     )
 
     @Stable
     val body12 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 9.sp
+        fontSize = 9.sp,
+        lineHeight = 14.sp,
     )
 
     @Stable
     val body13 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.SemiBold,
-        fontSize = 10.sp
+        fontSize = 10.sp,
+        lineHeight = 16.sp,
     )
 
     @Stable
     val body14 = TextStyle(
         fontFamily = notoSansFamily,
         fontWeight = FontWeight.Normal,
-        fontSize = 10.sp
+        fontSize = 10.sp,
+        lineHeight = 16.sp,
     )
 }
 
