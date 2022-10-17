@@ -53,6 +53,11 @@ value class SimTongIcon private constructor(
         )
 
         @Stable
+        val White_CheckBox = SimTongIcon(
+            drawableId = R.drawable.ic_check_white,
+        )
+
+        @Stable
         val Add = SimTongIcon(
             drawableId = R.drawable.ic_add,
         )
