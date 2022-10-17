@@ -27,9 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.common.domain.unit.dp
-import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 const val CARD_HEIGHT = 56
@@ -71,8 +70,10 @@ fun NotificationList(
                         }
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_trash),
-                            contentDescription = null
+                            painter = painterResource(
+                                id = SimTongIcon.Trash.drawableId,
+                            ),
+                            contentDescription = SimTongIcon.Trash.contentDescription,
                         )
                     }
 
@@ -105,20 +106,20 @@ fun PreviewNotificationList() {
 
     notifications = listOf(
         NotificationModel(
-            icon = painterResource(id = SimTongIcons.Image),
-            typeIcon = painterResource(id = SimTongIcons.More),
+            icon = SimTongIcon.Image,
+            typeIcon = SimTongIcon.More,
             text = "안녕하세요. 테스트입니다.",
             time = "방금 전"
         ),
         NotificationModel(
-            icon = painterResource(id = SimTongIcons.Image),
-            typeIcon = painterResource(id = SimTongIcons.More),
+            icon = SimTongIcon.Image,
+            typeIcon = SimTongIcon.More,
             text = "안녕하세요. 테스트입니다.",
             time = "1시간 전"
         ),
         NotificationModel(
-            icon = painterResource(id = SimTongIcons.Image),
-            typeIcon = painterResource(id = SimTongIcons.More),
+            icon = SimTongIcon.Image,
+            typeIcon = SimTongIcon.More,
             text = "안녕하세요. 테스트입니다.",
             time = "1시간 전"
         )

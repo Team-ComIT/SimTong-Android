@@ -1,7 +1,7 @@
 package com.comit.core_design_system.button
 
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.Image
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -22,22 +22,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.typography.Body4
+import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.util.runIf
 
 @Composable
-fun BasicCheckBox(
+fun BasicRadioButton(
     modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
     selectedColor: Color,
@@ -45,34 +40,32 @@ fun BasicCheckBox(
     disabledSelectedColor: Color,
     disabledUnSelectedColor: Color,
     enabled: Boolean = true,
-    content: @Composable () -> Unit,
 ) {
-    val backgroundColor: Color by animateColorAsState(
-        if (enabled) selectedColor else disabledSelectedColor
+    val enabledBackgroundColor: Color by animateColorAsState(
+        if (checked) selectedColor else unSelectedColor
     )
 
-    val borderColor: Color by animateColorAsState(
-        if (enabled) unSelectedColor else disabledUnSelectedColor
+    val disabledBackgroundColor: Color by animateColorAsState(
+        if (checked) disabledSelectedColor else disabledUnSelectedColor
+    )
+
+    val backgroundColor = if (enabled) enabledBackgroundColor else disabledBackgroundColor
+
+    val inCircleSize: Dp by animateDpAsState(
+        if (checked) 10.dp else 0.dp
     )
 
     Box(
         modifier = modifier
-            .background(
-                color = if (checked) backgroundColor else Color.Transparent,
-                shape = shape,
+            .border(
+                width = 2.dp,
+                shape = CircleShape,
+                color = backgroundColor
             )
-            .runIf(!checked) {
-                composed {
-                    border(
-                        width = 2.dp,
-                        color = borderColor,
-                    )
-                }
-            }
             .runIf(enabled) {
                 composed {
                     simClickable(
-                        rippleEnabled = enabled,
+                        rippleEnabled = false,
                         rippleColor = null,
                     ) {
                         onCheckedChange(!checked)
@@ -81,104 +74,43 @@ fun BasicCheckBox(
             },
         contentAlignment = Alignment.Center,
     ) {
-        if (checked) {
-            content()
-        }
-    }
-}
-
-@Composable
-fun BasicIconCheckBox(
-    modifier: Modifier = Modifier,
-    shape: Shape = RectangleShape,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    selectedColor: Color,
-    unSelectedColor: Color,
-    disabledSelectedColor: Color,
-    disabledUnSelectedColor: Color,
-    enabled: Boolean = true,
-    icon: SimTongIcon = SimTongIcon.Check,
-) {
-    BasicCheckBox(
-        modifier = modifier,
-        shape = shape,
-        checked = checked,
-        onCheckedChange = onCheckedChange,
-        selectedColor = selectedColor,
-        unSelectedColor = unSelectedColor,
-        disabledSelectedColor = disabledSelectedColor,
-        disabledUnSelectedColor = disabledUnSelectedColor,
-        enabled = enabled,
-    ) {
-        Image(
-            painter = painterResource(
-                id = icon.drawableId,
-            ),
-            contentDescription = icon.contentDescription,
+        Box(
+            modifier = Modifier
+                .size(inCircleSize)
+                .background(
+                    color = backgroundColor,
+                    shape = CircleShape,
+                )
         )
     }
 }
 
+@Stable
+private val DefaultRadioButtonSize: Dp = 20.dp
+
 @Composable
-fun BasicRoundIconCheckBox(
+fun SimRadioButton(
     modifier: Modifier = Modifier,
-    round: Dp = 0.dp,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
-    selectedColor: Color,
-    unSelectedColor: Color,
-    disabledSelectedColor: Color,
-    disabledUnSelectedColor: Color,
     enabled: Boolean = true,
-    icon: SimTongIcon = SimTongIcon.Check,
 ) {
-    BasicIconCheckBox(
-        modifier = modifier,
-        shape = RoundedCornerShape(round),
+    BasicRadioButton(
+        modifier = modifier.size(DefaultRadioButtonSize),
         checked = checked,
         onCheckedChange = onCheckedChange,
-        selectedColor = selectedColor,
-        unSelectedColor = unSelectedColor,
-        disabledSelectedColor = disabledSelectedColor,
-        disabledUnSelectedColor = disabledUnSelectedColor,
         enabled = enabled,
-        icon = icon,
-    )
-}
-
-@Stable
-private val DefaultCheckBoxRound = 2.dp
-
-@Stable
-private val DefaultCheckBoxSize = 24.dp
-
-@Composable
-fun SimCheckBox(
-    modifier: Modifier = Modifier,
-    round: Dp = DefaultCheckBoxRound,
-    checked: Boolean,
-    onCheckedChange: (Boolean) -> Unit,
-    enabled: Boolean = true,
-) {
-    BasicRoundIconCheckBox(
-        modifier = modifier.size(DefaultCheckBoxSize),
-        round = round,
-        checked = checked,
-        onCheckedChange = onCheckedChange,
         selectedColor = SimTongColor.MainColor,
         unSelectedColor = SimTongColor.Gray500,
         disabledSelectedColor = SimTongColor.Gray300,
         disabledUnSelectedColor = SimTongColor.Gray200,
-        enabled = enabled,
-        icon = SimTongIcon.White_CheckBox,
     )
 }
 
-private val TextCheckBoxYOffset: Dp = (-1.2).dp
+private val TextRadioButtonYOffset: Dp = (-1.2).dp
 
 @Composable
-fun SimTextCheckBox(
+fun SimTextRadioButton(
     modifier: Modifier = Modifier,
     checked: Boolean,
     onCheckedChange: (Boolean) -> Unit,
@@ -199,7 +131,7 @@ fun SimTextCheckBox(
             },
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        SimCheckBox(
+        SimRadioButton(
             modifier = modifier,
             checked = checked,
             onCheckedChange = onCheckedChange,
@@ -211,10 +143,10 @@ fun SimTextCheckBox(
         Box(
             modifier = Modifier
                 .offset(
-                    y = TextCheckBoxYOffset,
+                    y = TextRadioButtonYOffset,
                 ),
         ) {
-            Body4(
+            Body5(
                 text = text,
                 color = SimTongColor.Gray800,
             )
@@ -224,20 +156,20 @@ fun SimTextCheckBox(
 
 @Preview
 @Composable
-fun PreviewCheckBox() {
+fun PreviewRadioButton() {
     var checked by remember { mutableStateOf(false) }
     var checked2 by remember { mutableStateOf(false) }
 
     Column {
-        SimCheckBox(
+        SimRadioButton(
             checked = checked,
             onCheckedChange = { checked = !checked },
         )
 
-        SimTextCheckBox(
+        SimTextRadioButton(
             checked = checked2,
             onCheckedChange = { checked2 = !checked2 },
-            text = "체크박스 테스트입니다.",
+            text = "항목 1",
         )
     }
 }

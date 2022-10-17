@@ -23,7 +23,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.SimTongTypography
@@ -105,7 +105,6 @@ fun IdeaItem(
                 textStyle = SimTongTypography.body14,
                 textColor = SimTongColor.OtherColor.Gray96,
                 onClick = onClickHeart,
-                isGray = true,
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)
@@ -113,8 +112,10 @@ fun IdeaItem(
             )
 
             Image(
-                painter = painterResource(id = SimTongIcons.Comment(true)),
-                contentDescription = "",
+                painter = painterResource(
+                    id = SimTongIcon.Gray_Comment.drawableId,
+                ),
+                contentDescription = SimTongIcon.Gray_Comment.contentDescription,
                 modifier = Modifier
                     .padding(35.dp, 0.dp, 0.dp, 0.dp)
                     .clickable { onClickComment() }

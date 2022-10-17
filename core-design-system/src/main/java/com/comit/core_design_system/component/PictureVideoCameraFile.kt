@@ -23,11 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body6
 
 data class IconListData(
-    val icon: Painter,
+    val icon: SimTongIcon,
     val text: String,
 )
 
@@ -57,7 +57,9 @@ fun PictureVideoCameraFileList(
                 lineColor = lineColor,
                 textColor = textColor,
                 index = index,
-                icon = data.icon,
+                icon = painterResource(
+                    id = data.icon.drawableId,
+                ),
                 text = data.text,
                 onClick = onClick,
                 imagePaddingStart = imagePaddingStart,
@@ -130,9 +132,18 @@ fun PictureVideoCameraFileItem(
 fun PictureVideoCameraFile() {
     PictureVideoCameraFileList(
         list = listOf(
-            IconListData(painterResource(id = SimTongIcons.Image), "사진/동영상"),
-            IconListData(painterResource(id = SimTongIcons.Photo), "카메라"),
-            IconListData(painterResource(id = SimTongIcons.Link), "링크"),
-        )
+            IconListData(
+                icon = SimTongIcon.Image,
+                text = "사진/동영상",
+            ),
+            IconListData(
+                icon = SimTongIcon.Photo,
+                text = "카메라",
+            ),
+            IconListData(
+                icon = SimTongIcon.Link,
+                text = "링크",
+            ),
+        ),
     )
 }
