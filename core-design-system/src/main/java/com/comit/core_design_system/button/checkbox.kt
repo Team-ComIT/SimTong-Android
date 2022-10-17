@@ -1,6 +1,5 @@
 package com.comit.core_design_system.button
 
-import android.widget.CheckBox
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -33,7 +32,6 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body4
-import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.util.runIf
 
 @Composable
