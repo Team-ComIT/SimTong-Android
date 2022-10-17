@@ -10,7 +10,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
 
@@ -40,7 +42,7 @@ fun TextHeart(
             painter = painterResource(
                 id = SimTongIcons.Heart(checkClickWatcher.value, isGray)
             ),
-            contentDescription = "heart image",
+            contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = heartModifier
         )
 
@@ -79,7 +81,7 @@ fun TextHeart(
             painter = painterResource(
                 id = SimTongIcons.Heart(checkClickWatcher.value)
             ),
-            contentDescription = "heart image",
+            contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = heartModifier
         )
 

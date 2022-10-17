@@ -40,7 +40,6 @@ import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
-import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.notoSansFamily
@@ -109,6 +108,7 @@ fun CommentItem(
 
     val like = rememberSaveable { mutableStateOf(data.like) }
     val likeNum = rememberSaveable { mutableStateOf(data.likeNum) }
+    val likeText: String = stringResource(id = R.string.like) + " " + likeNum + stringResource(id = R.string.num)
 
     val onCLickCheck = rememberSaveable { mutableStateOf(false) }
     val backgroundColor = if (onCLickCheck.value) SimTongColor.OtherColor.RedFFE7E7 else SimTongColor.White
@@ -155,8 +155,9 @@ fun CommentItem(
                     .padding(
                         start = 10.dp,
                         top = 9.dp,
-                        bottom =  9.dp
-                    )
+                        bottom = 9.dp
+                    ),
+
             ) {
                 Row {
                     Body9(
@@ -176,7 +177,6 @@ fun CommentItem(
                             .width(CommentItemContentWidth)
                             .padding(start = 10.dp)
                     )
-
                 }
 
                 Row(
@@ -189,11 +189,7 @@ fun CommentItem(
 
                     Spacer(modifier = Modifier.width(15.dp))
 
-                    Body12(text = 
-                    stringResource(id = R.string.like) 
-                            + " " 
-                            + likeNum.value
-                            + stringResource(id = R.string.num))
+                    Body12(text = likeText)
 
                     Spacer(modifier = Modifier.width(15.dp))
 

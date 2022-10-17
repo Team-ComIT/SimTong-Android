@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,15 +22,16 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body10
 import com.comit.feature_auth.R
 
-@Composable
-fun CheckCertificationNumber(
+@Stable
+private val CertificateNumberLength: Int = 6
 
-){
+@Composable
+fun CheckCertificationNumber() {
 
     var certificationNumber by remember { mutableStateOf<String?>(null) }
     var certificationNumberError by remember { mutableStateOf<String?>(null) }
 
-    val buttonEnabled = certificationNumber?.length == 6
+    val buttonEnabled = certificationNumber?.length == CertificateNumberLength
 
     val errorMsg = stringResource(id = R.string.certification_number_not_correct)
 
@@ -46,7 +48,7 @@ fun CheckCertificationNumber(
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End)
         )
-        
+
         Spacer(modifier = Modifier.height(8.dp))
 
         SimTongTextField(
