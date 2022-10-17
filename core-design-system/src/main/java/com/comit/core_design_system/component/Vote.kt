@@ -133,7 +133,7 @@ fun VotePage(
                         .height(21.dp)
                 ) {
 
-                    TextHeart(
+                    TextHeart2(
                         text = data.heartNum,
                         textStyle = SimTongTypography.body10,
                         textColor = SimTongColor.Black,
