@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body9
 import kotlin.math.roundToInt
@@ -106,7 +106,9 @@ fun Notification(
     ) {
         Box(modifier = Modifier.size(44.dp)) {
             Image(
-                painter = notificationModel.icon,
+                painter = painterResource(
+                    id = notificationModel.icon.drawableId,
+                ),
                 contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
@@ -131,7 +133,9 @@ fun Notification(
                 contentAlignment = Alignment.Center
             ) {
                 Image(
-                    painter = notificationModel.typeIcon,
+                    painter = painterResource(
+                        id = notificationModel.typeIcon.drawableId,
+                    ),
                     contentDescription = null
                 )
             }
@@ -170,19 +174,19 @@ fun PreviewNotification() {
     Column {
         Notification(
             notificationModel = NotificationModel(
-                icon = painterResource(id = SimTongIcons.Image),
-                typeIcon = painterResource(id = SimTongIcons.More),
+                icon = SimTongIcon.Image,
+                typeIcon = SimTongIcon.More,
                 text = "안녕하세요. 테스트입니다.",
-                time = "1시간 전"
+                time = "1시간 전",
             )
         )
 
         Notification(
             notificationModel = NotificationModel(
-                icon = painterResource(id = SimTongIcons.Image),
-                typeIcon = painterResource(id = SimTongIcons.More),
+                icon = SimTongIcon.Image,
+                typeIcon = SimTongIcon.More,
                 text = "안녕하세요. 테스트입니다.",
-                time = "1시간 전"
+                time = "1시간 전",
             )
         )
     }

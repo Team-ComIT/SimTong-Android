@@ -33,7 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body5
 
 @Composable
@@ -43,7 +43,7 @@ fun ChoosePlace(
     textColor: Color = SimTongColor.Black,
     onClick: (Int) -> Unit = {},
     list: List<String>,
-    painter: Painter = painterResource(id = SimTongIcons.Others.Check),
+    icon: SimTongIcon = SimTongIcon.Check,
     haveCheckImage: Boolean = true,
     lineHeight: Float = 2.5F,
     lineColor: Color = SimTongColor.Gray300
@@ -69,7 +69,9 @@ fun ChoosePlace(
                 text = text,
                 textColor = textColor,
                 index = index,
-                painter = painter,
+                painter = painterResource(
+                    id = icon.drawableId,
+                ),
                 haveCheckImage = haveCheckImage,
                 lineHeight = lineHeight,
                 lineColor = lineColor,

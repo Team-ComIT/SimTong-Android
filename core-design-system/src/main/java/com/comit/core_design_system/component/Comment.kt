@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.notoSansFamily
 
@@ -176,7 +176,8 @@ fun CommentItem(
 
             Image(
                 painter = painterResource(
-                    id = SimTongIcons.Heart(like.value)
+                    id = if (like.value) SimTongIcon.Heart_On.drawableId
+                    else SimTongIcon.Heart_Off.drawableId,
                 ),
                 contentDescription = "",
                 modifier = Modifier
