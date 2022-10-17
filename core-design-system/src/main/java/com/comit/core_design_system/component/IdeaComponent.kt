@@ -105,7 +105,6 @@ fun IdeaItem(
                 textStyle = SimTongTypography.body14,
                 textColor = SimTongColor.OtherColor.Gray96,
                 onClick = onClickHeart,
-                isGray = true,
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)

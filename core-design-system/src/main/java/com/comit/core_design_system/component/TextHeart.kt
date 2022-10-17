@@ -48,13 +48,14 @@ fun TextHeart(
     }
 }
 
+// TODO ("modifier argument 2개 function naming 개선 필요")
 @Composable
-fun TextHeart(
+fun TextHeart2(
+    modifier: Modifier = Modifier,
     text: Int,
     textStyle: TextStyle,
     textModifier: Modifier = Modifier,
     textColor: Color,
-    modifier: Modifier = Modifier,
     heartModifier: Modifier = Modifier,
     click: Boolean = false,
     onClick: () -> Unit = {}
