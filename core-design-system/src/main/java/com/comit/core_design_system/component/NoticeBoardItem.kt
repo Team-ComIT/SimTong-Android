@@ -42,7 +42,7 @@ import androidx.compose.ui.util.lerp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body11
@@ -191,7 +191,7 @@ fun NoticeBoardItemRowTop(
 
         Image(
             painter = painterResource(
-                id = SimTongIcons.Option(true)
+                id = SimTongIcon.Option_Thin.drawableId,
             ),
             contentDescription = stringResource(id = R.string.description_ic_option),
             modifier = Modifier
@@ -224,7 +224,8 @@ fun NoticeBoardItemHeartChat(
 
         Image(
             painter = painterResource(
-                id = SimTongIcons.Heart(like.value)
+                id = if (like.value) SimTongIcon.Heart_On.drawableId else
+                    SimTongIcon.Heart_Off.drawableId
             ),
             contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = Modifier
@@ -236,7 +237,7 @@ fun NoticeBoardItemHeartChat(
 
         Image(
             painter = painterResource(
-                id = SimTongIcons.Comment
+                id = SimTongIcon.Comment.drawableId,
             ),
             contentDescription = stringResource(id = R.string.description_ic_comment),
             modifier = Modifier

@@ -42,7 +42,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.button.BasicRoundSideButton
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.Body8
@@ -216,7 +216,7 @@ fun SimTongTextField(
                                 onValueChange("")
                             },
                         painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = null,
+                        contentDescription = "close icon",
                     )
                 }
 
@@ -228,7 +228,10 @@ fun SimTongTextField(
                             ) {
                                 passwordVisible = !passwordVisible
                             },
-                        painter = painterResource(id = SimTongIcons.Password(passwordVisible)),
+                        painter = painterResource(
+                            id = if (passwordVisible) SimTongIcon.Password_Visible.drawableId
+                            else SimTongIcon.Password_InVisible.drawableId,
+                        ),
                         contentDescription =
                         stringResource(
                             if (passwordVisible) R.string.descriptiom_ic_password_visible
