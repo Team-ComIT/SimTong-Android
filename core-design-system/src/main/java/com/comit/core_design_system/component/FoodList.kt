@@ -94,7 +94,6 @@ fun FoodListItem(
             Body13(
                 text = menu,
                 color = textColor,
-                line,
                 modifier = Modifier
                     .padding(
                         start = 12.dp,

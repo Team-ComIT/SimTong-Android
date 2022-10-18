@@ -29,7 +29,7 @@ import com.comit.feature_auth.screen.find.password.FindPassword
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalMaterialApi
 @Composable
 fun ChangeAuthScreen(
     index: Int,
@@ -48,7 +48,8 @@ fun ChangeAuthScreen(
 @Stable
 val AuthFindScreenTabBarHeight = 35.dp
 
-@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
+@ExperimentalPagerApi
+@ExperimentalMaterialApi
 @Composable
 fun AuthFindScreen() {
     val bottomSheetState = rememberModalBottomSheetState(
@@ -72,7 +73,7 @@ fun AuthFindScreen() {
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Composable
 fun AuthFindScreenBasic(
@@ -109,6 +110,7 @@ fun AuthFindScreenBasic(
     }
 }
 
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable

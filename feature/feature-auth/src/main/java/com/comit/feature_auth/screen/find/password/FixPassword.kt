@@ -15,7 +15,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.component.SimTongTextField
-import com.comit.core_design_system.typography.Body1
 import com.comit.feature_auth.R
 
 @Composable
@@ -35,7 +34,7 @@ fun FixPassword() {
         Spacer(modifier = Modifier.height(24.dp))
 
         SimTongTextField(
-            value = newPassword ?: "",
+            value = newPassword,
             onValueChange = {
                 newPassword = it
                 newPasswordError = null
@@ -49,7 +48,7 @@ fun FixPassword() {
         Spacer(modifier = Modifier.height(25.dp))
 
         SimTongTextField(
-            value = newPasswordAgain ?: "",
+            value = newPasswordAgain,
             onValueChange = {
                 newPasswordAgain = it
                 newPasswordError = null

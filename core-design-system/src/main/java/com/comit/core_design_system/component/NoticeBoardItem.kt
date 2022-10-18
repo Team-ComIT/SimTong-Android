@@ -3,7 +3,6 @@ package com.comit.core_design_system.component
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,13 +34,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.lerp
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body11
 import com.comit.core_design_system.typography.Body5
@@ -61,18 +63,18 @@ import kotlin.math.absoluteValue
 fun NoticeBoard(
     modifier: Modifier = Modifier,
     list: List<NoticeBoardData>,
-    menuClick: (Int) -> Unit = {},
-    heartClick: (Int) -> Unit = {},
-    commentClick: (Int) -> Unit = {}
+    onMenuClicked: (Int) -> Unit = {},
+    onHeartClicked: (Int) -> Unit = {},
+    onCommentClicked: (Int) -> Unit = {}
 ) {
     LazyColumn() {
         items(list) {
             NoticeBoardItem(
                 modifier = modifier,
                 data = it,
-                menuClick = menuClick,
-                heartClick = heartClick,
-                commentClick = commentClick
+                onMenuClicked = onMenuClicked,
+                onHeartClicked = onHeartClicked,
+                onCommentClicked = onCommentClicked
             )
         }
     }
@@ -83,9 +85,9 @@ fun NoticeBoard(
 fun NoticeBoardItem(
     modifier: Modifier,
     data: NoticeBoardData,
-    menuClick: (Int) -> Unit,
-    heartClick: (Int) -> Unit,
-    commentClick: (Int) -> Unit
+    onMenuClicked: (Int) -> Unit,
+    onHeartClicked: (Int) -> Unit,
+    onCommentClicked: (Int) -> Unit
 ) {
 
     Card() {
@@ -94,9 +96,10 @@ fun NoticeBoardItem(
                 .fillMaxWidth()
         ) {
             NoticeBoardItemRowTop(
+                profile = data.profile,
                 title = data.title,
                 time = data.time,
-                menuClick = menuClick
+                onMenuClicked = onMenuClicked
             )
 
             ViewPagerSliderNoticeBoard(
@@ -105,8 +108,8 @@ fun NoticeBoardItem(
 
             NoticeBoardItemHeartChat(
                 dataLike = data.like,
-                heartClick = heartClick,
-                commentClick = commentClick
+                heartClick = onHeartClicked,
+                commentClick = onCommentClicked
             )
 
             Row(
@@ -137,53 +140,51 @@ fun NoticeBoardItem(
                 text = "댓글 " + 4.toString() + "개 모두 보기",
                 color = SimTongColor.Gray500,
                 modifier = Modifier
-                    .padding(20.dp, 4.dp, 0.dp, 0.dp)
+                    .padding(start = 20.dp, top = 4.dp)
                     .noRippleClickable { }
             )
         }
     }
 }
 
+@Stable
+private val NoticeBoardItemRowTopHeight: Dp = 50.dp
+
+@Stable
+private val NoticeBoardItemRowTopImageSize: Dp = 30.dp
+
 @Composable
 fun NoticeBoardItemRowTop(
+    profile: String?,
     title: String,
     time: String,
-    menuClick: (Int) -> Unit
+    onMenuClicked: (Int) -> Unit
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)
+            .height(NoticeBoardItemRowTopHeight)
     ) {
-        Box(
-            modifier = Modifier
-                .padding(20.dp, 0.dp, 0.dp, 0.dp)
-                .width(30.dp)
-                .fillMaxHeight()
-                .wrapContentHeight(Alignment.CenterVertically)
-                .height(30.dp)
-                .background(
-                    shape = CircleShape,
-                    color = Color.LightGray
-                )
-        ) {
+        if (profile.isNullOrEmpty()) {
             Image(
                 painter = painterResource(
                     id = R.drawable.img_notice_board_rectangle
                 ),
-                contentDescription = "profile image",
+                contentDescription = stringResource(id = R.string.description_ic_profile),
                 modifier = Modifier
-                    .width(30.dp)
-                    .height(30.dp)
+                    .padding(start = 20.dp)
+                    .width(NoticeBoardItemRowTopImageSize)
+                    .fillMaxHeight()
+                    .wrapContentHeight(Alignment.CenterVertically)
+                    .height(NoticeBoardItemRowTopImageSize)
                     .clip(CircleShape)
-                // contentScale = ContentScale.Crop
             )
         }
 
         Body5(
             text = "$title • $time",
             modifier = Modifier
-                .padding(15.dp, 0.dp, 0.dp, 0.dp)
+                .padding(start = 15.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
         )
@@ -192,17 +193,20 @@ fun NoticeBoardItemRowTop(
             painter = painterResource(
                 id = SimTongIcons.Option(true)
             ),
-            contentDescription = "option image",
+            contentDescription = stringResource(id = R.string.description_ic_option),
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
-                .padding(0.dp, 0.dp, 20.dp, 0.dp)
-                .clickable { menuClick(1) }
+                .padding(end = 20.dp)
+                .simClickable { onMenuClicked(1) }
         )
     }
 }
+
+@Stable
+private val NoticeBoardItemHeartChatCommentWidth: Dp = 26.dp
 
 @Composable
 fun NoticeBoardItemHeartChat(
@@ -214,7 +218,7 @@ fun NoticeBoardItemHeartChat(
 
     Row(
         modifier = Modifier
-            .padding(20.dp, 10.dp, 0.dp, 10.dp)
+            .padding(start = 20.dp, top = 10.dp, end = 10.dp)
             .fillMaxWidth()
     ) {
 
@@ -222,7 +226,7 @@ fun NoticeBoardItemHeartChat(
             painter = painterResource(
                 id = SimTongIcons.Heart(like.value)
             ),
-            contentDescription = "heart image",
+            contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = Modifier
                 .noRippleClickable {
                     like.value = !like.value
@@ -234,10 +238,10 @@ fun NoticeBoardItemHeartChat(
             painter = painterResource(
                 id = SimTongIcons.Comment
             ),
-            contentDescription = "comment image",
+            contentDescription = stringResource(id = R.string.description_ic_comment),
             modifier = Modifier
-                .padding(15.dp, 0.dp, 0.dp, 0.dp)
-                .width(26.dp)
+                .padding(start = 15.dp)
+                .width(NoticeBoardItemHeartChatCommentWidth)
                 .noRippleClickable { commentClick(1) }
         )
     }
@@ -293,7 +297,7 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
                     painter = painterResource(
                         id = R.drawable.img_notice_board_rectangle
                     ),
-                    contentDescription = "item image",
+                    contentDescription = stringResource(id = R.string.description_ic_item),
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -304,6 +308,12 @@ fun ViewPagerSliderNoticeBoardHorizontalPager(
         }
     }
 }
+
+@Stable
+private val ViewPagerSliderNoticeBoardHeight: Dp = 24.dp
+
+@Stable
+private val ViewPagerSliderNoticeBoardWidth: Dp = 48.dp
 
 @ExperimentalPagerApi
 @Composable
@@ -338,13 +348,13 @@ fun ViewPagerSliderNoticeBoard(
 
         Box(
             modifier = Modifier
-                .padding(0.dp, 0.dp, 19.dp, 17.dp)
+                .padding(end = 19.dp, bottom = 17.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Bottom)
-                .height(24.dp)
+                .height(ViewPagerSliderNoticeBoardHeight)
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End)
-                .width(48.dp)
+                .width(ViewPagerSliderNoticeBoardWidth)
                 .background(
                     color = SimTongColor.Black.copy(alpha = 0.1f),
                     shape = RoundedCornerShape(20.dp)
@@ -376,6 +386,7 @@ data class NoticeBoardData(
     val title: String,
     val time: String,
     val like: Boolean,
+    val profile: String?,
     val imageList: List<String>?,
     val peopleList: List<String>?,
     val placeName: String,
@@ -399,6 +410,7 @@ fun PreviewNoticeBoard() {
                 "제목",
                 "1시간 전",
                 false,
+                null,
                 null,
                 peopleList = null,
                 placeName = "로쏘 (주) 전체 지점 ",
