@@ -124,7 +124,6 @@ fun IdeaItem(
                 textStyle = SimTongTypography.body14,
                 textColor = SimTongColor.OtherColor.Gray96,
                 onClick = onHeartClicked,
-                isGray = true,
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)
@@ -132,7 +131,7 @@ fun IdeaItem(
             )
 
             Image(
-                painter = painterResource(id = SimTongIcons.Comment(true)),
+                painter = painterResource(id = SimTongIcon.Gray_Comment.drawableId),
                 contentDescription = stringResource(id = R.string.description_ic_comment),
                 modifier = Modifier
                     .padding(start = 30.dp)
