@@ -58,9 +58,7 @@ fun PictureVideoCameraFileList(
                 lineColor = lineColor,
                 textColor = textColor,
                 index = index,
-                icon = painterResource(
-                    id = data.icon.drawableId,
-                ),
+                icon = data.icon.drawableId,
                 text = data.text,
                 onClick = onClick,
                 imagePaddingStart = imagePaddingStart,
