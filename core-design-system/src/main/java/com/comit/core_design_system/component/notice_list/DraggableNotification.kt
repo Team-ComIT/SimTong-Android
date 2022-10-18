@@ -34,7 +34,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body9
 import kotlin.math.roundToInt

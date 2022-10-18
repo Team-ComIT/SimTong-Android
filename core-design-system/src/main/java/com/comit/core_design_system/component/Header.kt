@@ -24,7 +24,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3

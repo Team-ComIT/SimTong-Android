@@ -29,7 +29,6 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.button.RedIconButton
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title2
 import kotlinx.coroutines.launch

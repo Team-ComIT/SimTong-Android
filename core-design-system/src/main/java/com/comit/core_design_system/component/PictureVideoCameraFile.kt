@@ -23,7 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body6
 
 data class IconListData(
@@ -57,7 +58,9 @@ fun PictureVideoCameraFileList(
                 lineColor = lineColor,
                 textColor = textColor,
                 index = index,
-                icon = data.icon,
+                icon = painterResource(
+                    id = data.icon.drawableId,
+                ),
                 text = data.text,
                 onClick = onClick,
                 imagePaddingStart = imagePaddingStart,
