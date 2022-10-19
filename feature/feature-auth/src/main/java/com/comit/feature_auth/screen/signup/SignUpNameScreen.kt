@@ -1,5 +1,6 @@
 package com.comit.feature_auth.screen.signup
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -15,7 +16,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -26,21 +26,21 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.BigRedRoundButton
-import com.comit.core_design_system.button.TextCheckBox
+import com.comit.core_design_system.button.SimTextCheckBox
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body9
-import kotlinx.coroutines.CoroutineScope
+import com.comit.feature_auth.utils.BottomSheetType
+import com.comit.feature_auth.utils.changeBottomSheetState
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -57,15 +57,24 @@ fun textFieldOffset(
 @Stable
 private val TextFieldEnterAnimation = fadeIn(tween(450))
 
+private const val SignUpBottomMargin: Int = 24
+
 data class Agreed(
     val index: Int,
     val text: String,
 )
 
+private val agreedList: List<String> =
+    listOf(
+        "약관1",
+        "약관2",
+        "약관3",
+        "약관4"
+    )
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SignUpNameScreen(
-    navController: NavController,
     toPrevious: () -> Unit,
     toNext: () -> Unit,
 ) {
@@ -83,11 +92,31 @@ fun SignUpNameScreen(
         when (signUpStep) {
             SignUpStep.InputUserInfo.NAME -> signUpStep = SignUpStep.InputUserInfo.EMPLOYEE_NUMBER
             SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> signUpStep = SignUpStep.InputUserInfo.EMAIL
-            SignUpStep.InputUserInfo.EMAIL -> openBottomSheet(
-                coroutineScope,
-                bottomSheetState,
-            )
+            SignUpStep.InputUserInfo.EMAIL -> {
+                signUpStep = SignUpStep.InputUserInfo.AGREED
+                changeBottomSheetState(
+                    coroutineScope = coroutineScope,
+                    bottomSheetState = bottomSheetState,
+                    bottomSheetType = BottomSheetType.Show
+                )
+            }
             SignUpStep.InputUserInfo.AGREED -> toNext()
+        }
+    }
+
+    val backBtnClick = {
+        when (signUpStep) {
+            SignUpStep.InputUserInfo.AGREED -> {
+                signUpStep = SignUpStep.InputUserInfo.EMAIL
+                changeBottomSheetState(
+                    coroutineScope = coroutineScope,
+                    bottomSheetState = bottomSheetState,
+                    bottomSheetType = BottomSheetType.Hide
+                )
+            }
+            SignUpStep.InputUserInfo.EMAIL -> signUpStep = SignUpStep.InputUserInfo.EMPLOYEE_NUMBER
+            SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> signUpStep = SignUpStep.InputUserInfo.NAME
+            SignUpStep.InputUserInfo.NAME -> toPrevious()
         }
     }
 
@@ -110,7 +139,7 @@ fun SignUpNameScreen(
         )
     )
     val bottomLoreOffset by animateDpAsState(
-        targetValue = (signUpStep.offsetIdx * TextFieldMargin + 24).dp
+        targetValue = (signUpStep.offsetIdx * TextFieldMargin + SignUpBottomMargin).dp
     )
 
     var name by remember { mutableStateOf<String?>(null) }
@@ -124,46 +153,29 @@ fun SignUpNameScreen(
         SignUpStep.InputUserInfo.AGREED -> true // TODO checkALL
     }
 
+    // 약관 모두 동의 개선 필요
     var agreedAll by remember {
         mutableStateOf(false)
     }
 
-    var agreedList = remember {
-        mutableStateListOf<Agreed>(
-            Agreed(
-                index = 0,
-                text = "약관1",
-            ),
-            Agreed(
-                index = 1,
-                text = "약관2",
-            ),
-            Agreed(
-                index = 2,
-                text = "약관2",
-            ),
-            Agreed(
-                index = 3,
-                text = "약관4",
-            )
-        )
+    val agreedList = remember {
+        agreedList.toMutableStateList()
     }
 
     val agreedChecked = remember {
         mutableStateListOf(
-            false, false, false, false,
+            elements = Array(
+                size = agreedList.size,
+                init = { false }
+            ),
         )
     }
 
-//    if (agreedAll) {
-//        (1..agreedList.size).map { index ->
-//            agreedList[index].checked = true
-//        }
-//    } else {
-//        (1..agreedList.size).map { index ->
-//            agreedList[index].checked = false
-//        }
-//    }
+    BackHandler {
+        coroutineScope.launch {
+            backBtnClick()
+        }
+    }
 
     SimBottomSheetDialog(
         useHandle = true,
@@ -186,7 +198,7 @@ fun SignUpNameScreen(
                         .padding(horizontal = 18.dp),
                     verticalArrangement = Arrangement.spacedBy(24.dp),
                 ) {
-                    TextCheckBox(
+                    SimTextCheckBox(
                         text = "전체 약관 동의",
                         checked = agreedAll,
                         onCheckedChange = { agreedAll = !agreedAll },
@@ -204,8 +216,8 @@ fun SignUpNameScreen(
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
-                                TextCheckBox(
-                                    text = item.text,
+                                SimTextCheckBox(
+                                    text = item,
                                     checked = agreedChecked[index],
                                     onCheckedChange = {
                                         agreedChecked[index] = !agreedChecked[index]
@@ -230,7 +242,7 @@ fun SignUpNameScreen(
         },
     ) {
         BaseSignUpScreen(
-            onPrevious = { /*TODO*/ },
+            onPrevious = backBtnClick,
             onNext = nextBtnClick,
             btnEnabled = btnEnabled,
         ) {
@@ -291,23 +303,10 @@ fun SignUpNameScreen(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
-fun openBottomSheet(
-    coroutineScope: CoroutineScope,
-    bottomSheetState: ModalBottomSheetState
-) {
-    coroutineScope.launch {
-        bottomSheetState.show()
-    }
-}
-
 @Preview
 @Composable
 fun PreviewSignUp() {
-    val navController = rememberNavController()
-
     SignUpNameScreen(
-        navController = navController,
         toPrevious = { },
     ) {
     }
