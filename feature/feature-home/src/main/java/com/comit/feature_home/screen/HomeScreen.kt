@@ -2,7 +2,6 @@ package com.comit.feature_home.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -23,7 +22,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -113,19 +111,19 @@ fun HomeScreen() {
             )
 
             Spacer(modifier = Modifier.height(27.dp))
-            
+
             HomeUnderRowItem(
                 painter = painterResource(id = R.drawable.ic_home_coin),
-                title = "나의 급여 정보",
-                content = "이번 달 나의 급여 정보를 손쉽게 확인해보세요."
+                title = stringResource(id = R.string.my_pay_info),
+                content = stringResource(id = R.string.my_pay_info_content)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
-            
+
             HomeUnderRowItem(
                 painter = painterResource(id = R.drawable.ic_home_schedule),
-                title = "휴무표 작성",
-                content = "이번 달 나의 휴무표를 직접 작성해 일정을 손쉽게 관리해 보세요."
+                title = stringResource(id = R.string.schedule_write),
+                content = stringResource(id = R.string.schedule_write_content)
             )
 
             Spacer(modifier = Modifier.height(46.dp))
@@ -139,7 +137,7 @@ fun HomeUnderRowItem(
     title: String,
     content: String,
     onClick: () -> Unit = {}
-){
+) {
     Card(
         shape = RoundedCornerShape(4.dp),
         elevation = 2.dp,
@@ -189,7 +187,6 @@ fun HomeUnderRowItem(
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
