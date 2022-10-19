@@ -116,7 +116,7 @@ private fun LoadImage(
         if (index == -1) {
             Image(
                 painter = nullPainter,
-                contentDescription = "",
+                contentDescription = "people image",
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize(Alignment.Center)
@@ -135,7 +135,7 @@ private fun LoadImage(
                 failure = {
                     Image(
                         painter = nullPainter,
-                        contentDescription = "",
+                        contentDescription = "null painter image",
                         modifier = Modifier
                             .fillMaxSize()
                             .wrapContentSize(Alignment.Center)

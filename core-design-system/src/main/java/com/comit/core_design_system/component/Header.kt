@@ -24,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
@@ -84,9 +85,11 @@ fun Header(
                 modifier = Modifier.size(21.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = SimTongIcons.Back(true)),
+                    painter = painterResource(
+                        id = SimTongIcon.Back_Small.drawableId,
+                    ),
                     contentDescription = stringResource(
-                        id = R.string.description_ic_back
+                        id = R.string.description_ic_back,
                     ),
                 )
             }
@@ -106,8 +109,12 @@ fun Header(
                 modifier = Modifier.size(17.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = SimTongIcons.More),
-                    contentDescription = stringResource(id = R.string.description_ic_more),
+                    painter = painterResource(
+                        id = SimTongIcon.More.drawableId,
+                    ),
+                    contentDescription = stringResource(
+                        id = R.string.description_ic_more,
+                    ),
                 )
             }
         }
@@ -120,8 +127,12 @@ fun Header(
                 modifier = Modifier.size(21.dp),
             ) {
                 Icon(
-                    painter = painterResource(id = SimTongIcons.Plus),
-                    contentDescription = stringResource(id = R.string.description_ic_plus),
+                    painter = painterResource(
+                        id = SimTongIcon.Plus.drawableId,
+                    ),
+                    contentDescription = stringResource(
+                        id = R.string.description_ic_plus,
+                    ),
                 )
             }
         }
@@ -135,7 +146,8 @@ fun Header(
             ) {
                 Image(
                     painter = painterResource(
-                        id = SimTongIcons.Beil(beilState),
+                        id = if (beilState) SimTongIcon.Beil_On.drawableId
+                        else SimTongIcon.Beil_Off.drawableId,
                     ),
                     contentDescription = stringResource(
                         id = if (beilState) R.string.description_ic_beil_on
@@ -154,10 +166,10 @@ fun Header(
             ) {
                 Icon(
                     painter = painterResource(
-                        id = SimTongIcons.MyPage,
+                        id = SimTongIcon.MyPage.drawableId,
                     ),
                     contentDescription = stringResource(
-                        id = R.string.description_ic_my_page
+                        id = R.string.description_ic_my_page,
                     ),
                 )
             }
@@ -208,18 +220,26 @@ fun BigHeader(
             .padding(BigHeaderHorizontalPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = onPrevious, modifier = Modifier.size(24.dp)) {
+        IconButton(
+            onClick = onPrevious,
+            modifier = Modifier
+                .size(24.dp),
+        ) {
             Icon(
-                painter = painterResource(id = SimTongIcons.Back(false)),
+                painter = painterResource(
+                    id = SimTongIcon.Back_Big.drawableId,
+                ),
                 contentDescription = stringResource(
-                    id = R.string.description_ic_back
+                    id = R.string.description_ic_back,
                 )
             )
         }
 
         Spacer(modifier = Modifier.width(15.dp))
 
-        Body1(text = text)
+        Body1(
+            text = text,
+        )
     }
 }
 

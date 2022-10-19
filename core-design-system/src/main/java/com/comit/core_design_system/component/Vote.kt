@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -29,10 +30,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body12
@@ -57,44 +61,58 @@ data class VoteListData(
 )
 
 @Composable
-fun VoteLazyColumn(
+fun Vote(
     modifier: Modifier = Modifier,
     list: List<VoteData>,
-    onHeartClick: () -> Unit = {},
-    onCommentClick: () -> Unit = {},
-    onItemClick: (Int) -> Unit = {},
+    onHeartClicked: () -> Unit = {},
+    onCommentClicked: () -> Unit = {},
+    onItemClicked: (Int) -> Unit = {},
 ) {
-    LazyColumn(
-        modifier = Modifier
-            .background(
-                SimTongColor.White
-            ),
-    ) {
+    LazyColumn() {
         items(list) {
             VotePage(
                 modifier = modifier,
                 data = it,
-                onHeartClick = onHeartClick,
-                onCommentClick = onCommentClick,
-                onItemClick = onItemClick,
+                onHeartClicked = onHeartClicked,
+                onCommentClicked = onCommentClicked,
+                onItemClicked = onItemClicked,
             )
         }
     }
 }
 
+@Stable
+private val VotePageBottomRowHeight: Dp = 21.dp
+
+@Stable
+private val PeopleImageListWidth: Dp = 23.dp
+
+@Stable
+private val PeopleImageListCount: Int = 2
+
+@Stable
+private val PeopleImageListPaddingEnd: Double = 18.0
+
+@Stable
+private val PeopleImageListHeight: Dp = 23.dp
+
+@Stable
+private val VotePageLineStartX: Float = 0f
+
+@Stable
+private val VotePageLineWidth: Float = 5f
+
 @Composable
 fun VotePage(
     modifier: Modifier,
     data: VoteData,
-    onHeartClick: () -> Unit,
-    onCommentClick: () -> Unit,
-    onItemClick: (Int) -> Unit,
+    onHeartClicked: () -> Unit,
+    onCommentClicked: () -> Unit,
+    onItemClicked: (Int) -> Unit,
 ) {
 
     Card(
         modifier = modifier
-            .fillMaxWidth()
-            .background(SimTongColor.White),
     ) {
         Column(
             modifier = Modifier
@@ -103,80 +121,80 @@ fun VotePage(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(25.dp, 0.dp, 25.dp, 0.dp)
+                    .padding(horizontal = 25.dp)
                     .background(SimTongColor.White),
             ) {
 
                 Body1(
                     text = data.title,
                     modifier = Modifier
-                        .padding(0.dp, 25.dp, 0.dp, 0.dp),
+                        .padding(top = 20.dp)
                 )
 
                 Body10(
                     text = data.place + " ・ " + data.time,
                     color = SimTongColor.Gray400,
                     modifier = Modifier
-                        .padding(0.dp, 0.dp, 0.dp, 20.dp),
+                        .padding(top = 4.dp, bottom = 20.dp)
                 )
 
                 VoteItemLazyColumn(
                     list = data.voteList,
-                    onItemClick = onItemClick,
+                    onItemClick = onItemClicked,
                 )
 
                 Row(
                     modifier = Modifier
-                        .padding(0.dp, 10.dp, 0.dp, 20.dp)
+                        .padding(top = 10.dp, bottom = 20.dp)
                         .fillMaxWidth()
-                        .height(21.dp)
+                        .height(VotePageBottomRowHeight)
                 ) {
 
-                    TextHeart(
+                    TextHeart2(
                         text = data.heartNum,
                         textStyle = SimTongTypography.body10,
                         textColor = SimTongColor.Black,
                         textModifier = Modifier
-                            .padding(5.dp, 0.dp, 0.dp, 0.dp)
+                            .padding(start = 5.dp)
                             .fillMaxHeight()
                             .wrapContentHeight(Alignment.CenterVertically),
                         modifier = Modifier
                             .fillMaxHeight()
                             .wrapContentHeight(Alignment.CenterVertically),
-                        onClick = onHeartClick,
+                        onClick = onHeartClicked,
                         click = data.heartCheck,
                     )
 
                     Image(
                         painter = painterResource(
-                            id = SimTongIcons.Comment
+                            id = SimTongIcon.Comment.drawableId,
                         ),
-                        contentDescription = "",
+                        contentDescription = stringResource(id = R.string.description_ic_comment),
                         modifier = Modifier
-                            .padding(25.dp, 0.dp, 0.dp, 0.dp)
-                            .clickable { onCommentClick() }
+                            .padding(start = 25.dp)
+                            .clickable { onCommentClicked() }
                     )
 
                     Body10(
                         text = data.commentNum.toString(),
                         color = SimTongColor.Black,
                         modifier = Modifier
-                            .padding(5.dp, 0.dp, 0.dp, 0.dp)
+                            .padding(start = 5.dp)
                             .fillMaxHeight()
                             .wrapContentHeight(Alignment.CenterVertically)
                     )
 
                     PeopleImageList(
-                        itemWidth = 23.dp,
+                        itemWidth = PeopleImageListWidth,
                         nullPainter = painterResource(
                             id = R.drawable.img_notice_board_rectangle
                         ),
-                        showImage = 2,
+                        showImage = PeopleImageListCount,
                         showListSize = true,
                         list = data.imageList,
-                        paddingEnd = 18.0,
+                        paddingEnd = PeopleImageListPaddingEnd,
                         modifier = Modifier
-                            .height(23.dp),
+                            .height(PeopleImageListHeight),
                     )
                 }
             }
@@ -184,16 +202,16 @@ fun VotePage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .padding(0.dp, 5.dp, 0.dp, 0.dp)
+                    .padding(top = 5.dp)
             ) {
                 val canvasWidth = size.width
                 val canvasHeight = size.height
 
                 drawLine(
-                    start = Offset(x = 0f, y = canvasHeight),
+                    start = Offset(x = VotePageLineStartX, y = canvasHeight),
                     end = Offset(x = canvasWidth, y = canvasHeight),
                     color = SimTongColor.OtherColor.GrayD8,
-                    strokeWidth = 5f,
+                    strokeWidth = VotePageLineWidth,
                 )
             }
         }
@@ -219,6 +237,12 @@ fun VoteItemLazyColumn(
 @Stable
 private val VoteItemAnimationProgressTween: Int = 2000
 
+@Stable
+private val VoteItemHeight: Dp = 32.dp
+
+@Stable
+private val VoteItemRound: Dp = 4.dp
+
 @Composable
 fun VoteItem(
     data: VoteListData,
@@ -242,12 +266,11 @@ fun VoteItem(
 
     Box(
         modifier = Modifier
-            .padding(0.dp, 0.dp, 0.dp, 10.dp)
             .fillMaxWidth()
-            .height(32.dp)
+            .height(VoteItemHeight)
             .background(
                 color = SimTongColor.Gray100,
-                shape = RoundedCornerShape(4.dp),
+                shape = RoundedCornerShape(VoteItemRound),
             )
             .clickable {
                 chooseState.value = !chooseState.value
@@ -267,7 +290,7 @@ fun VoteItem(
                 .fillMaxWidth(animationProgress)
                 .background(
                     color = shapeColor,
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(VoteItemRound)
                 ),
         )
 
@@ -275,27 +298,29 @@ fun VoteItem(
             text = data.menu,
             color = textColor,
             modifier = Modifier
-                .padding(10.dp, 0.dp, 0.dp, 0.dp)
+                .padding(start = 10.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically),
         )
 
         Body12(
-            text = voteNum.toString() + "명",
+            text = voteNum.value.toString() + stringResource(id = R.string.number_of_people),
             color = textNumColor,
             modifier = Modifier
-                .padding(0.dp, 0.dp, 10.dp, 0.dp)
+                .padding(end = 10.dp)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.End),
         )
     }
+
+    Spacer(modifier = Modifier.height(10.dp))
 }
 
 @Preview
 @Composable
-fun Vote() {
+fun PreviewVote() {
 
     val list = listOf(
         VoteData(
@@ -319,10 +344,7 @@ fun Vote() {
                     check = false
                 )
             ),
-            imageList = listOf(
-                "1", "2", "1", "2", "1", "2", "1",
-                "2", "1", "2", "1", "2", "1", "2", "1", "2", "1",
-            )
+            imageList = null
         ),
         VoteData(
             title = "점심 메뉴 투표",
@@ -349,5 +371,7 @@ fun Vote() {
         )
     )
 
-    VoteLazyColumn(list = list)
+    Vote(
+        list = list
+    )
 }

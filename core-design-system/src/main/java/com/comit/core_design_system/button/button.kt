@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.icon.SimTongIcon
 
 /**
  * Defines the round of the SimTongButtons
@@ -275,10 +276,21 @@ fun ButtonPreview() {
         RedSideButton(text = "Text", enabled = false) {
         }
 
-        RedIconButton(painter = painterResource(id = SimTongIcons.Next), contentDescription = null) {
+        RedIconButton(
+            painter = painterResource(
+                id = SimTongIcon.Next.drawableId,
+            ),
+            contentDescription = SimTongIcon.Next.contentDescription,
+        ) {
         }
 
-        RedIconButton(painter = painterResource(id = SimTongIcons.Next), contentDescription = null, enabled = false) {
+        RedIconButton(
+            painter = painterResource(
+                id = SimTongIcon.Next.drawableId,
+            ),
+            contentDescription = SimTongIcon.Next.contentDescription,
+            enabled = false,
+        ) {
         }
     }
 }

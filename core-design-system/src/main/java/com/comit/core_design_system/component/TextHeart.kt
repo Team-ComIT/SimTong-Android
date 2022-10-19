@@ -10,9 +10,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 
 @Composable
 fun TextHeart(
@@ -21,7 +23,6 @@ fun TextHeart(
     textStyle: TextStyle,
     textColor: Color,
     click: Boolean = false,
-    isGray: Boolean,
     onClick: () -> Unit = {},
     heartModifier: Modifier = Modifier
 ) {
@@ -38,9 +39,11 @@ fun TextHeart(
     ) {
         Image(
             painter = painterResource(
-                id = SimTongIcons.Heart(checkClickWatcher.value, isGray)
+                id = if (checkClickWatcher.value) SimTongIcon.Heart_On.drawableId
+                else SimTongIcon.Gray_Heart_Off.drawableId,
             ),
-            contentDescription = null,
+            contentDescription = if (checkClickWatcher.value) SimTongIcon.Heart_On.contentDescription
+            else SimTongIcon.Gray_Heart_Off.contentDescription,
             modifier = heartModifier
         )
 
@@ -48,13 +51,14 @@ fun TextHeart(
     }
 }
 
+// TODO ("modifier argument 2개 function naming 개선 필요")
 @Composable
-fun TextHeart(
+fun TextHeart2(
+    modifier: Modifier = Modifier,
     text: Int,
     textStyle: TextStyle,
     textModifier: Modifier = Modifier,
     textColor: Color,
-    modifier: Modifier = Modifier,
     heartModifier: Modifier = Modifier,
     click: Boolean = false,
     onClick: () -> Unit = {}
@@ -77,12 +81,18 @@ fun TextHeart(
     ) {
         Image(
             painter = painterResource(
-                id = SimTongIcons.Heart(checkClickWatcher.value)
+                id = if (checkClickWatcher.value) SimTongIcon.Heart_On.drawableId
+                else SimTongIcon.Heart_Off.drawableId,
             ),
-            contentDescription = "",
+            contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = heartModifier
         )
 
-        Text(text = textWatcher.value.toString(), style = textStyle, color = textColorWatcher, modifier = textModifier)
+        Text(
+            text = textWatcher.value.toString(),
+            style = textStyle,
+            color = textColorWatcher,
+            modifier = textModifier
+        )
     }
 }

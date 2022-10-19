@@ -1,3 +1,4 @@
+    val buttonEnabled = !(id.isNullOrEmpty() || password.isNullOrEmpty())
 package com.comit.feature_auth.screen
 
 import androidx.compose.foundation.Image
@@ -27,6 +28,7 @@ import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
+import com.comit.core_design_system.icon.SimTongIcons
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R

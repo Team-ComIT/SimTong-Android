@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.RedIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
@@ -153,8 +154,10 @@ fun MyPageProfileImage(
         GlideImage(imageModel = imageUrl, Modifier.clip(CircleShape))
 
         RedIconButton(
-            painter = painterResource(id = R.drawable.ic_my_page_plus),
-            contentDescription = null,
+            painter = painterResource(
+                id = R.drawable.ic_my_page_plus
+            ),
+            contentDescription = "mypage plus icon",
             modifier = Modifier
                 .size(24.dp)
                 .align(Alignment.BottomEnd)
@@ -226,8 +229,10 @@ fun MyPageEditModeMenu(
         if (enabledNextIcon) {
             Icon(
                 modifier = Modifier.align(Alignment.CenterEnd),
-                painter = painterResource(id = SimTongIcons.Next),
-                contentDescription = null
+                painter = painterResource(
+                    id = SimTongIcon.Next.drawableId,
+                ),
+                contentDescription = SimTongIcon.Next.contentDescription,
             )
         }
     }

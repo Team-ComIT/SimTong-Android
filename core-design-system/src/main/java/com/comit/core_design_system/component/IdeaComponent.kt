@@ -3,7 +3,6 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -20,10 +19,14 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.comit.common.compose.noRippleClickable
+import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.SimTongTypography
@@ -37,45 +40,61 @@ data class IdeaData(
     val commentCount: Int
 )
 @Composable
-fun IdeaLazyColumn(
+fun IdeaComponent(
     modifier: Modifier = Modifier,
     list: List<IdeaData>,
-    onClickHeart: () -> Unit = {},
-    onClickComment: () -> Unit = {}
+    onHeartClicked: () -> Unit = {},
+    onCommentClicked: () -> Unit = {},
+    onItemClicked: () -> Unit = {}
 ) {
     LazyColumn() {
         items(list) {
             IdeaItem(
                 modifier = modifier,
                 data = it,
-                onClickHeart = onClickHeart,
-                onClickComment = onClickComment
+                onHeartClicked = onHeartClicked,
+                onCommentClicked = onCommentClicked,
+                onItemClicked = onItemClicked
             )
         }
     }
 }
 
 @Stable
+private val IdeaItemHeight: Dp = 91.dp
+
+@Stable
 private val IdeaItemDataBodyWidth: Float = 0.5f
+
+@Stable
+private val IdeaItemRowHeight: Dp = 14.dp
+
+@Stable
+private val IdeaItemLineStartX: Float = 0f
+
+@Stable
+private val IdeaItemLineWidth: Float = 5F
 
 @Composable
 fun IdeaItem(
     modifier: Modifier = Modifier,
     data: IdeaData,
-    onClickHeart: () -> Unit = {},
-    onClickComment: () -> Unit = {}
+    onHeartClicked: () -> Unit = {},
+    onCommentClicked: () -> Unit = {},
+    onItemClicked: () -> Unit = {}
 ) {
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .height(91.dp)
+            .height(IdeaItemHeight)
             .background(SimTongColor.White)
+            .noRippleClickable { onItemClicked() }
     ) {
 
         Body6(
             text = data.title,
             modifier = Modifier
-                .padding(30.dp, 10.dp, 0.dp, 0.dp)
+                .padding(start = 30.dp, top = 10.dp)
         )
 
         Body14(
@@ -83,41 +102,40 @@ fun IdeaItem(
             color = SimTongColor.OtherColor.Gray96,
             modifier = Modifier
                 .fillMaxWidth(IdeaItemDataBodyWidth)
-                .padding(30.dp, 3.dp, 0.dp, 0.dp)
+                .padding(start = 30.dp, top = 3.dp)
         )
 
         Body14(
             text = data.userName + " • " + data.time + "분 전",
             color = SimTongColor.OtherColor.Gray96,
             modifier = Modifier
-                .padding(30.dp, 5.dp, 0.dp, 0.dp)
+                .padding(start = 30.dp, top = 5.dp)
         )
 
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(30.dp, 10.dp, 0.dp, 0.dp)
-                .height(14.dp)
+                .padding(start = 30.dp, top = 10.dp)
+                .height(IdeaItemRowHeight)
         ) {
 
             TextHeart(
-                text = "공감",
+                text = stringResource(id = R.string.sympathy),
                 textStyle = SimTongTypography.body14,
                 textColor = SimTongColor.OtherColor.Gray96,
-                onClick = onClickHeart,
-                isGray = true,
+                onClick = onHeartClicked,
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)
-                    .padding(10.dp, 0.dp, 0.dp, 0.dp)
+                    .padding(start = 10.dp)
             )
 
             Image(
-                painter = painterResource(id = SimTongIcons.Comment(true)),
-                contentDescription = "",
+                painter = painterResource(id = SimTongIcon.Gray_Comment.drawableId),
+                contentDescription = stringResource(id = R.string.description_ic_comment),
                 modifier = Modifier
-                    .padding(35.dp, 0.dp, 0.dp, 0.dp)
-                    .clickable { onClickComment() }
+                    .padding(start = 30.dp)
+                    .noRippleClickable { onCommentClicked() }
             )
 
             Body14(
@@ -126,7 +144,7 @@ fun IdeaItem(
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(CenterVertically)
-                    .padding(10.dp, 0.dp, 0.dp, 0.dp)
+                    .padding(start = 10.dp)
             )
         }
 
@@ -140,10 +158,10 @@ fun IdeaItem(
             val canvasHeight = size.height
 
             drawLine(
-                start = Offset(x = 0f, y = canvasHeight),
+                start = Offset(x = IdeaItemLineStartX, y = canvasHeight),
                 end = Offset(x = canvasWidth, y = canvasHeight),
                 color = SimTongColor.OtherColor.GrayD8,
-                strokeWidth = 5f
+                strokeWidth = IdeaItemLineWidth
             )
         }
     }
@@ -157,8 +175,8 @@ private val PreViewCommentCount: Int = 0
 
 @Preview
 @Composable
-fun IdeaComponent() {
-    IdeaLazyColumn(
+fun PreviewIdeaComponent() {
+    IdeaComponent(
         list = listOf(
             IdeaData(
                 "안녕하세요",
@@ -173,7 +191,7 @@ fun IdeaComponent() {
                 "안녕하세요,제 아이디어는 이번ㅇㄹ 구퍼ㅜㅕㄱㄷ루퍼두mvknejfncoenmdikneocmkdj ofekcmdn mkocemkn dkocem dk",
                 "유저 이름",
                 PreViewTime,
-                false,
+                true,
                 PreViewCommentCount
             )
         )

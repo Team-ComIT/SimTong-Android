@@ -3,7 +3,6 @@ package com.comit.core_design_system.component
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,28 +16,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body6
 
 data class IconListData(
-    val icon: Painter,
+    val icon: SimTongIcon,
     val text: String,
 )
 
 @Composable
-fun PictureVideoCameraFileList(
+fun PictureVideoCameraFile(
     modifier: Modifier = Modifier,
     list: List<IconListData>,
     onClick: (Int) -> Unit = {},
     height: Dp = 32.dp,
-    background: Color = SimTongColor.White,
+    backgroundColor: Color = SimTongColor.White,
     imageHeight: Dp = 18.dp,
     lineHeight: Float = 2F,
     lineColor: Color = SimTongColor.OtherColor.GrayDF,
@@ -52,7 +52,7 @@ fun PictureVideoCameraFileList(
         itemsIndexed(list) { index, data ->
             PictureVideoCameraFileItem(
                 height = height,
-                background = background,
+                backgroundColor = backgroundColor,
                 imageHeight = imageHeight,
                 lineHeight = lineHeight,
                 lineColor = lineColor,
@@ -70,13 +70,13 @@ fun PictureVideoCameraFileList(
 @Composable
 fun PictureVideoCameraFileItem(
     height: Dp = 32.dp,
-    background: Color = SimTongColor.White,
+    backgroundColor: Color = SimTongColor.White,
     imageHeight: Dp = 18.dp,
     lineHeight: Float = 2F,
     lineColor: Color = SimTongColor.OtherColor.GrayDF,
     textColor: Color = SimTongColor.Black,
     index: Int,
-    icon: Painter,
+    icon: Int,
     text: String,
     onClick: (Int) -> Unit,
     imagePaddingStart: Dp = 14.dp,
@@ -103,13 +103,14 @@ fun PictureVideoCameraFileItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(height)
-            .background(background)
-            .clickable { onClick(index) }
+            .background(backgroundColor)
+            .simClickable { onClick(index) }
     ) {
         Image(
-            painter = icon, contentDescription = "",
+            painter = painterResource(id = icon),
+            contentDescription = stringResource(id = R.string.description_ic_item),
             modifier = Modifier
-                .padding(imagePaddingStart, 0.dp, 0.dp, 0.dp)
+                .padding(start = imagePaddingStart)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
                 .height(imageHeight)
@@ -119,7 +120,7 @@ fun PictureVideoCameraFileItem(
             text = text,
             color = textColor,
             modifier = Modifier
-                .padding(textPaddingStart, 0.dp, 0.dp, 0.dp)
+                .padding(start = textPaddingStart)
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)
         )
@@ -128,12 +129,21 @@ fun PictureVideoCameraFileItem(
 
 @Preview
 @Composable
-fun PictureVideoCameraFile() {
-    PictureVideoCameraFileList(
+fun PreviewPictureVideoCameraFile() {
+    PictureVideoCameraFile(
         list = listOf(
-            IconListData(painterResource(id = SimTongIcons.Image), "사진/동영상"),
-            IconListData(painterResource(id = SimTongIcons.Photo), "카메라"),
-            IconListData(painterResource(id = SimTongIcons.Link), "링크"),
-        )
+            IconListData(
+                icon = SimTongIcon.Image,
+                text = "사진/동영상",
+            ),
+            IconListData(
+                icon = SimTongIcon.Photo,
+                text = "카메라",
+            ),
+            IconListData(
+                icon = SimTongIcon.Link,
+                text = "링크",
+            ),
+        ),
     )
 }
