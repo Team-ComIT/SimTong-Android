@@ -27,7 +27,7 @@ import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R
@@ -127,9 +127,9 @@ fun SignInTopLogo() {
 
         Image(
             painter = painterResource(
-                id = SimTongIcons.Others.Logo
+                id = SimTongIcon.Logo.drawableId
             ),
-            contentDescription = stringResource(id = R.string.description_ic_logo),
+            contentDescription = SimTongIcon.Logo.contentDescription,
             modifier = Modifier
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)

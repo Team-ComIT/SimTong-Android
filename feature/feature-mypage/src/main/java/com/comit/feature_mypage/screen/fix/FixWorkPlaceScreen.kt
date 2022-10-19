@@ -24,15 +24,12 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.SimCheckBox
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.modifier.simSelectable
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body8
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 private var placeName by mutableStateOf(SignInDefault.DefaultPlaceName)
 
