@@ -140,7 +140,7 @@ fun SimTongTextField(
     Column(
         modifier = modifier,
     ) {
-        if(!title.isNullOrEmpty()) {
+        if (!title.isNullOrEmpty()) {
             Body8(
                 text = title,
                 color = SimTongColor.Gray400,
