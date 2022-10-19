@@ -21,13 +21,16 @@ import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.TabBar
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
-import com.comit.core_design_system.icon.SimTongIcons
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.feature_auth.R
 import com.comit.feature_auth.screen.find.findemployeenum.FindEmployeeNum
 import com.comit.feature_auth.screen.find.findemployeenum.FindPlaceLazyColumn
 import com.comit.feature_auth.screen.find.password.FindPassword
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
+
+@Stable
+val AuthFindScreenTabBarHeight = 35.dp
 
 @ExperimentalMaterialApi
 @Composable
@@ -44,9 +47,6 @@ fun ChangeAuthScreen(
         1 -> FindPassword()
     }
 }
-
-@Stable
-val AuthFindScreenTabBarHeight = 35.dp
 
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
@@ -82,10 +82,16 @@ fun AuthFindScreenBasic(
 ) {
     Column() {
         Image(
-            painter = painterResource(id = SimTongIcons.Back(false)),
-            contentDescription = stringResource(id = R.string.description_ic_back),
+            painter = painterResource(
+                id = SimTongIcon.Back_Big.drawableId,
+            ),
+            contentDescription = stringResource(
+                id = R.string.description_ic_back,
+            ),
             modifier = Modifier
-                .padding(start = 26.dp, top = 22.5.dp)
+                .padding(
+                    start = 26.dp, top = 22.5.dp,
+                )
                 .noRippleClickable { }
         )
 
@@ -105,7 +111,7 @@ fun AuthFindScreenBasic(
                     coroutineScope = coroutineScope,
                     bottomSheetState = bottomSheetState
                 )
-            }
+            },
         )
     }
 }

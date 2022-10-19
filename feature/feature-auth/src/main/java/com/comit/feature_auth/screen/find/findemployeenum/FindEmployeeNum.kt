@@ -150,7 +150,7 @@ fun FindEmployeeNum(
             },
             hintBackgroundColor = SimTongColor.Gray200,
             backgroundColor = SimTongColor.Gray100,
-            hint = stringResource(id = R.string.email),
+            hint = stringResource(id = R.string.eng_email),
             error = emailError
         )
 
