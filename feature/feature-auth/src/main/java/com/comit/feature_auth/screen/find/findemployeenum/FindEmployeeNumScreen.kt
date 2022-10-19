@@ -56,7 +56,7 @@ fun String.isPlaceEmpty(): Boolean =
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FindEmployeeNum(
+fun FindEmployeeNumScreen(
     coroutineScope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
 ) {
