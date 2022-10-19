@@ -1,6 +1,8 @@
 package com.comit.core_design_system.component
 
 import android.widget.Toast
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -48,6 +50,7 @@ private val HeaderHorizontalPadding = PaddingValues(horizontal = 0.dp)
  * @param enabledPlusBtn Whether the plus button is enabled
  * @param enabledBeilBtn Whether the beil button is enabled
  * @param enabledPeopleBtn Whether the people button is enabled
+ * @param enabledSideBtn Whether the side text button is enabled
  * @param onPrevious Callback to be invoked when a back button is clicked
  * @param onMenu Callback to be invoked when a menu button is clicked
  * @param onPlus Callback to be invoked when a plus button is clicked
@@ -65,6 +68,7 @@ fun Header(
     enabledPlusBtn: Boolean = false,
     enabledBeilBtn: Boolean = false,
     enabledPeopleBtn: Boolean = false,
+    enabledSideBtn: Boolean = false,
     onPrevious: (() -> Unit)? = null,
     onMenu: (() -> Unit)? = null,
     onPlus: (() -> Unit)? = null,
@@ -72,6 +76,11 @@ fun Header(
     onMyPage: (() -> Unit)? = null,
     onTextBtnClicked: (() -> Unit)? = null,
 ) {
+
+    val textBtnColor = animateColorAsState(
+        if (enabledSideBtn) SimTongColor.MainColor else SimTongColor.MainColor200
+    )
+
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -180,6 +189,7 @@ fun Header(
                 modifier = Modifier
                     .simClickable(
                         rippleEnabled = false,
+                        runIf = enabledSideBtn,
                     ) {
                         if (onTextBtnClicked != null) {
                             onTextBtnClicked()
@@ -187,7 +197,7 @@ fun Header(
                     }
                     .padding(6.dp),
                 text = stringResource(id = R.string.fix),
-                color = SimTongColor.MainColor,
+                color = textBtnColor.value,
             )
         }
     }
@@ -248,7 +258,7 @@ fun BigHeader(
 fun PreviewHeader() {
     val context = LocalContext.current
 
-    Column() {
+    Column {
         Header(headerText = "전체 지점", beilState = true, enabledBackBtn = true)
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -259,7 +269,7 @@ fun PreviewHeader() {
             enabledMoreBtn = true,
             enabledBeilBtn = true,
             enabledPeopleBtn = true,
-            enabledPlusBtn = true
+            enabledPlusBtn = true,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -267,6 +277,7 @@ fun PreviewHeader() {
         Header(
             headerText = "전체 지점",
             sideBtnText = "수정",
+            enabledSideBtn = true,
             enabledBackBtn = true,
             onTextBtnClicked = {
                 Toast.makeText(context, "text btn clicked!", Toast.LENGTH_SHORT).show()
