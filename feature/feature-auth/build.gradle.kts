@@ -47,11 +47,15 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":core"))
     implementation(project(":core-design-system"))
+    implementation(project(":common"))
 
     implementation(Dependency.Ui.CORE_KTX)
     implementation(Dependency.Ui.APP_COMPAT)
     implementation(Dependency.Ui.MATERIAL)
     implementation(Dependency.Ui.CONSTRAINT_LAYOUT)
+
+    implementation(Dependency.Pager.PAGER)
+    implementation(Dependency.Pager.PAGER_INDICATOR)
 
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
     implementation(Dependency.Compose.COMPOSE_MATERIAL)

@@ -10,7 +10,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 
@@ -82,7 +84,7 @@ fun TextHeart2(
                 id = if (checkClickWatcher.value) SimTongIcon.Heart_On.drawableId
                 else SimTongIcon.Heart_Off.drawableId,
             ),
-            contentDescription = "",
+            contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = heartModifier
         )
 

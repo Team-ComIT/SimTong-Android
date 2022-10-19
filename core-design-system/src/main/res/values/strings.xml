@@ -9,9 +9,21 @@
     <string name="description_ic_my_page">마이페이지</string>
     <string name="descriptiom_ic_password_visible">비밀번호 활성화</string>
     <string name="descriptiom_ic_password_invisible">비밀번호 비활성화</string>
+    <string name="description_ic_profile">프로필 이미지</string>
+    <string name="description_ic_heart">하트 이미지</string>
+    <string name="description_ic_item">아이템 이미지</string>
+    <string name="description_ic_comment">댓글 이미지</string>
+    <string name="description_ic_option">더보기 이미지</string>
+    
 
     <string name="fix">수정</string>
 
     <!--    용어 정의-->
     <string name="all_points">전체지점</string>
+    <string name="comment_write">댓글 쓰기</string>
+    <string name="like">좋아요</string>
+    <string name="num">개</string>
+    <string name="sympathy">공감</string>
+    <string name="number_of_people">명</string>
+
 </resources>
