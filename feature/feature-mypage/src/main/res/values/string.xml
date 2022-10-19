@@ -14,4 +14,7 @@
 
     <string name="eng_email">e-mail</string>
     <string name="eng_my_page">Mypage</string>
+
+    <string name="nick_name_fix">닉네임 수정</string>
+    <string name="nick_name_fix_do">닉네임 수정하기</string>
 </resources>
