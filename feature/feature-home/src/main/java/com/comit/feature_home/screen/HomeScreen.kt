@@ -13,6 +13,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.core_design_system.typography.Title3
 import com.comit.core_design_system.util.currentMealsTime
@@ -44,17 +47,18 @@ fun HomeScreen() {
         Column(
             modifier = Modifier
                 .verticalScroll(scrollState)
-                .padding(25.dp, 0.dp, 25.dp, 0.dp)
+                .padding(horizontal = 25.dp)
         ) {
             Header(
                 headerText = "",
                 enabledBeilBtn = true,
+                onBeil = {},
                 enabledPeopleBtn = true,
+                onMyPage = {},
             )
             Row(
                 modifier = Modifier
                     .height(30.dp)
-                    .clickable { }
             ) {
                 Title3(
                     text = stringResource(id = R.string.calendar),
@@ -65,13 +69,17 @@ fun HomeScreen() {
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                Image(
-                    painter = painterResource(id = R.drawable.ic_home_next),
-                    contentDescription = "home next icon",
+                IconButton(
+                    onClick = {},
                     modifier = Modifier
                         .fillMaxHeight()
                         .wrapContentHeight(Alignment.CenterVertically)
-                )
+                ) {
+                    Icon(
+                        painter = painterResource(id = SimTongIcon.Main_Gray_Next.drawableId),
+                        contentDescription = SimTongIcon.Main_Gray_Next.contentDescription,
+                    )
+                }
             }
 
             Spacer(modifier = Modifier.height(30.dp))
@@ -92,6 +100,10 @@ fun HomeScreen() {
                 timeCheck = currentMealsTime(),
                 list = HomeFakeData.foodList
             )
+
+            Spacer(modifier = Modifier.height(27.dp))
+
+
         }
     }
 }
