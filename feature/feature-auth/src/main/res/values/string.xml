@@ -6,16 +6,22 @@
     <string name="description_ic_logo">성심당 로고</string>
     <string name="description_ic_back">뒤로가기 버튼</string>
 
+    <string name="sign_lore_have_account">계정이 있으신가요?</string>
+    <string name="sign_up_terms_agreed">약관 동의</string>
+    <string name="sign_up_terms_agreed_all">전체 약관 동의</string>
+
     <!--    용어 정의-->
     <string name="mind_share">마음을 나누다.</string>
     <string name="password">비밀번호</string>
     <string name="new_password">새 비밀번호</string>
     <string name="new_password_again">새 비밀번호 재입력</string>
     <string name="log_in">Log in</string>
+    <string name="sign_in">로그인</string>
     <string name="sign_up">회원가입</string>
+    <string name="email">이메일</string>
     <string name="employee_number">사원번호</string>
     <string name="name">이름</string>
-    <string name="email">e-mail</string>
+    <string name="eng_email">e-mail</string>
     <string name="contour">|</string>
     <string name="find_employee">사원번호 찾기</string>
     <string name="find_password">비밀번호 찾기</string>

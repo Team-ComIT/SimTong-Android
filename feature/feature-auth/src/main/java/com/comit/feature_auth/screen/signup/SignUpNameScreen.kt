@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -39,6 +40,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body9
+import com.comit.feature_auth.R
 import com.comit.feature_auth.utils.BottomSheetType
 import com.comit.feature_auth.utils.changeBottomSheetState
 import kotlinx.coroutines.launch
@@ -47,7 +49,10 @@ import kotlin.math.abs
 @Stable
 private val TextFieldMargin: Int = 8
 
-fun textFieldOffset(
+/**
+ * TextField의 Offset을 계산합니다.
+ */
+internal fun textFieldOffset(
     step: SignUpStep.InputUserInfo,
     currentStep: SignUpStep.InputUserInfo,
 ): Dp {
@@ -59,11 +64,9 @@ private val TextFieldEnterAnimation = fadeIn(tween(450))
 
 private const val SignUpBottomMargin: Int = 24
 
-data class Agreed(
-    val index: Int,
-    val text: String,
-)
-
+/**
+ * 약관 목록을 정이합니다.
+ */
 private val agreedList: List<String> =
     listOf(
         "약관1",
@@ -188,7 +191,9 @@ fun SignUpNameScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Body1(
-                    text = "약관 동의",
+                    text = stringResource(
+                        id = R.string.sign_up_terms_agreed,
+                    ),
                 )
 
                 Spacer(modifier = Modifier.height(28.dp))
@@ -199,7 +204,9 @@ fun SignUpNameScreen(
                     verticalArrangement = Arrangement.spacedBy(24.dp),
                 ) {
                     SimTextCheckBox(
-                        text = "전체 약관 동의",
+                        text = stringResource(
+                            id = R.string.sign_up_terms_agreed_all,
+                        ),
                         checked = agreedAll,
                         onCheckedChange = { agreedAll = !agreedAll },
                     )
@@ -230,7 +237,11 @@ fun SignUpNameScreen(
 
                 Spacer(modifier = Modifier.height(47.dp))
 
-                BigRedRoundButton(text = "다음") {
+                BigRedRoundButton(
+                    text = stringResource(
+                        id = R.string.next,
+                    ),
+                ) {
                     coroutineScope.launch {
                         bottomSheetState.hide()
                         nextBtnClick()
@@ -258,7 +269,9 @@ fun SignUpNameScreen(
                 ) {
                     SimTongTextField(
                         modifier = Modifier.offset(y = emailOffset),
-                        title = "이메일",
+                        title = stringResource(
+                            id = R.string.email,
+                        ),
                         value = email ?: "",
                         onValueChange = { email = it },
                     )
@@ -269,32 +282,48 @@ fun SignUpNameScreen(
                     enter = TextFieldEnterAnimation
                 ) {
                     SimTongTextField(
-                        modifier = Modifier.offset(y = employeeNumberOffset),
-                        title = "사원번호",
+                        modifier = Modifier.offset(
+                            y = employeeNumberOffset,
+                        ),
+                        title = stringResource(
+                            id = R.string.employee_number,
+                        ),
                         value = employeeNumber ?: "",
                         onValueChange = { employeeNumber = it },
                     )
                 }
 
                 SimTongTextField(
-                    modifier = Modifier.offset(y = nameOffset),
-                    title = "이름",
+                    modifier = Modifier.offset(
+                        y = nameOffset,
+                    ),
+                    title = stringResource(
+                        id = R.string.name,
+                    ),
                     value = name ?: "",
                     onValueChange = { name = it },
                 )
 
                 Row(
-                    modifier = Modifier.offset(y = bottomLoreOffset),
+                    modifier = Modifier.offset(
+                        y = bottomLoreOffset,
+                    ),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Body9(
-                        text = "계정이 있으신가요?",
+                        text = stringResource(
+                            id = R.string.sign_lore_have_account,
+                        ),
                         color = SimTongColor.Gray500,
                     )
 
                     Body9(
-                        modifier = Modifier.padding(start = 3.dp),
-                        text = "로그인",
+                        modifier = Modifier.padding(
+                            start = 3.dp,
+                        ),
+                        text = stringResource(
+                            id = R.string.sign_in,
+                        ),
                         color = SimTongColor.Gray500,
                     )
                 }
