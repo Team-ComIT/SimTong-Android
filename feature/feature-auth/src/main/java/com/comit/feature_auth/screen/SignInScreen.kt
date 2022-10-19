@@ -1,4 +1,3 @@
-    val buttonEnabled = !(id.isNullOrEmpty() || password.isNullOrEmpty())
 package com.comit.feature_auth.screen
 
 import androidx.compose.foundation.Image
