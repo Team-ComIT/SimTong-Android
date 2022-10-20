@@ -57,14 +57,14 @@ fun FixWorkPlaceScreen(
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
     val isSelect: (Int) -> Boolean = { selectedValue == it }
 
-    var textBtnClick by remember { mutableStateOf(false) }
-    val textBtnColor = if(textBtnClick) SimTongColor.MainColor else SimTongColor.MainColor200
+    var enabledSideBtn by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Header(
             headerText = stringResource(id = R.string.work_place_fix),
             sideBtnText = stringResource(id = R.string.check),
             enabledBackBtn = true,
+            enabledSideBtn = enabledSideBtn,
             onTextBtnClicked = {},
             modifier = Modifier
                 .padding(start = 26.dp, end = 30.dp)
@@ -86,6 +86,7 @@ fun FixWorkPlaceScreen(
                             onClick = {
                                 selectedValue = index
                                 placeName = item.name
+                                enabledSideBtn = true
                             },
                             role = Role.RadioButton
                         )
@@ -130,6 +131,7 @@ fun FixWorkPlaceScreen(
                         onCheckedChange = {
                             selectedValue = index
                             placeName = item.name
+                            enabledSideBtn = true
                         },
                         modifier = Modifier
                             .fillMaxWidth()
