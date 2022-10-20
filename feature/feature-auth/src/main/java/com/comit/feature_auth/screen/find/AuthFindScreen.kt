@@ -29,6 +29,9 @@ import com.comit.feature_auth.screen.find.password.FindPasswordScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 
+@Stable
+val AuthFindScreenTabBarHeight = 35.dp
+
 @ExperimentalMaterialApi
 @Composable
 fun ChangeAuthScreen(
@@ -44,9 +47,6 @@ fun ChangeAuthScreen(
         1 -> FindPasswordScreen()
     }
 }
-
-@Stable
-val AuthFindScreenTabBarHeight = 35.dp
 
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
@@ -85,7 +85,9 @@ fun AuthFindScreenBasic(
             painter = painterResource(id = SimTongIcon.Back_Big.drawableId),
             contentDescription = SimTongIcon.Back_Big.contentDescription,
             modifier = Modifier
-                .padding(start = 26.dp, top = 22.5.dp)
+                .padding(
+                    start = 26.dp, top = 22.5.dp,
+                )
                 .noRippleClickable { }
         )
 
@@ -105,7 +107,7 @@ fun AuthFindScreenBasic(
                     coroutineScope = coroutineScope,
                     bottomSheetState = bottomSheetState
                 )
-            }
+            },
         )
     }
 }

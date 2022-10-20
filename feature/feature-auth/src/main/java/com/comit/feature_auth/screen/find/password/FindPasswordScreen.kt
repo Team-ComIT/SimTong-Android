@@ -68,7 +68,7 @@ fun FindPasswordScreen() {
             },
             hintBackgroundColor = SimTongColor.Gray200,
             backgroundColor = SimTongColor.Gray100,
-            hint = stringResource(id = R.string.email),
+            hint = stringResource(id = R.string.eng_email),
             error = emailError,
             sideBtnText = stringResource(id = R.string.certification),
             enabledSideBtn = true,

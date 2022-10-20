@@ -14,11 +14,12 @@ import androidx.compose.ui.semantics.Role
 import com.comit.core_design_system.util.runIf
 
 @Stable
-internal fun Modifier.simClickable(
+fun Modifier.simClickable(
     rippleEnabled: Boolean = true,
     rippleColor: Color? = null,
+    runIf: Boolean = true,
     onClick: (() -> Unit)?,
-) = runIf(onClick != null) {
+) = runIf(onClick != null && runIf) {
     composed {
         clickable(
             onClick = onClick!!,

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -101,6 +102,7 @@ fun SimTongTextField(
     onValueChange: (String) -> Unit,
     backgroundColor: Color = Color.White,
     onClick: (() -> Unit)? = null,
+    title: String? = null,
     hint: String? = null,
     hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
     enabledSideBtn: Boolean = false,
@@ -135,9 +137,20 @@ fun SimTongTextField(
     val bgColor: Color =
         if (value.isEmpty() && hint != null) hintBgColor else backgroundColor
 
-    Column {
+    Column(
+        modifier = modifier,
+    ) {
+        if (!title.isNullOrEmpty()) {
+            Body8(
+                text = title,
+                color = SimTongColor.Gray400,
+            )
+
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+
         Box(
-            modifier = modifier
+            modifier = Modifier
                 .height(TextFieldHeight)
                 .wrapContentHeight(Alignment.CenterVertically)
                 .background(
@@ -278,7 +291,8 @@ fun PreviewSimTongTextField() {
         // default text field
         SimTongTextField(
             value = value ?: "",
-            onValueChange = { value = it }
+            onValueChange = { value = it },
+            error = null
         )
 
         // password text field
@@ -318,12 +332,6 @@ fun PreviewSimTongTextField() {
             backgroundColor = SimTongColor.Gray200
         )
 
-        SimTongTextField(
-            value = value7 ?: "",
-            onValueChange = { value7 = it },
-            error = ""
-        )
-
         // custom background & side btn
         SimTongTextField(
             value = value7 ?: "",
@@ -334,6 +342,13 @@ fun PreviewSimTongTextField() {
             enabledSideBtn = true,
             sideBtnDisabledBackgroundColor = SimTongColor.Gray600,
             sideBtnPressedBackgroundColor = SimTongColor.Gray700,
+        )
+
+        SimTongTextField(
+            title = "사원번호",
+            value = value7 ?: "",
+            onValueChange = { value7 = it },
+            error = ""
         )
     }
 }
