@@ -114,7 +114,7 @@ fun SignUpNameScreen(
                 changeBottomSheetState(
                     coroutineScope = coroutineScope,
                     bottomSheetState = bottomSheetState,
-                    bottomSheetType = BottomSheetType.Hide
+                    bottomSheetType = BottomSheetType.Hide,
                 )
             }
             SignUpStep.InputUserInfo.EMAIL -> signUpStep = SignUpStep.InputUserInfo.EMPLOYEE_NUMBER
