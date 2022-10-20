@@ -21,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.modifier.simSelectable
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body8
+import com.comit.feature_mypage.R
 
 private var placeName by mutableStateOf(SignInDefault.DefaultPlaceName)
 
@@ -49,7 +51,7 @@ private const val ItemsSampleMapperEnd: Int = 100
 
 @Composable
 fun FixWorkPlaceScreen(
-
+    items: List<WorkPlaceSample>
 ){
     val scrollState = rememberScrollState()
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
@@ -58,15 +60,10 @@ fun FixWorkPlaceScreen(
     var textBtnClick by remember { mutableStateOf(false) }
     val textBtnColor = if(textBtnClick) SimTongColor.MainColor else SimTongColor.MainColor200
 
-    val items =
-        (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
-            WorkPlaceSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
-        }.toList()
-
     Column(modifier = Modifier.fillMaxSize()) {
         Header(
-            headerText = "근무지점 수정",
-            sideBtnText = "확인",
+            headerText = stringResource(id = R.string.work_place_fix),
+            sideBtnText = stringResource(id = R.string.check),
             enabledBackBtn = true,
             onTextBtnClicked = {},
             modifier = Modifier
@@ -150,5 +147,12 @@ fun FixWorkPlaceScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewFixWorkPlaceScreen(){
-    FixWorkPlaceScreen()
+    val items =
+        (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
+            WorkPlaceSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
+        }.toList()
+
+    FixWorkPlaceScreen(
+        items = items
+    )
 }
