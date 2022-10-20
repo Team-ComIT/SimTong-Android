@@ -27,27 +27,14 @@ fun FixNickNameScreen(
     var nickNameError by remember { mutableStateOf(null) }
     val nickNameEnabled = nickName.isNotEmpty()
 
-    Column(modifier = Modifier.fillMaxSize()) {
-       BigHeader(
-           text = stringResource(id = R.string.nick_name_fix),
-           onPrevious = {}
-       )
+    FixBaseScreen(
+        header = stringResource(id = R.string.nick_name_fix),
+        headerBackClick = { },
+        btnText = stringResource(id = R.string.nick_name_fix),
+        btnClick = { },
+        btnEnabled = nickNameEnabled
+    ) {
 
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 40.dp)
-        ) {
-
-        }
-
-        BigRedRoundButton(
-            text = stringResource(id = R.string.nick_name_fix),
-            onClick = {},
-            enabled = nickNameEnabled,
-            modifier = Modifier
-                .fillMaxHeight()
-                .wrapContentHeight(Alignment.Bottom)
-        )
     }
 }
 

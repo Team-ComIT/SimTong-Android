@@ -19,6 +19,8 @@
     <string name="nick_name_fix">닉네임 수정</string>
     <string name="nick_name_fix_do">닉네임 수정하기</string>
 
+    <string name="email_fix">이메일 수정</string>
+
     <!--근무 지점 수정-->
     <string name="work_place_fix">근무지점 수정</string>
 </resources>
