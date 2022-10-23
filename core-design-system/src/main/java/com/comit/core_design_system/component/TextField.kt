@@ -258,8 +258,10 @@ private fun SimTongBasicTextField(
                                 ) {
                                     onValueChange("")
                                 },
-                            painter = painterResource(id = R.drawable.ic_close),
-                            contentDescription = "close icon",
+                            painter = painterResource(
+                                id = SimTongIcon.Close.drawableId,
+                            ),
+                            contentDescription = SimTongIcon.Close.contentDescription,
                         )
                     }
 
