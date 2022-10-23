@@ -248,7 +248,10 @@ private fun SimTongBasicTextField(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     if (value.isEmpty() && hint != null) {
-                        Body6(text = hint, color = SimTongColor.Gray400)
+                        Body6(
+                            text = hint,
+                            color = SimTongColor.Gray400,
+                        )
                     }
 
                     Spacer(modifier = Modifier.weight(1f))
