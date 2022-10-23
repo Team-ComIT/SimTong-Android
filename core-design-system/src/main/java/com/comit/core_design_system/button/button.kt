@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -138,67 +139,54 @@ fun ThinRedRoundButton(
     )
 }
 
-/**
- * default round in [RedSideButton]
- */
-@Stable
-private val RedSideButtonDefaultRound = ButtonDefaultRound.Medium
-
-/**
- * RedSideButton 구현합니다.
- * 뷰 사이드에 위치하는 용도로 구현된 빨간색의 사이드 버튼입니다.
- * default round 는 [RedSideButtonDefaultRound] 로 설정되어 있습니다.
- *
- * @param modifier [Modifier] to use to draw the RedSideButton
- * @param round round in RedSideButton
- * @param text text in RedSideButton
- * @param enalbed activation status of button
- * @param onClick Callback to be invoked when a button is clicked
- */
-@Composable
-fun RedSideButton(
-    modifier: Modifier = Modifier,
-    round: Dp = RedSideButtonDefaultRound,
-    text: String,
-    enabled: Boolean = true,
-    onClick: () -> Unit,
+enum class SideBtnColorType(
+    val backgroundColor: Color,
+    val pressedBackgroundColor: Color,
+    val disabledBackgroundColor: Color,
+    val textColor: Color,
+    val disabledTextColor: Color,
 ) {
-    BasicRoundSideButton(
-        modifier = modifier,
-        text = text,
-        round = round,
-        onClick = onClick,
+    RED(
         backgroundColor = SimTongColor.MainColor,
         pressedBackgroundColor = SimTongColor.MainColor600,
         disabledBackgroundColor = SimTongColor.MainColor200,
         textColor = SimTongColor.White,
         disabledTextColor = SimTongColor.White,
-        enabled = enabled,
-    )
+    ),
+
+    GRAY(
+        backgroundColor = SimTongColor.Gray700,
+        pressedBackgroundColor = SimTongColor.Gray800,
+        disabledBackgroundColor = SimTongColor.Gray400,
+        textColor = SimTongColor.White,
+        disabledTextColor = SimTongColor.White,
+    ),
 }
 
 /**
- * default round in [GraySideButton]
+ * default round in [SimTongSideBtn]
  */
 @Stable
-private val GraySideButtonDefaultRound = ButtonDefaultRound.Medium
+private val SimTongSideButtonDefaultRound = ButtonDefaultRound.Medium
 
 /**
- * GraySideButton 구현합니다.
+ * RedSideButton 구현합니다.
  * 뷰 사이드에 위치하는 용도로 구현된 빨간색의 사이드 버튼입니다.
- * default round 는 [GraySideButtonDefaultRound] 로 설정되어 있습니다.
+ * default round 는 [SimTongSideButtonDefaultRound] 로 설정되어 있습니다.
  *
- * @param modifier [Modifier] to use to draw the GraySideButton
- * @param round round in GraySideButton
- * @param text text in GraySideButton
- * @param enalbed activation status of button
+ * @param modifier [Modifier] to use to draw the SimTongSideButton
+ * @param round round in SimTongSideButton
+ * @param text text in SimTongSideButton
+ * @param sideBtnColorType color type in SimTongSideBtn
+ * @param enabled activation status of button
  * @param onClick Callback to be invoked when a button is clicked
  */
 @Composable
-fun GraySideButton(
+fun SimTongSideBtn(
     modifier: Modifier = Modifier,
-    round: Dp = GraySideButtonDefaultRound,
+    round: Dp = SimTongSideButtonDefaultRound,
     text: String,
+    sideBtnColorType: SideBtnColorType = SideBtnColorType.RED,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -207,11 +195,11 @@ fun GraySideButton(
         text = text,
         round = round,
         onClick = onClick,
-        backgroundColor = SimTongColor.Gray700,
-        pressedBackgroundColor = SimTongColor.Gray800,
-        disabledBackgroundColor = SimTongColor.Gray400,
-        textColor = SimTongColor.White,
-        disabledTextColor = SimTongColor.White,
+        backgroundColor = sideBtnColorType.backgroundColor,
+        pressedBackgroundColor = sideBtnColorType.pressedBackgroundColor,
+        disabledBackgroundColor = sideBtnColorType.disabledBackgroundColor,
+        textColor = sideBtnColorType.textColor,
+        disabledTextColor = sideBtnColorType.disabledTextColor,
         enabled = enabled,
     )
 }
@@ -270,10 +258,10 @@ fun ButtonPreview() {
         ThinRedRoundButton(text = "NEXT", enabled = false) {
         }
 
-        RedSideButton(text = "Text") {
+        SimTongSideBtn(text = "Text") {
         }
 
-        RedSideButton(text = "Text", enabled = false) {
+        SimTongSideBtn(text = "Text", enabled = false) {
         }
 
         RedIconButton(
