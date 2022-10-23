@@ -54,12 +54,6 @@ import com.comit.core_design_system.typography.SimTongTypography
 import com.comit.core_design_system.util.runIf
 
 @Stable
-private val TextFieldEnabledFraction: Float = 0.75f
-
-@Stable
-private val TextFieldDisabledFraction: Float = 0.9f
-
-@Stable
 private val TextFieldHeight: Dp = 44.dp
 
 @Stable
