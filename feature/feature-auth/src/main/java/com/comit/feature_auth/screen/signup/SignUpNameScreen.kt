@@ -52,7 +52,7 @@ private val TextFieldMargin: Int = 8
 /**
  * TextField의 Offset을 계산합니다.
  */
-internal fun textFieldOffset(
+private fun textFieldOffset(
     step: SignUpStep.InputUserInfo,
     currentStep: SignUpStep.InputUserInfo,
 ): Dp {
