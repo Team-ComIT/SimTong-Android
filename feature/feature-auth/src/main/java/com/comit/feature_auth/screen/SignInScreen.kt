@@ -126,10 +126,8 @@ fun SignInTopLogo() {
         )
 
         Image(
-            painter = painterResource(
-                id = SimTongIcon.Logo.drawableId,
-            ),
-            contentDescription = stringResource(id = R.string.description_ic_logo),
+            painter = painterResource(id = SimTongIcon.Logo.drawableId,),
+            contentDescription = SimTongIcon.Logo.contentDescription,
             modifier = Modifier
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.CenterVertically)

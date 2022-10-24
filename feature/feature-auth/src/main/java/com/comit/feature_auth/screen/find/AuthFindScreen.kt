@@ -1,11 +1,12 @@
 package com.comit.feature_auth.screen.find
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
@@ -17,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.TabBar
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
@@ -81,19 +81,16 @@ fun AuthFindScreenBasic(
     bottomSheetState: ModalBottomSheetState
 ) {
     Column() {
-        Image(
-            painter = painterResource(
-                id = SimTongIcon.Back_Big.drawableId,
-            ),
-            contentDescription = stringResource(
-                id = R.string.description_ic_back,
-            ),
+        IconButton(
+            onClick = {},
             modifier = Modifier
-                .padding(
-                    start = 26.dp, top = 22.5.dp,
-                )
-                .noRippleClickable { }
-        )
+                .padding(start = 26.dp, top = 22.5.dp)
+        ) {
+            Icon(
+                painter = painterResource(id = SimTongIcon.Back_Big.drawableId),
+                contentDescription = SimTongIcon.Back_Big.contentDescription
+            )
+        }
 
         Spacer(modifier = Modifier.height(31.dp))
 
