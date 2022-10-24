@@ -104,9 +104,7 @@ fun HomeScreen() {
             Box(
                 modifier = Modifier
                     .height(HomeScreenCalendarHeight)
-            ) {
-
-            }
+            )
 
             Spacer(modifier = Modifier.height(9.dp))
 
@@ -114,8 +112,7 @@ fun HomeScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-
-            //TODO: FoodList 디자인 시스템 lineHeight 수정 작업 필요
+            // TODO: FoodList 디자인 시스템 lineHeight 수정 작업 필요
             FoodList(
                 timeCheck = currentMealsTime(),
                 list = HomeFakeData.foodList
