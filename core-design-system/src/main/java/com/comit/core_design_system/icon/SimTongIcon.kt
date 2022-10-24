@@ -5,13 +5,18 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import com.comit.core_design_system.R
 
+/**
+ * [SimTongIcon] 의 naming convention을 정의합니다.
+ * Color -> noun(명사) -> adjective(형용사)
+ * 해당 순서대로 네이밍을 진행합니다.
+ */
 @Immutable
 class SimTongIcon private constructor(
     @DrawableRes val drawableId: Int,
     val contentDescription: String? = null,
 ) {
     companion object {
-
+        
         @Stable
         val Navi_Home = SimTongIcon(
             drawableId = R.drawable.ic_navi_home,
