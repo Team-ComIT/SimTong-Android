@@ -225,7 +225,7 @@ fun Title3(
 fun Body1(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -244,7 +244,7 @@ fun Body1(
 fun Body2(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -263,7 +263,7 @@ fun Body2(
 fun Body3(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -282,7 +282,7 @@ fun Body3(
 fun Body4(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -301,7 +301,7 @@ fun Body4(
 fun Body5(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -320,7 +320,7 @@ fun Body5(
 fun Body6(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -339,7 +339,7 @@ fun Body6(
 fun Body7(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -358,7 +358,7 @@ fun Body7(
 fun Body8(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -377,7 +377,7 @@ fun Body8(
 fun Body9(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -396,7 +396,7 @@ fun Body9(
 fun Body10(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -415,7 +415,7 @@ fun Body10(
 fun Body11(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -434,7 +434,7 @@ fun Body11(
 fun Body12(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -453,7 +453,7 @@ fun Body12(
 fun Body13(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
@@ -472,7 +472,7 @@ fun Body13(
 fun Body14(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = SimTongColor.Black,
+    color: Color = SimTongColor.Gray900,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {

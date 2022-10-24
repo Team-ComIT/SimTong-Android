@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.BigRedRoundButton
+import com.comit.core_design_system.button.SideBtnColorType
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
@@ -25,14 +26,7 @@ fun FindPasswordScreen() {
     var eMail by remember { mutableStateOf<String?>(null) }
     var employeeNumError by remember { mutableStateOf<String?>(null) }
     var emailError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(employeeNum.isNullOrEmpty()|| eMail.isNullOrEmpty())
-
-    val sideBtnBackgroundColor =
-        if (eMail.isNullOrEmpty()) SimTongColor.Gray300 else SimTongColor.MainColor
-    val sideBtnDisabledBackgroundColor =
-        if (eMail.isNullOrEmpty()) SimTongColor.Gray300 else SimTongColor.MainColor
-    val sideBtnPressedBackgroundColor =
-        if (eMail.isNullOrEmpty()) SimTongColor.Gray400 else SimTongColor.MainColor100
+    val buttonEnabled = !(employeeNum.isNullOrEmpty() || eMail.isNullOrEmpty())
 
     val errorMsg = stringResource(id = R.string.error_message)
 
@@ -72,9 +66,7 @@ fun FindPasswordScreen() {
             error = emailError,
             sideBtnText = stringResource(id = R.string.certification),
             enabledSideBtn = true,
-            sideBtnBackgroundColor = sideBtnBackgroundColor,
-            sideBtnDisabledBackgroundColor = sideBtnDisabledBackgroundColor,
-            sideBtnPressedBackgroundColor = sideBtnPressedBackgroundColor
+            sideBtnColorType = if (eMail.isNullOrEmpty()) SideBtnColorType.GRAY else SideBtnColorType.RED,
         )
 
         Spacer(modifier = Modifier.height(30.dp))

@@ -15,11 +15,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NoLiveLiterals
 import androidx.compose.runtime.Stable
@@ -41,7 +42,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
-import com.comit.core_design_system.button.BasicRoundSideButton
+import com.comit.core_design_system.button.SideBtnColorType
+import com.comit.core_design_system.button.SimTongSideBtn
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
@@ -50,12 +52,6 @@ import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.Error
 import com.comit.core_design_system.typography.SimTongTypography
 import com.comit.core_design_system.util.runIf
-
-@Stable
-private val TextFieldEnabledFraction: Float = 0.75f
-
-@Stable
-private val TextFieldDisabledFraction: Float = 0.9f
 
 @Stable
 private val TextFieldHeight: Dp = 44.dp
@@ -83,10 +79,6 @@ private val DefaultTextFieldRound: Dp = 5.dp
  * @param hintBackgroundColor backgroundColor with Hint
  * @param enabledSideBtn whether side button is used
  * @param sideBtnText text of side button
- * @param sideBtnTextColor text of side button's text
- * @param sideBtnBackgroundColor backgroundColor of side button
- * @param sideBtnPressedBackgroundColor backgroundColor when side button is pressed
- * @param sideBtnDisabledTextColor color of side button's text when side button is disabled
  * @param round radius of SimTongTextField
  * @param onSideBtnClick Callback to be invoked when a side button is clicked
  * @param error message when an error occurs
@@ -107,11 +99,7 @@ fun SimTongTextField(
     hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
     enabledSideBtn: Boolean = false,
     sideBtnText: String? = null,
-    sideBtnTextColor: Color = SimTongColor.White,
-    sideBtnBackgroundColor: Color = SimTongColor.MainColor,
-    sideBtnPressedBackgroundColor: Color = SimTongColor.MainColor600,
-    sideBtnDisabledBackgroundColor: Color = SimTongColor.MainColor200,
-    sideBtnDisabledTextColor: Color = SimTongColor.White,
+    sideBtnColorType: SideBtnColorType = SideBtnColorType.RED,
     round: Dp = DefaultTextFieldRound,
     onSideBtnClick: (() -> Unit)? = null,
     error: String? = null,
@@ -129,10 +117,6 @@ fun SimTongTextField(
 
     val hintBgColor: Color =
         hintBackgroundColor ?: Color.Transparent
-
-    val textFieldFraction =
-        if (enabledSideBtn) TextFieldEnabledFraction
-        else TextFieldDisabledFraction
 
     val bgColor: Color =
         if (value.isEmpty() && hint != null) hintBgColor else backgroundColor
@@ -173,86 +157,29 @@ fun SimTongTextField(
                 }
         ) {
             Row(
-                modifier = Modifier.fillMaxSize(),
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                BasicTextField(
-                    modifier = Modifier
-                        .fillMaxWidth(textFieldFraction)
-                        .padding(start = BasicTextFieldStartPadding),
+                SimTongBasicTextField(
                     value = value,
                     onValueChange = onValueChange,
+                    hint = hint,
+                    passwordVisible = passwordVisible,
+                    onPasswordVisibleChanged = {
+                        passwordVisible = it
+                    },
+                    enabledSideBtn = enabledSideBtn,
+                    sideBtnText = sideBtnText,
+                    round = round,
+                    onSideBtnClick = onSideBtnClick,
+                    sideBtnColorType = sideBtnColorType,
+                    isPassword = isPassword,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = keyboardType,
-                        imeAction = imeAction
+                        imeAction = imeAction,
                     ),
-                    visualTransformation =
-                    if (!passwordVisible && isPassword)
-                        PasswordVisualTransformation()
-                    else VisualTransformation.None,
-                    maxLines = 1,
-                    textStyle = SimTongTypography.body6,
-                    decorationBox = { innerTextField ->
-                        if (value.isEmpty() && hint != null) {
-                            Body6(text = hint, color = SimTongColor.Gray400)
-                        }
-
-                        innerTextField()
-                    },
                 )
-
-                if (enabledSideBtn) {
-                    BasicRoundSideButton(
-                        text = sideBtnText ?: "",
-                        backgroundColor = sideBtnBackgroundColor,
-                        pressedBackgroundColor = sideBtnPressedBackgroundColor,
-                        disabledBackgroundColor = sideBtnDisabledBackgroundColor,
-                        textColor = sideBtnTextColor,
-                        disabledTextColor = sideBtnDisabledTextColor,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentWidth(Alignment.End),
-                        round = round
-                    ) {
-                        if (onSideBtnClick != null) {
-                            onSideBtnClick()
-                        }
-                    }
-                }
-
-                if (value.isNotEmpty()) {
-                    Image(
-                        modifier = Modifier
-                            .simClickable(
-                                rippleEnabled = false,
-                            ) {
-                                onValueChange("")
-                            },
-                        painter = painterResource(id = R.drawable.ic_close),
-                        contentDescription = "close icon",
-                    )
-                }
-
-                if (isPassword) {
-                    Image(
-                        modifier = Modifier
-                            .simClickable(
-                                rippleEnabled = false,
-                            ) {
-                                passwordVisible = !passwordVisible
-                            },
-                        painter = painterResource(
-                            id = if (passwordVisible) SimTongIcon.Password_Visible.drawableId
-                            else SimTongIcon.Password_InVisible.drawableId,
-                        ),
-                        contentDescription =
-                        stringResource(
-                            if (passwordVisible) R.string.descriptiom_ic_password_visible
-                            else R.string.descriptiom_ic_password_invisible
-                        ),
-                        alpha = if (value.isNotEmpty()) 1f else 0f
-                    )
-                }
             }
         }
 
@@ -271,6 +198,112 @@ fun SimTongTextField(
             )
         }
     }
+}
+
+@Composable
+private fun SimTongBasicTextField(
+    value: String,
+    onValueChange: (String) -> Unit,
+    hint: String? = null,
+    passwordVisible: Boolean = false,
+    onPasswordVisibleChanged: (Boolean) -> Unit,
+    enabledSideBtn: Boolean = false,
+    sideBtnText: String? = null,
+    sideBtnColorType: SideBtnColorType,
+    round: Dp = DefaultTextFieldRound,
+    onSideBtnClick: (() -> Unit)? = null,
+    isPassword: Boolean = false,
+    keyboardOptions: KeyboardOptions = KeyboardOptions(
+        keyboardType = KeyboardType.Text,
+        imeAction = ImeAction.Default,
+    ),
+) {
+    BasicTextField(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = BasicTextFieldStartPadding),
+        value = value,
+        onValueChange = onValueChange,
+        keyboardOptions = keyboardOptions,
+        visualTransformation =
+        if (!passwordVisible && isPassword)
+            PasswordVisualTransformation()
+        else VisualTransformation.None,
+        maxLines = 1,
+        textStyle = SimTongTypography.body6,
+        decorationBox = @Composable { innerTextField ->
+
+            Box(
+                contentAlignment = Alignment.CenterStart,
+            ) {
+                innerTextField()
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    if (value.isEmpty() && hint != null) {
+                        Body6(
+                            text = hint,
+                            color = SimTongColor.Gray400,
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    if (value.isNotEmpty()) {
+                        Image(
+                            modifier = Modifier
+                                .simClickable(
+                                    rippleEnabled = false,
+                                ) {
+                                    onValueChange("")
+                                },
+                            painter = painterResource(
+                                id = SimTongIcon.Close.drawableId,
+                            ),
+                            contentDescription = SimTongIcon.Close.contentDescription,
+                        )
+                    }
+
+                    if (isPassword) {
+                        Image(
+                            modifier = Modifier
+                                .simClickable(
+                                    rippleEnabled = false,
+                                ) {
+                                    onPasswordVisibleChanged(!passwordVisible)
+                                },
+                            painter = painterResource(
+                                id = if (passwordVisible) SimTongIcon.Password_Visible.drawableId
+                                else SimTongIcon.Password_InVisible.drawableId,
+                            ),
+                            contentDescription =
+                            stringResource(
+                                if (passwordVisible) R.string.descriptiom_ic_password_visible
+                                else R.string.descriptiom_ic_password_invisible
+                            ),
+                            alpha = if (value.isNotEmpty()) 1f else 0f
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.width(9.dp))
+
+                    if (enabledSideBtn) {
+
+                        SimTongSideBtn(
+                            text = sideBtnText ?: "",
+                            round = round,
+                            sideBtnColorType = sideBtnColorType,
+                        ) {
+                            if (onSideBtnClick != null) {
+                                onSideBtnClick()
+                            }
+                        }
+                    }
+                }
+            }
+        },
+    )
 }
 
 @Preview
@@ -338,10 +371,8 @@ fun PreviewSimTongTextField() {
             onValueChange = { value7 = it },
             backgroundColor = SimTongColor.Gray200,
             sideBtnText = "인증",
-            sideBtnBackgroundColor = SimTongColor.Gray600,
+            sideBtnColorType = SideBtnColorType.GRAY,
             enabledSideBtn = true,
-            sideBtnDisabledBackgroundColor = SimTongColor.Gray600,
-            sideBtnPressedBackgroundColor = SimTongColor.Gray700,
         )
 
         SimTongTextField(
