@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,6 +25,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.color.SimTongColor
@@ -49,10 +51,13 @@ private const val DefaultSelected: Int = -1
 private const val ItemsSampleMapperStart: Int = 1
 private const val ItemsSampleMapperEnd: Int = 100
 
+@Stable
+private val FixWorkPlaceHeight: Dp = 60.dp
+
 @Composable
 fun FixWorkPlaceScreen(
     items: List<WorkPlaceSample>
-){
+) {
     val scrollState = rememberScrollState()
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
     val isSelect: (Int) -> Boolean = { selectedValue == it }
@@ -77,10 +82,10 @@ fun FixWorkPlaceScreen(
                 .fillMaxWidth()
                 .verticalScroll(scrollState)
         ) {
-            items.forEachIndexed { index,item ->
+            items.forEachIndexed { index, item ->
                 Box(
                     modifier = Modifier
-                        .height(60.dp)
+                        .height(FixWorkPlaceHeight)
                         .simSelectable(
                             selected = isSelect(index),
                             onClick = {
@@ -148,7 +153,7 @@ fun FixWorkPlaceScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewFixWorkPlaceScreen(){
+fun PreviewFixWorkPlaceScreen() {
     val items =
         (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
             WorkPlaceSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")

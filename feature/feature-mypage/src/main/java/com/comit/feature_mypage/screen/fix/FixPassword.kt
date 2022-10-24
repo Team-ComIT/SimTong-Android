@@ -15,17 +15,15 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 
 @Composable
-fun FixPassword(
-
-){
+fun FixPassword() {
     var btnEnabled by remember { mutableStateOf(false) }
     var isLastPage by remember { mutableStateOf(false) }
-    val btnText = 
-        if(isLastPage) stringResource(id = R.string.check)
+    val btnText =
+        if (isLastPage) stringResource(id = R.string.check)
         else stringResource(id = R.string.next)
 
     var password by remember { mutableStateOf("") }
-    
+
     FixBaseScreen(
         header = stringResource(id = R.string.password_fix),
         headerBackClick = { },
@@ -37,7 +35,7 @@ fun FixPassword(
 
         SimTongTextField(
             value = password,
-            onValueChange = { password = it},
+            onValueChange = { password = it },
             title = stringResource(id = R.string.password_input),
         )
     }
@@ -45,6 +43,6 @@ fun FixPassword(
 
 @Preview
 @Composable
-fun PreviewFixPassword(){
+fun PreviewFixPassword() {
     FixPassword()
 }

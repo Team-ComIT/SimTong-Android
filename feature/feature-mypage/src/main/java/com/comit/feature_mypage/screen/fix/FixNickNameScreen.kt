@@ -15,19 +15,16 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 
 @Composable
-fun FixNickNameScreen(
-
-){
+fun FixNickNameScreen() {
     var nickName by remember { mutableStateOf("") }
-    var nickNameError by remember { mutableStateOf(null) }
+    var nickNameError by remember { mutableStateOf<String?>(null) }
     val nickNameEnabled = nickName.isNotEmpty()
-
 
     FixBaseScreen(
         header = stringResource(id = R.string.nick_name_input),
         headerBackClick = { },
         btnText = stringResource(id = R.string.nick_name_fix),
-        btnClick = { },
+        btnClick = { nickNameError = "" },
         btnEnabled = nickNameEnabled
     ) {
         Spacer(modifier = Modifier.height(16.dp))
@@ -35,13 +32,14 @@ fun FixNickNameScreen(
         SimTongTextField(
             value = nickName,
             onValueChange = { nickName = it },
-            title = stringResource(id = R.string.nick_name_input)
+            title = stringResource(id = R.string.nick_name_input),
+            error = nickNameError
         )
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewFixNickNameScreen(){
+fun PreviewFixNickNameScreen() {
     FixNickNameScreen()
 }

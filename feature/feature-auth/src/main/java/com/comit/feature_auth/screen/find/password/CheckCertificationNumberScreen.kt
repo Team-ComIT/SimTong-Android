@@ -85,6 +85,6 @@ fun CheckCertificationNumberScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewCheckCertificationNumber(){
+fun PreviewCheckCertificationNumber() {
     CheckCertificationNumberScreen()
 }
