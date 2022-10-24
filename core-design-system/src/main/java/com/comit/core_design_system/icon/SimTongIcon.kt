@@ -109,8 +109,8 @@ class SimTongIcon private constructor(
         )
 
         @Stable
-        val Main_Gray_Next = SimTongIcon(
-            drawableId = R.drawable.ic_next_main_gray,
+        val Gray_Next = SimTongIcon(
+            drawableId = R.drawable.ic_next_gray,
             contentDescription = "next icon"
         )
 

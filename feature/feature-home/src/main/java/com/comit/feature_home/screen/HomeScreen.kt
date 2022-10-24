@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -93,8 +94,8 @@ fun HomeScreen() {
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
                     Icon(
-                        painter = painterResource(id = SimTongIcon.Main_Gray_Next.drawableId),
-                        contentDescription = SimTongIcon.Main_Gray_Next.contentDescription,
+                        painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
+                        contentDescription = SimTongIcon.Gray_Next.contentDescription,
                     )
                 }
             }
@@ -140,7 +141,7 @@ fun HomeScreen() {
 }
 
 @Stable
-private val HomeUnderRowItemCornerShape: Dp = 4.dp
+private fun cardShape() = RoundedCornerShape(4.dp)
 
 @Stable
 private val HomeUnderRowItemElevation: Dp = 2.dp
@@ -159,7 +160,7 @@ fun HomeUnderRowItem(
     onClick: () -> Unit = {}
 ) {
     Card(
-        shape = RoundedCornerShape(HomeUnderRowItemCornerShape),
+        shape = cardShape(),
         elevation = HomeUnderRowItemElevation,
         modifier = Modifier
             .fillMaxWidth()
@@ -168,11 +169,10 @@ fun HomeUnderRowItem(
     ) {
         Row(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .fillMaxSize()
                 .background(
                     color = SimTongColor.Transparent,
-                    shape = RoundedCornerShape(HomeUnderRowItemCornerShape)
+                    shape = cardShape()
                 )
         ) {
 
@@ -180,7 +180,7 @@ fun HomeUnderRowItem(
 
             Image(
                 painter = painter,
-                contentDescription = null,
+                contentDescription = "row item image",
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(Alignment.CenterVertically)
