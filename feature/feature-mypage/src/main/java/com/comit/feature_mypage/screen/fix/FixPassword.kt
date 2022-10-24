@@ -1,22 +1,30 @@
 package com.comit.feature_mypage.screen.fix
 
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 
 @Composable
 fun FixPassword(
 
 ){
-    val btnEnabled by remember { mutableStateOf(false) }
-    val isLastPage by remember { mutableStateOf(false) }
+    var btnEnabled by remember { mutableStateOf(false) }
+    var isLastPage by remember { mutableStateOf(false) }
     val btnText = 
         if(isLastPage) stringResource(id = R.string.check)
         else stringResource(id = R.string.next)
+
+    var password by remember { mutableStateOf("") }
     
     FixBaseScreen(
         header = stringResource(id = R.string.password_fix),
@@ -25,7 +33,13 @@ fun FixPassword(
         btnClick = { },
         btnEnabled = btnEnabled
     ) {
-        
+        Spacer(modifier = Modifier.height(16.dp))
+
+        SimTongTextField(
+            value = password,
+            onValueChange = { password = it},
+            title = stringResource(id = R.string.password_input),
+        )
     }
 }
 
