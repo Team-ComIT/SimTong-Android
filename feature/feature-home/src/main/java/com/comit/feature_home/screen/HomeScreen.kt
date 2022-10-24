@@ -20,12 +20,14 @@ import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.FoodList
@@ -47,6 +49,12 @@ object HomeFakeData {
     )
 }
 
+@Stable
+private val HomeScreenCalendarHeight: Dp = 360.dp
+
+@Stable
+private val HomeScreenTopRowHeight: Dp = 30.dp
+
 @Composable
 fun HomeScreen() {
     SimTongTheme(
@@ -67,7 +75,7 @@ fun HomeScreen() {
             )
             Row(
                 modifier = Modifier
-                    .height(30.dp)
+                    .height(HomeScreenTopRowHeight)
             ) {
                 Title3(
                     text = stringResource(id = R.string.calendar),
@@ -95,8 +103,9 @@ fun HomeScreen() {
 
             Box(
                 modifier = Modifier
-                    .height(360.dp)
+                    .height(HomeScreenCalendarHeight)
             ) {
+
             }
 
             Spacer(modifier = Modifier.height(9.dp))
@@ -105,6 +114,8 @@ fun HomeScreen() {
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
+            //TODO: FoodList 디자인 시스템 lineHeight 수정 작업 필요
             FoodList(
                 timeCheck = currentMealsTime(),
                 list = HomeFakeData.foodList
@@ -131,6 +142,18 @@ fun HomeScreen() {
     }
 }
 
+@Stable
+private val HomeUnderRowItemCornerShape: Dp = 4.dp
+
+@Stable
+private val HomeUnderRowItemElevation: Dp = 2.dp
+
+@Stable
+private val HomeUnderRowItemHeight: Dp = 48.dp
+
+@Stable
+private val HomeUnderRowItemImageSize: Dp = 28.dp
+
 @Composable
 fun HomeUnderRowItem(
     painter: Painter,
@@ -139,11 +162,11 @@ fun HomeUnderRowItem(
     onClick: () -> Unit = {}
 ) {
     Card(
-        shape = RoundedCornerShape(4.dp),
-        elevation = 2.dp,
+        shape = RoundedCornerShape(HomeUnderRowItemCornerShape),
+        elevation = HomeUnderRowItemElevation,
         modifier = Modifier
             .fillMaxWidth()
-            .height(48.dp)
+            .height(HomeUnderRowItemHeight)
             .simClickable { onClick() }
     ) {
         Row(
@@ -152,7 +175,7 @@ fun HomeUnderRowItem(
                 .fillMaxHeight()
                 .background(
                     color = SimTongColor.Transparent,
-                    shape = RoundedCornerShape(4.dp)
+                    shape = RoundedCornerShape(HomeUnderRowItemCornerShape)
                 )
         ) {
 
@@ -164,14 +187,14 @@ fun HomeUnderRowItem(
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(Alignment.CenterVertically)
-                    .size(28.dp)
+                    .size(HomeUnderRowItemImageSize)
             )
 
             Spacer(modifier = Modifier.width(11.dp))
 
             Column(
                 modifier = Modifier
-                    .height(48.dp)
+                    .height(HomeUnderRowItemHeight)
                     .fillMaxHeight()
                     .wrapContentHeight(Alignment.CenterVertically)
             ) {
