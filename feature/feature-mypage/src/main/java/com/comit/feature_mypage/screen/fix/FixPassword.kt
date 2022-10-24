@@ -16,13 +16,14 @@ import com.comit.feature_mypage.R
 
 @Composable
 fun FixPassword() {
-    var btnEnabled by remember { mutableStateOf(false) }
     var isLastPage by remember { mutableStateOf(false) }
     val btnText =
         if (isLastPage) stringResource(id = R.string.check)
         else stringResource(id = R.string.next)
 
     var password by remember { mutableStateOf("") }
+
+    val btnEnabled = password.isNotEmpty()
 
     FixBaseScreen(
         header = stringResource(id = R.string.password_fix),
