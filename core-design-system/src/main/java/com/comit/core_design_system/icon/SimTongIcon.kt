@@ -16,7 +16,6 @@ class SimTongIcon private constructor(
     val contentDescription: String? = null,
 ) {
     companion object {
-        
         @Stable
         val Navi_Home = SimTongIcon(
             drawableId = R.drawable.ic_navi_home,
