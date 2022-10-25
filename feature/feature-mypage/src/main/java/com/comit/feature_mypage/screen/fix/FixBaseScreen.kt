@@ -3,6 +3,7 @@ package com.comit.feature_mypage.screen.fix
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
@@ -24,6 +25,7 @@ fun FixBaseScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .imePadding()
     ) {
         BigHeader(
             text = header,
