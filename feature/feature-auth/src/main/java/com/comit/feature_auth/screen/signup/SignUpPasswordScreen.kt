@@ -98,10 +98,6 @@ fun SignUpPasswordScreen(
         }
     }
 
-    val bottomLoreOffset by animateDpAsState(
-        targetValue = (state.signUpPasswordStep.offsetIdx * TextFieldHeight + SignUpBottomMargin).dp
-    )
-
     BackHandler {
         coroutineScope.launch {
             toPreviousBtnClicked()

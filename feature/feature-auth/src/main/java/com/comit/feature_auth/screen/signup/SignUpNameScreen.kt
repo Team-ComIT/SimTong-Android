@@ -144,9 +144,6 @@ fun SignUpNameScreen(
             currentStep = state.signUpNameStep,
         )
     )
-    val bottomLoreOffset by animateDpAsState(
-        targetValue = (state.signUpNameStep.offsetIdx * TextFieldHeight + SignUpBottomMargin).dp
-    )
 
     // TODO ("추후 MVI로 개선 필요")
     val agreedList = remember {
