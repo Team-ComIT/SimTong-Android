@@ -9,14 +9,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
+@Stable
 private val SimpleLayoutBottomPadding = PaddingValues(
     horizontal = 0.dp,
 )
 
+@Stable
 private val SimpleLayoutContentPadding = PaddingValues(
     horizontal = 20.dp,
 )

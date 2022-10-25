@@ -1,11 +1,13 @@
 package com.comit.feature_auth.screen.signup
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -18,6 +20,7 @@ import com.comit.feature_auth.R
 import com.comit.feature_auth.component.SimImageUpload
 import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.vm.SignUpViewModel
+import kotlinx.coroutines.launch
 
 @Composable
 fun SignUpNicknameScreen(
@@ -27,6 +30,13 @@ fun SignUpNicknameScreen(
     toNext: () -> Unit,
     onError: (String) -> Unit,
 ) {
+    val coroutineScope = rememberCoroutineScope()
+
+    BackHandler {
+        coroutineScope.launch {
+            toPrevious()
+        }
+    }
 
     SimTongSimpleLayout(
         topAppBar = {

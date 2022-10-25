@@ -125,6 +125,7 @@ fun SignUpPasswordScreen(
                     SimTongTextField(
                         modifier = Modifier.offset(y = checkPasswordOffset),
                         value = checkPassword,
+                        isPassword = true,
                         onValueChange = { checkPassword = it },
                         title = stringResource(id = R.string.password_again),
                         error = if (password == checkPassword)
@@ -138,6 +139,7 @@ fun SignUpPasswordScreen(
                 SimTongTextField(
                     modifier = Modifier.offset(y = passwordOffset),
                     value = password,
+                    isPassword = true,
                     onValueChange = { password = it },
                     title = stringResource(id = R.string.password_input),
                     error = if (isPasswordFormat(password) && password.isNotEmpty()) stringResource(
