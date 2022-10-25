@@ -1,5 +1,6 @@
 package com.comit.feature_mypage.screen.fix
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -8,11 +9,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.withRunningRecomposer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -20,13 +23,17 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body10
 import com.comit.feature_mypage.R
+import kotlinx.coroutines.delay
+import java.util.*
+import kotlin.concurrent.timer
 
-var email = mutableStateOf("")
-var certificationNumber = mutableStateOf("")
+private var email = mutableStateOf("")
+private var certificationNumber = mutableStateOf("")
 
 @Composable
 fun FixEmailScreen() {
@@ -62,11 +69,10 @@ fun FixEmailScreen() {
         },
         btnEnabled = btnEnabled
     ) {
-        if (isLastPage) {
-            InputCertificationNumber(textTitle = textTitle)
-        } else {
-            InputEmailScreen(textTitle = textTitle)
-        }
+        ChangeScreen(
+            isLastPage = isLastPage,
+            textTitle = textTitle
+        )
     }
 }
 
@@ -84,12 +90,31 @@ fun InputEmailScreen(
 }
 
 @Stable
-val InputCertificationNumberHeight: Dp = 150.dp
+private val InputCertificationNumberTotalTime: Int = 180
+
+@Stable
+private val InputCertificationNumberHeight: Dp = 70.dp
 
 @Composable
 fun InputCertificationNumber(
     textTitle: String
 ) {
+    var totalTime by remember {
+        mutableStateOf(InputCertificationNumberTotalTime)
+    }
+
+    val minute = totalTime/60
+    val second = if(10 <= totalTime % 60) totalTime % 60 else "0" + totalTime % 60
+
+    LaunchedEffect(key1 = totalTime){
+        if (totalTime > 0){
+            delay(1000)
+            totalTime -= 1
+        } else{
+
+        }
+    }
+
     Spacer(modifier = Modifier.height(16.dp))
 
     Box(modifier = Modifier.height(InputCertificationNumberHeight)) {
@@ -99,8 +124,13 @@ fun InputCertificationNumber(
             title = textTitle,
             keyboardType = KeyboardType.Number
         )
+
         Body10(
-            text = stringResource(id = R.string.left_time),
+            text = stringResource(id = R.string.left_time)
+                    +" "
+                    + minute
+                    +" : "
+                    +second,
             color = SimTongColor.MainColor,
             modifier = Modifier
                 .fillMaxWidth()
@@ -108,6 +138,27 @@ fun InputCertificationNumber(
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Top)
         )
+    }
+    
+    Spacer(modifier = Modifier.height(18.dp))
+
+    BigRedRoundButton(
+        text = stringResource(id = R.string.resend),
+        onClick = {
+            totalTime = 180
+        }
+    )
+}
+
+@Composable
+fun ChangeScreen(
+    isLastPage: Boolean,
+    textTitle: String
+){
+    if (isLastPage) {
+        InputCertificationNumber(textTitle = textTitle)
+    } else {
+        InputEmailScreen(textTitle = textTitle)
     }
 }
 
