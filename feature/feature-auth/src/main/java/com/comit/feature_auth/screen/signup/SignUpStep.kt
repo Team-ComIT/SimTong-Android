@@ -17,18 +17,11 @@ class SignUpStep {
         AGREED("약관을 동의해주세요.", FourthStep),
     }
 
-    enum class AuthenticatePhone(
-        val title: String,
-        val offsetIdx: Int,
-    )
-
     enum class InputPassword(
         val title: String,
         val offsetIdx: Int,
-    )
-
-    enum class InputNickName(
-        val title: String,
-        val offsetIdx: Int,
-    )
+    ) {
+        Password("비밀번호를 입력해주세요.", FirstStep),
+        CheckPassword("비밀번호를 다시 입력해주세요.", SecondStep),
+    }
 }
