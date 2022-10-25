@@ -33,9 +33,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.comit.common.compose.SimTongSimpleLayout
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.button.SimTextCheckBox
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
@@ -149,17 +151,9 @@ fun SignUpNameScreen(
     var employeeNumber by remember { mutableStateOf<String?>(null) }
     var email by remember { mutableStateOf<String?>(null) }
 
-    val btnEnabled = when (signUpStep) {
-        SignUpStep.InputUserInfo.NAME -> name != null
-        SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> employeeNumber != null
-        SignUpStep.InputUserInfo.EMAIL -> email != null
-        SignUpStep.InputUserInfo.AGREED -> true // TODO checkALL
-    }
-
-    // 약관 모두 동의 개선 필요
-    var agreedAll by remember {
-        mutableStateOf(false)
-    }
+//    var agreedAll by remember {
+//        mutableStateOf(false)
+//    }
 
     val agreedList = remember {
         agreedList.toMutableStateList()
@@ -173,6 +167,26 @@ fun SignUpNameScreen(
             ),
         )
     }
+
+    val btnEnabled = when (signUpStep) {
+        SignUpStep.InputUserInfo.NAME -> name != null
+        SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> employeeNumber != null
+        SignUpStep.InputUserInfo.EMAIL -> email != null
+        SignUpStep.InputUserInfo.AGREED -> true
+    }
+
+//    if (agreedAll) {
+//        List(agreedChecked.size) { index ->
+//            agreedChecked[index] = true
+//        }
+//    } else {
+//        List(agreedChecked.size) { index ->
+//            agreedChecked[index] = true
+//        }
+//    }
+//    List(agreedChecked.size) { index ->
+//        agreedChecked[index] = agreedAll
+//    }
 
     BackHandler {
         coroutineScope.launch {
@@ -207,8 +221,13 @@ fun SignUpNameScreen(
                         text = stringResource(
                             id = R.string.sign_up_terms_agreed_all,
                         ),
-                        checked = agreedAll,
-                        onCheckedChange = { agreedAll = !agreedAll },
+                        checked = agreedChecked.all { it },
+                        onCheckedChange = {
+                            val checked = agreedChecked.all { it }
+                            List(agreedList.size) { index ->
+                                agreedChecked[index] = !checked
+                            }
+                        },
                     )
 
                     Divider(
@@ -252,83 +271,97 @@ fun SignUpNameScreen(
             }
         },
     ) {
-        BaseSignUpScreen(
-            onPrevious = backBtnClick,
-            onNext = nextBtnClick,
-            btnEnabled = btnEnabled,
-        ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
-                modifier = Modifier.padding(horizontal = 40.dp),
-            ) {
-                Spacer(modifier = Modifier.height(16.dp))
-
-                AnimatedVisibility(
-                    visible = signUpStep.offsetIdx >= SignUpStep.InputUserInfo.EMAIL.offsetIdx,
-                    enter = TextFieldEnterAnimation
+        SimTongSimpleLayout(
+            topAppBar = {
+                BigHeader(
+                    text = "회원가입",
                 ) {
-                    SimTongTextField(
-                        modifier = Modifier.offset(y = emailOffset),
-                        title = stringResource(
-                            id = R.string.email,
-                        ),
-                        value = email ?: "",
-                        onValueChange = { email = it },
-                    )
+                    backBtnClick()
                 }
-
-                AnimatedVisibility(
-                    visible = signUpStep.offsetIdx >= SignUpStep.InputUserInfo.EMPLOYEE_NUMBER.offsetIdx,
-                    enter = TextFieldEnterAnimation
+            },
+            content = {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.padding(horizontal = 20.dp)
                 ) {
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    AnimatedVisibility(
+                        visible = signUpStep.offsetIdx >= SignUpStep.InputUserInfo.EMAIL.offsetIdx,
+                        enter = TextFieldEnterAnimation
+                    ) {
+                        SimTongTextField(
+                            modifier = Modifier.offset(y = emailOffset),
+                            title = stringResource(
+                                id = R.string.email,
+                            ),
+                            value = email ?: "",
+                            onValueChange = { email = it },
+                        )
+                    }
+
+                    AnimatedVisibility(
+                        visible = signUpStep.offsetIdx >= SignUpStep.InputUserInfo.EMPLOYEE_NUMBER.offsetIdx,
+                        enter = TextFieldEnterAnimation
+                    ) {
+                        SimTongTextField(
+                            modifier = Modifier.offset(
+                                y = employeeNumberOffset,
+                            ),
+                            title = stringResource(
+                                id = R.string.employee_number,
+                            ),
+                            value = employeeNumber ?: "",
+                            onValueChange = { employeeNumber = it },
+                        )
+                    }
+
                     SimTongTextField(
                         modifier = Modifier.offset(
-                            y = employeeNumberOffset,
+                            y = nameOffset,
                         ),
                         title = stringResource(
-                            id = R.string.employee_number,
+                            id = R.string.name,
                         ),
-                        value = employeeNumber ?: "",
-                        onValueChange = { employeeNumber = it },
+                        value = name ?: "",
+                        onValueChange = { name = it },
                     )
+
+                    Row(
+                        modifier = Modifier.offset(
+                            y = bottomLoreOffset,
+                        ),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Body9(
+                            text = stringResource(
+                                id = R.string.sign_lore_have_account,
+                            ),
+                            color = SimTongColor.Gray500,
+                        )
+
+                        Body9(
+                            modifier = Modifier.padding(
+                                start = 3.dp,
+                            ),
+                            text = stringResource(
+                                id = R.string.sign_in,
+                            ),
+                            color = SimTongColor.Gray500,
+                        )
+                    }
                 }
-
-                SimTongTextField(
-                    modifier = Modifier.offset(
-                        y = nameOffset,
-                    ),
-                    title = stringResource(
-                        id = R.string.name,
-                    ),
-                    value = name ?: "",
-                    onValueChange = { name = it },
-                )
-
-                Row(
-                    modifier = Modifier.offset(
-                        y = bottomLoreOffset,
-                    ),
-                    verticalAlignment = Alignment.CenterVertically,
+            },
+            bottomContent = {
+                BigRedRoundButton(
+                    text = "다음",
+                    round = 0.dp,
+                    enabled = btnEnabled,
                 ) {
-                    Body9(
-                        text = stringResource(
-                            id = R.string.sign_lore_have_account,
-                        ),
-                        color = SimTongColor.Gray500,
-                    )
-
-                    Body9(
-                        modifier = Modifier.padding(
-                            start = 3.dp,
-                        ),
-                        text = stringResource(
-                            id = R.string.sign_in,
-                        ),
-                        color = SimTongColor.Gray500,
-                    )
+                    nextBtnClick()
                 }
             }
-        }
+        )
     }
 }
 
