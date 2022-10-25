@@ -8,6 +8,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -18,6 +19,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -29,6 +31,8 @@ import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body9
+import com.comit.core_design_system.typography.UnderlineBody9
+import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
@@ -107,7 +111,7 @@ fun SignUpPasswordScreen(
     SimTongSimpleLayout(
         topAppBar = {
             BigHeader(
-                text = "회원가입",
+                text = stringResource(id = R.string.sign_up),
             ) {
                 toPreviousBtnClicked()
             }
@@ -126,8 +130,8 @@ fun SignUpPasswordScreen(
                         modifier = Modifier.offset(y = checkPasswordOffset),
                         value = checkPassword,
                         onValueChange = { checkPassword = it },
-                        title = "비밀번호 재입력",
-                        error = if (password == checkPassword) "비밀번호가 일치하지 않습니다." else null,
+                        title = stringResource(id = R.string.password_again),
+                        error = if (password == checkPassword) stringResource(id = R.string.error_message_password) else null,
                     )
                 }
 
@@ -137,21 +141,27 @@ fun SignUpPasswordScreen(
                     modifier = Modifier.offset(y = passwordOffset),
                     value = password,
                     onValueChange = { password = it },
-                    title = "비밀번호 입력",
-                    error = if (isPasswordFormat(password) && password.isNotEmpty()) "영문과 숫자 그리고 특수 기호가 모두 포함되어야 합니다." else null,
+                    title = stringResource(id = R.string.password_input),
+                    error = if (isPasswordFormat(password) && password.isNotEmpty()) stringResource(
+                        id = R.string.password_format_message
+                    ) else null,
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                Body9(
-                    text = "계정이 있으신가요? 로그인",
+                UnderlineBody9(
+                    text = stringResource(id = R.string.account_exist_message),
+                    underlineText = listOf(
+                        stringResource(id = R.string.sign_in)
+                    ),
                     color = SimTongColor.Gray400,
                 )
             }
         },
         bottomContent = {
             BigRedRoundButton(
-                text = "닫음",
+                modifier = Modifier.imePadding(),
+                text = stringResource(id = R.string.next),
                 round = 0.dp,
                 enabled = btnEnabled(),
             ) {

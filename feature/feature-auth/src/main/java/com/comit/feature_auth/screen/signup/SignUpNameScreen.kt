@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -39,6 +40,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body9
+import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.utils.BottomSheetType
@@ -251,7 +253,7 @@ fun SignUpNameScreen(
         SimTongSimpleLayout(
             topAppBar = {
                 BigHeader(
-                    text = "회원가입",
+                    text = stringResource(id = R.string.sign_up),
                 ) {
                     backBtnClick()
                 }
@@ -304,34 +306,21 @@ fun SignUpNameScreen(
                         onValueChange = { viewModel.changeName(it) },
                     )
 
-                    Row(
-                        modifier = Modifier.offset(
-                            y = bottomLoreOffset,
-                        ),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Body9(
-                            text = stringResource(
-                                id = R.string.sign_lore_have_account,
-                            ),
-                            color = SimTongColor.Gray500,
-                        )
+                    Spacer(modifier = Modifier.height(24.dp))
 
-                        Body9(
-                            modifier = Modifier.padding(
-                                start = 3.dp,
-                            ),
-                            text = stringResource(
-                                id = R.string.sign_in,
-                            ),
-                            color = SimTongColor.Gray500,
-                        )
-                    }
+                    UnderlineBody9(
+                        text = stringResource(id = R.string.account_exist_message),
+                        underlineText = listOf(
+                            stringResource(id = R.string.sign_in)
+                        ),
+                        color = SimTongColor.Gray400,
+                    )
                 }
             },
             bottomContent = {
                 BigRedRoundButton(
-                    text = "다음",
+                    modifier = Modifier.imePadding(),
+                    text = stringResource(id = R.string.next),
                     round = 0.dp,
                     enabled = btnEnabled,
                 ) {

@@ -5,14 +5,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
+import com.comit.feature_auth.R
 import com.comit.feature_auth.component.SimImageUpload
 import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.vm.SignUpViewModel
@@ -29,7 +32,7 @@ fun SignUpNicknameScreen(
     SimTongSimpleLayout(
         topAppBar = {
             BigHeader(
-                text = "회원가입",
+                text = stringResource(id = R.string.sign_up),
             ) {
                 toPrevious()
             }
@@ -49,7 +52,7 @@ fun SignUpNicknameScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SimTongTextField(
-                    title = "닉네임",
+                    title = stringResource(id = R.string.nickname),
                     value = state.nickname,
                     onValueChange = { viewModel.changeNickname(it) },
                 )
@@ -57,7 +60,8 @@ fun SignUpNicknameScreen(
         },
         bottomContent = {
             BigRedRoundButton(
-                text = "다음",
+                modifier = Modifier.imePadding(),
+                text = stringResource(id = R.string.next),
                 round = 0.dp,
                 enabled = state.nickname.isNotEmpty()
             ) {
