@@ -1,13 +1,11 @@
 package com.comit.feature_auth.screen.signup
 
-import android.widget.Space
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -15,25 +13,23 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.component.BigHeader
-import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.component.SimTongTextField
-import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body9
+import com.comit.feature_auth.mvi.signup.SignUpState
+import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 @Composable
 fun SignUpVerifyScreen(
+    state: SignUpState,
+    viewModel: SignUpViewModel,
     toPrevious: () -> Unit,
     toNext: () -> Unit,
 ) {
-    var verifyCode by remember { mutableStateOf("") }
     val coroutineScope = rememberCoroutineScope()
 
     BackHandler {
@@ -57,8 +53,8 @@ fun SignUpVerifyScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 SimTongTextField(
-                    value = verifyCode,
-                    onValueChange = { verifyCode = it },
+                    value = state.verifyCode,
+                    onValueChange = { viewModel.changeVerifyCode(it) },
                     title = "이름"
                 )
 
@@ -71,19 +67,11 @@ fun SignUpVerifyScreen(
             BigRedRoundButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "다음",
-                enabled = verifyCode.isNotEmpty(),
+                enabled = state.verifyCode.isNotEmpty(),
                 round = 0.dp,
             ) {
                 toNext()
             }
         },
     )
-}
-
-@Preview
-@Composable
-fun PreviewSignUpVerifyScreen() {
-    SignUpVerifyScreen(toPrevious = { /*TODO*/ }) {
-
-    }
 }

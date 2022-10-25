@@ -29,6 +29,8 @@ import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body9
+import com.comit.feature_auth.mvi.signup.SignUpState
+import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -50,25 +52,21 @@ private fun textFieldOffset(
 
 @Composable
 fun SignUpPasswordScreen(
+    state: SignUpState,
+    viewModel: SignUpViewModel,
     toPrevious: () -> Unit,
     toNext: () -> Unit,
 ) {
-    var currentStep by remember {
-        mutableStateOf(SignUpStep.InputPassword.Password)
-    }
-
     val toNextBtnClicked = {
-        when (currentStep) {
-            SignUpStep.InputPassword.Password -> currentStep =
-                SignUpStep.InputPassword.CheckPassword
+        when (state.signUpPasswordStep) {
+            SignUpStep.InputPassword.Password -> viewModel.navigatePasswordStep(SignUpStep.InputPassword.CheckPassword)
             SignUpStep.InputPassword.CheckPassword -> toNext()
         }
     }
 
     val toPreviousBtnClicked = {
-        when (currentStep) {
-            SignUpStep.InputPassword.CheckPassword -> currentStep =
-                SignUpStep.InputPassword.Password
+        when (state.signUpPasswordStep) {
+            SignUpStep.InputPassword.CheckPassword -> viewModel.navigatePasswordStep(SignUpStep.InputPassword.Password)
             SignUpStep.InputPassword.Password -> toPrevious()
         }
     }
@@ -78,14 +76,14 @@ fun SignUpPasswordScreen(
     val passwordOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputPassword.Password,
-            currentStep = currentStep,
+            currentStep = state.signUpPasswordStep,
         )
     )
 
     val checkPasswordOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputPassword.CheckPassword,
-            currentStep = currentStep,
+            currentStep = state.signUpPasswordStep,
         )
     )
 
@@ -93,7 +91,7 @@ fun SignUpPasswordScreen(
     var checkPassword by remember { mutableStateOf("") }
 
     val btnEnabled = {
-        when (currentStep) {
+        when (state.signUpPasswordStep) {
             SignUpStep.InputPassword.Password -> password.isNotEmpty()
             SignUpStep.InputPassword.CheckPassword -> checkPassword.isNotEmpty()
         }
@@ -121,7 +119,7 @@ fun SignUpPasswordScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 AnimatedVisibility(
-                    visible = currentStep == SignUpStep.InputPassword.CheckPassword,
+                    visible = state.signUpPasswordStep == SignUpStep.InputPassword.CheckPassword,
                     enter = TextFieldEnterAnimation,
                 ) {
                     SimTongTextField(
@@ -161,12 +159,4 @@ fun SignUpPasswordScreen(
             }
         }
     )
-}
-
-@Preview
-@Composable
-fun PreviewSignUpPasswordScreen() {
-    SignUpPasswordScreen(toPrevious = { /*TODO*/ }) {
-
-    }
 }

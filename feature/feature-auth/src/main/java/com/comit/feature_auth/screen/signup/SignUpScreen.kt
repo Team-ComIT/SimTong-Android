@@ -1,6 +1,5 @@
 package com.comit.feature_auth.screen.signup
 
-import android.app.Activity
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -18,8 +17,8 @@ private const val SIGN_UP_NICKNAME = 3
 @Composable
 internal fun SignUpScreen(
     navController: NavController,
-    viewModel: SignUpViewModel,
 ) {
+    val viewModel: SignUpViewModel = hiltViewModel()
 
     val signUpContainer = viewModel.container
     val signUpState = signUpContainer.stateFlow.collectAsState().value
@@ -29,24 +28,32 @@ internal fun SignUpScreen(
         when (page) {
             SIGN_UP_NAME -> {
                 SignUpNameScreen(
+                    state = signUpState,
+                    viewModel = viewModel,
                     toPrevious = { navController.popBackStack() },
                     toNext = { viewModel.navigatePage(SIGN_UP_VERIFY) },
                 )
             }
             SIGN_UP_VERIFY -> {
                 SignUpVerifyScreen(
+                    state = signUpState,
+                    viewModel = viewModel,
                     toPrevious = { viewModel.navigatePage(SIGN_UP_NAME) },
                     toNext = { viewModel.navigatePage(SIGN_UP_PASSWORD) },
                 )
             }
             SIGN_UP_PASSWORD -> {
                 SignUpPasswordScreen(
+                    state = signUpState,
+                    viewModel = viewModel,
                     toPrevious = { viewModel.navigatePage(SIGN_UP_VERIFY) },
                     toNext = { viewModel.navigatePage(SIGN_UP_NICKNAME) },
                 )
             }
             SIGN_UP_NICKNAME -> {
                 SignUpNicknameScreen(
+                    state = signUpState,
+                    viewModel = viewModel,
                     toPrevious = { viewModel.navigatePage(SIGN_UP_PASSWORD) },
                     toNext = { },
                     onError = { }
@@ -61,6 +68,5 @@ internal fun SignUpScreen(
 fun PreviewSignUpScreen() {
     SignUpScreen(
         navController = rememberNavController(),
-        viewModel = hiltViewModel(),
     )
 }

@@ -22,15 +22,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
@@ -43,8 +40,10 @@ import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body9
 import com.comit.feature_auth.R
+import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.utils.BottomSheetType
 import com.comit.feature_auth.utils.changeBottomSheetState
+import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
@@ -80,6 +79,8 @@ private val agreedList: List<String> =
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun SignUpNameScreen(
+    state: SignUpState,
+    viewModel: SignUpViewModel,
     toPrevious: () -> Unit,
     toNext: () -> Unit,
 ) {
@@ -89,16 +90,12 @@ fun SignUpNameScreen(
         ModalBottomSheetValue.Hidden
     )
 
-    var signUpStep: SignUpStep.InputUserInfo by remember {
-        mutableStateOf(SignUpStep.InputUserInfo.NAME)
-    }
-
     val nextBtnClick = {
-        when (signUpStep) {
-            SignUpStep.InputUserInfo.NAME -> signUpStep = SignUpStep.InputUserInfo.EMPLOYEE_NUMBER
-            SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> signUpStep = SignUpStep.InputUserInfo.EMAIL
+        when (state.signUpNameStep) {
+            SignUpStep.InputUserInfo.NAME -> viewModel.navigateNameStep(SignUpStep.InputUserInfo.EMPLOYEE_NUMBER)
+            SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> viewModel.navigateNameStep(SignUpStep.InputUserInfo.EMAIL)
             SignUpStep.InputUserInfo.EMAIL -> {
-                signUpStep = SignUpStep.InputUserInfo.AGREED
+                viewModel.navigateNameStep(SignUpStep.InputUserInfo.AGREED)
                 changeBottomSheetState(
                     coroutineScope = coroutineScope,
                     bottomSheetState = bottomSheetState,
@@ -110,17 +107,17 @@ fun SignUpNameScreen(
     }
 
     val backBtnClick = {
-        when (signUpStep) {
+        when (state.signUpNameStep) {
             SignUpStep.InputUserInfo.AGREED -> {
-                signUpStep = SignUpStep.InputUserInfo.EMAIL
+                viewModel.navigateNameStep(SignUpStep.InputUserInfo.EMAIL)
                 changeBottomSheetState(
                     coroutineScope = coroutineScope,
                     bottomSheetState = bottomSheetState,
                     bottomSheetType = BottomSheetType.Hide,
                 )
             }
-            SignUpStep.InputUserInfo.EMAIL -> signUpStep = SignUpStep.InputUserInfo.EMPLOYEE_NUMBER
-            SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> signUpStep = SignUpStep.InputUserInfo.NAME
+            SignUpStep.InputUserInfo.EMAIL -> viewModel.navigateNameStep(SignUpStep.InputUserInfo.EMPLOYEE_NUMBER)
+            SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> viewModel.navigateNameStep(SignUpStep.InputUserInfo.NAME)
             SignUpStep.InputUserInfo.NAME -> toPrevious()
         }
     }
@@ -128,33 +125,26 @@ fun SignUpNameScreen(
     val nameOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputUserInfo.NAME,
-            currentStep = signUpStep,
+            currentStep = state.signUpNameStep,
         )
     )
     val employeeNumberOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputUserInfo.EMPLOYEE_NUMBER,
-            currentStep = signUpStep,
+            currentStep = state.signUpNameStep,
         )
     )
     val emailOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputUserInfo.EMAIL,
-            currentStep = signUpStep,
+            currentStep = state.signUpNameStep,
         )
     )
     val bottomLoreOffset by animateDpAsState(
-        targetValue = (signUpStep.offsetIdx * TextFieldMargin + SignUpBottomMargin).dp
+        targetValue = (state.signUpNameStep.offsetIdx * TextFieldMargin + SignUpBottomMargin).dp
     )
 
-    var name by remember { mutableStateOf<String?>(null) }
-    var employeeNumber by remember { mutableStateOf<String?>(null) }
-    var email by remember { mutableStateOf<String?>(null) }
-
-//    var agreedAll by remember {
-//        mutableStateOf(false)
-//    }
-
+    // TODO ("추후 MVI로 개선 필요")
     val agreedList = remember {
         agreedList.toMutableStateList()
     }
@@ -168,25 +158,12 @@ fun SignUpNameScreen(
         )
     }
 
-    val btnEnabled = when (signUpStep) {
-        SignUpStep.InputUserInfo.NAME -> name != null
-        SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> employeeNumber != null
-        SignUpStep.InputUserInfo.EMAIL -> email != null
-        SignUpStep.InputUserInfo.AGREED -> true
+    val btnEnabled = when (state.signUpNameStep) {
+        SignUpStep.InputUserInfo.NAME -> state.name.isNotEmpty()
+        SignUpStep.InputUserInfo.EMPLOYEE_NUMBER -> state.employeeNumber.isNotEmpty()
+        SignUpStep.InputUserInfo.EMAIL -> state.employeeNumber.isNotEmpty()
+        SignUpStep.InputUserInfo.AGREED -> agreedChecked.all { it }
     }
-
-//    if (agreedAll) {
-//        List(agreedChecked.size) { index ->
-//            agreedChecked[index] = true
-//        }
-//    } else {
-//        List(agreedChecked.size) { index ->
-//            agreedChecked[index] = true
-//        }
-//    }
-//    List(agreedChecked.size) { index ->
-//        agreedChecked[index] = agreedAll
-//    }
 
     BackHandler {
         coroutineScope.launch {
@@ -287,7 +264,7 @@ fun SignUpNameScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     AnimatedVisibility(
-                        visible = signUpStep.offsetIdx >= SignUpStep.InputUserInfo.EMAIL.offsetIdx,
+                        visible = state.signUpNameStep.offsetIdx >= SignUpStep.InputUserInfo.EMAIL.offsetIdx,
                         enter = TextFieldEnterAnimation
                     ) {
                         SimTongTextField(
@@ -295,13 +272,13 @@ fun SignUpNameScreen(
                             title = stringResource(
                                 id = R.string.email,
                             ),
-                            value = email ?: "",
-                            onValueChange = { email = it },
+                            value = state.email,
+                            onValueChange = { viewModel.changeEmail(it) },
                         )
                     }
 
                     AnimatedVisibility(
-                        visible = signUpStep.offsetIdx >= SignUpStep.InputUserInfo.EMPLOYEE_NUMBER.offsetIdx,
+                        visible = state.signUpNameStep.offsetIdx >= SignUpStep.InputUserInfo.EMPLOYEE_NUMBER.offsetIdx,
                         enter = TextFieldEnterAnimation
                     ) {
                         SimTongTextField(
@@ -311,8 +288,8 @@ fun SignUpNameScreen(
                             title = stringResource(
                                 id = R.string.employee_number,
                             ),
-                            value = employeeNumber ?: "",
-                            onValueChange = { employeeNumber = it },
+                            value = state.employeeNumber,
+                            onValueChange = { viewModel.changeEmployeeNumber(it) },
                         )
                     }
 
@@ -323,8 +300,8 @@ fun SignUpNameScreen(
                         title = stringResource(
                             id = R.string.name,
                         ),
-                        value = name ?: "",
-                        onValueChange = { name = it },
+                        value = state.name,
+                        onValueChange = { viewModel.changeName(it) },
                     )
 
                     Row(
@@ -362,14 +339,5 @@ fun SignUpNameScreen(
                 }
             }
         )
-    }
-}
-
-@Preview
-@Composable
-fun PreviewSignUp() {
-    SignUpNameScreen(
-        toPrevious = { },
-    ) {
     }
 }
