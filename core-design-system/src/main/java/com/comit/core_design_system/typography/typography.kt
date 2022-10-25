@@ -7,10 +7,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
@@ -391,6 +394,45 @@ fun Body9(
         color = color,
     )
 }
+
+@Composable
+fun UnderlineBody9(
+    modifier: Modifier = Modifier,
+    text: String,
+    underlineText: List<String>,
+    underlineTextColor: Color = SimTongColor.Gray900,
+    color: Color = SimTongColor.Gray900,
+    rippleEnabled: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    Text(
+        modifier = modifier.simClickable(
+            rippleEnabled = rippleEnabled,
+            onClick = onClick
+        ),
+        text = buildAnnotatedString {
+            append(text)
+            underlineText.forEach { highlightText ->
+                val highlightStartIndex = text.indexOf(
+                    string = highlightText
+                )
+                if (highlightStartIndex != -1) {
+                    addStyle(
+                        style = SpanStyle(
+                            color = underlineTextColor,
+                            textDecoration = TextDecoration.Underline,
+                        ),
+                        start = highlightStartIndex,
+                        end = highlightStartIndex + highlightText.length,
+                    )
+                }
+            }
+        },
+        style = SimTongTypography.body9,
+        color = color,
+    )
+}
+
 
 @Composable
 fun Body10(
