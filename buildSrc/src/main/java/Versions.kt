@@ -41,4 +41,6 @@ object Versions {
     const val SPLASH_SCREEN_VERSION = "1.0.0-beta01"
     const val COMPOSE = "1.2.0-rc01"
     const val ACTIVITY_COMPOSE = "1.4.0"
+
+    const val COIL = "2.2.2"
 }

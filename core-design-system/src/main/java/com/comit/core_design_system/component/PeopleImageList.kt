@@ -23,10 +23,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.typography.Body12
-import com.skydoves.landscapist.glide.GlideImage
 
 @Stable
 private val PeopleImageListMax: Int = 99
@@ -124,25 +124,15 @@ private fun LoadImage(
                     .clip(CircleShape)
             )
         } else {
-            GlideImage(
-                imageModel = list[index],
+            AsyncImage(
+                model = list[index],
+                contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxSize()
                     .wrapContentSize(Alignment.Center)
                     .size(itemWidth - 2.dp)
                     .clip(CircleShape),
-                failure = {
-                    Image(
-                        painter = nullPainter,
-                        contentDescription = "null painter image",
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentSize(Alignment.Center)
-                            .size(itemWidth - 2.dp)
-                            .clip(CircleShape)
-                    )
-                }
             )
         }
     }
