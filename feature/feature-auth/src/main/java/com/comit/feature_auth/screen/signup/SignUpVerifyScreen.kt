@@ -3,7 +3,6 @@ package com.comit.feature_auth.screen.signup
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.runtime.Composable
@@ -17,7 +16,6 @@ import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
-import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.signup.SignUpState

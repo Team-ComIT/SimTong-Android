@@ -39,7 +39,6 @@ import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
-import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.signup.SignUpState
@@ -51,6 +50,9 @@ import kotlin.math.abs
 
 @Stable
 private val TextFieldMargin: Int = 8
+
+@Stable
+internal val TextFieldHeight: Int = 64
 
 /**
  * TextField의 Offset을 계산합니다.
@@ -65,7 +67,7 @@ private fun textFieldOffset(
 @Stable
 private val TextFieldEnterAnimation = fadeIn(tween(450))
 
-private const val SignUpBottomMargin: Int = 24
+internal const val SignUpBottomMargin: Int = 24
 
 /**
  * 약관 목록을 정이합니다.
@@ -143,7 +145,7 @@ fun SignUpNameScreen(
         )
     )
     val bottomLoreOffset by animateDpAsState(
-        targetValue = (state.signUpNameStep.offsetIdx * TextFieldMargin + SignUpBottomMargin).dp
+        targetValue = (state.signUpNameStep.offsetIdx * TextFieldHeight + SignUpBottomMargin).dp
     )
 
     // TODO ("추후 MVI로 개선 필요")

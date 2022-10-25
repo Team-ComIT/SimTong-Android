@@ -20,17 +20,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
-import com.comit.common.domain.isPasswordFormat
+import com.comit.common.domain.format.isPasswordFormat
 import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.BigHeader
-import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.component.SimTongTextField
-import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.signup.SignUpState
@@ -101,12 +98,15 @@ fun SignUpPasswordScreen(
         }
     }
 
+    val bottomLoreOffset by animateDpAsState(
+        targetValue = (state.signUpPasswordStep.offsetIdx * TextFieldHeight + SignUpBottomMargin).dp
+    )
+
     BackHandler {
         coroutineScope.launch {
             toPreviousBtnClicked()
         }
     }
-
 
     SimTongSimpleLayout(
         topAppBar = {
@@ -131,7 +131,9 @@ fun SignUpPasswordScreen(
                         value = checkPassword,
                         onValueChange = { checkPassword = it },
                         title = stringResource(id = R.string.password_again),
-                        error = if (password == checkPassword) stringResource(id = R.string.error_message_password) else null,
+                        error = if (password == checkPassword)
+                            stringResource(id = R.string.error_message_password)
+                        else null,
                     )
                 }
 

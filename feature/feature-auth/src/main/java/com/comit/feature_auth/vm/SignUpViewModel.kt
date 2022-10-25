@@ -13,9 +13,7 @@ import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
-
-) : ContainerHost<SignUpState, SignUpSideEffect>, ViewModel() {
+class SignUpViewModel @Inject constructor() : ContainerHost<SignUpState, SignUpSideEffect>, ViewModel() {
 
     override val container = container<SignUpState, SignUpSideEffect>(SignUpState())
 
@@ -54,6 +52,4 @@ class SignUpViewModel @Inject constructor(
     fun changeVerifyCode(code: String) = intent {
         reduce { state.copy(verifyCode = code) }
     }
-
-
 }

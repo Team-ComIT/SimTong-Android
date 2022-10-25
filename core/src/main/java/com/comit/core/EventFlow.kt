@@ -49,7 +49,6 @@ private class EventFlowImpl<T>(
     override suspend fun emit(value: T) {
         flow.emit(EventFlowSlot(value))
     }
-
 }
 
 private class EventFlowSlot<T>(val value: T) {
@@ -68,9 +67,11 @@ inline fun <reified T> Flow<T>.observeWithLifecycle(
 ) {
     LaunchedEffect(key1 = Unit) {
         lifecycleOwner.lifecycleScope.launch {
-            flowWithLifecycle(lifecycleOwner.lifecycle, minActiveState).collect(FlowCollector {
-                action(it)
-            })
+            flowWithLifecycle(lifecycleOwner.lifecycle, minActiveState).collect(
+                FlowCollector {
+                    action(it)
+                }
+            )
         }
     }
 }

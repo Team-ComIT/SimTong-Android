@@ -14,6 +14,7 @@ private const val SIGN_UP_VERIFY = 1
 private const val SIGN_UP_PASSWORD = 2
 private const val SIGN_UP_NICKNAME = 3
 
+@Suppress("UnusedPrivateMember")
 @Composable
 internal fun SignUpScreen(
     navController: NavController,

@@ -31,7 +31,7 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 
-private const val takePhotoError: String = "이미지를 가져오던 중 오류가 발생하였습니다."
+private const val TakePhotoError: String = "이미지를 가져오던 중 오류가 발생하였습니다."
 
 private val ImageSize: Dp = 100.dp
 
@@ -51,12 +51,12 @@ fun SimImageUpload(
                     imageFile(bitmap!!)
                 } ?: run {
                     if (onError != null) {
-                        onError(takePhotoError)
+                        onError(TakePhotoError)
                     }
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
                 if (onError != null) {
-                    onError(takePhotoError)
+                    onError(TakePhotoError)
                 }
             }
         }
@@ -116,4 +116,3 @@ fun PreviewImageUpload() {
         onError = {},
     )
 }
-
