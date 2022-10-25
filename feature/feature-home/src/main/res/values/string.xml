@@ -2,4 +2,13 @@
 <resources>
     <string name="calendar">캘린더</string>
     <string name="employee_menu">직원 식당 메뉴판</string>
+
+    <!--나의 급여정보-->
+    <string name="my_pay_info">나의 급여 정보</string>
+    <string name="my_pay_info_content">이번 달 나의 급여 정보를 손쉽게 확인해보세요.</string>
+
+    <!--휴무표 작성-->
+    <string name="schedule_write">휴무표 작성</string>
+    <string name="schedule_write_content">이번 달 나의 휴무표를 직접 작성해 일정을 손쉽게 관리해 보세요.</string>
+
 </resources>
