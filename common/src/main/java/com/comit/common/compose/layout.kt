@@ -35,12 +35,8 @@ fun SimTongSimpleLayout(
         modifier = Modifier.fillMaxSize(),
     ) {
         Column {
-            Box(
-                modifier = Modifier
-                    .padding(SimpleLayoutContentPadding)
-            ) {
-                topAppBar()
-            }
+            topAppBar()
+
             Column(
                 modifier = Modifier
                     .padding(SimpleLayoutContentPadding)
