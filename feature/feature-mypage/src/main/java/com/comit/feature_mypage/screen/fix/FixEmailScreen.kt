@@ -160,6 +160,7 @@ private fun ChangeScreen(
     isLastPage: Boolean,
     textTitle: String
 ) {
+    // TODO: 화면 전환 애니메이션 추가해야됨 //
     // https://fornewid.medium.com/material-motion-for-jetpack-compose-d97ef2114b9c
     if (isLastPage) {
         InputCertificationNumber(
