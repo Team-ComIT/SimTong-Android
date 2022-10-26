@@ -13,10 +13,13 @@
     <!--    용어 정의-->
     <string name="mind_share">마음을 나누다.</string>
     <string name="password">비밀번호</string>
+    <string name="password_input">비밀번호 입력</string>
+    <string name="password_again">비밀번호 재입력</string>
     <string name="new_password">새 비밀번호</string>
     <string name="new_password_again">새 비밀번호 재입력</string>
     <string name="log_in">Log in</string>
     <string name="sign_in">로그인</string>
+    <string name="nickname">닉네임</string>
     <string name="sign_up">회원가입</string>
     <string name="email">이메일</string>
     <string name="employee_number">사원번호</string>
@@ -33,5 +36,9 @@
     <string name="password_change">비밀번호 재설정</string>
     <string name="find_employee_number_password">사원번호 • 비밀번호 찾기</string>
     <string name="error_message">정보가 일치하지 않습니다.</string>
+    <string name="error_message_password">비밀번호가 일치하지 않습니다.</string>
     <string name="certification_number_not_correct">인증번호가 일치하지 않습니다.</string>
+
+    <string name="account_exist_message">계정이 있으신가요? 로그인</string>
+    <string name="password_format_message">영문과 숫자 그리고 특수 기호가 모두 포함되어야 합니다.</string>
 </resources>

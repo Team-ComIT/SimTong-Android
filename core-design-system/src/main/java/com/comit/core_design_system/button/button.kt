@@ -38,7 +38,7 @@ private val SmallRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
  * @param modifier [Modifier] to use to draw the SmallRedRoundButton
  * @param round round in SmallRedRoundButton
  * @param text text in SmallRedRoundButton
- * @param enalbed activation status of button
+ * @param enabled activation status of button
  * @param onClick Callback to be invoked when a button is clicked
  */
 @Composable
@@ -76,7 +76,7 @@ private val BigRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
  * @param modifier [Modifier] to use to draw the BigRedRoundButton
  * @param round round in BigRedRoundButton
  * @param text text in BigRedRoundButton
- * @param enalbed activation status of button
+ * @param enabled activation status of button
  * @param onClick Callback to be invoked when a button is clicked
  */
 @Composable
@@ -114,7 +114,7 @@ private val ThinRedRoundButtonDefaultRound = ButtonDefaultRound.Medium
  * @param modifier [Modifier] to use to draw the ThinRedRoundButton
  * @param round round in ThinRedRoundButton
  * @param text text in ThinRedRoundButton
- * @param enalbed activation status of button
+ * @param enabled activation status of button
  * @param onClick Callback to be invoked when a button is clicked
  */
 @Composable
@@ -210,7 +210,7 @@ fun SimTongSideBtn(
  * @param modifier [Modifier] to use to draw the RedIconButton
  * @param painter [Painter] to go into button
  * @param contentDescription description of the BasicIconButton
- * @param enalbed activation status of button
+ * @param enabled activation status of button
  * @param onClick Callback to be invoked when a button is clicked
  */
 @Composable
