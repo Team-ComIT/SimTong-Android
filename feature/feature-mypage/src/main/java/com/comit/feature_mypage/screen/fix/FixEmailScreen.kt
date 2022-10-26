@@ -1,6 +1,5 @@
 package com.comit.feature_mypage.screen.fix
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -15,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.withRunningRecomposer
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -29,8 +27,6 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body10
 import com.comit.feature_mypage.R
 import kotlinx.coroutines.delay
-import java.util.*
-import kotlin.concurrent.timer
 
 private var email = mutableStateOf("")
 private var certificationNumber = mutableStateOf("")
@@ -95,6 +91,15 @@ private val InputCertificationNumberTotalTime: Int = 180
 @Stable
 private val InputCertificationNumberHeight: Dp = 70.dp
 
+@Stable
+private val OneMinute: Int = 60
+
+@Stable
+private val OneSecondDelay: Long = 1000
+
+@Stable
+private val CheckDigit: Int = 10
+
 @Composable
 fun InputCertificationNumber(
     textTitle: String
@@ -103,15 +108,15 @@ fun InputCertificationNumber(
         mutableStateOf(InputCertificationNumberTotalTime)
     }
 
-    val minute = totalTime/60
-    val second = if(10 <= totalTime % 60) totalTime % 60 else "0" + totalTime % 60
+    val minute = totalTime / OneMinute
+    val second =
+        if (CheckDigit <= totalTime % OneMinute) totalTime % OneMinute
+        else "0" + totalTime % OneMinute
 
-    LaunchedEffect(key1 = totalTime){
-        if (totalTime > 0){
-            delay(1000)
+    LaunchedEffect(key1 = totalTime) {
+        if (totalTime > 0) {
+            delay(OneSecondDelay)
             totalTime -= 1
-        } else{
-
         }
     }
 
@@ -126,11 +131,11 @@ fun InputCertificationNumber(
         )
 
         Body10(
-            text = stringResource(id = R.string.left_time)
-                    +" "
-                    + minute
-                    +" : "
-                    +second,
+            text = stringResource(id = R.string.left_time) +
+                " " +
+                minute +
+                " : " +
+                second,
             color = SimTongColor.MainColor,
             modifier = Modifier
                 .fillMaxWidth()
@@ -139,13 +144,13 @@ fun InputCertificationNumber(
                 .wrapContentHeight(Alignment.Top)
         )
     }
-    
+
     Spacer(modifier = Modifier.height(18.dp))
 
     BigRedRoundButton(
         text = stringResource(id = R.string.resend),
         onClick = {
-            totalTime = 180
+            totalTime = InputCertificationNumberTotalTime
         }
     )
 }
@@ -154,9 +159,12 @@ fun InputCertificationNumber(
 fun ChangeScreen(
     isLastPage: Boolean,
     textTitle: String
-){
+) {
+    // https://fornewid.medium.com/material-motion-for-jetpack-compose-d97ef2114b9c
     if (isLastPage) {
-        InputCertificationNumber(textTitle = textTitle)
+        InputCertificationNumber(
+            textTitle = textTitle
+        )
     } else {
         InputEmailScreen(textTitle = textTitle)
     }

@@ -45,7 +45,7 @@ fun FixBaseScreen(
             text = btnText,
             onClick = btnClick,
             enabled = btnEnabled,
-            round = 0.dp,
+            round = FixBaseButtonRound,
             modifier = Modifier
                 .fillMaxHeight()
                 .wrapContentHeight(Alignment.Bottom)
