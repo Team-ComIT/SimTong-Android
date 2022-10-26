@@ -78,9 +78,9 @@ fun FixPassword() {
 
     FixBaseScreen(
         header = stringResource(id = R.string.password_fix),
-        headerBackClick = { btnBack() },
+        onPrevious = { btnBack() },
         btnText = btnText,
-        btnClick = { btnNext() },
+        onNext = { btnNext() },
         btnEnabled = btnEnabled
     ) {
         Spacer(modifier = Modifier.height(16.dp))

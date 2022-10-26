@@ -21,11 +21,11 @@ private val FixBaseButtonRound: Dp = 0.dp
 @Composable
 fun FixBaseScreen(
     header: String,
-    headerBackClick: () -> Unit,
+    onPrevious: () -> Unit,
     btnText: String,
-    btnClick: () -> Unit,
+    onNext: () -> Unit,
     btnEnabled: Boolean,
-    screenBody: @Composable () -> Unit
+    content: @Composable () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -34,16 +34,16 @@ fun FixBaseScreen(
     ) {
         BigHeader(
             text = header,
-            onPrevious = headerBackClick
+            onPrevious = onPrevious
         )
 
         Column(modifier = Modifier.padding(horizontal = 40.dp)) {
-            screenBody()
+            content()
         }
 
         BigRedRoundButton(
             text = btnText,
-            onClick = btnClick,
+            onClick = onNext,
             enabled = btnEnabled,
             round = FixBaseButtonRound,
             modifier = Modifier

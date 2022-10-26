@@ -22,9 +22,9 @@ fun FixNickNameScreen() {
 
     FixBaseScreen(
         header = stringResource(id = R.string.nick_name_input),
-        headerBackClick = { },
+        onPrevious = { },
         btnText = stringResource(id = R.string.nick_name_fix),
-        btnClick = { nickNameError = "" },
+        onNext = { nickNameError = "" },
         btnEnabled = nickNameEnabled
     ) {
         Spacer(modifier = Modifier.height(16.dp))

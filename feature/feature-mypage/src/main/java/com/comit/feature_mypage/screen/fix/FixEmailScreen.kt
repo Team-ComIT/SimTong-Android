@@ -2,8 +2,7 @@ package com.comit.feature_mypage.screen.fix
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
@@ -31,6 +30,8 @@ import kotlinx.coroutines.delay
 private var email = mutableStateOf("")
 private var certificationNumber = mutableStateOf("")
 
+// TODO: 버튼 클릭 이벤트나 에러 메세지 표시지는 추가가 필요합니다 //
+
 @Composable
 fun FixEmailScreen() {
     var emailError by remember { mutableStateOf<String?>(null) }
@@ -55,11 +56,11 @@ fun FixEmailScreen() {
 
     FixBaseScreen(
         header = headerText,
-        headerBackClick = {
+        onPrevious = {
             isLastPage = false
         },
         btnText = btnText,
-        btnClick = {
+        onNext = {
             emailError = ""
             isLastPage = true
         },
@@ -73,7 +74,7 @@ fun FixEmailScreen() {
 }
 
 @Composable
-fun InputEmailScreen(
+private fun InputEmailScreen(
     textTitle: String
 ) {
     Spacer(modifier = Modifier.height(16.dp))
@@ -101,7 +102,7 @@ private val OneSecondDelay: Long = 1000
 private val CheckDigit: Int = 10
 
 @Composable
-fun InputCertificationNumber(
+private fun InputCertificationNumber(
     textTitle: String
 ) {
     var totalTime by remember {
@@ -138,9 +139,8 @@ fun InputCertificationNumber(
                 second,
             color = SimTongColor.MainColor,
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxSize()
                 .wrapContentWidth(Alignment.End)
-                .fillMaxHeight()
                 .wrapContentHeight(Alignment.Top)
         )
     }
@@ -156,7 +156,7 @@ fun InputCertificationNumber(
 }
 
 @Composable
-fun ChangeScreen(
+private fun ChangeScreen(
     isLastPage: Boolean,
     textTitle: String
 ) {
