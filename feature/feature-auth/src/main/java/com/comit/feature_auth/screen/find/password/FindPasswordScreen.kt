@@ -21,7 +21,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 
 @Composable
-fun FindPassword() {
+fun FindPasswordScreen() {
     var employeeNum by remember { mutableStateOf<String?>(null) }
     var eMail by remember { mutableStateOf<String?>(null) }
     var employeeNumError by remember { mutableStateOf<String?>(null) }
@@ -85,5 +85,5 @@ fun FindPassword() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewFindPasswordScreen() {
-    FindPassword()
+    FindPasswordScreen()
 }

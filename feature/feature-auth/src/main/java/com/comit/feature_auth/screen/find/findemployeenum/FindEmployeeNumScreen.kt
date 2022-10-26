@@ -31,7 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.BasicButton
 import com.comit.core_design_system.button.BigRedRoundButton
-import com.comit.core_design_system.button.SimCheckBox
+import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.modifier.simSelectable
@@ -56,7 +56,7 @@ fun String.isPlaceEmpty(): Boolean =
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun FindEmployeeNum(
+fun FindEmployeeNumScreen(
     coroutineScope: CoroutineScope,
     bottomSheetState: ModalBottomSheetState,
 ) {
@@ -263,7 +263,7 @@ fun FindPlaceLazyColumn(
                         }
                     }
 
-                    SimCheckBox(
+                    SimRadioButton(
                         checked = isSelect(index),
                         onCheckedChange = {
                             selectedValue = index

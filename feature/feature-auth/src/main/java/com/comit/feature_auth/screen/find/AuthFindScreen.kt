@@ -23,9 +23,9 @@ import com.comit.core_design_system.component.TabBar
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.feature_auth.R
-import com.comit.feature_auth.screen.find.findemployeenum.FindEmployeeNum
+import com.comit.feature_auth.screen.find.findemployeenum.FindEmployeeNumScreen
 import com.comit.feature_auth.screen.find.findemployeenum.FindPlaceLazyColumn
-import com.comit.feature_auth.screen.find.password.FindPassword
+import com.comit.feature_auth.screen.find.password.FindPasswordScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.CoroutineScope
 
@@ -40,11 +40,11 @@ fun ChangeAuthScreen(
     bottomSheetState: ModalBottomSheetState
 ) {
     when (index) {
-        0 -> FindEmployeeNum(
+        0 -> FindEmployeeNumScreen(
             coroutineScope = coroutineScope,
             bottomSheetState = bottomSheetState
         )
-        1 -> FindPassword()
+        1 -> FindPasswordScreen()
     }
 }
 
