@@ -13,7 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
-import com.comit.core_design_system.button.BigRedRoundButton
+import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
@@ -68,7 +68,7 @@ fun SignUpNicknameScreen(
             }
         },
         bottomContent = {
-            BigRedRoundButton(
+            SimTongBigRoundButton(
                 modifier = Modifier.imePadding(),
                 text = stringResource(id = R.string.next),
                 round = 0.dp,

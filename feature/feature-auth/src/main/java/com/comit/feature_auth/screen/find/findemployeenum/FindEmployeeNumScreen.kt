@@ -30,8 +30,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.BasicButton
-import com.comit.core_design_system.button.BigRedRoundButton
 import com.comit.core_design_system.button.SimRadioButton
+import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.modifier.simSelectable
@@ -156,7 +156,7 @@ fun FindEmployeeNumScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        BigRedRoundButton(
+        SimTongBigRoundButton(
             text = stringResource(id = R.string.find_employee),
             onClick = {
                 nameError = ""
@@ -315,7 +315,7 @@ fun ShowEmployeeNum() {
                 .wrapContentWidth(Alignment.CenterHorizontally),
         )
 
-        BigRedRoundButton(
+        SimTongBigRoundButton(
             text = "로그인 창으로 돌아가기",
             onClick = {},
             modifier = Modifier

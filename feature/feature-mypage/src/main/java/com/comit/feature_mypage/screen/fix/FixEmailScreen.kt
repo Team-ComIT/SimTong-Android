@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.BigRedRoundButton
+import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body10
@@ -147,7 +147,7 @@ private fun InputCertificationNumber(
 
     Spacer(modifier = Modifier.height(18.dp))
 
-    BigRedRoundButton(
+    SimTongBigRoundButton(
         text = stringResource(id = R.string.resend),
         onClick = {
             totalTime = InputCertificationNumberTotalTime

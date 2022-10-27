@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
 import com.comit.common.domain.format.isPasswordFormat
-import com.comit.core_design_system.button.BigRedRoundButton
+import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
@@ -159,7 +159,7 @@ fun SignUpPasswordScreen(
             }
         },
         bottomContent = {
-            BigRedRoundButton(
+            SimTongBigRoundButton(
                 modifier = Modifier.imePadding(),
                 text = stringResource(id = R.string.next),
                 round = 0.dp,

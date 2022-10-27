@@ -26,7 +26,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.RedIconButton
+import com.comit.core_design_system.button.SimTongIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
@@ -153,7 +153,7 @@ fun MyPageProfileImage(
     ) {
         GlideImage(imageModel = imageUrl, Modifier.clip(CircleShape))
 
-        RedIconButton(
+        SimTongIconButton(
             painter = painterResource(
                 id = R.drawable.ic_my_page_plus
             ),
