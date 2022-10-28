@@ -15,17 +15,16 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 
-@Stable
 private val FixBaseButtonRound: Dp = 0.dp
 
 @Composable
-fun FixBaseScreen(
+internal fun FixBaseScreen(
     header: String,
     onPrevious: () -> Unit,
     btnText: String,
     onNext: () -> Unit,
     btnEnabled: Boolean,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -34,10 +33,14 @@ fun FixBaseScreen(
     ) {
         BigHeader(
             text = header,
-            onPrevious = onPrevious
+            onPrevious = onPrevious,
         )
 
-        Column(modifier = Modifier.padding(horizontal = 40.dp)) {
+        Column(
+            modifier = Modifier.padding(
+                horizontal = 40.dp,
+            ),
+        ) {
             content()
         }
 
@@ -48,7 +51,7 @@ fun FixBaseScreen(
             round = FixBaseButtonRound,
             modifier = Modifier
                 .fillMaxHeight()
-                .wrapContentHeight(Alignment.Bottom)
+                .wrapContentHeight(Alignment.Bottom),
         )
     }
 }

@@ -3,6 +3,7 @@ package com.comit.feature_mypage.screen.fix
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
@@ -51,12 +54,17 @@ private const val DefaultSelected: Int = -1
 private const val ItemsSampleMapperStart: Int = 1
 private const val ItemsSampleMapperEnd: Int = 100
 
-@Stable
 private val FixWorkPlaceHeight: Dp = 60.dp
 
+@Stable
+private val FixWorkPlaceHeaderPadding = PaddingValues(
+    start = 26.dp, end = 30.dp,
+)
+
 @Composable
-fun FixWorkPlaceScreen(
-    items: List<WorkPlaceSample>
+internal fun FixWorkPlaceScreen(
+    navController: NavController,
+    items: List<WorkPlaceSample>,
 ) {
     val scrollState = rememberScrollState()
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
@@ -66,13 +74,18 @@ fun FixWorkPlaceScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         Header(
+            modifier = Modifier
+                .padding(FixWorkPlaceHeaderPadding),
             headerText = stringResource(id = R.string.work_place_fix),
             sideBtnText = stringResource(id = R.string.check),
             enabledBackBtn = true,
-            enabledSideBtn = enabledSideBtn,
-            onTextBtnClicked = {},
-            modifier = Modifier
-                .padding(start = 26.dp, end = 30.dp)
+            enabledTextBtn = enabledSideBtn,
+            onTextBtnClicked = {
+                //TODO ("수정 요청 보내기")
+            },
+            onPrevious = {
+                navController.popBackStack()
+            },
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -80,7 +93,7 @@ fun FixWorkPlaceScreen(
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(scrollState)
+                .verticalScroll(scrollState),
         ) {
             items.forEachIndexed { index, item ->
                 Box(
@@ -93,57 +106,67 @@ fun FixWorkPlaceScreen(
                                 placeName = item.name
                                 enabledSideBtn = true
                             },
-                            role = Role.RadioButton
+                            role = Role.RadioButton,
                         )
                 ) {
 
                     Column(
                         modifier = Modifier
-                            .padding(horizontal = 30.dp)
+                            .padding(
+                                horizontal = 30.dp,
+                            ),
                     ) {
                         Spacer(modifier = Modifier.height(15.dp))
 
                         Body4(
                             text = item.name,
-                            color = SimTongColor.Gray900
+                            color = SimTongColor.Gray900,
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
 
                         Body8(
                             text = item.position,
-                            color = SimTongColor.Gray900
+                            color = SimTongColor.Gray900,
                         )
                         Canvas(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .fillMaxHeight()
-                                .wrapContentHeight(Alignment.Bottom)
+                                .wrapContentHeight(Alignment.Bottom),
                         ) {
                             val canvasWidth = size.width
                             val canvasHeight = size.height
 
                             drawLine(
-                                start = Offset(x = 0f, y = canvasHeight),
-                                end = Offset(x = canvasWidth, y = canvasHeight),
+                                start = Offset(
+                                    x = 0f,
+                                    y = canvasHeight,
+                                ),
+                                end = Offset(
+                                    x = canvasWidth,
+                                    y = canvasHeight,
+                                ),
                                 color = SimTongColor.Gray900,
-                                strokeWidth = 0.1F
+                                strokeWidth = 0.1F,
                             )
                         }
                     }
                     SimRadioButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentWidth(Alignment.End)
+                            .fillMaxHeight()
+                            .wrapContentHeight(Alignment.CenterVertically)
+                            .padding(
+                                end = 33.dp,
+                            ),
                         checked = isSelect(index),
                         onCheckedChange = {
                             selectedValue = index
                             placeName = item.name
                             enabledSideBtn = true
                         },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentWidth(Alignment.End)
-                            .fillMaxHeight()
-                            .wrapContentHeight(Alignment.CenterVertically)
-                            .padding(end = 33.dp)
                     )
                 }
             }
@@ -151,15 +174,17 @@ fun FixWorkPlaceScreen(
     }
 }
 
+internal val fakeItems =
+    (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
+        WorkPlaceSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
+    }.toList()
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewFixWorkPlaceScreen() {
-    val items =
-        (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
-            WorkPlaceSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
-        }.toList()
 
     FixWorkPlaceScreen(
-        items = items
+        navController = rememberNavController(),
+        items = fakeItems,
     )
 }
