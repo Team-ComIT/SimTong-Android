@@ -25,7 +25,9 @@ internal fun FixNickNameScreen(
 
     FixBaseScreen(
         header = stringResource(id = R.string.nick_name_input),
-        onPrevious = { },
+        onPrevious = {
+            navController.popBackStack()
+        },
         btnText = stringResource(id = R.string.nick_name_fix),
         onNext = { nickNameError = "" },
         btnEnabled = nickName.isNotEmpty(),

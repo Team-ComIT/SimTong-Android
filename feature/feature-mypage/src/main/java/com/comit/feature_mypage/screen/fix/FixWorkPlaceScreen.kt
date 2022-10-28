@@ -81,7 +81,7 @@ internal fun FixWorkPlaceScreen(
             enabledBackBtn = true,
             enabledTextBtn = enabledSideBtn,
             onTextBtnClicked = {
-                //TODO ("수정 요청 보내기")
+                // TODO ("수정 요청 보내기")
             },
             onPrevious = {
                 navController.popBackStack()

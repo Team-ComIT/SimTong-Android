@@ -62,6 +62,7 @@ internal fun FixEmailScreen(
         header = headerText,
         onPrevious = {
             isLastPage = false
+            navController.popBackStack()
         },
         btnText = btnText,
         onNext = {

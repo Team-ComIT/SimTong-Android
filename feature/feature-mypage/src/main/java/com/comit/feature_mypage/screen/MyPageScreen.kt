@@ -18,7 +18,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,7 +34,6 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
@@ -88,7 +86,7 @@ fun MyPageScreen(
                 navController.popBackStack()
             },
             sideBtnText = stringResource(
-                id = if(editMode) R.string.kr_edit else R.string.check,
+                id = if (editMode) R.string.kr_edit else R.string.check,
             ),
             onTextBtnClicked = {
                 editMode = !editMode
