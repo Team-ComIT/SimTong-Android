@@ -12,6 +12,7 @@ object SimTongColor {
     val Check = Color(0xFF04DF00)
     val Error = Color(0xFFDC3035)
 
+    val Gray50 = Color(0xFFFDFDFD)
     val Gray100 = Color(0xFFFDFDFD)
     val Gray200 = Color(0xFFEDEDED)
     val Gray300 = Color(0xFFD3D3D3)

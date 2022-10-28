@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.NoLiveLiterals
 import androidx.compose.runtime.Stable
@@ -42,7 +41,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
-import com.comit.core_design_system.button.SideBtnColorType
+import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.button.SimTongSideBtn
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
@@ -99,7 +98,7 @@ fun SimTongTextField(
     hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
     enabledSideBtn: Boolean = false,
     sideBtnText: String? = null,
-    sideBtnColorType: SideBtnColorType = SideBtnColorType.RED,
+    simTongButtonColor: SimTongButtonColor = SimTongButtonColor.RED,
     round: Dp = DefaultTextFieldRound,
     onSideBtnClick: (() -> Unit)? = null,
     error: String? = null,
@@ -173,7 +172,7 @@ fun SimTongTextField(
                     sideBtnText = sideBtnText,
                     round = round,
                     onSideBtnClick = onSideBtnClick,
-                    sideBtnColorType = sideBtnColorType,
+                    simTongButtonColor = simTongButtonColor,
                     isPassword = isPassword,
                     keyboardOptions = KeyboardOptions(
                         keyboardType = keyboardType,
@@ -209,7 +208,7 @@ private fun SimTongBasicTextField(
     onPasswordVisibleChanged: (Boolean) -> Unit,
     enabledSideBtn: Boolean = false,
     sideBtnText: String? = null,
-    sideBtnColorType: SideBtnColorType,
+    simTongButtonColor: SimTongButtonColor,
     round: Dp = DefaultTextFieldRound,
     onSideBtnClick: (() -> Unit)? = null,
     isPassword: Boolean = false,
@@ -293,7 +292,7 @@ private fun SimTongBasicTextField(
                         SimTongSideBtn(
                             text = sideBtnText ?: "",
                             round = round,
-                            sideBtnColorType = sideBtnColorType,
+                            color = simTongButtonColor,
                         ) {
                             if (onSideBtnClick != null) {
                                 onSideBtnClick()
@@ -371,7 +370,7 @@ fun PreviewSimTongTextField() {
             onValueChange = { value7 = it },
             backgroundColor = SimTongColor.Gray200,
             sideBtnText = "인증",
-            sideBtnColorType = SideBtnColorType.GRAY,
+            simTongButtonColor = SimTongButtonColor.GRAY,
             enabledSideBtn = true,
         )
 

@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.BigRedRoundButton
-import com.comit.core_design_system.button.SideBtnColorType
+import com.comit.core_design_system.button.SimTongBigRoundButton
+import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
@@ -66,12 +66,12 @@ fun FindPasswordScreen() {
             error = emailError,
             sideBtnText = stringResource(id = R.string.certification),
             enabledSideBtn = true,
-            sideBtnColorType = if (eMail.isNullOrEmpty()) SideBtnColorType.GRAY else SideBtnColorType.RED,
+            simTongButtonColor = if (eMail.isNullOrEmpty()) SimTongButtonColor.GRAY else SimTongButtonColor.RED,
         )
 
         Spacer(modifier = Modifier.height(30.dp))
 
-        BigRedRoundButton(
+        SimTongBigRoundButton(
             text = stringResource(id = R.string.find_password),
             onClick = {
                 employeeNumError = ""

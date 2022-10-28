@@ -12,7 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.BigRedRoundButton
+import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 
 @Stable
@@ -41,7 +41,7 @@ fun FixBaseScreen(
             content()
         }
 
-        BigRedRoundButton(
+        SimTongBigRoundButton(
             text = btnText,
             onClick = onNext,
             enabled = btnEnabled,

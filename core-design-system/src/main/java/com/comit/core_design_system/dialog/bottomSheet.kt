@@ -26,8 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.BigRedRoundButton
-import com.comit.core_design_system.button.RedIconButton
+import com.comit.core_design_system.button.SimTongBigRoundButton
+import com.comit.core_design_system.button.SimTongIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body5
@@ -148,7 +148,7 @@ fun PreviewBottomSheetDialog() {
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                BigRedRoundButton(text = "심통 사용하기") {
+                SimTongBigRoundButton(text = "심통 사용하기") {
                     coroutineScope.launch {
                         bottomSheetState.hide()
                     }
@@ -160,7 +160,7 @@ fun PreviewBottomSheetDialog() {
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            RedIconButton(
+            SimTongIconButton(
                 painter = painterResource(
                     id = SimTongIcon.More.drawableId,
                 ),
