@@ -26,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimTongIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
@@ -58,7 +60,9 @@ object MyPageFakeData {
  * 이는 추후에 개선되어야 합니다.
  */
 @Composable
-fun MyPageScreen() {
+fun MyPageScreen(
+    navController: NavController,
+) {
     SimTongTheme(
         darkTheme = false
     ) {
@@ -241,5 +245,7 @@ fun MyPageEditModeMenu(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
-    MyPageScreen()
+    MyPageScreen(
+        navController = rememberNavController()
+    )
 }
