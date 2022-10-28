@@ -30,6 +30,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
@@ -57,7 +59,9 @@ private val HomeScreenCalendarHeight: Dp = 360.dp
 private val HomeScreenTopRowHeight: Dp = 30.dp
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    navController: NavController,
+) {
     SimTongTheme(
         darkTheme = false
     ) {
@@ -211,5 +215,7 @@ fun HomeUnderRowItem(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
-    HomeScreen()
+    HomeScreen(
+        navController = rememberNavController(),
+    )
 }
