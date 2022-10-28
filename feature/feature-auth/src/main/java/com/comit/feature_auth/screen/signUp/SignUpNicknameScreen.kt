@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
+import com.comit.core_design_system.component.SimImageUploadLayout
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
-import com.comit.core_design_system.component.SimImageUploadLayout
 import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
