@@ -49,7 +49,7 @@ private val HeaderHorizontalPadding = PaddingValues(horizontal = 0.dp)
  * @param enabledPlusBtn Whether the plus button is enabled
  * @param enabledBeilBtn Whether the beil button is enabled
  * @param enabledPeopleBtn Whether the people button is enabled
- * @param enabledSideBtn Whether the side text button is enabled
+ * @param enabledTextBtn Whether the side text button is enabled
  * @param onPrevious Callback to be invoked when a back button is clicked
  * @param onMenu Callback to be invoked when a menu button is clicked
  * @param onPlus Callback to be invoked when a plus button is clicked
@@ -67,7 +67,7 @@ fun Header(
     enabledPlusBtn: Boolean = false,
     enabledBeilBtn: Boolean = false,
     enabledPeopleBtn: Boolean = false,
-    enabledSideBtn: Boolean = false,
+    enabledTextBtn: Boolean = false,
     onPrevious: (() -> Unit)? = null,
     onMenu: (() -> Unit)? = null,
     onPlus: (() -> Unit)? = null,
@@ -77,7 +77,7 @@ fun Header(
 ) {
 
     val textBtnColor = animateColorAsState(
-        if (enabledSideBtn) SimTongColor.MainColor else SimTongColor.MainColor200
+        if (enabledTextBtn) SimTongColor.MainColor else SimTongColor.MainColor200
     )
 
     Row(
@@ -188,7 +188,7 @@ fun Header(
                 modifier = Modifier
                     .simClickable(
                         rippleEnabled = false,
-                        runIf = enabledSideBtn,
+                        runIf = enabledTextBtn,
                     ) {
                         if (onTextBtnClicked != null) {
                             onTextBtnClicked()
@@ -246,7 +246,7 @@ fun BigHeader(
 
         Spacer(modifier = Modifier.width(15.dp))
 
-        if(text != null) {
+        if (text != null) {
             Body1(
                 text = text,
             )
@@ -278,7 +278,7 @@ fun PreviewHeader() {
         Header(
             headerText = "전체 지점",
             sideBtnText = "수정",
-            enabledSideBtn = true,
+            enabledTextBtn = true,
             enabledBackBtn = true,
             onTextBtnClicked = {
                 Toast.makeText(context, "text btn clicked!", Toast.LENGTH_SHORT).show()

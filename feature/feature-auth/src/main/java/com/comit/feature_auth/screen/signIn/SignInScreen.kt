@@ -30,7 +30,6 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9
@@ -63,102 +62,101 @@ fun SignInScreen(
         id = R.string.error_message,
     )
 
-        Column(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(SignInScreenPadding),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+
+        SignInTopLayout()
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        SimTongTextField(
+            value = id ?: "",
+            onValueChange = {
+                id = it
+                idError = null
+                passwordError = null
+            },
+            hintBackgroundColor = SimTongColor.Gray200,
+            backgroundColor = SimTongColor.Gray100,
+            hint = stringResource(id = R.string.employee_number),
+            error = idError,
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        SimTongTextField(
+            value = password ?: "",
+            onValueChange = {
+                password = it
+                idError = null
+                passwordError = null
+            },
+            hintBackgroundColor = SimTongColor.Gray200,
+            backgroundColor = SimTongColor.Gray100,
+            hint = stringResource(id = R.string.password),
+            isPassword = true,
+            error = passwordError,
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        SimTongBigRoundButton(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(SignInScreenPadding),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
+                .fillMaxWidth(),
+            text = stringResource(id = R.string.log_in),
+            onClick = {
+                idError = ""
+                passwordError = errorMsg
 
-            SignInTopLayout()
+                // TODO ("test 딴에서는 바로 홈으로 이동")
+                navController.navigate(
+                    route = SimTongScreen.Home.MAIN,
+                )
+            },
+            enabled = buttonEnabled,
+        )
 
-            Spacer(modifier = Modifier.height(40.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            SimTongTextField(
-                value = id ?: "",
-                onValueChange = {
-                    id = it
-                    idError = null
-                    passwordError = null
-                },
-                hintBackgroundColor = SimTongColor.Gray200,
-                backgroundColor = SimTongColor.Gray100,
-                hint = stringResource(id = R.string.employee_number),
-                error = idError,
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            SimTongTextField(
-                value = password ?: "",
-                onValueChange = {
-                    password = it
-                    idError = null
-                    passwordError = null
-                },
-                hintBackgroundColor = SimTongColor.Gray200,
-                backgroundColor = SimTongColor.Gray100,
-                hint = stringResource(id = R.string.password),
-                isPassword = true,
-                error = passwordError,
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            SimTongBigRoundButton(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = stringResource(id = R.string.log_in),
-                onClick = {
-                    idError = ""
-                    passwordError = errorMsg
-
-                    // TODO ("test 딴에서는 바로 홈으로 이동")
+        Body8(
+            modifier = Modifier
+                .noRippleClickable {
                     navController.navigate(
-                        route = SimTongScreen.Home.MAIN,
+                        route = SimTongScreen.Auth.AUTH_FIND,
                     )
-                },
-                enabled = buttonEnabled,
-            )
+                }
+                .padding(TextBtnPadding),
+            text = stringResource(id = R.string.find_employee_number_password),
+            color = SimTongColor.OtherColor.GrayB3,
+        )
 
-            Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
-            Body8(
-                modifier = Modifier
-                    .noRippleClickable {
-                        navController.navigate(
-                            route = SimTongScreen.Auth.AUTH_FIND,
-                        )
-                    }
-                    .padding(TextBtnPadding)
-                ,
-                text = stringResource(id = R.string.find_employee_number_password),
-                color = SimTongColor.OtherColor.GrayB3,
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            UnderlineBody9(
-                modifier = Modifier
-                    .padding(TextBtnPadding),
-                text = stringResource(
-                    id = R.string.sign_up_induction_msg,
+        UnderlineBody9(
+            modifier = Modifier
+                .padding(TextBtnPadding),
+            text = stringResource(
+                id = R.string.sign_up_induction_msg,
+            ),
+            underlineText = listOf(
+                stringResource(
+                    id = R.string.sign_up,
                 ),
-                underlineText = listOf(
-                    stringResource(
-                        id = R.string.sign_up,
-                    ),
-                ),
-                color = SimTongColor.Gray300,
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.Auth.SIGN_UP,
-                    )
-                },
-            )
+            ),
+            color = SimTongColor.Gray300,
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.Auth.SIGN_UP,
+                )
+            },
+        )
 
-            Spacer(modifier = Modifier.height(30.dp))
-        }
+        Spacer(modifier = Modifier.height(30.dp))
+    }
 }
 
 @Composable
@@ -199,7 +197,6 @@ private fun SignInTopLayout() {
         }
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable

@@ -18,12 +18,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 import kotlin.math.abs
 
-@Stable
-private val TextFieldMargin: Int = 8
+enum class FixPasswordStep(
+    val index: Int,
+) {
+    PASSWORD(
+        index = 1,
+    ),
+    CHECK_PASSWORD(
+        index = 2,
+    )
+}
+private const val TextFieldMargin: Int = 8
 
 internal fun textFieldOffset(
     step: Int,
@@ -36,37 +47,40 @@ internal fun textFieldOffset(
 private val TextFieldEnterAnimation = fadeIn(tween(450))
 
 @Composable
-fun FixPassword() {
-    var isLastPage by remember { mutableStateOf(false) }
+internal fun FixPassword(
+    navController: NavController,
+) {
+    val isLastPage by remember { mutableStateOf(false) }
 
     var password by remember { mutableStateOf("") }
-    var passwordError by remember { mutableStateOf<String?>(null) }
+    val passwordError by remember { mutableStateOf<String?>(null) }
     var passwordCheck by remember { mutableStateOf("") }
-    var passwordCheckError by remember { mutableStateOf<String?>(null) }
+    val passwordCheckError by remember { mutableStateOf<String?>(null) }
 
-    var fixPasswordStep by remember { mutableStateOf(1) }
+    var fixPasswordStep by remember { mutableStateOf(FixPasswordStep.PASSWORD) }
+
     val btnNext = {
         when (fixPasswordStep) {
-            1 -> fixPasswordStep = 2
-            2 -> {}
+            FixPasswordStep.PASSWORD -> fixPasswordStep = FixPasswordStep.CHECK_PASSWORD
+            FixPasswordStep.CHECK_PASSWORD -> navController.popBackStack()
         }
     }
     val btnBack = {
         when (fixPasswordStep) {
-            1 -> {}
-            2 -> fixPasswordStep = 1
+            FixPasswordStep.PASSWORD -> navController.popBackStack()
+            FixPasswordStep.CHECK_PASSWORD -> fixPasswordStep = FixPasswordStep.PASSWORD
         }
     }
     val passwordOffset by animateDpAsState(
         textFieldOffset(
             step = 1,
-            currentStep = fixPasswordStep
+            currentStep = fixPasswordStep.index,
         )
     )
     val passwordCheckOffset by animateDpAsState(
         textFieldOffset(
             step = 2,
-            currentStep = fixPasswordStep
+            currentStep = fixPasswordStep.index,
         )
     )
 
@@ -81,29 +95,29 @@ fun FixPassword() {
         onPrevious = { btnBack() },
         btnText = btnText,
         onNext = { btnNext() },
-        btnEnabled = btnEnabled
+        btnEnabled = btnEnabled,
     ) {
         Spacer(modifier = Modifier.height(16.dp))
 
         AnimatedVisibility(
-            visible = fixPasswordStep >= 2,
-            enter = TextFieldEnterAnimation
+            visible = fixPasswordStep.index >= 2,
+            enter = TextFieldEnterAnimation,
         ) {
             SimTongTextField(
+                modifier = Modifier.offset(y = passwordCheckOffset),
                 value = passwordCheck,
                 onValueChange = { passwordCheck = it },
                 title = stringResource(id = R.string.password_input_again),
                 error = passwordCheckError,
-                modifier = Modifier.offset(y = passwordCheckOffset)
             )
         }
 
         SimTongTextField(
+            modifier = Modifier.offset(y = passwordOffset),
             value = password,
             onValueChange = { password = it },
             title = stringResource(id = R.string.password_input),
             error = passwordError,
-            modifier = Modifier.offset(y = passwordOffset)
         )
     }
 }
@@ -111,5 +125,7 @@ fun FixPassword() {
 @Preview
 @Composable
 fun PreviewFixPassword() {
-    FixPassword()
+    FixPassword(
+        navController = rememberNavController()
+    )
 }
