@@ -246,7 +246,7 @@ fun BigHeader(
 
         Spacer(modifier = Modifier.width(15.dp))
 
-        if(text != null) {
+        if (text != null) {
             Body1(
                 text = text,
             )
