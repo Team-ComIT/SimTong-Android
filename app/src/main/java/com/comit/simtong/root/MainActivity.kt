@@ -3,7 +3,6 @@ package com.comit.simtong.root
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -12,9 +11,6 @@ import com.comit.feature_auth.navigation.authNavigation
 import com.comit.feature_home.navigation.homeNavigation
 import com.comit.feature_mypage.navigation.myPageNavigation
 import com.comit.navigator.SimTongRoute
-import com.comit.navigator.SimTongScreen
-import com.comit.simtong.R
-import dagger.Component
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
