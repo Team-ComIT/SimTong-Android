@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signup
+package com.comit.feature_auth.screen.signUp
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column

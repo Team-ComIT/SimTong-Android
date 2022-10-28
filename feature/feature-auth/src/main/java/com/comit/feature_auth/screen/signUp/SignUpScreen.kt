@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signup
+package com.comit.feature_auth.screen.signUp
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable

@@ -4,7 +4,7 @@ import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import com.comit.feature_auth.mvi.signup.SignUpSideEffect
 import com.comit.feature_auth.mvi.signup.SignUpState
-import com.comit.feature_auth.screen.signup.SignUpStep
+import com.comit.feature_auth.screen.signUp.SignUpStep
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent

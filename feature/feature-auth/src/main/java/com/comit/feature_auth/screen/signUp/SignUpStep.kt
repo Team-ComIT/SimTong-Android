@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signup
+package com.comit.feature_auth.screen.signUp
 
 private const val FirstStep: Int = 1
 private const val SecondStep: Int = 2
