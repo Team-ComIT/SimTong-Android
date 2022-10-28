@@ -5,6 +5,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.comit.feature_mypage.screen.MyPageScreen
+import com.comit.feature_mypage.screen.fix.FixEmailScreen
+import com.comit.feature_mypage.screen.fix.FixNickNameScreen
+import com.comit.feature_mypage.screen.fix.FixPassword
+import com.comit.feature_mypage.screen.fix.FixWorkPlaceScreen
+import com.comit.feature_mypage.screen.fix.fakeItems
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 
@@ -20,6 +25,39 @@ fun NavGraphBuilder.myPageNavigation(
         ) {
             MyPageScreen(
                 navController = navController,
+            )
+        }
+
+        composable(
+            route = SimTongScreen.MyPage.FIX_EMAIL,
+        ) {
+            FixEmailScreen(
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = SimTongScreen.MyPage.FIX_NICKNAME,
+        ) {
+            FixNickNameScreen(
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = SimTongScreen.MyPage.FIX_PASSWORD,
+        ) {
+            FixPassword(
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = SimTongScreen.MyPage.FIX_WORKPLACE,
+        ) {
+            FixWorkPlaceScreen(
+                navController = navController,
+                items = fakeItems,
             )
         }
     }
