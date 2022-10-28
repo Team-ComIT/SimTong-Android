@@ -20,6 +20,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
@@ -30,10 +32,12 @@ import kotlinx.coroutines.delay
 private var email = mutableStateOf("")
 private var certificationNumber = mutableStateOf("")
 
-// TODO: 버튼 클릭 이벤트나 에러 메세지 표시지는 추가가 필요합니다 //
+// TODO: 버튼 클릭 이벤트나 에러 메세지 표시지는 추가가 필요합니다/
 
 @Composable
-fun FixEmailScreen() {
+internal fun FixEmailScreen(
+    navController: NavController,
+) {
     var emailError by remember { mutableStateOf<String?>(null) }
 
     var isLastPage by remember { mutableStateOf(false) }
@@ -174,5 +178,7 @@ private fun ChangeScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewFixEmailScreen() {
-    FixEmailScreen()
+    FixEmailScreen(
+        navController = rememberNavController()
+    )
 }
