@@ -39,6 +39,7 @@
     <string name="error_message_password">비밀번호가 일치하지 않습니다.</string>
     <string name="certification_number_not_correct">인증번호가 일치하지 않습니다.</string>
 
-    <string name="account_exist_message">계정이 있으신가요? 로그인</string>
+    <string name="sign_in_induction_msg">계정이 있으신가요? 로그인</string>
+    <string name="sign_up_induction_msg">계정이 없으신가요? 회원가입</string>
     <string name="password_format_message">영문과 숫자 그리고 특수 기호가 모두 포함되어야 합니다.</string>
 </resources>
