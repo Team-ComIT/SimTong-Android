@@ -219,7 +219,7 @@ private val BigHeaderHorizontalPadding = PaddingValues(horizontal = 26.dp)
 @Composable
 fun BigHeader(
     modifier: Modifier = Modifier,
-    text: String,
+    text: String? = null,
     onPrevious: () -> Unit
 ) {
     Row(
@@ -246,9 +246,11 @@ fun BigHeader(
 
         Spacer(modifier = Modifier.width(15.dp))
 
-        Body1(
-            text = text,
-        )
+        if(text != null) {
+            Body1(
+                text = text,
+            )
+        }
     }
 }
 
