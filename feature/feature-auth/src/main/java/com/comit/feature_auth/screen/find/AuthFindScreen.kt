@@ -18,6 +18,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.TabBar
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
@@ -51,7 +53,9 @@ fun ChangeAuthScreen(
 @ExperimentalPagerApi
 @ExperimentalMaterialApi
 @Composable
-fun AuthFindScreen() {
+fun AuthFindScreen(
+    navController: NavController,
+) {
     val bottomSheetState = rememberModalBottomSheetState(
         ModalBottomSheetValue.Hidden
     )
@@ -118,5 +122,7 @@ fun AuthFindScreenBasic(
 @Preview(showBackground = true)
 @Composable
 fun PreviewAuthFindScreen() {
-    AuthFindScreen()
+    AuthFindScreen(
+        navController = rememberNavController()
+    )
 }

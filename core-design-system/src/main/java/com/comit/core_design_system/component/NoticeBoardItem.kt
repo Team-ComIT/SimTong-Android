@@ -67,7 +67,7 @@ fun NoticeBoard(
     onHeartClicked: (Int) -> Unit = {},
     onCommentClicked: (Int) -> Unit = {}
 ) {
-    LazyColumn() {
+    LazyColumn {
         items(list) {
             NoticeBoardItem(
                 modifier = modifier,

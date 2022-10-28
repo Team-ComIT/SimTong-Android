@@ -23,6 +23,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.common.compose.noRippleClickable
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
@@ -36,7 +38,9 @@ import com.comit.feature_auth.R
 val SignInTopRowHeight = 43.dp
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(
+    navController: NavController,
+) {
     var id by remember { mutableStateOf<String?>(null) }
     var password by remember { mutableStateOf<String?>(null) }
     var idError by remember { mutableStateOf<String?>(null) }
@@ -173,5 +177,7 @@ fun SignInBottomBtn() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewSignInScreen() {
-    SignInScreen()
+    SignInScreen(
+        navController = rememberNavController()
+    )
 }
