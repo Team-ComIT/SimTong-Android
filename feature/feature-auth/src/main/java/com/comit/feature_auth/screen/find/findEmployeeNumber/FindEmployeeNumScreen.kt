@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.find.findemployeenum
+package com.comit.feature_auth.screen.find.findEmployeeNumber
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border

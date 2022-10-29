@@ -1,7 +1,7 @@
 package com.comit.feature_auth.mvi.signup
 
 import android.graphics.Bitmap
-import com.comit.feature_auth.screen.signup.SignUpStep
+import com.comit.feature_auth.screen.signUp.SignUpStep
 
 private val DefaultSignUpNameStep = SignUpStep.InputUserInfo.NAME
 private val DefaultSignUpPasswordStep = SignUpStep.InputPassword.Password

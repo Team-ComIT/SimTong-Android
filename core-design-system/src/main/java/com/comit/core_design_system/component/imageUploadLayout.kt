@@ -1,4 +1,4 @@
-package com.comit.feature_auth.component
+package com.comit.core_design_system.component
 
 import android.app.Activity
 import android.content.Intent
@@ -36,7 +36,7 @@ private const val TakePhotoError: String = "이미지를 가져오던 중 오류
 private val ImageSize: Dp = 100.dp
 
 @Composable
-fun SimImageUpload(
+fun SimImageUploadLayout(
     imageFile: (Bitmap) -> Unit,
     onError: ((String) -> Unit)? = null,
 ) {
@@ -97,7 +97,7 @@ fun SimImageUpload(
     }
 }
 
-private val takePhotoFromAlbumIntent =
+internal val takePhotoFromAlbumIntent =
     Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
         type = "image/*"
         action = Intent.ACTION_GET_CONTENT
@@ -111,7 +111,7 @@ private val takePhotoFromAlbumIntent =
 @Preview
 @Composable
 fun PreviewImageUpload() {
-    SimImageUpload(
+    SimImageUploadLayout(
         imageFile = {},
         onError = {},
     )

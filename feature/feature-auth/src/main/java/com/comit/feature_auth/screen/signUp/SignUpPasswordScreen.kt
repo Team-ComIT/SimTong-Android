@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signup
+package com.comit.feature_auth.screen.signUp
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
@@ -150,7 +150,7 @@ fun SignUpPasswordScreen(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 UnderlineBody9(
-                    text = stringResource(id = R.string.account_exist_message),
+                    text = stringResource(id = R.string.sign_in_induction_msg),
                     underlineText = listOf(
                         stringResource(id = R.string.sign_in)
                     ),

@@ -55,6 +55,9 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":di"))
     implementation(project(":feature:feature-auth"))
+    implementation(project(":feature:feature-mypage"))
+    implementation(project(":feature:feature-home"))
+    implementation(project(":core-design-system"))
 
     implementation(Dependency.Logger.TIMBER)
 

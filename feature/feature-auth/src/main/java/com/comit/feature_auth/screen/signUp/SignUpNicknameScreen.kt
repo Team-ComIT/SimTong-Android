@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signup
+package com.comit.feature_auth.screen.signUp
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
@@ -15,9 +15,9 @@ import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
+import com.comit.core_design_system.component.SimImageUploadLayout
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
-import com.comit.feature_auth.component.SimImageUpload
 import com.comit.feature_auth.mvi.signup.SignUpState
 import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
@@ -53,7 +53,7 @@ fun SignUpNicknameScreen(
             ) {
                 Spacer(modifier = Modifier.height(8.dp))
 
-                SimImageUpload(
+                SimImageUploadLayout(
                     imageFile = { viewModel.changeProfileImg(it) },
                     onError = onError
                 )
