@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimTongBigRoundButton
+import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body10
@@ -152,8 +153,10 @@ private fun InputCertificationNumber(
 
     Spacer(modifier = Modifier.height(18.dp))
 
+
     SimTongBigRoundButton(
         text = stringResource(id = R.string.resend),
+        color = SimTongButtonColor.WHITE,
         onClick = {
             totalTime = InputCertificationNumberTotalTime
         }
