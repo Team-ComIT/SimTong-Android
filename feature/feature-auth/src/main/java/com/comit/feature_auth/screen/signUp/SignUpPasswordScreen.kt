@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -128,7 +129,7 @@ fun SignUpPasswordScreen(
                         isPassword = true,
                         onValueChange = { checkPassword = it },
                         title = stringResource(id = R.string.password_again),
-                        error = if (password == checkPassword)
+                        error = if (password != checkPassword)
                             stringResource(id = R.string.error_message_password)
                         else null,
                     )
