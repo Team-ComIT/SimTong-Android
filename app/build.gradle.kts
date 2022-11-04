@@ -3,6 +3,8 @@ plugins {
     id(BuildPlugins.DAGGER_HILT_PLUGIN)
     id(BuildPlugins.KOTLIN_ANDROID)
     id(BuildPlugins.KOTLIN_KAPT)
+    id(BuildPlugins.FIREBASE_DISTRIBUTION)
+    id(BuildPlugins.GOOGLE_SERVICE)
 }
 android {
     compileSdk = ProjectProperties.COMPILE_SDK_VERSION
