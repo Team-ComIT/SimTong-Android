@@ -68,6 +68,11 @@ dependencies {
     testImplementation(Dependency.UnitTest.JUNIT)
     testImplementation(Dependency.UnitTest.MOCKITO)
 
+    implementation(Dependency.Pager.PAGER)
+    implementation(Dependency.Pager.PAGER_INDICATOR)
+
+    implementation(Dependency.Util.Util)
+
     androidTestImplementation(Dependency.AndroidTest.ANDROID_JUNIT)
     androidTestImplementation(Dependency.AndroidTest.ESPRESSO_CORE)
 

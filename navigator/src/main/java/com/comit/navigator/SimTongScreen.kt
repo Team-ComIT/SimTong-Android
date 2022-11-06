@@ -16,6 +16,7 @@ sealed class SimTongScreen(
     object MyPage : SimTongScreen("MyPage") {
         const val MAIN = "MYPAGE_MAIN"
         const val FIX_EMAIL = "FIX_EMAIL"
+        const val INPUT_CERTIFICATION_NUMBER = "INPUT_CERTIFICATION_NUMBER"
         const val FIX_NICKNAME = "FIX_NICKNAME"
         const val FIX_PASSWORD = "FIX_PASSWORD"
         const val FIX_WORKPLACE = "FIX_WORKPLACE"
