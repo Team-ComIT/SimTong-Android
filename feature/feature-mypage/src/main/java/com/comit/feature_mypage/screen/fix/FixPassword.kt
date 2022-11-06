@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -97,28 +98,30 @@ internal fun FixPassword(
         onNext = { btnNext() },
         btnEnabled = btnEnabled,
     ) {
-        Spacer(modifier = Modifier.height(16.dp))
+        Column() {
+            Spacer(modifier = Modifier.height(16.dp))
 
-        AnimatedVisibility(
-            visible = fixPasswordStep.index >= 2,
-            enter = TextFieldEnterAnimation,
-        ) {
+            AnimatedVisibility(
+                visible = fixPasswordStep.index >= 2,
+                enter = TextFieldEnterAnimation,
+            ) {
+                SimTongTextField(
+                    modifier = Modifier.offset(y = passwordCheckOffset),
+                    value = passwordCheck,
+                    onValueChange = { passwordCheck = it },
+                    title = stringResource(id = R.string.password_input_again),
+                    error = passwordCheckError,
+                )
+            }
+
             SimTongTextField(
-                modifier = Modifier.offset(y = passwordCheckOffset),
-                value = passwordCheck,
-                onValueChange = { passwordCheck = it },
-                title = stringResource(id = R.string.password_input_again),
-                error = passwordCheckError,
+                modifier = Modifier.offset(y = passwordOffset),
+                value = password,
+                onValueChange = { password = it },
+                title = stringResource(id = R.string.password_input),
+                error = passwordError,
             )
         }
-
-        SimTongTextField(
-            modifier = Modifier.offset(y = passwordOffset),
-            value = password,
-            onValueChange = { password = it },
-            title = stringResource(id = R.string.password_input),
-            error = passwordError,
-        )
     }
 }
 
