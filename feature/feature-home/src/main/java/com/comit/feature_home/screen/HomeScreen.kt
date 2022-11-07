@@ -81,9 +81,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .verticalScroll(scrollState)
             .padding(HomeScreenPadding),
-    ) {
+        ) {
         Header(
             headerText = "",
             enabledBeilBtn = true,
@@ -98,78 +97,84 @@ fun HomeScreen(
             },
         )
 
-        Row(
+        Column(
             modifier = Modifier
-                .height(HomeScreenTopRowHeight),
+                .verticalScroll(scrollState),
         ) {
-            Title3(
-                text = stringResource(id = R.string.calendar),
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically),
-            )
 
-            Spacer(modifier = Modifier.width(8.dp))
-
-            IconButton(
-                onClick = {},
+            Row(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically),
+                    .height(HomeScreenTopRowHeight),
             ) {
-                Icon(
-                    painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
-                    contentDescription = SimTongIcon.Gray_Next.contentDescription,
+                Title3(
+                    text = stringResource(id = R.string.calendar),
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .wrapContentHeight(Alignment.CenterVertically),
                 )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                IconButton(
+                    onClick = {},
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .wrapContentHeight(Alignment.CenterVertically),
+                ) {
+                    Icon(
+                        painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
+                        contentDescription = SimTongIcon.Gray_Next.contentDescription,
+                    )
+                }
             }
+
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Box(
+                modifier = Modifier
+                    .height(HomeScreenCalendarHeight),
+            )
+
+            Spacer(modifier = Modifier.height(9.dp))
+
+            Title3(
+                text = stringResource(
+                    id = R.string.employee_menu,
+                )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // TODO: FoodList 디자인 시스템 lineHeight 수정 작업 필요
+            FoodList(
+                timeCheck = currentMealsTime(),
+                list = HomeFakeData.foodList,
+            )
+
+            Spacer(modifier = Modifier.height(27.dp))
+
+            HomeBottomIconLayout(
+                painter = painterResource(
+                    id = R.drawable.ic_home_coin,
+                ),
+                title = stringResource(
+                    id = R.string.my_pay_info,
+                ),
+                content = stringResource(
+                    id = R.string.my_pay_info_content,
+                )
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            HomeBottomIconLayout(
+                painter = painterResource(id = R.drawable.ic_home_schedule),
+                title = stringResource(id = R.string.schedule_write),
+                content = stringResource(id = R.string.schedule_write_content)
+            )
+
+            Spacer(modifier = Modifier.height(46.dp))
         }
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        Box(
-            modifier = Modifier
-                .height(HomeScreenCalendarHeight),
-        )
-
-        Spacer(modifier = Modifier.height(9.dp))
-
-        Title3(
-            text = stringResource(
-                id = R.string.employee_menu,
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // TODO: FoodList 디자인 시스템 lineHeight 수정 작업 필요
-        FoodList(
-            timeCheck = currentMealsTime(),
-            list = HomeFakeData.foodList,
-        )
-
-        Spacer(modifier = Modifier.height(27.dp))
-
-        HomeBottomIconLayout(
-            painter = painterResource(
-                id = R.drawable.ic_home_coin,
-            ),
-            title = stringResource(
-                id = R.string.my_pay_info,
-            ),
-            content = stringResource(
-                id = R.string.my_pay_info_content,
-            )
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        HomeBottomIconLayout(
-            painter = painterResource(id = R.drawable.ic_home_schedule),
-            title = stringResource(id = R.string.schedule_write),
-            content = stringResource(id = R.string.schedule_write_content)
-        )
-
-        Spacer(modifier = Modifier.height(46.dp))
     }
 }
 
