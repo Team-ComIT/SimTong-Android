@@ -1,5 +1,6 @@
 package com.comit.feature_mypage.screen.fix
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,7 +36,7 @@ internal fun FixBaseScreen(
             onPrevious = onPrevious,
         )
 
-        Column(
+        Box(
             modifier = Modifier.padding(
                 horizontal = 40.dp,
             ),
