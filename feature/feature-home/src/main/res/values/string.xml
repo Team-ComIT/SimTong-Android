@@ -11,4 +11,17 @@
     <string name="schedule_write">휴무표 작성</string>
     <string name="schedule_write_content">이번 달 나의 휴무표를 직접 작성해 일정을 손쉽게 관리해 보세요.</string>
 
+    <!--달력-->
+    <string name="calendar_rest_day">휴</string>
+    <string name="calendar_annual_day">연</string>
+    <string name="calendar_year">년</string>
+    <string name="calendar_month">월</string>
+    <string name="calendar_day">일</string>
+    <string name="calendar_sunday">일</string>
+    <string name="calendar_monday">월</string>
+    <string name="calendar_tuesday">화</string>
+    <string name="calendar_wednesday">수</string>
+    <string name="calendar_thursday">목</string>
+    <string name="calendar_friday">금</string>
+    <string name="calendar_saturday">토</string>
 </resources>
