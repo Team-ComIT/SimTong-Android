@@ -210,7 +210,7 @@ fun SignUpNameScreen(
 
                     Divider(
                         thickness = 1.dp,
-                        color = SimTongColor.Gray800,
+                        color = SimTongColor.Gray200,
                     )
 
                     LazyColumn(

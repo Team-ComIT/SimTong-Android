@@ -164,7 +164,7 @@ fun MyPageScreen(
 
             Body5(
                 text = MyPageFakeData.nickname,
-                color = SimTongColor.Gray400,
+                color = SimTongColor.Gray300,
             )
 
             Spacer(modifier = Modifier.height(45.dp))
@@ -241,14 +241,14 @@ private fun MyPageDescription(
         ) {
             Body5(
                 text = title,
-                color = SimTongColor.Black
+                color = SimTongColor.Gray800
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
             Body5(
                 text = content,
-                color = SimTongColor.Gray500
+                color = SimTongColor.Gray300
             )
         }
     }
@@ -279,7 +279,7 @@ private fun MyPageEditModeMenu(
 
             Body13(
                 text = content,
-                color = SimTongColor.Gray400,
+                color = SimTongColor.Gray300,
             )
         }
 

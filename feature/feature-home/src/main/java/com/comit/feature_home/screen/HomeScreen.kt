@@ -220,11 +220,11 @@ private fun HomeBottomIconLayout(
             ) {
                 Body5(
                     text = title,
-                    color = SimTongColor.Gray900,
+                    color = SimTongColor.Gray800,
                 )
                 Body14(
                     text = content,
-                    color = SimTongColor.Gray400,
+                    color = SimTongColor.Gray300,
                 )
             }
         }

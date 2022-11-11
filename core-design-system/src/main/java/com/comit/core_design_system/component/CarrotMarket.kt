@@ -95,7 +95,7 @@ fun CarrotMarketItemCard(
             Box(
                 modifier = Modifier
                     .background(
-                        color = SimTongColor.Gray300,
+                        color = SimTongColor.Gray200,
                         shape = RoundedCornerShape(CarrotMarketItemCardRoundedCornerShape)
                     )
             ) {

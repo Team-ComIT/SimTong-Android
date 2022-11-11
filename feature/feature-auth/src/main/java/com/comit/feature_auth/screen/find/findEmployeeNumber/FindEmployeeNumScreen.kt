@@ -71,12 +71,12 @@ fun FindEmployeeNumScreen(
 
     val centerButtonTextColor =
         if (placeName == stringResource(id = R.string.choose_work_place))
-            SimTongColor.Gray400 else SimTongColor.Gray900
+            SimTongColor.Gray300 else SimTongColor.Gray800
     val centerButtonColor =
         if (placeName == stringResource(id = R.string.choose_work_place))
-            SimTongColor.Gray200 else SimTongColor.Gray100
+            SimTongColor.Gray100 else SimTongColor.Gray50
     val centerButtonBorderColor =
-        if (workPlaceError == null) SimTongColor.Gray200 else SimTongColor.Error
+        if (workPlaceError == null) SimTongColor.Gray100 else SimTongColor.Error
 
     val localFocusManager = LocalFocusManager.current
 
@@ -96,8 +96,8 @@ fun FindEmployeeNumScreen(
                 workPlaceError = null
                 emailError = null
             },
-            hintBackgroundColor = SimTongColor.Gray200,
-            backgroundColor = SimTongColor.Gray100,
+            hintBackgroundColor = SimTongColor.Gray100,
+            backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.name),
             error = nameError
         )
@@ -125,8 +125,8 @@ fun FindEmployeeNumScreen(
                 }
             },
             backgroundColor = centerButtonColor,
-            pressedBackgroundColor = SimTongColor.Gray200,
-            disabledBackgroundColor = SimTongColor.Gray200,
+            pressedBackgroundColor = SimTongColor.Gray100,
+            disabledBackgroundColor = SimTongColor.Gray100,
         ) {
             Body6(
                 text = placeName,
@@ -148,8 +148,8 @@ fun FindEmployeeNumScreen(
                 workPlaceError = null
                 emailError = null
             },
-            hintBackgroundColor = SimTongColor.Gray200,
-            backgroundColor = SimTongColor.Gray100,
+            hintBackgroundColor = SimTongColor.Gray100,
+            backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.eng_email),
             error = emailError
         )
@@ -236,14 +236,14 @@ fun FindPlaceLazyColumn(
 
                         Body4(
                             text = item.name,
-                            color = SimTongColor.Gray900
+                            color = SimTongColor.Gray800
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
 
                         Body8(
                             text = item.position,
-                            color = SimTongColor.Gray900
+                            color = SimTongColor.Gray800
                         )
                         Canvas(
                             modifier = Modifier
@@ -257,7 +257,7 @@ fun FindPlaceLazyColumn(
                             drawLine(
                                 start = Offset(x = 0f, y = canvasHeight),
                                 end = Offset(x = canvasWidth, y = canvasHeight),
-                                color = SimTongColor.Gray900,
+                                color = SimTongColor.Gray800,
                                 strokeWidth = 0.1F
                             )
                         }
@@ -293,7 +293,7 @@ fun ShowEmployeeNum() {
 
         Body2(
             text = "회원님의 사원번호는",
-            color = SimTongColor.Gray900,
+            color = SimTongColor.Gray800,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.CenterHorizontally),
@@ -301,7 +301,7 @@ fun ShowEmployeeNum() {
 
         Body1(
             text = "12345678",
-            color = SimTongColor.Gray900,
+            color = SimTongColor.Gray800,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.CenterHorizontally),
@@ -309,7 +309,7 @@ fun ShowEmployeeNum() {
 
         Body2(
             text = "입니다.",
-            color = SimTongColor.Gray900,
+            color = SimTongColor.Gray800,
             modifier = Modifier
                 .fillMaxWidth()
                 .wrapContentWidth(Alignment.CenterHorizontally),

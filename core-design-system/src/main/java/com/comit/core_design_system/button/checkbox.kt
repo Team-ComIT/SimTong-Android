@@ -167,9 +167,9 @@ fun SimCheckBox(
         checked = checked,
         onCheckedChange = onCheckedChange,
         selectedColor = SimTongColor.MainColor,
-        unSelectedColor = SimTongColor.Gray500,
-        disabledSelectedColor = SimTongColor.Gray300,
-        disabledUnSelectedColor = SimTongColor.Gray200,
+        unSelectedColor = SimTongColor.Gray400,
+        disabledSelectedColor = SimTongColor.Gray200,
+        disabledUnSelectedColor = SimTongColor.Gray100,
         enabled = enabled,
         icon = SimTongIcon.White_CheckBox,
     )
@@ -216,7 +216,7 @@ fun SimTextCheckBox(
         ) {
             Body4(
                 text = text,
-                color = SimTongColor.Gray800,
+                color = SimTongColor.Gray700,
             )
         }
     }

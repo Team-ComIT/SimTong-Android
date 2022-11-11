@@ -120,14 +120,14 @@ internal fun FixWorkPlaceScreen(
 
                         Body4(
                             text = item.name,
-                            color = SimTongColor.Gray900,
+                            color = SimTongColor.Gray800,
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
 
                         Body8(
                             text = item.position,
-                            color = SimTongColor.Gray900,
+                            color = SimTongColor.Gray800,
                         )
                         Canvas(
                             modifier = Modifier
@@ -147,7 +147,7 @@ internal fun FixWorkPlaceScreen(
                                     x = canvasWidth,
                                     y = canvasHeight,
                                 ),
-                                color = SimTongColor.Gray900,
+                                color = SimTongColor.Gray800,
                                 strokeWidth = 0.1F,
                             )
                         }
