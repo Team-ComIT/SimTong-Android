@@ -41,9 +41,7 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.example.feature_home.R
-import java.text.DecimalFormat
 import java.time.LocalDate
-import java.time.Month
 import java.util.Calendar
 import java.util.GregorianCalendar
 
@@ -57,6 +55,15 @@ data class SimTongCalendarData(
 )
 
 @Stable
+private val Week: Int = 7
+
+@Stable
+private val Saturday: Int = 6
+
+@Stable
+private val Sunday: Int = 7
+
+@Stable
 private val SimTongCalendarTotalHeight: Dp = 420.dp
 
 @Stable
@@ -68,19 +75,17 @@ private val SimTongCalendarTotalHorizontalPadding = PaddingValues(
 )
 
 @Composable
-fun SimTongCalendar(
-
-) {
+fun SimTongCalendar() {
     var checkMonth by remember { mutableStateOf(0) }
 
     val today = GregorianCalendar()
-    var calendar = GregorianCalendar(today.get(Calendar.YEAR),today.get(Calendar.MONTH),1)
+    var calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
-    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH)+1) }
+    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
     var day by remember { mutableStateOf(calendar.get(Calendar.DATE)) }
 
-    var calendarList by remember { mutableStateOf(organizeList(1)) }
+    var calendarList by remember { mutableStateOf(organizeList(0)) }
 
     Column(
         modifier = Modifier
@@ -101,18 +106,20 @@ fun SimTongCalendar(
             day = day.toString(),
             onBeforeClicked = {
                 checkMonth --
-                calendar = GregorianCalendar(today.get(Calendar.YEAR),today.get(Calendar.MONTH)+checkMonth,1)
+                calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
                 year = calendar.get(Calendar.YEAR)
                 month = calendar.get(Calendar.MONTH) + 1
+                calendarList = organizeList(checkMonth)
             },
             onNextClicked = {
                 checkMonth ++
-                calendar = GregorianCalendar(today.get(Calendar.YEAR),today.get(Calendar.MONTH)+checkMonth,1)
+                calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
                 year = calendar.get(Calendar.YEAR)
                 month = calendar.get(Calendar.MONTH) + 1
+                calendarList = organizeList(checkMonth)
             }
         )
-        
+
         Spacer(modifier = Modifier.height(37.dp))
 
         Column(
@@ -123,8 +130,9 @@ fun SimTongCalendar(
             WeekTopRow()
 
             SimTongCalendarList(
-                list = calendarList
-            ) { day = returnDay(day.toString()) }
+                list = calendarList,
+                onItemClicked = { day = it }
+            )
         }
     }
 }
@@ -133,7 +141,7 @@ fun SimTongCalendar(
 private val SimTongCalendarDateHeight: Dp = 30.dp
 
 @Stable
-private val SimTongCalendarDateButtonSize:Dp = 20.dp
+private val SimTongCalendarDateButtonSize: Dp = 20.dp
 
 @Composable
 fun SimTongCalendarDate(
@@ -193,7 +201,7 @@ fun SimTongCalendarDate(
 }
 
 @Composable
-fun WeekTopRow(){
+fun WeekTopRow() {
 
     val sunday: String = stringResource(id = R.string.calendar_sunday)
     val monday: String = stringResource(id = R.string.calendar_monday)
@@ -205,18 +213,19 @@ fun WeekTopRow(){
 
     LazyRow(
         modifier = Modifier.fillMaxWidth()
-    ){
-        val list = listOf(sunday,monday,tuesday,wednesday,thursday,friday,saturday)
+    ) {
+        val list = listOf(sunday, monday, tuesday, wednesday, thursday, friday, saturday)
 
-        items(list){
+        items(list) {
             val textColor =
-                if(it == stringResource(id = R.string.calendar_sunday)
-                    || it == stringResource(id = R.string.calendar_saturday)) SimTongColor.Gray300
+                if (it == stringResource(id = R.string.calendar_sunday) ||
+                    it == stringResource(id = R.string.calendar_saturday)
+                ) SimTongColor.Gray300
                 else SimTongColor.Gray800
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier
-                    .fillParentMaxWidth(1.toFloat()/7.toFloat())
+                    .fillParentMaxWidth(1.toFloat() / 7.toFloat())
             ) {
                 Body6(
                     text = it,
@@ -230,63 +239,36 @@ fun WeekTopRow(){
 @Composable
 fun SimTongCalendarList(
     list: List<SimTongCalendarData>,
-    onItemClicked: (String) -> Unit
-){
-
-
-//    Column(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//    ) {
-//        repeat(list.size/7){
-//
-//        }
-//    }
-//    LazyRow(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//    ) {
-//        items(list){
-//            Log.d("TAG", "SimTongCalendarList: $date")
-//
-//            SimTongCalendarItem(
-//                day = list[date].day,
-//                workCount = list[date].workCount,
-//                weekend = list[date].weekend,
-//                thisMouth = list[date].thisMouth,
-//                restDay = list[date].restDay,
-//                annualDay = list[date].annualDay,
-//                onItemClicked = onItemClicked,
-//                modifier = Modifier
-//                    .fillParentMaxSize(1.toFloat()/7.toFloat())
-//            )
-//
-//            date++
-//        }
-//    }
-    LazyRow(
-        modifier = Modifier
-            .fillMaxWidth()
+    onItemClicked: (Int) -> Unit
+) {
+    Column(
+        modifier = Modifier.fillMaxSize()
     ) {
-        items(list){
-            SimTongCalendarItem(
-                day = it.day,
-                workCount = it.workCount,
-                weekend = it.weekend,
-                thisMouth = it.thisMouth,
-                restDay = it.restDay,
-                annualDay = it.annualDay,
-                onItemClicked = onItemClicked,
-                modifier = Modifier
-                    .fillParentMaxSize(1.toFloat()/7.toFloat())
-            )
+        repeat(list.size / Week) { size ->
+            val rowList = list.subList(size * Week, size * Week + Week)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            LazyRow(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                items(rowList) {
+                    SimTongCalendarItem(
+                        day = it.day,
+                        workCount = it.workCount,
+                        weekend = it.weekend,
+                        thisMouth = it.thisMouth,
+                        restDay = it.restDay,
+                        annualDay = it.annualDay,
+                        onItemClicked = onItemClicked,
+                        modifier = Modifier
+                            .fillParentMaxWidth(1.toFloat() / 7.toFloat())
+                    )
+                }
+            }
         }
     }
-
 }
-
-@Stable
-private val SimTongCalendarItemSize: Dp = 40.dp
 
 @Stable
 private val SimTongCalendarItemBoxSize: Dp = 23.64.dp
@@ -303,22 +285,26 @@ fun SimTongCalendarItem(
     thisMouth: Boolean,
     restDay: Boolean,
     annualDay: Boolean,
-    onItemClicked: (String) -> Unit
-){
+    onItemClicked: (Int) -> Unit
+) {
     val textColor =
-        if(weekend) SimTongColor.Gray300
+        if (weekend) SimTongColor.Gray300
         else if (thisMouth) SimTongColor.Gray800
         else SimTongColor.Gray100
 
     val backgroundColor =
-        if(restDay) SimTongColor.MainColor400
-        else if(annualDay) SimTongColor.FocusBlue
+        if (restDay) SimTongColor.MainColor400
+        else if (annualDay) SimTongColor.FocusBlue
         else SimTongColor.Gray200
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.noRippleClickable { onItemClicked(day) }
-    ){
+        modifier = modifier.noRippleClickable {
+            if(thisMouth){
+                onItemClicked(day.toInt())
+            }
+        }
+    ) {
         Body12(
             text = day,
             color = textColor
@@ -333,17 +319,17 @@ fun SimTongCalendarItem(
                     shape = SimTongCalendarItemBoxRound
                 )
         ) {
-            if(restDay) {
+            if (restDay) {
                 Body13(
                     text = stringResource(id = R.string.calendar_rest_day),
                     color = SimTongColor.White
                 )
-            }else if(annualDay) {
+            } else if (annualDay) {
                 Body13(
                     text = stringResource(id = R.string.calendar_annual_day),
                     color = SimTongColor.White
                 )
-            }else if(thisMouth){
+            } else if (thisMouth && !weekend) {
                 Body11(
                     text = workCount.toString(),
                     color = SimTongColor.Gray400
@@ -353,26 +339,24 @@ fun SimTongCalendarItem(
     }
 }
 
-private fun returnDay(day: String): Int = day.toInt()
-
 private fun organizeList(
     checkMonth: Int
 ): ArrayList<SimTongCalendarData> {
     val calendarList = ArrayList<SimTongCalendarData>()
     val today = GregorianCalendar()
-    val calendar = GregorianCalendar(today.get(Calendar.YEAR),today.get(Calendar.MONTH)+checkMonth,1)
-    val min = calendar.get(Calendar.DAY_OF_WEEK)-1
+    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
+    val min = calendar.get(Calendar.DAY_OF_WEEK) - 1
     val max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
     val year = calendar.get(Calendar.YEAR)
-    val mouth = calendar.get(Calendar.MONTH)+1
+    val mouth = calendar.get(Calendar.MONTH) + 1
 
-    val lastCalendar = GregorianCalendar(today.get(Calendar.YEAR),today.get(Calendar.MONTH)+checkMonth-1,1)
+    val lastCalendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth - 1, 1)
     val lastMax = lastCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
 
-    for(i in min-1 downTo  0){
+    for (i in min - 1 downTo 0) {
         calendarList.add(
             SimTongCalendarData(
-                day = (lastMax-i).toString(),
+                day = (lastMax - i).toString(),
                 workCount = 0,
                 weekend = false,
                 thisMouth = false,
@@ -380,14 +364,12 @@ private fun organizeList(
                 annualDay = false
             )
         )
-
-        Log.d("TAG", "before: "+(lastMax-i))
     }
 
-    for (i in 1..max){
+    for (i in 1..max) {
 
-        val dayOfWeek = LocalDate.of(year,mouth,i).dayOfWeek.value
-        val weekend = dayOfWeek == 6 || dayOfWeek == 7
+        val dayOfWeek = LocalDate.of(year, mouth, i).dayOfWeek.value
+        val weekend = dayOfWeek == Saturday || dayOfWeek == Sunday
 
         calendarList.add(
             SimTongCalendarData(
@@ -399,13 +381,10 @@ private fun organizeList(
                 annualDay = false
             )
         )
-
-        Log.d("TAG", "this: $i")
     }
 
-    for(i in 1..7){
-        if(calendarList.size%7 == 0){
-            Log.d("TAG", "break: ")
+    for (i in 1..Week) {
+        if (calendarList.size % Week == 0) {
             break
         } else {
             calendarList.add(
@@ -418,18 +397,15 @@ private fun organizeList(
                     annualDay = false
                 )
             )
-            Log.d("TAG", "next: $i")
         }
     }
 
     return calendarList
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
-fun ShowCalendar(){
+fun ShowCalendar() {
     Column(modifier = Modifier.fillMaxSize()) {
         SimTongCalendar()
     }

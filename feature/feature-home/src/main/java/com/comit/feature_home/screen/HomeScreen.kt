@@ -82,7 +82,7 @@ fun HomeScreen(
     Column(
         modifier = Modifier
             .padding(HomeScreenPadding),
-        ) {
+    ) {
         Header(
             headerText = "",
             enabledBeilBtn = true,
