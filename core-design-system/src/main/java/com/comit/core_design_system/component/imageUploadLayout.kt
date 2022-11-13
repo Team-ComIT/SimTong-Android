@@ -66,7 +66,7 @@ fun SimImageUploadLayout(
             modifier = Modifier
                 .size(ImageSize)
                 .background(
-                    color = SimTongColor.Gray200,
+                    color = SimTongColor.Gray100,
                     shape = CircleShape,
                 )
                 .clip(CircleShape)

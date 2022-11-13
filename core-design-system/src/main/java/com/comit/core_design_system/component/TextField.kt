@@ -108,7 +108,7 @@ fun SimTongTextField(
     description: String? = null
 ) {
     val borderColor: Color =
-        if (error == null) SimTongColor.Gray200 else SimTongColor.Error
+        if (error == null) SimTongColor.Gray100 else SimTongColor.Error
 
     var passwordVisible by remember {
         mutableStateOf(false)
@@ -361,14 +361,14 @@ fun PreviewSimTongTextField() {
         SimTongTextField(
             value = value6 ?: "",
             onValueChange = { value6 = it },
-            backgroundColor = SimTongColor.Gray200
+            backgroundColor = SimTongColor.Gray100
         )
 
         // custom background & side btn
         SimTongTextField(
             value = value7 ?: "",
             onValueChange = { value7 = it },
-            backgroundColor = SimTongColor.Gray200,
+            backgroundColor = SimTongColor.Gray100,
             sideBtnText = "인증",
             simTongButtonColor = SimTongButtonColor.GRAY,
             enabledSideBtn = true,

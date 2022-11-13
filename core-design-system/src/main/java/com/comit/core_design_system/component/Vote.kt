@@ -133,7 +133,7 @@ fun VotePage(
 
                 Body10(
                     text = data.place + " ・ " + data.time,
-                    color = SimTongColor.Gray400,
+                    color = SimTongColor.Gray300,
                     modifier = Modifier
                         .padding(top = 4.dp, bottom = 20.dp)
                 )
@@ -251,10 +251,10 @@ fun VoteItem(
 ) {
 
     val chooseState = rememberSaveable { mutableStateOf(data.check) }
-    val shapeColor: Color = if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray200
+    val shapeColor: Color = if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray100
     val textColor: Color = if (chooseState.value) SimTongColor.White else SimTongColor.Black
     val textNumColor: Color =
-        if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray600
+        if (chooseState.value) SimTongColor.MainColor else SimTongColor.Gray500
 
     var total = data.total
     val voteNum = rememberSaveable { mutableStateOf(data.voteNum) }
@@ -269,7 +269,7 @@ fun VoteItem(
             .fillMaxWidth()
             .height(VoteItemHeight)
             .background(
-                color = SimTongColor.Gray100,
+                color = SimTongColor.Gray50,
                 shape = RoundedCornerShape(VoteItemRound),
             )
             .clickable {
