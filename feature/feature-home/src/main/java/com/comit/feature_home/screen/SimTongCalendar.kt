@@ -40,6 +40,7 @@ import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.Body9
 import com.example.feature_home.R
 import java.time.LocalDate
 import java.util.Calendar
@@ -54,14 +55,11 @@ data class SimTongCalendarData(
     val annualDay: Boolean
 )
 
-@Stable
-private val Week: Int = 7
+private const val Week: Int = 7
 
-@Stable
-private val Saturday: Int = 6
+private const val Saturday: Int = 6
 
-@Stable
-private val Sunday: Int = 7
+private const val Sunday: Int = 7
 
 @Stable
 private val SimTongCalendarTotalHeight: Dp = 420.dp
@@ -81,8 +79,10 @@ fun SimTongCalendar() {
     val today = GregorianCalendar()
     var calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
 
-    var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
-    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+    var _year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
+    var year by remember { mutableStateOf(_year) }
+    var _month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+    var month by remember { mutableStateOf(_month) }
     var day by remember { mutableStateOf(calendar.get(Calendar.DATE)) }
 
     var calendarList by remember { mutableStateOf(organizeList(0)) }
@@ -101,21 +101,23 @@ fun SimTongCalendar() {
         Spacer(modifier = Modifier.height(15.dp))
 
         SimTongCalendarDate(
+            _year = _year.toString(),
             year = year.toString(),
+            _month = _month.toString(),
             month = month.toString(),
             day = day.toString(),
             onBeforeClicked = {
                 checkMonth --
-                calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
-                year = calendar.get(Calendar.YEAR)
-                month = calendar.get(Calendar.MONTH) + 1
+                calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, today.get(Calendar.DATE))
+                _year = calendar.get(Calendar.YEAR)
+                _month = calendar.get(Calendar.MONTH) + 1
                 calendarList = organizeList(checkMonth)
             },
             onNextClicked = {
                 checkMonth ++
-                calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
-                year = calendar.get(Calendar.YEAR)
-                month = calendar.get(Calendar.MONTH) + 1
+                calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, today.get(Calendar.DATE))
+                _year = calendar.get(Calendar.YEAR)
+                _month = calendar.get(Calendar.MONTH) + 1
                 calendarList = organizeList(checkMonth)
             }
         )
@@ -131,41 +133,54 @@ fun SimTongCalendar() {
 
             SimTongCalendarList(
                 list = calendarList,
-                onItemClicked = { day = it }
+                onItemClicked = {
+                    year = _year
+                    month = _month
+                    day = it
+                }
             )
         }
     }
 }
 
 @Stable
-private val SimTongCalendarDateHeight: Dp = 30.dp
-
-@Stable
 private val SimTongCalendarDateButtonSize: Dp = 20.dp
 
 @Composable
 fun SimTongCalendarDate(
+    _year: String,
     year: String,
+    _month: String,
     month: String,
     day: String,
     onBeforeClicked: () -> Unit,
     onNextClicked: () -> Unit
 ) {
+    val _year = _year + stringResource(id = R.string.calendar_year)
     val year = year + stringResource(id = R.string.calendar_year)
+    val _month = _month + stringResource(id = R.string.calendar_month)
     val month = month + stringResource(id = R.string.calendar_month)
     val day = day + stringResource(id = R.string.calendar_day)
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
-            .padding(start = 16.dp, end = 20.dp)
+            .padding(start = 16.dp, top = 18.dp, end = 20.dp)
             .fillMaxWidth()
-            .height(SimTongCalendarDateHeight)
     ) {
-        Body3(
-            text = "$year $month $day",
-            color = SimTongColor.Gray800
-        )
+        Column() {
+            Body3(
+                text = "$year $month $day",
+                color = SimTongColor.Gray800
+            )
+            
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Body9(
+                text = "$_year $_month",
+                color = SimTongColor.Gray300
+            )
+        }
 
         Row(
             modifier = Modifier
