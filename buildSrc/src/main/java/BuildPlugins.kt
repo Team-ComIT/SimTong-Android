@@ -7,4 +7,7 @@ object BuildPlugins {
     const val KOTLIN_KAPT = "kotlin-kapt"
     const val KT_LINT = "org.jlleitschuh.gradle.ktlint"
 
+    const val FIREBASE_DISTRIBUTION = "com.google.firebase.appdistribution"
+    const val GOOGLE_SERVICE = "com.google.gms.google-services"
+
 }

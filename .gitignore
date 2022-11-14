@@ -35,3 +35,8 @@ output.json
 #NDK
 obj/
 .externalNativeBuild
+app/google-services.json
+
+fastlane/.env
+
+fastlane/api-key.json
