@@ -3,6 +3,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
     id("com.android.library") version "7.2.1" apply false
     id("org.jetbrains.kotlin.android") version "1.6.10" apply false
+    id("org.jetbrains.kotlin.jvm") version "1.7.10" apply false
 }
 
 dependencies {

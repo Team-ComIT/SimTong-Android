@@ -50,16 +50,16 @@ android {
 }
 
 dependencies {
-    implementation(project(":navigator"))
-    implementation(project(":local"))
-    implementation(project(":remote"))
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":di"))
-    implementation(project(":feature:feature-auth"))
-    implementation(project(":feature:feature-mypage"))
-    implementation(project(":feature:feature-home"))
-    implementation(project(":core-design-system"))
+    implementation(projects.navigator)
+    implementation(projects.local)
+    implementation(projects.remote)
+    implementation(projects.data)
+    implementation(projects.domain)
+    implementation(projects.di)
+    implementation(projects.feature.featureAuth)
+    implementation(projects.feature.featureMypage)
+    implementation(projects.feature.featureHome)
+    implementation(projects.coreDesignSystem)
 
     implementation(Dependency.Logger.TIMBER)
 

@@ -37,10 +37,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":remote"))
-    implementation(project(":local"))
+    implementation(projects.data)
+    implementation(projects.domain)
+    implementation(projects.remote)
+    implementation(projects.local)
 
     implementation(Dependency.Hilt.HILT_ANDROID)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
@@ -56,4 +56,10 @@ dependencies {
 
     implementation(Dependency.Moshi.MOSHI)
     kapt(Dependency.Moshi.MOSHI_COMPILER)
+
+    implementation(Dependency.KTor.KTOR_CLIENT)
+    implementation(Dependency.KTor.KTOR_ENGINE_CIO)
+    implementation(Dependency.KTor.KTOR_JACKSON)
+    implementation(Dependency.KTor.KTOR_LOGGING)
+    implementation(Dependency.KTor.KTOR_CONTENT_NEGOTIATION)
 }
