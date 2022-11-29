@@ -1,0 +1,150 @@
+[versions]
+
+# plugin
+plugin-build-gradle-android = "7.2.1"
+plugin-build-gradle-kotlin = "1.6.21"
+
+# google
+google-service = "4.3.10"
+firebase-distribution = "3.0.1"
+pager = "0.13.0"
+
+# kotlin
+kotlin-coroutines = "1.6.0"
+
+# tools
+kt-lint = "10.2.0"
+
+# ktx
+ktx-core = "1.5.0"
+ktx-activity = "1.2.3"
+ktx-fragment = "1.3.4"
+ktx-lifecycle = "2.3.1"
+
+
+# androidx
+app-compat = "1.3.0"
+room = "2.5.0-alpha02"
+datastore = "1.0.0"
+
+# ui
+lifecycle = "2.4.0"
+material = "1.3.0"
+splash-screen = "1.0.0-beta01"
+navigation = "2.4.1"
+
+# di
+hilt = "2.38.1"
+di-inject = "1"
+
+# logger
+timber = "4.7.1"
+
+# moshi
+moshi = "1.13.0"
+
+# network
+retrofit = "2.7.1"
+okhttp = "3.12.1"
+ktor-core = "2.1.2"
+
+# test
+junit = "4.13.2"
+mockito = "4.2.0"
+
+# mvi
+orbit = "4.3.2"
+
+# compose
+compose-core = "1.2.0-rc01"
+compose-activity = "1.4.0"
+compose-ani-nav = "0.24.5-alpha"
+compose-coil = "2.2.2"
+compose-hilt-nav = "1.0.0"
+
+[plugins]
+
+build-gradle-tools = { id = "com.android.tools.build:gradle", version.ref = "plugin-build-gradle-android" }
+
+kotlin-gradle = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "plugin-build-gradle-kotlin" }
+kotlin-stdlib = { id = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "plugin-build-gradle-kotlin" }
+
+google-service = { id = "com.google.gms:google-services", version.ref = "google-service"}
+google-firebase-distribution = { id = ""}
+
+di-hilt = { id = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+[libraries]
+
+# ktx
+ktx-core = { id = "androidx.core:core-ktx", version.ref = "ktx-core" }
+ktx-activity = { id = "androidx.activity:activity-ktx", version.ref = "ktx-activity" }
+ktx-fragment = { id = "androidx.fragment:fragment-ktx", version.ref = "ktx-fragment" }
+
+# kotlin
+coroutines-core = { id = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
+coroutines-android = { id = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
+
+
+# room
+room-runtmie = { id = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { id = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { id = "ndroidx.room:room-compiler", version.ref = "room" }
+
+# datasotre
+datastore-pref = { id = "androidx.datastore:datastore-preference", version.ref = "datastore" }
+datastore-pref-core = { id = "androidx.datastore:datastore-preferences-core", version.ref = "datastore" }
+
+# compose
+compose-ui = { id = "androidx.compose.ui:ui", version.ref = "compose-core" }
+compose-material = { id = "androidx.compose.material:material", version.ref = "compose-core" }
+compose-preview = { id = "androidx.compose.ui:ui-tooling-preview", version.ref = "compose-core" }
+compose-test = { id = "androidx.compose.ui:ui-test-junit4", version.ref = "compose-core"}
+compose-ui-tool = { id = "androidx.compose.ui:ui-tooling", version.ref = "compose-core" }
+compose-util = { id = "androidx.compose.ui:ui-util", version.ref = "compose-core"}
+
+comose-activity = { id = "androidx.activity:activity-compose", version.ref = "compose-activity"}
+compose-nav = { id = "androidx.navigation:navigation-compose", version.ref = "compose-navigation" }
+compose-ani-nav = { id = "com.google.accompanist:accompanist-navigation-animation", version.ref = "compose-ani-nav" }
+compose-hilt-nav = { id = "androidx.hilt:hilt-navigation-compose", version.ref = "compose-hilt-nav" }
+compose-coil = { id = "io.coil-kt:coil-compose", version.ref = "compose-coil" }
+
+# di
+hilt-android = { id = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { id = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+di-inject = { id = "javax.inject:javax.inject", version.ref = "di-inject" }
+
+# moshi
+moshi = { id = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+moshi-compiler = { id = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+
+# retrofit
+retrofit = { id = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit-converter-gson = { id = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
+
+# okhttp
+okhttp = { id = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
+okhttp_logging-interceptor = { id = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
+
+# test
+test-junit = { id = "junit:junit", version.ref = "junit" }
+test-mockito = { id = "org.mockito:mockito-core", versionr.ref = "mockito" }
+
+# ui
+ui-nav = { id = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
+pager = { id = "com.google.accompanist:accompanist-pager", version.ref = "pager" }
+pager-indicator = { id = "com.google.accompanist:accompanist-pager-indicators", version.ref = "pager" }
+
+# logger
+timber = { id = "com.jakewharton.timber:timber", version.ref = "timber" }
+
+# mvi
+orbit-core = { id = "org.orbit-mvi:orbit-core", version.ref = "orbit" }
+orbit-viewmodel = { id = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
+orbit-test = { id = "org.orbit-mvi:orbit-test", version.ref = "orbit" }
+
+[bundles]
+
+ktx = ["ktx-core", "ktx-activity", "ktx-fragment"]
+compose-ui = ["compose-ui", "compose-material", "compose-preview", "compose-test", "compose-ui-tool", "compose-util", "compose-coil"]
+compose-nav = ["comose-activity", "compose-nav", "compose-ani-nav", "compose-hilt-nav"]
