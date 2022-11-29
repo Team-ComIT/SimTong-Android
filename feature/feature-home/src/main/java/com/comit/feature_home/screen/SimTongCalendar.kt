@@ -1,6 +1,5 @@
 package com.comit.feature_home.screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,8 +16,10 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -41,6 +42,8 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.example.feature_home.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -71,8 +74,13 @@ private val SimTongCalendarTotalHorizontalPadding = PaddingValues(
     horizontal = 20.dp
 )
 
+@ExperimentalMaterialApi
 @Composable
-fun SimTongCalendar() {
+fun SimTongCalendar(
+    coroutineScope: CoroutineScope,
+    bottomSheetValue: ModalBottomSheetState,
+    onDateClicked: (String, String, String) -> Unit,
+) {
     var checkMonth by remember { mutableStateOf(0) }
 
     val today = GregorianCalendar()
@@ -80,7 +88,7 @@ fun SimTongCalendar() {
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-    var day by remember { mutableStateOf(calendar.get(Calendar.DATE)) }
+    // var day by remember { mutableStateOf(calendar.get(Calendar.DATE)) }
 
     var calendarList by remember { mutableStateOf(organizeList(0)) }
 
@@ -104,14 +112,14 @@ fun SimTongCalendar() {
                 checkMonth --
                 calendar.add(Calendar.MONTH, checkMonth)
                 calendarList = organizeList(checkMonth)
-                month = calendar.get(Calendar.MONTH)+1
+                month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
             },
             onNextClicked = {
                 checkMonth ++
                 calendar.add(Calendar.MONTH, checkMonth)
                 calendarList = organizeList(checkMonth)
-                month = calendar.get(Calendar.MONTH)+1
+                month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
             }
         )
@@ -128,7 +136,10 @@ fun SimTongCalendar() {
             SimTongCalendarList(
                 list = calendarList,
                 onItemClicked = {
-                    day = it
+                    onDateClicked(year.toString(), month.toString(), it.toString())
+                    coroutineScope.launch {
+                        bottomSheetValue.show()
+                    }
                 }
             )
         }
@@ -292,7 +303,7 @@ fun SimTongCalendarItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.noRippleClickable {
-            if(thisMouth){
+            if (thisMouth) {
                 onItemClicked(day.toInt())
             }
         }
@@ -399,6 +410,6 @@ private fun organizeList(
 @Composable
 fun ShowCalendar() {
     Column(modifier = Modifier.fillMaxSize()) {
-        SimTongCalendar()
+        // SimTongCalendar()
     }
 }

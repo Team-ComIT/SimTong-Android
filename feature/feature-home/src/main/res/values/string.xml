@@ -24,4 +24,10 @@
     <string name="calendar_thursday">목</string>
     <string name="calendar_friday">금</string>
     <string name="calendar_saturday">토</string>
+
+    <string name="save">저장</string>
+    <string name="work_close">휴무</string>
+    <string name="work_annual">연차</string>
+    <string name="work_work">근무</string>
+    <string name="schedule_day_write">휴무일 작성</string>
 </resources>
