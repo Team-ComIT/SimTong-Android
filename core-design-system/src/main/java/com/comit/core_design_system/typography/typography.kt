@@ -491,6 +491,44 @@ fun Body12(
 }
 
 @Composable
+fun UnderlineBody12(
+    modifier: Modifier = Modifier,
+    text: String,
+    underlineText: List<String>,
+    underlineTextColor: Color = SimTongColor.Gray900,
+    color: Color = SimTongColor.Gray900,
+    rippleEnabled: Boolean = false,
+    onClick: (() -> Unit)? = null,
+) {
+    Text(
+        modifier = modifier.simClickable(
+            rippleEnabled = rippleEnabled,
+            onClick = onClick
+        ),
+        text = buildAnnotatedString {
+            append(text)
+            underlineText.forEach { highlightText ->
+                val highlightStartIndex = text.indexOf(
+                    string = highlightText
+                )
+                if (highlightStartIndex != -1) {
+                    addStyle(
+                        style = SpanStyle(
+                            color = underlineTextColor,
+                            textDecoration = TextDecoration.Underline,
+                        ),
+                        start = highlightStartIndex,
+                        end = highlightStartIndex + highlightText.length,
+                    )
+                }
+            }
+        },
+        style = SimTongTypography.body12,
+        color = color,
+    )
+}
+
+@Composable
 fun Body13(
     modifier: Modifier = Modifier,
     text: String,

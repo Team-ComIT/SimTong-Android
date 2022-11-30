@@ -41,6 +41,7 @@ import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.UnderlineBody12
 import com.example.feature_home.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -54,7 +55,8 @@ data class SimTongCalendarData(
     val weekend: Boolean,
     val thisMouth: Boolean,
     val restDay: Boolean,
-    val annualDay: Boolean
+    val annualDay: Boolean,
+    val today: Boolean
 )
 
 private const val Week: Int = 7
@@ -84,11 +86,10 @@ fun SimTongCalendar(
     var checkMonth by remember { mutableStateOf(0) }
 
     val today = GregorianCalendar()
-    var calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-    // var day by remember { mutableStateOf(calendar.get(Calendar.DATE)) }
 
     var calendarList by remember { mutableStateOf(organizeList(0)) }
 
@@ -156,8 +157,8 @@ fun SimTongCalendarDate(
     onBeforeClicked: () -> Unit,
     onNextClicked: () -> Unit
 ) {
-    val year = year + stringResource(id = R.string.calendar_year)
-    val month = month + stringResource(id = R.string.calendar_month)
+    val yearT = year + stringResource(id = R.string.calendar_year)
+    val monthT = month + stringResource(id = R.string.calendar_month)
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -166,7 +167,7 @@ fun SimTongCalendarDate(
             .fillMaxWidth()
     ) {
         Body3(
-            text = "$year $month",
+            text = "$yearT $monthT",
             color = SimTongColor.Gray800
         )
 
@@ -263,6 +264,7 @@ fun SimTongCalendarList(
                         thisMouth = it.thisMouth,
                         restDay = it.restDay,
                         annualDay = it.annualDay,
+                        today = it.today,
                         onItemClicked = onItemClicked,
                         modifier = Modifier
                             .fillParentMaxWidth(1.toFloat() / 7.toFloat())
@@ -288,6 +290,7 @@ fun SimTongCalendarItem(
     thisMouth: Boolean,
     restDay: Boolean,
     annualDay: Boolean,
+    today: Boolean,
     onItemClicked: (Int, String) -> Unit
 ) {
     val textColor =
@@ -313,10 +316,18 @@ fun SimTongCalendarItem(
             }
         }
     ) {
-        Body12(
-            text = day,
-            color = textColor
-        )
+        if (today) {
+            UnderlineBody12(
+                text = day,
+                underlineText = listOf(day),
+                underlineTextColor = textColor
+            )
+        } else {
+            Body12(
+                text = day,
+                color = textColor
+            )
+        }
 
         Box(
             contentAlignment = Alignment.Center,
@@ -369,7 +380,8 @@ private fun organizeList(
                 weekend = false,
                 thisMouth = false,
                 restDay = false,
-                annualDay = false
+                annualDay = false,
+                today = false
             )
         )
     }
@@ -378,6 +390,7 @@ private fun organizeList(
 
         val dayOfWeek = LocalDate.of(year, mouth, i).dayOfWeek.value
         val weekend = dayOfWeek == Saturday || dayOfWeek == Sunday
+        val todayCheck = today.get(Calendar.DATE) == i
 
         calendarList.add(
             SimTongCalendarData(
@@ -386,7 +399,8 @@ private fun organizeList(
                 weekend = weekend,
                 thisMouth = true,
                 restDay = false,
-                annualDay = false
+                annualDay = false,
+                today = todayCheck
             )
         )
     }
@@ -402,7 +416,8 @@ private fun organizeList(
                     weekend = false,
                     thisMouth = false,
                     restDay = false,
-                    annualDay = false
+                    annualDay = false,
+                    today = false
                 )
             )
         }
