@@ -79,7 +79,7 @@ private val SimTongCalendarTotalHorizontalPadding = PaddingValues(
 fun SimTongCalendar(
     coroutineScope: CoroutineScope,
     bottomSheetValue: ModalBottomSheetState,
-    onDateClicked: (String, String, String) -> Unit,
+    onDateClicked: (String, String, String, String) -> Unit,
 ) {
     var checkMonth by remember { mutableStateOf(0) }
 
@@ -135,8 +135,8 @@ fun SimTongCalendar(
 
             SimTongCalendarList(
                 list = calendarList,
-                onItemClicked = {
-                    onDateClicked(year.toString(), month.toString(), it.toString())
+                onItemClicked = { day, workState ->
+                    onDateClicked(year.toString(), month.toString(), day.toString(), workState)
                     coroutineScope.launch {
                         bottomSheetValue.show()
                     }
@@ -242,7 +242,7 @@ fun WeekTopRow() {
 @Composable
 fun SimTongCalendarList(
     list: List<SimTongCalendarData>,
-    onItemClicked: (Int) -> Unit
+    onItemClicked: (Int, String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -288,7 +288,7 @@ fun SimTongCalendarItem(
     thisMouth: Boolean,
     restDay: Boolean,
     annualDay: Boolean,
-    onItemClicked: (Int) -> Unit
+    onItemClicked: (Int, String) -> Unit
 ) {
     val textColor =
         if (weekend) SimTongColor.Gray300
@@ -300,11 +300,16 @@ fun SimTongCalendarItem(
         else if (annualDay) SimTongColor.FocusBlue
         else SimTongColor.Gray200
 
+    val workState =
+        if (restDay) stringResource(id = R.string.work_close)
+        else if (annualDay) stringResource(id = R.string.work_annual)
+        else stringResource(id = R.string.work_work)
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.noRippleClickable {
-            if (thisMouth) {
-                onItemClicked(day.toInt())
+            if (thisMouth && !weekend) {
+                onItemClicked(day.toInt(), workState)
             }
         }
     ) {

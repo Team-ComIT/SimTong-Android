@@ -44,24 +44,22 @@ import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
-fun WriteClosedDayScreen(
-    workState: String
-) {
+fun WriteClosedDayScreen() {
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
     val coroutineScope = rememberCoroutineScope()
 
-    var year = "0000"
-    var month = "00"
-    var day = "0"
+    var year by remember { mutableStateOf("0000") }
+    var month by remember { mutableStateOf("00") }
+    var day by remember { mutableStateOf("0") }
+    var workState = ""
+    var workStateText by remember { mutableStateOf("") }
 
     SimBottomSheetDialog(
         useHandle = true,
         sheetState = bottomSheetState,
         sheetContent = {
-
-            var workStateText by remember { mutableStateOf(workState) }
             val saveEnabled = workState != workStateText
             val saveColor =
                 if (saveEnabled) SimTongColor.MainColor400 else SimTongColor.MainColor100
@@ -170,10 +168,12 @@ fun WriteClosedDayScreen(
             SimTongCalendar(
                 coroutineScope = coroutineScope,
                 bottomSheetValue = bottomSheetState,
-                onDateClicked = { _year, _month, _day ->
+                onDateClicked = { _year, _month, _day, _workState ->
                     year = _year
                     month = _month
                     day = _day
+                    workState = _workState
+                    workStateText = _workState
                 }
             )
         }
@@ -211,7 +211,5 @@ fun WriteCloseDayItem(
 @Composable
 @Preview(showBackground = true)
 fun ShowWriteClosedDayScreen() {
-    WriteClosedDayScreen(
-        workState = "근무"
-    )
+    WriteClosedDayScreen()
 }
