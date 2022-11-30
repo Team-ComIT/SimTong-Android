@@ -495,8 +495,8 @@ fun UnderlineBody12(
     modifier: Modifier = Modifier,
     text: String,
     underlineText: List<String>,
-    underlineTextColor: Color = SimTongColor.Gray900,
-    color: Color = SimTongColor.Gray900,
+    underlineTextColor: Color = SimTongColor.Gray800,
+    color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
 ) {
