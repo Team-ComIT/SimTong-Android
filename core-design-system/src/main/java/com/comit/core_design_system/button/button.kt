@@ -51,7 +51,7 @@ enum class SimTongButtonColor(
     WHITE(
         backgroundColor = SimTongColor.Gray50,
         pressedBackgroundColor = SimTongColor.Gray300,
-        disabledBackgroundColor = SimTongColor.Gray200,
+        disabledBackgroundColor = SimTongColor.Gray100,
         textColor = SimTongColor.Gray300,
         disabledTextColor = SimTongColor.Gray300,
     ),

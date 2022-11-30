@@ -101,9 +101,9 @@ fun SimRadioButton(
         onCheckedChange = onCheckedChange,
         enabled = enabled,
         selectedColor = SimTongColor.MainColor,
-        unSelectedColor = SimTongColor.Gray500,
-        disabledSelectedColor = SimTongColor.Gray300,
-        disabledUnSelectedColor = SimTongColor.Gray200,
+        unSelectedColor = SimTongColor.Gray400,
+        disabledSelectedColor = SimTongColor.Gray200,
+        disabledUnSelectedColor = SimTongColor.Gray100,
     )
 }
 
@@ -148,7 +148,7 @@ fun SimTextRadioButton(
         ) {
             Body5(
                 text = text,
-                color = SimTongColor.Gray800,
+                color = SimTongColor.Gray700,
             )
         }
     }

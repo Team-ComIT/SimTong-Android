@@ -58,8 +58,8 @@ fun CheckCertificationNumberScreen() {
                 certificationNumber = it
                 certificationNumberError = null
             },
-            hintBackgroundColor = SimTongColor.Gray200,
-            backgroundColor = SimTongColor.Gray100,
+            hintBackgroundColor = SimTongColor.Gray100,
+            backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.certification_number),
             error = certificationNumberError
         )

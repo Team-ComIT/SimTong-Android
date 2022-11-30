@@ -80,8 +80,8 @@ fun SignInScreen(
                 idError = null
                 passwordError = null
             },
-            hintBackgroundColor = SimTongColor.Gray200,
-            backgroundColor = SimTongColor.Gray100,
+            hintBackgroundColor = SimTongColor.Gray100,
+            backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.employee_number),
             error = idError,
         )
@@ -95,8 +95,8 @@ fun SignInScreen(
                 idError = null
                 passwordError = null
             },
-            hintBackgroundColor = SimTongColor.Gray200,
-            backgroundColor = SimTongColor.Gray100,
+            hintBackgroundColor = SimTongColor.Gray100,
+            backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.password),
             isPassword = true,
             error = passwordError,

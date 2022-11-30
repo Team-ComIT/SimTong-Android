@@ -12,7 +12,9 @@ import com.comit.feature_mypage.screen.fix.FixWorkPlaceScreen
 import com.comit.feature_mypage.screen.fix.fakeItems
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 fun NavGraphBuilder.myPageNavigation(
     navController: NavController,
 ) {

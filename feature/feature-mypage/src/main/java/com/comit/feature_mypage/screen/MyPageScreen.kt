@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -61,6 +60,7 @@ object MyPageFakeData {
  * 또한 UI쪽에서는 click effect가 자연스럽지 않습니다.
  * 이는 추후에 개선되어야 합니다.
  */
+
 @Composable
 fun MyPageScreen(
     navController: NavController,
@@ -70,10 +70,7 @@ fun MyPageScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(
-                horizontal = 20.dp,
-            ),
+            .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Header(
@@ -90,7 +87,8 @@ fun MyPageScreen(
             ),
             onTextBtnClicked = {
                 editMode = !editMode
-            }
+            },
+            modifier = Modifier.padding(horizontal = 20.dp)
         )
 
         Spacer(modifier = Modifier.height(22.dp))
@@ -166,7 +164,7 @@ fun MyPageScreen(
 
             Body5(
                 text = MyPageFakeData.nickname,
-                color = SimTongColor.Gray400,
+                color = SimTongColor.Gray300,
             )
 
             Spacer(modifier = Modifier.height(45.dp))
@@ -226,7 +224,6 @@ private fun MyPageProfileImage(
 
 @Composable
 private fun MyPageDescription(
-    isFinal: Boolean = false,
     title: String,
     content: String,
     onClick: (() -> Unit)? = null,
@@ -238,25 +235,19 @@ private fun MyPageDescription(
                 .fillMaxWidth()
                 .simClickable(
                     onClick = onClick ?: {}
-                ),
+                )
+                .padding(horizontal = 20.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Body5(
                 text = title,
-                color = SimTongColor.Black
+                color = SimTongColor.Gray800
             )
 
             Spacer(modifier = Modifier.weight(1f))
 
             Body5(
                 text = content,
-                color = SimTongColor.Gray500
-            )
-        }
-
-        if (!isFinal) {
-            Divider(
-                thickness = 1.dp,
                 color = SimTongColor.Gray300
             )
         }
@@ -288,7 +279,7 @@ private fun MyPageEditModeMenu(
 
             Body13(
                 text = content,
-                color = SimTongColor.Gray400,
+                color = SimTongColor.Gray300,
             )
         }
 

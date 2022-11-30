@@ -50,7 +50,7 @@ fun PlaceComponent(
     icon: SimTongIcon = SimTongIcon.Check,
     haveCheckImage: Boolean = true,
     lineHeight: Float = 2.5F,
-    lineColor: Color = SimTongColor.Gray300
+    lineColor: Color = SimTongColor.Gray200
 ) {
 
     val isNeedExpansion = rememberSaveable { mutableStateOf(0) }

@@ -1,6 +1,7 @@
 package com.comit.feature_mypage.screen.fix
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -23,17 +24,24 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimTongBigRoundButton
+import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.Body10
+import com.comit.core_design_system.util.AnimatedScreenSlide
 import com.comit.feature_mypage.R
+import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.delay
+
+@Stable
+private val InputCertificationNumberTotalTime: Int = 180
 
 private var email = mutableStateOf("")
 private var certificationNumber = mutableStateOf("")
 
-// TODO: 버튼 클릭 이벤트나 에러 메세지 표시지는 추가가 필요합니다/
+// TODO: 에러 메세지 표시지는 추가가 필요합니다/
 
+@ExperimentalPagerApi
 @Composable
 internal fun FixEmailScreen(
     navController: NavController,
@@ -61,8 +69,13 @@ internal fun FixEmailScreen(
     FixBaseScreen(
         header = headerText,
         onPrevious = {
-            isLastPage = false
-            navController.popBackStack()
+            if (!isLastPage) {
+                email.value = ""
+                navController.popBackStack()
+            } else {
+                certificationNumber.value = ""
+            }
+            isLastPage = !isLastPage
         },
         btnText = btnText,
         onNext = {
@@ -71,28 +84,31 @@ internal fun FixEmailScreen(
         },
         btnEnabled = btnEnabled
     ) {
-        ChangeScreen(
-            isLastPage = isLastPage,
-            textTitle = textTitle
-        )
+
+        if (!isLastPage) {
+            InputEmailScreen(textTitle = textTitle)
+        }
+
+        AnimatedScreenSlide(visible = isLastPage) {
+            InputCertificationNumber(textTitle = textTitle)
+        }
     }
 }
 
 @Composable
 private fun InputEmailScreen(
-    textTitle: String
+    textTitle: String,
 ) {
-    Spacer(modifier = Modifier.height(16.dp))
+    Column() {
+        Spacer(modifier = Modifier.height(16.dp))
 
-    SimTongTextField(
-        value = email.value,
-        onValueChange = { email.value = it },
-        title = textTitle
-    )
+        SimTongTextField(
+            value = email.value,
+            onValueChange = { email.value = it },
+            title = textTitle
+        )
+    }
 }
-
-@Stable
-private val InputCertificationNumberTotalTime: Int = 180
 
 @Stable
 private val InputCertificationNumberHeight: Dp = 70.dp
@@ -107,9 +123,12 @@ private val OneSecondDelay: Long = 1000
 private val CheckDigit: Int = 10
 
 @Composable
-private fun InputCertificationNumber(
-    textTitle: String
+internal fun InputCertificationNumber(
+    textTitle: String,
 ) {
+
+    val leftTime = stringResource(id = R.string.left_time)
+
     var totalTime by remember {
         mutableStateOf(InputCertificationNumberTotalTime)
     }
@@ -126,56 +145,40 @@ private fun InputCertificationNumber(
         }
     }
 
-    Spacer(modifier = Modifier.height(16.dp))
+    Column() {
+        Spacer(modifier = Modifier.height(16.dp))
 
-    Box(modifier = Modifier.height(InputCertificationNumberHeight)) {
-        SimTongTextField(
-            value = certificationNumber.value,
-            onValueChange = { certificationNumber.value = it },
-            title = textTitle,
-            keyboardType = KeyboardType.Number
-        )
+        Box(modifier = Modifier.height(InputCertificationNumberHeight)) {
+            SimTongTextField(
+                value = certificationNumber.value,
+                onValueChange = { certificationNumber.value = it },
+                title = textTitle,
+                keyboardType = KeyboardType.Number
+            )
 
-        Body10(
-            text = stringResource(id = R.string.left_time) +
-                " " +
-                minute +
-                " : " +
-                second,
-            color = SimTongColor.MainColor,
-            modifier = Modifier
-                .fillMaxSize()
-                .wrapContentWidth(Alignment.End)
-                .wrapContentHeight(Alignment.Top)
-        )
-    }
-
-    Spacer(modifier = Modifier.height(18.dp))
-
-    SimTongBigRoundButton(
-        text = stringResource(id = R.string.resend),
-        onClick = {
-            totalTime = InputCertificationNumberTotalTime
+            Body10(
+                text = "$leftTime $minute : $second",
+                color = SimTongColor.MainColor,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentWidth(Alignment.End)
+                    .wrapContentHeight(Alignment.Top)
+            )
         }
-    )
-}
 
-@Composable
-private fun ChangeScreen(
-    isLastPage: Boolean,
-    textTitle: String
-) {
-    // TODO: 화면 전환 애니메이션 추가해야됨 //
-    // https://fornewid.medium.com/material-motion-for-jetpack-compose-d97ef2114b9c
-    if (isLastPage) {
-        InputCertificationNumber(
-            textTitle = textTitle
+        Spacer(modifier = Modifier.height(18.dp))
+
+        SimTongBigRoundButton(
+            text = stringResource(id = R.string.resend),
+            color = SimTongButtonColor.WHITE,
+            onClick = {
+                totalTime = InputCertificationNumberTotalTime
+            }
         )
-    } else {
-        InputEmailScreen(textTitle = textTitle)
     }
 }
 
+@ExperimentalPagerApi
 @Preview(showBackground = true)
 @Composable
 fun PreviewFixEmailScreen() {

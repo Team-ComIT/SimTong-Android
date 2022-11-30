@@ -138,7 +138,7 @@ fun NoticeBoardItem(
 
             Body8(
                 text = "댓글 " + 4.toString() + "개 모두 보기",
-                color = SimTongColor.Gray500,
+                color = SimTongColor.Gray400,
                 modifier = Modifier
                     .padding(start = 20.dp, top = 4.dp)
                     .noRippleClickable { }

@@ -1,4 +1,7 @@
 object Versions {
+    const val GOOGLE_SERVICE = "4.3.10"
+    const val FIREBASE_DISTRIBUTION = "3.0.1"
+
     const val KT_LINT = "10.2.0"
 
     const val CONSTRAINT_LAYOUT = "1.1.3"
