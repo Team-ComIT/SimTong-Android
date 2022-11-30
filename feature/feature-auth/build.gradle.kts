@@ -48,6 +48,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.coreDesignSystem)
     implementation(projects.common)
+    implementation(projects.model)
 
     implementation(Dependency.Ui.CORE_KTX)
     implementation(Dependency.Ui.APP_COMPAT)

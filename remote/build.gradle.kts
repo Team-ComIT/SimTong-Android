@@ -36,8 +36,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.model)
+    implementation(projects.param)
     implementation(projects.data)
-    implementation(projects.domain)
 
     implementation(Dependency.Kotlin.COROUTINES_CORE)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)
@@ -50,10 +51,4 @@ dependencies {
 
     testImplementation(Dependency.UnitTest.JUNIT)
     testImplementation(Dependency.UnitTest.MOCKITO)
-
-    implementation(Dependency.KTor.KTOR_CLIENT)
-    implementation(Dependency.KTor.KTOR_ENGINE_CIO)
-    implementation(Dependency.KTor.KTOR_JACKSON)
-    implementation(Dependency.KTor.KTOR_LOGGING)
-    implementation(Dependency.KTor.KTOR_CONTENT_NEGOTIATION)
 }
