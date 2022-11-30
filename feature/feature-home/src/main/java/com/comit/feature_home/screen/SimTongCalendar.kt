@@ -390,7 +390,7 @@ private fun organizeList(
 
         val dayOfWeek = LocalDate.of(year, mouth, i).dayOfWeek.value
         val weekend = dayOfWeek == Saturday || dayOfWeek == Sunday
-        val todayCheck = today.get(Calendar.DATE) == i
+        val todayCheck = today.get(Calendar.DATE) == i && checkMonth == 0
 
         calendarList.add(
             SimTongCalendarData(
