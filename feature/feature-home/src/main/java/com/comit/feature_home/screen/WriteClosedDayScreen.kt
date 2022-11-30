@@ -191,6 +191,7 @@ fun WriteCloseDayItem(
         modifier = Modifier
             .noRippleClickable { onItemClicked(text) }
     ) {
+        // TODO: 글자 가운데 정렬
         Body1(
             text = text[0].toString(),
             color = SimTongColor.White,
