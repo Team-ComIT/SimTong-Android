@@ -2,8 +2,8 @@ package com.comit.feature_auth.vm
 
 import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
-import com.comit.feature_auth.mvi.signup.SignUpSideEffect
-import com.comit.feature_auth.mvi.signup.SignUpState
+import com.comit.feature_auth.mvi.SignUpSideEffect
+import com.comit.feature_auth.mvi.SignUpState
 import com.comit.feature_auth.screen.signUp.SignUpStep
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.orbitmvi.orbit.ContainerHost

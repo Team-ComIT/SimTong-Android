@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
+    implementation(projects.data)
 
     implementation(Dependency.Room.ROOM_RUNTIME)
     implementation(Dependency.Room.ROOM_KTX)

@@ -37,10 +37,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":data"))
-    implementation(project(":domain"))
-    implementation(project(":remote"))
-    implementation(project(":local"))
+    implementation(projects.data)
+    implementation(projects.domain)
+    implementation(projects.remote)
+    implementation(projects.local)
 
     implementation(Dependency.Hilt.HILT_ANDROID)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
