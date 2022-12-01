@@ -2,9 +2,16 @@ package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.model.Token
+import com.comit.model.User
 import com.comit.remote.api.AuthAPI
 import com.comit.remote.mapper.toModel
+import com.comit.remote.request.users.ChangeEmailRequest
+import com.comit.remote.request.users.ChangeNicknameRequest
+import com.comit.remote.request.users.ChangeProfileImageRequest
+import com.comit.remote.request.users.ChangeSpotRequest
 import com.comit.remote.request.users.SignInRequest
+import com.comit.remote.request.users.SignUpRequest
+import java.util.*
 import javax.inject.Inject
 
 class RemoteAuthDataSourceImpl @Inject constructor(
@@ -21,5 +28,87 @@ class RemoteAuthDataSourceImpl @Inject constructor(
                 password = password,
             )
         ).toModel()
+    }
+
+    override suspend fun verificationEmployee(
+        name: String,
+        employeeNumber: String,
+    ) {
+        return authAPI.verificationEmployee(
+            name = name,
+            employeeNumber = employeeNumber,
+        )
+    }
+
+    override suspend fun signUp(
+        name: String,
+        employeeNumber: Int,
+        email: String,
+        password: String,
+        nickname: String?,
+        profileImagePath: String?
+    ): Token {
+        return authAPI.signUp(
+            request = SignUpRequest(
+                name = name,
+                employeeNumber = employeeNumber,
+                email = email,
+                password = password,
+                nickname = nickname,
+                profileImagePath = profileImagePath,
+            )
+        ).toModel()
+    }
+
+    override suspend fun checkNicknameDuplication(
+        nickname: String,
+    ) {
+        return authAPI.checkNicknameDuplication(
+            nickname = nickname,
+        )
+    }
+
+    override suspend fun changeSpot(
+        spotId: UUID,
+    ) {
+        return authAPI.changeSpot(
+            request = ChangeSpotRequest(
+                spotId = spotId,
+            )
+        )
+    }
+
+    override suspend fun changeProfileImage(
+        profileImagePath: String,
+    ) {
+        return authAPI.changeProfileImage(
+            request = ChangeProfileImageRequest(
+                profileImagePath = profileImagePath,
+            )
+        )
+    }
+
+    override suspend fun changeEmail(
+        email: String,
+    ) {
+        return authAPI.changeEmail(
+            request = ChangeEmailRequest(
+                email = email,
+            )
+        )
+    }
+
+    override suspend fun changeNickname(
+        nickname: String,
+    ) {
+        return authAPI.changeNickname(
+            request = ChangeNicknameRequest(
+                nickname = nickname,
+            )
+        )
+    }
+
+    override suspend fun fetchUserInformation(): User {
+        return authAPI.fetchUserInformation().toModel()
     }
 }
