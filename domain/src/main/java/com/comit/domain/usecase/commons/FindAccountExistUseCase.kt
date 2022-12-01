@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 class FindAccountExistUseCase @Inject constructor(
     private val repository: CommonsRepository,
-){
+) {
 
     suspend operator fun invoke(
         params: Params

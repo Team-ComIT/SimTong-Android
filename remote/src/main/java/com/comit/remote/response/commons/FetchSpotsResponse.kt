@@ -1,6 +1,5 @@
 package com.comit.remote.response.commons
 
-import com.comit.model.SpotList
 import com.google.gson.annotations.SerializedName
 
 data class FetchSpotsResponse(

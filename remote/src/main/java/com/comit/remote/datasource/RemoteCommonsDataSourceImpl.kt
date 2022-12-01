@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class RemoteCommonsDataSourceImpl @Inject constructor(
     private val commonsAPI: CommonsAPI,
-): RemoteCommonsDataSource {
+) : RemoteCommonsDataSource {
 
     override suspend fun findEmployeeNumber(
         name: String,

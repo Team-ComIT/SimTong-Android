@@ -1,7 +1,6 @@
 package com.comit.domain.repository
 
 import com.comit.model.SpotList
-import com.comit.model.Token
 
 interface CommonsRepository {
 

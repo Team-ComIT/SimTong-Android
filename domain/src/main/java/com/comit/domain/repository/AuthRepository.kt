@@ -1,6 +1,5 @@
 package com.comit.domain.repository
 
-import com.comit.model.Token
 import com.comit.model.User
 import java.util.UUID
 
@@ -9,7 +8,7 @@ interface AuthRepository {
     suspend fun signIn(
         employeeNumber: Int,
         password: String,
-    ): Token
+    )
 
     suspend fun verificationEmployee(
         name: String,
@@ -23,7 +22,7 @@ interface AuthRepository {
         password: String,
         nickname: String?,
         profileImagePath: String?,
-    ): Token
+    )
 
     suspend fun checkNicknameDuplication(
         nickname: String,

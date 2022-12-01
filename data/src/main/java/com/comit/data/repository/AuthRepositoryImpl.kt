@@ -2,7 +2,6 @@ package com.comit.data.repository
 
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.domain.repository.AuthRepository
-import com.comit.model.Token
 import com.comit.model.User
 import java.util.UUID
 import javax.inject.Inject

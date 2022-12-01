@@ -8,7 +8,6 @@ import com.comit.remote.response.commons.ReissueTokenResponse
 import com.comit.remote.response.users.FetchUserInformationResponse
 import com.comit.remote.response.users.SignInResponse
 import com.comit.remote.response.users.SignUpResponse
-import kotlin.math.log
 
 internal fun SignInResponse.toModel() =
     Token(

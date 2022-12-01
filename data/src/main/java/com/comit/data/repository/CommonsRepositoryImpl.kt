@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class CommonsRepositoryImpl @Inject constructor(
     private val remoteCommonsDataSource: RemoteCommonsDataSource,
-): CommonsRepository {
+) : CommonsRepository {
 
     override suspend fun findEmployeeNumber(
         name: String,
@@ -21,8 +21,8 @@ class CommonsRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun tokenReissue()  {
-        //TODO("local에 token 저장")
+    override suspend fun tokenReissue() {
+        // TODO("local에 token 저장")
         remoteCommonsDataSource.tokenReissue()
     }
 

@@ -25,7 +25,7 @@ interface CommonsAPI {
     suspend fun findAccountExist(
         @Query("employeeNumber") employeeNumber: Int,
         @Query("email") email: String
-     )
+    )
 
     @GET("$COMMONS/email/duplication")
     suspend fun findEmailDuplication(

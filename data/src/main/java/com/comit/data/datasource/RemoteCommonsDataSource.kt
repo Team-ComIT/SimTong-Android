@@ -3,7 +3,6 @@ package com.comit.data.datasource
 import com.comit.model.SpotList
 import com.comit.model.Token
 
-
 interface RemoteCommonsDataSource {
 
     suspend fun findEmployeeNumber(
