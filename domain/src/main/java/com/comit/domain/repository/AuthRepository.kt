@@ -2,7 +2,7 @@ package com.comit.domain.repository
 
 import com.comit.model.Token
 import com.comit.model.User
-import java.util.*
+import java.util.UUID
 
 interface AuthRepository {
 

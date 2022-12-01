@@ -11,7 +11,7 @@ import com.comit.remote.request.users.ChangeProfileImageRequest
 import com.comit.remote.request.users.ChangeSpotRequest
 import com.comit.remote.request.users.SignInRequest
 import com.comit.remote.request.users.SignUpRequest
-import java.util.*
+import java.util.UUID
 import javax.inject.Inject
 
 class RemoteAuthDataSourceImpl @Inject constructor(
