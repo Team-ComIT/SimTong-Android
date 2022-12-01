@@ -1,6 +1,7 @@
 package com.comit.feature_home.screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -191,16 +192,20 @@ fun WriteCloseDayItem(
         modifier = Modifier
             .noRippleClickable { onItemClicked(text) }
     ) {
-        // TODO: 글자 가운데 정렬
-        Body1(
-            text = text[0].toString(),
-            color = SimTongColor.White,
+        Box(
+            contentAlignment = Alignment.Center,
             modifier = Modifier
                 .size(60.dp)
                 .background(
-                    color = color, shape = RoundedCornerShape(20.dp)
+                    color = color,
+                    shape = RoundedCornerShape(20.dp)
                 )
-        )
+        ) {
+            Body1(
+                text = text[0].toString(),
+                color = SimTongColor.White,
+            )
+        }
 
         Spacer(modifier = Modifier.height(8.dp))
 
