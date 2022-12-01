@@ -2,7 +2,7 @@ package com.comit.remote.response.users
 
 import com.google.gson.annotations.SerializedName
 
-data class UsersInformationResponse(
+data class FetchUserInformationResponse(
 
     @field:SerializedName("name")
     val name: String,
