@@ -12,20 +12,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.common.compose.noRippleClickable
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
@@ -34,33 +32,42 @@ import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
+import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.navigator.SimTongScreen
+import kotlinx.coroutines.InternalCoroutinesApi
 
 private val SignInTopRowHeight = 43.dp
 
-@Stable
 private val SignInScreenPadding = PaddingValues(
-    start = 40.dp, top = 107.5.dp, end = 40.dp, bottom = 30.dp,
+    start = 40.dp,
+    top = 107.5.dp,
+    end = 40.dp,
+    bottom = 30.dp,
 )
 
-@Stable
 private val TextBtnPadding = PaddingValues(
     all = 3.dp,
 )
 
+@OptIn(InternalCoroutinesApi::class)
 @Composable
 fun SignInScreen(
     navController: NavController,
+    vm: SignInViewModel = hiltViewModel(),
 ) {
-    var id by remember { mutableStateOf<String?>(null) }
-    var password by remember { mutableStateOf<String?>(null) }
-    var idError by remember { mutableStateOf<String?>(null) }
-    var passwordError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(id.isNullOrEmpty() || password.isNullOrEmpty())
+    val signInContainer = vm.container
+    val signInState = signInContainer.stateFlow.collectAsState().value
+    val signInSideEffect = signInContainer.sideEffectFlow
 
-    val errorMsg = stringResource(
-        id = R.string.error_message,
-    )
+    signInSideEffect.observeWithLifecycle {
+        when (it) {
+            SignInSideEffect.NavigateToHomeScreen -> {
+                navController.navigate(
+                    route = SimTongScreen.Home.MAIN
+                )
+            }
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -74,32 +81,28 @@ fun SignInScreen(
         Spacer(modifier = Modifier.height(40.dp))
 
         SimTongTextField(
-            value = id ?: "",
+            value = signInState.employeeNumber,
             onValueChange = {
-                id = it
-                idError = null
-                passwordError = null
+                vm.inputEmployeeNumber(it)
             },
             hintBackgroundColor = SimTongColor.Gray100,
             backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.employee_number),
-            error = idError,
+            error = signInState.errMsgEmployeeNumber,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         SimTongTextField(
-            value = password ?: "",
+            value = signInState.password,
             onValueChange = {
-                password = it
-                idError = null
-                passwordError = null
+                vm.inputPassword(it)
             },
             hintBackgroundColor = SimTongColor.Gray100,
             backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.password),
             isPassword = true,
-            error = passwordError,
+            error = signInState.errMsgPassword,
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -109,15 +112,13 @@ fun SignInScreen(
                 .fillMaxWidth(),
             text = stringResource(id = R.string.log_in),
             onClick = {
-                idError = ""
-                passwordError = errorMsg
-
-                // TODO ("test 딴에서는 바로 홈으로 이동")
-                navController.navigate(
-                    route = SimTongScreen.Home.MAIN,
+                vm.signIn(
+                    employeeNumber = 1299999990,
+                    password = "1234567890",
                 )
             },
-            enabled = buttonEnabled,
+            enabled = signInState.employeeNumber.isNotEmpty() &&
+                    signInState.password.isNotEmpty(),
         )
 
         Spacer(modifier = Modifier.height(16.dp))

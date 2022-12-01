@@ -1,4 +1,4 @@
-package com.comit.feature_auth.mvi.signup
+package com.comit.feature_auth.mvi
 
 import android.graphics.Bitmap
 import com.comit.feature_auth.screen.signUp.SignUpStep
@@ -16,6 +16,10 @@ data class SignUpState(
     val employeeNumber: String = "",
     val email: String = "",
     val nickname: String = "",
-    val profileImg: Bitmap ? = null,
+    val profileImg: Bitmap? = null,
     val verifyCode: String = "",
 )
+
+
+sealed class SignUpSideEffect
+
