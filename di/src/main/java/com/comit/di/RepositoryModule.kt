@@ -1,3 +1,5 @@
+@file:Suppress("UnnecessaryAbstractClass")
+
 package com.comit.di
 
 import com.comit.data.repository.AuthRepositoryImpl

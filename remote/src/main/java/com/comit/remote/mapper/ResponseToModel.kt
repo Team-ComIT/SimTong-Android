@@ -6,6 +6,6 @@ import com.comit.remote.response.users.SignInResponse
 internal fun SignInResponse.toModel() =
     Token(
         accessToken = accessToken,
-        access_token_exp = accessTokenExp,
-        refresh_token = refreshToken,
+        accessTokenExp = accessTokenExp,
+        refreshToken = refreshToken,
     )

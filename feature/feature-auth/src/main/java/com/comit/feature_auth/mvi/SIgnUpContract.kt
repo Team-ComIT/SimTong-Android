@@ -20,6 +20,4 @@ data class SignUpState(
     val verifyCode: String = "",
 )
 
-
 sealed class SignUpSideEffect
-

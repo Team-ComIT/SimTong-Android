@@ -118,7 +118,7 @@ fun SignInScreen(
                 )
             },
             enabled = signInState.employeeNumber.isNotEmpty() &&
-                    signInState.password.isNotEmpty(),
+                signInState.password.isNotEmpty(),
         )
 
         Spacer(modifier = Modifier.height(16.dp))
