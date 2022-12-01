@@ -37,8 +37,9 @@ android {
 }
 
 dependencies {
+    implementation(projects.model)
+    implementation(projects.domain)
 
-    implementation(project(":domain"))
     implementation(Dependency.Moshi.MOSHI)
     kapt(Dependency.Moshi.MOSHI_COMPILER)
 

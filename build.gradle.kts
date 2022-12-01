@@ -2,7 +2,7 @@ plugins {
     id(BuildPlugins.KT_LINT) version Versions.KT_LINT
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
     id("com.android.library") version "7.2.1" apply false
-    id("org.jetbrains.kotlin.android") version "1.6.10" apply false
+    id("org.jetbrains.kotlin.android") version ProjectProperties.KOTLIN_VERSION apply false
 }
 
 dependencies {

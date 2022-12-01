@@ -41,7 +41,7 @@ import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
-import com.comit.feature_auth.mvi.signup.SignUpState
+import com.comit.feature_auth.mvi.SignUpState
 import com.comit.feature_auth.utils.BottomSheetType
 import com.comit.feature_auth.utils.changeBottomSheetState
 import com.comit.feature_auth.vm.SignUpViewModel
