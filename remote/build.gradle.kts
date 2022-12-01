@@ -37,7 +37,6 @@ android {
 
 dependencies {
     implementation(projects.model)
-    implementation(projects.param)
     implementation(projects.data)
 
     implementation(Dependency.Kotlin.COROUTINES_CORE)

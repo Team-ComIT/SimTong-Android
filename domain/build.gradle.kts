@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.param)
     implementation(projects.model)
 
     implementation(Dependency.Ui.CORE_KTX)
