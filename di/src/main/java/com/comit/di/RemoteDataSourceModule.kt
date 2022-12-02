@@ -4,8 +4,10 @@ package com.comit.di
 
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.data.datasource.RemoteCommonsDataSource
+import com.comit.data.datasource.RemoteFileDataSource
 import com.comit.remote.datasource.RemoteAuthDataSourceImpl
 import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
+import com.comit.remote.datasource.RemoteFileDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
