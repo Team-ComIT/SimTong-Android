@@ -44,6 +44,7 @@ import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title3
 import com.comit.core_design_system.util.currentMealsTime
+import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 
