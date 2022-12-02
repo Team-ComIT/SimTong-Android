@@ -5,11 +5,13 @@ package com.comit.di
 import com.comit.data.repository.AuthRepositoryImpl
 import com.comit.data.repository.CommonsRepositoryImpl
 import com.comit.data.repository.EmailRepositoryImpl
+import com.comit.data.repository.FileRepositoryImpl
 import com.comit.data.repository.MenuRepositoryImpl
 import com.comit.data.repository.ScheduleRepositoryImpl
 import com.comit.domain.repository.AuthRepository
 import com.comit.domain.repository.CommonsRepository
 import com.comit.domain.repository.EmailRepository
+import com.comit.domain.repository.FileRepository
 import com.comit.domain.repository.MenuRepository
 import com.comit.domain.repository.ScheduleRepository
 import dagger.Binds
@@ -27,6 +29,12 @@ abstract class RepositoryModule {
     abstract fun provideAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl,
     ): AuthRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideFileRepository(
+        fileRepositoryImpl: FileRepositoryImpl,
+    ): FileRepository
 
     @Singleton
     @Binds
