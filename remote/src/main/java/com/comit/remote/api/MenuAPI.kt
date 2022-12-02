@@ -10,12 +10,12 @@ interface MenuAPI {
 
     @GET("$MENU")
     suspend fun fetchMenu(
-        @Query("data") data: Date,
+        @Query("date") date: Date,
     ): MenuResponse
 
     @GET("$MENU/public")
     suspend fun fetchPublicMenu(
-        @Query("data") data: Date,
+        @Query("date") date: Date,
     ): PublicMenuResponse
 
     private companion object {
