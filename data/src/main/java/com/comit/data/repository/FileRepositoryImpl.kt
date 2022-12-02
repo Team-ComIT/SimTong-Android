@@ -9,7 +9,7 @@ import javax.inject.Inject
 
 class FileRepositoryImpl @Inject constructor(
     private val remoteFileDataSource: RemoteFileDataSource,
-): FileRepository {
+) : FileRepository {
     override suspend fun uploadFile(
         file: File,
     ): String {
