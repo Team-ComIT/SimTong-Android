@@ -1,21 +1,21 @@
-package com.comit.domain.usecase
+package com.comit.domain.usecase.users
 
 import com.comit.domain.repository.AuthRepository
 import javax.inject.Inject
 
-class ChangeProfileImageUseCase @Inject constructor(
+class ChangeEmailUseCase @Inject constructor(
     private val repository: AuthRepository,
 ) {
 
     suspend operator fun invoke(
         params: Params,
     ) = kotlin.runCatching {
-        repository.changeProfileImage(
-            profileImagePath = params.profileImagePath,
+        repository.changeEmail(
+            email = params.email,
         )
     }
 
     data class Params(
-        val profileImagePath: String,
+        val email: String,
     )
 }

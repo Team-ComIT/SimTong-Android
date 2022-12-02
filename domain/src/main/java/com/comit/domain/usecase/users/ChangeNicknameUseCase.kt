@@ -1,16 +1,16 @@
-package com.comit.domain.usecase
+package com.comit.domain.usecase.users
 
 import com.comit.domain.repository.AuthRepository
 import javax.inject.Inject
 
-class CheckNicknameDuplicationUseCase @Inject constructor(
+class ChangeNicknameUseCase @Inject constructor(
     private val repository: AuthRepository,
 ) {
 
     suspend operator fun invoke(
         params: Params,
     ) = kotlin.runCatching {
-        repository.checkNicknameDuplication(
+        repository.changeNickname(
             nickname = params.nickname,
         )
     }
