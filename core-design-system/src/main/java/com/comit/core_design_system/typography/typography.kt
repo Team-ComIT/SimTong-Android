@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
@@ -544,6 +545,27 @@ fun Body13(
         text = text,
         style = SimTongTypography.body13,
         color = color,
+    )
+}
+
+@Composable
+fun LineHeightBody13(
+    modifier: Modifier = Modifier,
+    text: String,
+    color: Color = SimTongColor.Gray800,
+    rippleEnabled: Boolean = false,
+    lineHeight: TextUnit,
+    onClick: (() -> Unit)? = null,
+) {
+    Text(
+        modifier = modifier.simClickable(
+            rippleEnabled = rippleEnabled,
+            onClick = onClick
+        ),
+        text = text,
+        style = SimTongTypography.body13,
+        color = color,
+        lineHeight = lineHeight
     )
 }
 
