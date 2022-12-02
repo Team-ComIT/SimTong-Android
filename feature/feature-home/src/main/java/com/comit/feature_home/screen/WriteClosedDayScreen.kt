@@ -1,4 +1,5 @@
 @file:OptIn(ExperimentalMaterialApi::class)
+
 package com.comit.feature_home.screen
 
 import androidx.compose.foundation.background
@@ -43,9 +44,17 @@ import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body6
-import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.feature_home.calendar.SimTongCalendarDate
+import com.comit.feature_home.calendar.SimTongCalendarList
+import com.comit.feature_home.calendar.WeekTopRow
+import com.comit.feature_home.calendar.getAnnualDayList
+import com.comit.feature_home.calendar.getRestDayList
+import com.comit.feature_home.calendar.getWorkCountList
+import com.comit.feature_home.calendar.organizeList
 import com.example.feature_home.R
 import kotlinx.coroutines.launch
+import java.util.Calendar
+import java.util.GregorianCalendar
 
 @Composable
 fun WriteClosedDayScreen(
@@ -56,11 +65,23 @@ fun WriteClosedDayScreen(
     )
     val coroutineScope = rememberCoroutineScope()
 
-    var year by remember { mutableStateOf("0000") }
-    var month by remember { mutableStateOf("00") }
-    var day by remember { mutableStateOf("0") }
-    var workState = ""
+    val today = GregorianCalendar()
+    val thisYear = today.get(Calendar.YEAR)
+    val thisMonth = (today.get(Calendar.MONTH) + 1)
+    val thisDay = today.get(Calendar.DATE)
+
+    var workState by remember { mutableStateOf("") }
     var workStateText by remember { mutableStateOf("") }
+
+    var yearT by remember { mutableStateOf(thisYear) }
+    var monthT by remember { mutableStateOf(thisMonth) }
+    var dayT by remember { mutableStateOf(thisDay) }
+
+    var checkMonth by remember { mutableStateOf(0) }
+    var restDayList by remember { mutableStateOf(getRestDayList(thisYear, thisMonth)) }
+    var annualDayList by remember { mutableStateOf(getAnnualDayList(thisYear, thisMonth)) }
+    var workCountList by remember { mutableStateOf(getWorkCountList(thisYear, thisMonth)) }
+    var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
 
     SimBottomSheetDialog(
         useHandle = true,
@@ -71,17 +92,22 @@ fun WriteClosedDayScreen(
                 if (saveEnabled) SimTongColor.MainColor400 else SimTongColor.MainColor100
 
             Column() {
+
+                val workClose = stringResource(id = R.string.work_close)
+                val workAnnual = stringResource(id = R.string.work_annual)
+                val workWork = stringResource(id = R.string.work_work)
+
                 Row(
                     modifier = Modifier
                         .padding(start = 20.dp, end = 30.dp, top = 17.dp)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
-                    val yearT = year + stringResource(id = R.string.calendar_year) + " "
-                    val monthT = month + stringResource(id = R.string.calendar_month) + " "
-                    val dayT = day + stringResource(id = R.string.calendar_day) + "은 "
+                    val _yearT = yearT.toString() + stringResource(id = R.string.calendar_year) + " "
+                    val _monthT = monthT.toString() + stringResource(id = R.string.calendar_month) + " "
+                    val _dayT = dayT.toString() + stringResource(id = R.string.calendar_day) + "은 "
 
                     Body6(
-                        text = "$yearT$monthT$dayT\"$workStateText\"입니다.",
+                        text = "$_yearT$_monthT$_dayT\"$workStateText\"입니다.",
                         color = SimTongColor.Gray800
                     )
 
@@ -90,6 +116,16 @@ fun WriteClosedDayScreen(
                         color = saveColor,
                         onClick = {
                             if (saveEnabled) {
+                                restDayList[dayT - 1] = false
+                                annualDayList[dayT - 1] = false
+
+                                if (workStateText == workClose) {
+                                    restDayList[dayT - 1] = true
+                                } else if (workStateText == workAnnual) {
+                                    annualDayList[dayT - 1] = true
+                                }
+                                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+
                                 coroutineScope.launch {
                                     bottomSheetState.hide()
                                 }
@@ -110,7 +146,7 @@ fun WriteClosedDayScreen(
                         .width(240.dp)
                 ) {
                     WriteCloseDayItem(
-                        text = stringResource(id = R.string.work_close),
+                        text = workClose,
                         color = SimTongColor.MainColor400,
                         onItemClicked = {
                             workStateText = it
@@ -120,7 +156,7 @@ fun WriteClosedDayScreen(
                     Spacer(modifier = Modifier.width(30.dp))
 
                     WriteCloseDayItem(
-                        text = stringResource(id = R.string.work_annual),
+                        text = workAnnual,
                         color = SimTongColor.FocusBlue,
                         onItemClicked = {
                             workStateText = it
@@ -130,7 +166,7 @@ fun WriteClosedDayScreen(
                     Spacer(modifier = Modifier.width(30.dp))
 
                     WriteCloseDayItem(
-                        text = stringResource(id = R.string.work_work),
+                        text = workWork,
                         color = SimTongColor.Gray200,
                         onItemClicked = {
                             workStateText = it
@@ -142,6 +178,10 @@ fun WriteClosedDayScreen(
             }
         }
     ) {
+        val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+        var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
+        var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+
         Column(modifier = Modifier.fillMaxSize()) {
             Spacer(modifier = Modifier.height(22.5.dp))
 
@@ -171,17 +211,82 @@ fun WriteClosedDayScreen(
 
             Spacer(modifier = Modifier.height(44.dp))
 
-            SimTongCalendar(
-                coroutineScope = coroutineScope,
-                bottomSheetValue = bottomSheetState,
-                onDateClicked = { _year, _month, _day, _workState ->
-                    year = _year
-                    month = _month
-                    day = _day
-                    workState = _workState
-                    workStateText = _workState
+            Column(
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .fillMaxWidth()
+                    .height(420.dp)
+                    .background(
+                        color = SimTongColor.Gray50,
+                        shape = RoundedCornerShape(20.dp)
+                    )
+            ) {
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 20.dp)
+                        .fillMaxWidth()
+                        .height(420.dp)
+                        .background(
+                            color = SimTongColor.Gray50,
+                            shape = RoundedCornerShape(20.dp)
+                        )
+                ) {
+                    Spacer(modifier = Modifier.height(15.dp))
+
+                    SimTongCalendarDate(
+                        year = year.toString(),
+                        month = month.toString(),
+                        onBeforeClicked = {
+                            checkMonth --
+                            calendar.add(Calendar.MONTH, checkMonth)
+                            month = calendar.get(Calendar.MONTH) + 1
+                            monthT = month
+                            year = calendar.get(Calendar.YEAR)
+                            yearT = year
+                            restDayList = getRestDayList(year, month)
+                            annualDayList = getAnnualDayList(year, month)
+                            workCountList = getWorkCountList(year, month)
+                            calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                        },
+                        onNextClicked = {
+                            checkMonth ++
+                            calendar.add(Calendar.MONTH, checkMonth)
+                            month = calendar.get(Calendar.MONTH) + 1
+                            monthT = month
+                            year = calendar.get(Calendar.YEAR)
+                            yearT = year
+                            restDayList = getRestDayList(year, month)
+                            annualDayList = getAnnualDayList(year, month)
+                            workCountList = getWorkCountList(year, month)
+                            calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                        }
+                    )
+
+                    Spacer(modifier = Modifier.height(37.dp))
+
+                    Column(
+                        modifier = Modifier
+                            .padding(horizontal = 14.dp)
+                            .fillMaxWidth()
+                    ) {
+                        WeekTopRow()
+
+                        SimTongCalendarList(
+                            list = calendarList,
+                            onItemClicked = { _day, _workState ->
+                                workState = _workState
+                                workStateText = _workState
+                                dayT = _day
+                                coroutineScope.launch {
+                                    bottomSheetState.show()
+                                }
+                            }
+                        )
+                    }
                 }
-            )
+            }
         }
     }
 }
@@ -190,7 +295,7 @@ fun WriteClosedDayScreen(
 fun WriteCloseDayItem(
     text: String,
     color: Color,
-    onItemClicked: (String) -> Unit
+    onItemClicked: (String) -> Unit,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,

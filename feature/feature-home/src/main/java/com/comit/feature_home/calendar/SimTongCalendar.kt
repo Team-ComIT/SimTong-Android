@@ -142,7 +142,11 @@ fun SimTongCalendar(
 fun SimTongCalendar(
     coroutineScope: CoroutineScope,
     bottomSheetValue: ModalBottomSheetState,
+    restDayList: ArrayList<Boolean>,
+    annualDayList: ArrayList<Boolean>,
+    calendarList: ArrayList<SimTongCalendarData>,
     onDateClicked: (String, String, String, String) -> Unit,
+    onMonthChanged: (Int, Int) -> Unit,
 ) {
     var checkMonth by remember { mutableStateOf(0) }
 
@@ -152,10 +156,10 @@ fun SimTongCalendar(
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
 
-    var restDayList by remember { mutableStateOf(getRestDayList(year, month)) }
-    var annualDayList by remember { mutableStateOf(getAnnualDayList(year, month)) }
+    var restDayList by remember { mutableStateOf(restDayList) }
+    var annualDayList by remember { mutableStateOf(annualDayList) }
     var workCountList by remember { mutableStateOf(getWorkCountList(year, month)) }
-    var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
+    var calendarList by remember { mutableStateOf(calendarList) }
 
     Column(
         modifier = Modifier
@@ -178,6 +182,7 @@ fun SimTongCalendar(
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
+                onMonthChanged(year, month)
                 restDayList = getRestDayList(year, month)
                 annualDayList = getAnnualDayList(year, month)
                 workCountList = getWorkCountList(year, month)
@@ -188,6 +193,7 @@ fun SimTongCalendar(
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
+                onMonthChanged(year, month)
                 restDayList = getRestDayList(year, month)
                 annualDayList = getAnnualDayList(year, month)
                 workCountList = getWorkCountList(year, month)
