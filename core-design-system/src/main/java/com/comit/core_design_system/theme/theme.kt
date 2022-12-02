@@ -3,6 +3,7 @@ package com.comit.core_design_system.theme
 import android.annotation.SuppressLint
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
@@ -14,7 +15,7 @@ private val LightColorPalette = lightColors(
     primary = SimTongColor.Primary,
     secondary = SimTongColor.MainColor,
     background = SimTongColor.White,
-    surface = SimTongColor.White,
+    surface = SimTongColor.Background,
     error = SimTongColor.Error,
     onPrimary = SimTongColor.White,
     onSecondary = SimTongColor.Primary,
@@ -50,6 +51,10 @@ fun SimTongTheme(
     MaterialTheme(
         colors = colors,
         shapes = RoundShapes,
-        content = content
+        content = {
+            Surface(
+                content = content
+            )
+        }
     )
 }
