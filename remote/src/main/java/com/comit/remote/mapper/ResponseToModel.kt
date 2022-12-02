@@ -1,6 +1,7 @@
 package com.comit.remote.mapper
 
 import com.comit.model.MenuList
+import com.comit.model.ScheduleList
 import com.comit.model.SpotList
 import com.comit.model.Token
 import com.comit.model.User
@@ -8,6 +9,7 @@ import com.comit.remote.response.commons.FetchSpotsResponse
 import com.comit.remote.response.commons.ReissueTokenResponse
 import com.comit.remote.response.menu.MenuResponse
 import com.comit.remote.response.menu.PublicMenuResponse
+import com.comit.remote.response.schedules.FetchPersonalScheduleResponse
 import com.comit.remote.response.users.FetchUserInformationResponse
 import com.comit.remote.response.users.SignInResponse
 import com.comit.remote.response.users.SignUpResponse
@@ -54,6 +56,20 @@ internal fun ReissueTokenResponse.toModel() =
         accessTokenExp = accessTokenExp,
         refreshToken = refreshToken,
     )
+
+internal fun FetchPersonalScheduleResponse.toModel(): ScheduleList {
+    fun FetchPersonalScheduleResponse.Schedule.toModel() =
+        ScheduleList.Schedule(
+            id = id,
+            startAt = startAt,
+            endAt = endAt,
+            title = title,
+        )
+
+    return ScheduleList(
+        schedules = schedules.map { it.toModel() }
+    )
+}
 
 internal fun MenuResponse.toModel(): MenuList {
     fun MenuResponse.Menu.toModel() =
