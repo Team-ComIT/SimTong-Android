@@ -4,12 +4,14 @@ package com.comit.di
 
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.data.datasource.RemoteCommonsDataSource
+import com.comit.data.datasource.RemoteEmailDataSource
 import com.comit.data.datasource.RemoteMenuDataSource
+import com.comit.data.datasource.RemoteScheduleDataSource
 import com.comit.remote.datasource.RemoteAuthDataSourceImpl
 import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
-import com.comit.remote.datasource.RemoteMenuDataSourceImpl
-import com.comit.data.datasource.RemoteEmailDataSource
 import com.comit.remote.datasource.RemoteEmailDataSourceImpl
+import com.comit.remote.datasource.RemoteMenuDataSourceImpl
+import com.comit.remote.datasource.RemoteScheduleDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,10 +39,16 @@ abstract class RemoteDataSourceModule {
     abstract fun provideMenuDataSource(
         remoteMenuDataSourceImpl: RemoteMenuDataSourceImpl,
     ): RemoteMenuDataSource
-    
+
     @Singleton
     @Binds
     abstract fun provideRemoteEmailDataSource(
         remoteEmailDataSourceImpl: RemoteEmailDataSourceImpl,
     ): RemoteEmailDataSource
+
+    @Singleton
+    @Binds
+    abstract fun provideScheduleDataSource(
+        remoteScheduleDataSourceImpl: RemoteScheduleDataSourceImpl,
+    ): RemoteScheduleDataSource
 }

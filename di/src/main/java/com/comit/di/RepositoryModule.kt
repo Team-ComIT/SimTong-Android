@@ -4,12 +4,14 @@ package com.comit.di
 
 import com.comit.data.repository.AuthRepositoryImpl
 import com.comit.data.repository.CommonsRepositoryImpl
+import com.comit.data.repository.EmailRepositoryImpl
 import com.comit.data.repository.MenuRepositoryImpl
+import com.comit.data.repository.ScheduleRepositoryImpl
 import com.comit.domain.repository.AuthRepository
 import com.comit.domain.repository.CommonsRepository
-import com.comit.domain.repository.MenuRepository
-import com.comit.data.repository.EmailRepositoryImpl
 import com.comit.domain.repository.EmailRepository
+import com.comit.domain.repository.MenuRepository
+import com.comit.domain.repository.ScheduleRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,10 +39,16 @@ abstract class RepositoryModule {
     abstract fun provideMenuRepository(
         menuRepositoryImpl: MenuRepositoryImpl,
     ): MenuRepository
-    
+
     @Singleton
     @Binds
     abstract fun provideEmailRepository(
         emailRepositoryImpl: EmailRepositoryImpl,
     ): EmailRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideScheduleRepository(
+        scheduleRepositoryImpl: ScheduleRepositoryImpl,
+    ): ScheduleRepository
 }
