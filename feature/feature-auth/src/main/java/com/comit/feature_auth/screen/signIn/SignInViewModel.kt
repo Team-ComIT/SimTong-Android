@@ -2,7 +2,7 @@ package com.comit.feature_auth.screen.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.comit.domain.usecase.SignInUseCase
+import com.comit.domain.usecase.users.SignInUseCase
 import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.feature_auth.mvi.SignInState
 import dagger.hilt.android.lifecycle.HiltViewModel
