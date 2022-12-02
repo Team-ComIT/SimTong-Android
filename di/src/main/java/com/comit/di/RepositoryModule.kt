@@ -12,6 +12,7 @@ import com.comit.domain.repository.AuthRepository
 import com.comit.domain.repository.CommonsRepository
 import com.comit.domain.repository.EmailRepository
 import com.comit.domain.repository.FileRepository
+import com.comit.domain.repository.MenuRepository
 import com.comit.domain.repository.ScheduleRepository
 import dagger.Binds
 import dagger.Module
