@@ -1,5 +1,6 @@
 package com.comit.remote.mapper
 
+import com.comit.model.HolidayList
 import com.comit.model.MenuList
 import com.comit.model.ScheduleList
 import com.comit.model.SpotList
@@ -7,6 +8,7 @@ import com.comit.model.Token
 import com.comit.model.User
 import com.comit.remote.response.commons.FetchSpotsResponse
 import com.comit.remote.response.commons.ReissueTokenResponse
+import com.comit.remote.response.holidays.FetchHolidaysResponse
 import com.comit.remote.response.menu.MenuResponse
 import com.comit.remote.response.menu.PublicMenuResponse
 import com.comit.remote.response.schedules.FetchPersonalScheduleResponse
@@ -92,5 +94,17 @@ internal fun PublicMenuResponse.toModel(): MenuList {
 
     return MenuList(
         menu = menu.map { it.toModel() }
+    )
+}
+
+internal fun FetchHolidaysResponse.toModel(): HolidayList {
+    fun FetchHolidaysResponse.Holiday.toModel() =
+        HolidayList.Holiday(
+            date = date,
+            title = title,
+        )
+
+    return HolidayList(
+        holidays = holidays.map { it.toModel() }
     )
 }
