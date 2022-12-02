@@ -12,6 +12,7 @@ import com.comit.remote.datasource.RemoteAuthDataSourceImpl
 import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
 import com.comit.remote.datasource.RemoteEmailDataSourceImpl
 import com.comit.remote.datasource.RemoteFileDataSourceImpl
+import com.comit.remote.datasource.RemoteMenuDataSourceImpl
 import com.comit.remote.datasource.RemoteScheduleDataSourceImpl
 import dagger.Binds
 import dagger.Module
