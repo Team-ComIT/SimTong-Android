@@ -119,6 +119,18 @@ class SimTongIcon private constructor(
         )
 
         @Stable
+        val Calendar_Before = SimTongIcon(
+            drawableId = R.drawable.ic_calendar_before,
+            contentDescription = "calendar before icon"
+        )
+
+        @Stable
+        val Calendar_After = SimTongIcon(
+            drawableId = R.drawable.ic_calendar_after,
+            contentDescription = "calendar after icon"
+        )
+
+        @Stable
         val Photo = SimTongIcon(
             drawableId = R.drawable.ic_photo,
             contentDescription = "photo icon",

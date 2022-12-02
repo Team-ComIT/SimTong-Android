@@ -18,9 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.typography.Body13
+import com.comit.core_design_system.typography.LineHeightBody13
 import com.comit.core_design_system.util.currentMealsTime
 
 @Composable
@@ -91,9 +92,10 @@ fun FoodListItem(
                 .paint(painterResource(id = backgroundImage)),
         ) {
 
-            Body13(
+            LineHeightBody13(
                 text = menu,
                 color = textColor,
+                lineHeight = 20.sp,
                 modifier = Modifier
                     .padding(
                         start = 12.dp,

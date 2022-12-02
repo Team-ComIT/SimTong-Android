@@ -7,6 +7,7 @@ object SimTongColor {
     val Black = Color(0xFF000000)
     val SkyBlue = Color(0xFFE2ECFF)
     val Primary = Color(0xFF242424)
+    val Background = Color(0xFFF9F9F9)
 
     val FocusBlue = Color(0xFF006EFF)
     val Check = Color(0xFF04DF00)
