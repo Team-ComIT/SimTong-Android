@@ -8,6 +8,10 @@ import com.comit.data.repository.FileRepositoryImpl
 import com.comit.domain.repository.AuthRepository
 import com.comit.domain.repository.CommonsRepository
 import com.comit.domain.repository.FileRepository
+import com.comit.data.repository.MenuRepositoryImpl
+import com.comit.domain.repository.MenuRepository
+import com.comit.data.repository.EmailRepositoryImpl
+import com.comit.domain.repository.EmailRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -35,4 +39,16 @@ abstract class RepositoryModule {
     abstract fun provideCommonsRepository(
         commonsRepositoryImpl: CommonsRepositoryImpl,
     ): CommonsRepository
+
+    @Singleton
+    @Binds
+    abstract fun provideMenuRepository(
+        menuRepositoryImpl: MenuRepositoryImpl,
+    ): MenuRepository
+    
+    @Singleton
+    @Binds
+    abstract fun provideEmailRepository(
+        emailRepositoryImpl: EmailRepositoryImpl,
+    ): EmailRepository
 }

@@ -1,10 +1,13 @@
 package com.comit.remote.mapper
 
+import com.comit.model.MenuList
 import com.comit.model.SpotList
 import com.comit.model.Token
 import com.comit.model.User
 import com.comit.remote.response.commons.FetchSpotsResponse
 import com.comit.remote.response.commons.ReissueTokenResponse
+import com.comit.remote.response.menu.MenuResponse
+import com.comit.remote.response.menu.PublicMenuResponse
 import com.comit.remote.response.users.FetchUserInformationResponse
 import com.comit.remote.response.users.SignInResponse
 import com.comit.remote.response.users.SignUpResponse
@@ -51,3 +54,27 @@ internal fun ReissueTokenResponse.toModel() =
         accessTokenExp = accessTokenExp,
         refreshToken = refreshToken,
     )
+
+internal fun MenuResponse.toModel(): MenuList {
+    fun MenuResponse.Menu.toModel() =
+        MenuList.Menu(
+            date = date,
+            meal = meal,
+        )
+
+    return MenuList(
+        menu = menu.map { it.toModel() }
+    )
+}
+
+internal fun PublicMenuResponse.toModel(): MenuList {
+    fun PublicMenuResponse.Menu.toModel() =
+        MenuList.Menu(
+            date = date,
+            meal = meal,
+        )
+
+    return MenuList(
+        menu = menu.map { it.toModel() }
+    )
+}
