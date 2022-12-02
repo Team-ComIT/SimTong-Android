@@ -27,7 +27,7 @@ abstract class RemoteDataSourceModule {
     abstract fun provideRemoteFileDataSource(
         remoteFileDataSourceImpl: RemoteFileDataSourceImpl
     ): RemoteFileDataSource
-    
+
     @Singleton
     @Binds
     abstract fun provideRemoteCommonsDataSource(
