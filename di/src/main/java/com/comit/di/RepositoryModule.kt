@@ -4,9 +4,11 @@ package com.comit.di
 
 import com.comit.data.repository.AuthRepositoryImpl
 import com.comit.data.repository.CommonsRepositoryImpl
-import com.comit.data.repository.EmailRepositoryImpl
+import com.comit.data.repository.MenuRepositoryImpl
 import com.comit.domain.repository.AuthRepository
 import com.comit.domain.repository.CommonsRepository
+import com.comit.domain.repository.MenuRepository
+import com.comit.data.repository.EmailRepositoryImpl
 import com.comit.domain.repository.EmailRepository
 import dagger.Binds
 import dagger.Module
@@ -30,6 +32,12 @@ abstract class RepositoryModule {
         commonsRepositoryImpl: CommonsRepositoryImpl,
     ): CommonsRepository
 
+    @Singleton
+    @Binds
+    abstract fun provideMenuRepository(
+        menuRepositoryImpl: MenuRepositoryImpl,
+    ): MenuRepository
+    
     @Singleton
     @Binds
     abstract fun provideEmailRepository(

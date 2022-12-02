@@ -1,21 +1,22 @@
-package com.comit.domain.usecase
+package com.comit.domain.usecase.users
 
 import com.comit.domain.repository.AuthRepository
+import java.util.UUID
 import javax.inject.Inject
 
-class ChangeNicknameUseCase @Inject constructor(
+class ChangeSpotUseCase @Inject constructor(
     private val repository: AuthRepository,
 ) {
 
     suspend operator fun invoke(
         params: Params,
     ) = kotlin.runCatching {
-        repository.changeNickname(
-            nickname = params.nickname,
+        repository.changeSpot(
+            spotId = params.spotId,
         )
     }
 
     data class Params(
-        val nickname: String,
+        val spotId: UUID,
     )
 }

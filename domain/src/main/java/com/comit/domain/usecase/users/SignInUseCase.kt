@@ -1,22 +1,23 @@
-package com.comit.domain.usecase
+package com.comit.domain.usecase.users
 
 import com.comit.domain.repository.AuthRepository
-import java.util.UUID
 import javax.inject.Inject
 
-class ChangeSpotUseCase @Inject constructor(
+class SignInUseCase @Inject constructor(
     private val repository: AuthRepository,
 ) {
 
     suspend operator fun invoke(
         params: Params,
     ) = kotlin.runCatching {
-        repository.changeSpot(
-            spotId = params.spotId,
+        repository.signIn(
+            employeeNumber = params.employeeNumber,
+            password = params.password,
         )
     }
 
     data class Params(
-        val spotId: UUID,
+        val employeeNumber: Int,
+        val password: String,
     )
 }
