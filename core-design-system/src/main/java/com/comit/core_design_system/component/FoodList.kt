@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.LineHeightBody13
 import com.comit.core_design_system.util.currentMealsTime
 

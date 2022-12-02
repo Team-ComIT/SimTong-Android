@@ -79,6 +79,132 @@ private val SimTongCalendarTotalHorizontalPadding = PaddingValues(
 @ExperimentalMaterialApi
 @Composable
 fun SimTongCalendar(
+    modifier: Modifier = Modifier,
+) {
+    var checkMonth by remember { mutableStateOf(0) }
+
+    val today = GregorianCalendar()
+    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+
+    var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
+    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+
+    var calendarList by remember { mutableStateOf(organizeList(0)) }
+
+    Column(
+        modifier = modifier
+            .background(
+                color = SimTongColor.Gray50,
+                shape = SimTongCalendarTotalRound
+            )
+    ) {
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+        SimTongCalendarDate(
+            year = year.toString(),
+            month = month.toString(),
+            onBeforeClicked = {
+                checkMonth --
+                calendar.add(Calendar.MONTH, checkMonth)
+                calendarList = organizeList(checkMonth)
+                month = calendar.get(Calendar.MONTH) + 1
+                year = calendar.get(Calendar.YEAR)
+            },
+            onNextClicked = {
+                checkMonth ++
+                calendar.add(Calendar.MONTH, checkMonth)
+                calendarList = organizeList(checkMonth)
+                month = calendar.get(Calendar.MONTH) + 1
+                year = calendar.get(Calendar.YEAR)
+            }
+        )
+
+        Spacer(modifier = Modifier.height(37.dp))
+
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 14.dp)
+                .fillMaxWidth()
+        ) {
+            WeekTopRow()
+
+            SimTongCalendarList(list = calendarList)
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun SimTongCalendar(
+    onCalendarClicked: () -> Unit,
+    onDateClicked: (String, String, String, String) -> Unit,
+) {
+    var checkMonth by remember { mutableStateOf(0) }
+
+    val today = GregorianCalendar()
+    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+
+    var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
+    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+
+    var calendarList by remember { mutableStateOf(organizeList(0)) }
+
+    Column(
+        modifier = Modifier
+            .padding(SimTongCalendarTotalHorizontalPadding)
+            .fillMaxWidth()
+            .height(SimTongCalendarTotalHeight)
+            .background(
+                color = SimTongColor.Gray50,
+                shape = SimTongCalendarTotalRound
+            )
+    ) {
+
+        Spacer(modifier = Modifier.height(15.dp))
+
+        SimTongCalendarDate(
+            year = year.toString(),
+            month = month.toString(),
+            onBeforeClicked = {
+                checkMonth --
+                calendar.add(Calendar.MONTH, checkMonth)
+                calendarList = organizeList(checkMonth)
+                month = calendar.get(Calendar.MONTH) + 1
+                year = calendar.get(Calendar.YEAR)
+            },
+            onNextClicked = {
+                checkMonth ++
+                calendar.add(Calendar.MONTH, checkMonth)
+                calendarList = organizeList(checkMonth)
+                month = calendar.get(Calendar.MONTH) + 1
+                year = calendar.get(Calendar.YEAR)
+            }
+        )
+
+        Spacer(modifier = Modifier.height(37.dp))
+
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 14.dp)
+                .fillMaxWidth()
+                .noRippleClickable { onCalendarClicked() }
+        ) {
+            WeekTopRow()
+
+            SimTongCalendarList(
+                list = calendarList,
+                onItemClicked = { day, workState ->
+                    onDateClicked(year.toString(), month.toString(), day.toString(), workState)
+                }
+            )
+        }
+    }
+}
+
+@ExperimentalMaterialApi
+@Composable
+fun SimTongCalendar(
     coroutineScope: CoroutineScope,
     bottomSheetValue: ModalBottomSheetState,
     onDateClicked: (String, String, String, String) -> Unit,
@@ -243,7 +369,8 @@ fun WeekTopRow() {
 @Composable
 fun SimTongCalendarList(
     list: List<SimTongCalendarData>,
-    onItemClicked: (Int, String) -> Unit
+    onItemClicked: (Int, String) -> Unit = {day, workState ->},
+    onCalendarClicked: () -> Unit = {}
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -266,6 +393,7 @@ fun SimTongCalendarList(
                         annualDay = it.annualDay,
                         today = it.today,
                         onItemClicked = onItemClicked,
+                        onCalendarClicked = onCalendarClicked,
                         modifier = Modifier
                             .fillParentMaxWidth(1.toFloat() / 7.toFloat())
                     )
@@ -291,7 +419,8 @@ fun SimTongCalendarItem(
     restDay: Boolean,
     annualDay: Boolean,
     today: Boolean,
-    onItemClicked: (Int, String) -> Unit
+    onItemClicked: (Int, String) -> Unit,
+    onCalendarClicked: () -> Unit
 ) {
     val textColor =
         if (weekend) SimTongColor.Gray300
@@ -314,6 +443,7 @@ fun SimTongCalendarItem(
             if (thisMouth && !weekend) {
                 onItemClicked(day.toInt(), workState)
             }
+            onCalendarClicked()
         }
     ) {
         if (today) {
@@ -349,10 +479,12 @@ fun SimTongCalendarItem(
                     color = SimTongColor.White
                 )
             } else if (thisMouth && !weekend) {
-                Body11(
-                    text = workCount.toString(),
-                    color = SimTongColor.Gray400
-                )
+                if (workCount != 0) {
+                    Body11(
+                        text = workCount.toString(),
+                        color = SimTongColor.Gray400
+                    )
+                }
             }
         }
     }
@@ -426,10 +558,11 @@ private fun organizeList(
     return calendarList
 }
 
+@ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
 fun ShowCalendar() {
     Column(modifier = Modifier.fillMaxSize()) {
-        // SimTongCalendar()
+        SimTongCalendar()
     }
 }

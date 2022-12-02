@@ -1,8 +1,9 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.comit.feature_home.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -19,8 +20,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.ui.Alignment
@@ -37,6 +38,7 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
+import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
@@ -53,9 +55,7 @@ object HomeFakeData {
     )
 }
 
-private val HomeScreenCalendarHeight: Dp = 360.dp
-
-private val HomeScreenTopRowHeight: Dp = 30.dp
+private val HomeScreenTopRowHeight: Dp = 34.dp
 
 @Stable
 private val HomeScreenPadding = PaddingValues(
@@ -66,6 +66,8 @@ private val HomeScreenPadding = PaddingValues(
 private val HomeBottomIconLayoutShape = RoundedCornerShape(
     size = 4.dp,
 )
+
+private val HomeCalendarHeight: Dp = 422.dp
 
 private val HomeBottomIconLayoutElevation: Dp = 2.dp
 
@@ -81,7 +83,7 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .padding(HomeScreenPadding),
+            .padding(HomeScreenPadding)
     ) {
         Header(
             headerText = "",
@@ -103,39 +105,30 @@ fun HomeScreen(
         ) {
 
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .height(HomeScreenTopRowHeight),
+                    .height(HomeScreenTopRowHeight)
+                    .noRippleClickable { },
             ) {
-                Title3(
-                    text = stringResource(id = R.string.calendar),
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .wrapContentHeight(Alignment.CenterVertically),
-                )
+                Title3(text = stringResource(id = R.string.calendar))
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .wrapContentHeight(Alignment.CenterVertically),
-                ) {
-                    Icon(
-                        painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
-                        contentDescription = SimTongIcon.Gray_Next.contentDescription,
-                    )
-                }
+                Icon(
+                    painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
+                    contentDescription = SimTongIcon.Gray_Next.contentDescription,
+                )
             }
 
-            Spacer(modifier = Modifier.height(30.dp))
+            Spacer(modifier = Modifier.height(15.dp))
 
-            Box(
+            SimTongCalendar(
                 modifier = Modifier
-                    .height(HomeScreenCalendarHeight),
+                    .fillMaxWidth()
+                    .height(HomeCalendarHeight)
             )
 
-            Spacer(modifier = Modifier.height(9.dp))
+            Spacer(modifier = Modifier.height(30.dp))
 
             Title3(
                 text = stringResource(
@@ -145,7 +138,6 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // TODO: FoodList 디자인 시스템 lineHeight 수정 작업 필요
             FoodList(
                 timeCheck = currentMealsTime(),
                 list = HomeFakeData.foodList,
@@ -162,7 +154,7 @@ fun HomeScreen(
                 ),
                 content = stringResource(
                     id = R.string.my_pay_info_content,
-                )
+                ),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -170,7 +162,12 @@ fun HomeScreen(
             HomeBottomIconLayout(
                 painter = painterResource(id = R.drawable.ic_home_schedule),
                 title = stringResource(id = R.string.schedule_write),
-                content = stringResource(id = R.string.schedule_write_content)
+                content = stringResource(id = R.string.schedule_write_content),
+                onClick = {
+                    navController.navigate(
+                        route = SimTongScreen.Home.CLOSE_DAY,
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(46.dp))
@@ -236,9 +233,10 @@ private fun HomeBottomIconLayout(
     }
 }
 
+@ExperimentalMaterialApi
 @Preview(showBackground = true)
 @Composable
-fun PreviewMyPageScreen() {
+fun PreviewHomeScreen() {
     HomeScreen(
         navController = rememberNavController(),
     )
