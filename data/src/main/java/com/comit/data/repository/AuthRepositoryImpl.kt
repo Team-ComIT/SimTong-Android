@@ -2,7 +2,6 @@ package com.comit.data.repository
 
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.domain.repository.AuthRepository
-import com.comit.model.Token
 import com.comit.model.User
 import java.util.UUID
 import javax.inject.Inject
@@ -14,8 +13,9 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun signIn(
         employeeNumber: Int,
         password: String,
-    ): Token {
-        return remoteAuthDataSource.signIn(
+    ) {
+        // TODO ("local에 저장")
+        remoteAuthDataSource.signIn(
             employeeNumber = employeeNumber,
             password = password,
         )
@@ -25,7 +25,7 @@ class AuthRepositoryImpl @Inject constructor(
         name: String,
         employeeNumber: String,
     ) {
-        return remoteAuthDataSource.verificationEmployee(
+        remoteAuthDataSource.verificationEmployee(
             name = name,
             employeeNumber = employeeNumber,
         )
@@ -38,8 +38,9 @@ class AuthRepositoryImpl @Inject constructor(
         password: String,
         nickname: String?,
         profileImagePath: String?
-    ): Token {
-        return remoteAuthDataSource.signUp(
+    ) {
+        // TODO ("local에 저장")
+        remoteAuthDataSource.signUp(
             name = name,
             employeeNumber = employeeNumber,
             email = email,
@@ -52,7 +53,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun checkNicknameDuplication(
         nickname: String,
     ) {
-        return remoteAuthDataSource.checkNicknameDuplication(
+        remoteAuthDataSource.checkNicknameDuplication(
             nickname = nickname,
         )
     }
@@ -60,7 +61,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun changeSpot(
         spotId: UUID,
     ) {
-        return remoteAuthDataSource.changeSpot(
+        remoteAuthDataSource.changeSpot(
             spotId = spotId,
         )
     }
@@ -68,7 +69,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun changeProfileImage(
         profileImagePath: String,
     ) {
-        return remoteAuthDataSource.changeProfileImage(
+        remoteAuthDataSource.changeProfileImage(
             profileImagePath = profileImagePath,
         )
     }
@@ -76,7 +77,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun changeEmail(
         email: String,
     ) {
-        return remoteAuthDataSource.changeEmail(
+        remoteAuthDataSource.changeEmail(
             email = email,
         )
     }
@@ -84,7 +85,7 @@ class AuthRepositoryImpl @Inject constructor(
     override suspend fun changeNickname(
         nickname: String,
     ) {
-        return remoteAuthDataSource.changeNickname(
+        remoteAuthDataSource.changeNickname(
             nickname = nickname,
         )
     }

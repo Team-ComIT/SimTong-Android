@@ -34,7 +34,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
         name: String,
         employeeNumber: String,
     ) {
-        return authAPI.verificationEmployee(
+        authAPI.verificationEmployee(
             name = name,
             employeeNumber = employeeNumber,
         )
@@ -63,7 +63,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun checkNicknameDuplication(
         nickname: String,
     ) {
-        return authAPI.checkNicknameDuplication(
+        authAPI.checkNicknameDuplication(
             nickname = nickname,
         )
     }
@@ -71,7 +71,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun changeSpot(
         spotId: UUID,
     ) {
-        return authAPI.changeSpot(
+        authAPI.changeSpot(
             request = ChangeSpotRequest(
                 spotId = spotId,
             )
@@ -81,7 +81,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun changeProfileImage(
         profileImagePath: String,
     ) {
-        return authAPI.changeProfileImage(
+        authAPI.changeProfileImage(
             request = ChangeProfileImageRequest(
                 profileImagePath = profileImagePath,
             )
@@ -91,7 +91,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun changeEmail(
         email: String,
     ) {
-        return authAPI.changeEmail(
+        authAPI.changeEmail(
             request = ChangeEmailRequest(
                 email = email,
             )
@@ -101,7 +101,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun changeNickname(
         nickname: String,
     ) {
-        return authAPI.changeNickname(
+        authAPI.changeNickname(
             request = ChangeNicknameRequest(
                 nickname = nickname,
             )

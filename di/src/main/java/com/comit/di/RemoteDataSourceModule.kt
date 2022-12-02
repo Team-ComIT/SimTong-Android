@@ -3,9 +3,9 @@
 package com.comit.di
 
 import com.comit.data.datasource.RemoteAuthDataSource
-import com.comit.data.datasource.RemoteFileDataSource
+import com.comit.data.datasource.RemoteCommonsDataSource
 import com.comit.remote.datasource.RemoteAuthDataSourceImpl
-import com.comit.remote.datasource.RemoteFileDataSourceImpl
+import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -27,4 +27,10 @@ abstract class RemoteDataSourceModule {
     abstract fun provideRemoteFileDataSource(
         remoteFileDataSourceImpl: RemoteFileDataSourceImpl
     ): RemoteFileDataSource
+    
+    @Singleton
+    @Binds
+    abstract fun provideRemoteCommonsDataSource(
+        remoteCommonsDataSourceImpl: RemoteCommonsDataSourceImpl,
+    ): RemoteCommonsDataSource
 }
