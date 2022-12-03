@@ -21,9 +21,13 @@ class CommonsRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun tokenReissue() {
+    override suspend fun tokenReissue(
+        refreshToken: String,
+    ) {
         // TODO("local에 token 저장")
-        remoteCommonsDataSource.tokenReissue()
+        remoteCommonsDataSource.tokenReissue(
+            refreshToken = refreshToken
+        )
     }
 
     override suspend fun findAccountExist(
