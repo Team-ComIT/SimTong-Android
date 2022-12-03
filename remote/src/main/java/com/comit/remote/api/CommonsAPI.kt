@@ -19,7 +19,9 @@ interface CommonsAPI {
     ): EmployeeNumberResponse
 
     @PUT("$COMMONS/token/reissue")
-    suspend fun tokenReissue(): ReissueTokenResponse
+    suspend fun tokenReissue(
+        @Query("Refresh-Token") refreshToken: String,
+    ): ReissueTokenResponse
 
     @GET("$COMMONS/account/existence")
     suspend fun findAccountExist(
