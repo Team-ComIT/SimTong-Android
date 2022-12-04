@@ -1,3 +1,9 @@
+@file:Suppress(
+    "TooGenericExceptionCaught",
+    "SwallowedException",
+    "UseCheckOrError",
+)
+
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteCommonsDataSource
