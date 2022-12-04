@@ -15,7 +15,7 @@ class RemoteMenuDataSourceImpl @Inject constructor(
         date: Date,
     ): MenuList {
         return menuAPI.fetchMenu(
-            data = date,
+            date = date,
         ).toModel()
     }
 
@@ -23,7 +23,7 @@ class RemoteMenuDataSourceImpl @Inject constructor(
         date: Date,
     ): MenuList {
         return menuAPI.fetchPublicMenu(
-            data = date,
+            date = date,
         ).toModel()
     }
 }
