@@ -11,7 +11,9 @@ interface RemoteCommonsDataSource {
         email: String,
     ): String
 
-    suspend fun tokenReissue(): Token
+    suspend fun tokenReissue(
+        refreshToken: String,
+    ): Token
 
     suspend fun findAccountExist(
         employeeNumber: Int,

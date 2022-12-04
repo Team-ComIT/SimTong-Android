@@ -10,7 +10,9 @@ interface CommonsRepository {
         email: String,
     ): String
 
-    suspend fun tokenReissue()
+    suspend fun tokenReissue(
+        refreshToken: String,
+    )
 
     suspend fun findAccountExist(
         employeeNumber: Int,

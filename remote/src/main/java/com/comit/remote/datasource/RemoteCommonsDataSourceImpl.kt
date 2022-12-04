@@ -1,3 +1,9 @@
+@file:Suppress(
+    "TooGenericExceptionCaught",
+    "SwallowedException",
+    "UseCheckOrError",
+)
+
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteCommonsDataSource
@@ -24,8 +30,16 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
         ).employeeNumber
     }
 
-    override suspend fun tokenReissue(): Token {
-        return commonsAPI.tokenReissue().toModel()
+    override suspend fun tokenReissue(
+        refreshToken: String,
+    ): Token {
+        return try {
+            commonsAPI.tokenReissue(
+                refreshToken = refreshToken,
+            ).toModel()
+        } catch (e: Throwable) {
+            throw IllegalStateException("Need Login")
+        }
     }
 
     override suspend fun findAccountExist(

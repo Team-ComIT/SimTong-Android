@@ -13,7 +13,7 @@ object Versions {
     const val LIFECYLCE = "2.4.0"
     const val ROOM = "2.5.0-alpha02"
     const val DYNAMIC_TOAST = "3.3.1"
-    const val DATASTORE = "1.0.0"
+    const val DATASTORE = "1.1.0-alpha01"
 
     const val HILT = "2.38.1"
     const val MATERIAL = "1.3.0"
