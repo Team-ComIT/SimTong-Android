@@ -2,6 +2,7 @@ package com.comit.di
 
 import com.comit.local.preference.AuthPreference
 import com.comit.local.preference.AuthPreferenceImpl
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 abstract class PreferenceModule {
 
     @Singleton
-    @Provides
+    @Binds
     abstract fun provideAuthPreference(
         authPreferenceImpl: AuthPreferenceImpl
     ): AuthPreference
