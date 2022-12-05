@@ -11,4 +11,10 @@ data class SignInState(
 sealed class SignInSideEffect {
 
     object NavigateToHomeScreen : SignInSideEffect()
+
+    object IdOrPasswordNotCorrect : SignInSideEffect()
+
+    object NetworkError : SignInSideEffect()
+
+    object IdWasNotNumber : SignInSideEffect()
 }

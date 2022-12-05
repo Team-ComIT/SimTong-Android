@@ -1,6 +1,7 @@
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteMenuDataSource
+import com.comit.data.util.simTongApiCall
 import com.comit.model.MenuList
 import com.comit.remote.api.MenuAPI
 import com.comit.remote.mapper.toModel
@@ -13,16 +14,16 @@ class RemoteMenuDataSourceImpl @Inject constructor(
 
     override suspend fun fetchMenu(
         date: Date,
-    ): MenuList {
-        return menuAPI.fetchMenu(
+    ): MenuList = simTongApiCall {
+        menuAPI.fetchMenu(
             date = date,
         ).toModel()
     }
 
     override suspend fun fetchPublicMenu(
         date: Date,
-    ): MenuList {
-        return menuAPI.fetchPublicMenu(
+    ): MenuList = simTongApiCall {
+        menuAPI.fetchPublicMenu(
             date = date,
         ).toModel()
     }
