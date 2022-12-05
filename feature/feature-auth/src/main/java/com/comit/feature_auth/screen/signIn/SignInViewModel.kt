@@ -2,6 +2,9 @@ package com.comit.feature_auth.screen.signIn
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.exception.NoInternetException
+import com.comit.domain.exception.NotFoundException
+import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.usecase.users.SignInUseCase
 import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.feature_auth.mvi.SignInState
@@ -22,20 +25,30 @@ class SignInViewModel @Inject constructor(
     override val container = container<SignInState, SignInSideEffect>(SignInState())
 
     fun signIn(
-        employeeNumber: Int,
+        employeeNumber: String,
         password: String,
     ) = intent {
         viewModelScope.launch {
+
+            try {
+                employeeNumber.toInt()
+            } catch (e: NumberFormatException) {
+                postSideEffect(SignInSideEffect.IdWasNotNumber)
+                return@launch
+            }
+
             signInUseCase(
                 params = SignInUseCase.Params(
-                    employeeNumber = employeeNumber,
+                    employeeNumber = employeeNumber.toInt(),
                     password = password
                 ),
             ).onSuccess {
                 postSideEffect(SignInSideEffect.NavigateToHomeScreen)
             }.onFailure {
-                reduce {
-                    state.copy(errMsgEmployeeNumber = ERROR_MESSAGE_NOT_CORRECT)
+                when (it) {
+                    is UnAuthorizedException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
+                    is NotFoundException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
+                    is NoInternetException -> postSideEffect(SignInSideEffect.NetworkError)
                 }
             }
         }
@@ -45,8 +58,16 @@ class SignInViewModel @Inject constructor(
         reduce { state.copy(employeeNumber = employeeNumber) }
     }
 
-    fun inputPassword(password: String) = intent {
-        reduce { state.copy(password = password) }
+    fun inputPassword(msg: String) = intent {
+        reduce { state.copy(password = msg) }
+    }
+
+    fun inputErrMsgEmployeeNumber(msg: String) = intent {
+        reduce { state.copy(errMsgEmployeeNumber = msg) }
+    }
+
+    fun inputErrMsgPassword(msg: String) = intent {
+        reduce { state.copy(errMsgPassword = msg) }
     }
 
     companion object {
