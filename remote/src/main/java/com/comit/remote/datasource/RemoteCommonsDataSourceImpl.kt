@@ -8,7 +8,7 @@ package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteCommonsDataSource
 import com.comit.data.util.simTongApiCall
-import com.comit.domain.exception.NeedLoginException
+import com.comit.data.util.trySafeReissueToken
 import com.comit.model.SpotList
 import com.comit.model.Token
 import com.comit.remote.api.CommonsAPI
@@ -34,14 +34,10 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
 
     override suspend fun tokenReissue(
         refreshToken: String,
-    ): Token {
-        return try {
-            commonsAPI.tokenReissue(
-                refreshToken = refreshToken,
-            ).toModel()
-        } catch (e: Throwable) {
-            throw NeedLoginException()
-        }
+    ): Token = trySafeReissueToken {
+        commonsAPI.tokenReissue(
+            refreshToken = refreshToken,
+        ).toModel()
     }
 
     override suspend fun findAccountExist(

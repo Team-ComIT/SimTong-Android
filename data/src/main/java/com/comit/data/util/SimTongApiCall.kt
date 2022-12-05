@@ -3,6 +3,7 @@ package com.comit.data.util
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.ForBiddenException
+import com.comit.domain.exception.NeedLoginException
 import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.OtherHttpException
@@ -23,7 +24,7 @@ import java.net.UnknownHostException
  * TODO(BadRequest에서 field_errors를 Parsing하여 처리해줘야 함)
  */
 suspend inline fun <T> simTongApiCall(
-    crossinline callFunction: suspend () -> T
+    crossinline callFunction: suspend () -> T,
 ): T {
     return try {
         withContext(Dispatchers.IO) {
@@ -65,5 +66,19 @@ suspend inline fun <T> simTongApiCall(
         throw UnknownException(
             message = e.message,
         )
+    } catch (e: NeedLoginException) {
+        throw e
+    }
+}
+
+suspend inline fun <T> trySafeReissueToken(
+    crossinline callFunction: suspend () -> T,
+): T {
+    return try {
+        withContext(Dispatchers.IO) {
+            callFunction.invoke()
+        }
+    } catch (e: Throwable) {
+        throw NeedLoginException()
     }
 }
