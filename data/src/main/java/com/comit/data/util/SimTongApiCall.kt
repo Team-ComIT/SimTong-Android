@@ -1,3 +1,10 @@
+@file:Suppress(
+    "TooGenericExceptionCaught",
+    "SwallowedException",
+    "MagicNumber",
+    "RethrowCaughtException",
+)
+
 package com.comit.data.util
 
 import com.comit.domain.exception.BadRequestException

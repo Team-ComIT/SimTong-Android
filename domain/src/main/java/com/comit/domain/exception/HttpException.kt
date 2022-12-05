@@ -1,3 +1,7 @@
+@file:Suppress(
+    "UnusedPrivateMember",
+)
+
 package com.comit.domain.exception
 
 /**
