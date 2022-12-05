@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimTongIconButton
@@ -64,7 +66,13 @@ object MyPageFakeData {
 @Composable
 fun MyPageScreen(
     navController: NavController,
+    vm: MyPageViewModel = hiltViewModel(),
 ) {
+    val myPageContainer = vm.container
+    val myPageInState = myPageContainer.stateFlow.collectAsState().value
+
+    // TODO: LaunchedEffect 적용 필요
+    vm.fetchUserInformation()
 
     var editMode by remember { mutableStateOf(false) }
 
@@ -94,7 +102,7 @@ fun MyPageScreen(
         Spacer(modifier = Modifier.height(22.dp))
 
         MyPageProfileImage(
-            imageUrl = MyPageFakeData.image,
+            imageUrl = myPageInState.profileImagePath,
         ) {
             // TODO ("갤러리 접근")
         }
@@ -106,13 +114,13 @@ fun MyPageScreen(
                 title = stringResource(
                     id = R.string.kr_name,
                 ),
-                content = MyPageFakeData.name,
+                content = myPageInState.name,
             )
             MyPageDescription(
                 title = stringResource(
                     id = R.string.kr_nickname,
                 ),
-                content = MyPageFakeData.nickname,
+                content = myPageInState.nickname,
                 onClick = {
                     navController.navigate(
                         route = SimTongScreen.MyPage.FIX_NICKNAME,
@@ -123,7 +131,7 @@ fun MyPageScreen(
                 title = stringResource(
                     id = R.string.eng_email,
                 ),
-                content = MyPageFakeData.email,
+                content = myPageInState.email,
                 onClick = {
                     navController.navigate(
                         route = SimTongScreen.MyPage.FIX_EMAIL,
@@ -134,7 +142,7 @@ fun MyPageScreen(
                 title = stringResource(
                     id = R.string.kr_workplace,
                 ),
-                content = MyPageFakeData.workplace,
+                content = myPageInState.spot,
                 onClick = {
                     navController.navigate(
                         route = SimTongScreen.MyPage.FIX_WORKPLACE,
@@ -145,7 +153,8 @@ fun MyPageScreen(
                 title = stringResource(
                     id = R.string.kr_change_password,
                 ),
-                content = MyPageFakeData.changePassword,
+                // TODO: SIMT-55
+                content = "*********",
                 onClick = {
                     navController.navigate(
                         route = SimTongScreen.MyPage.FIX_PASSWORD,

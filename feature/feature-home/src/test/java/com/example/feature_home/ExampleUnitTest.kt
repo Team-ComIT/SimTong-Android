@@ -1,6 +1,6 @@
 package com.example.feature_home
 
-import junit.framework.Assert.assertEquals
+import junit.framework.TestCase.assertEquals
 import org.junit.Test
 
 /**
