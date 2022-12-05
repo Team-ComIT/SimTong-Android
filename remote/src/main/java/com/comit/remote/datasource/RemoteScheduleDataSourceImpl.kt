@@ -1,6 +1,7 @@
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteScheduleDataSource
+import com.comit.data.util.simTongApiCall
 import com.comit.model.ScheduleList
 import com.comit.remote.api.ScheduleAPI
 import com.comit.remote.mapper.toModel
@@ -17,8 +18,8 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
 
     override suspend fun fetchPersonalSchedule(
         date: Date,
-    ): ScheduleList {
-        return scheduleAPI.fetchPersonalSchedule(
+    ): ScheduleList = simTongApiCall {
+        scheduleAPI.fetchPersonalSchedule(
             date = date,
         ).toModel()
     }
@@ -28,7 +29,7 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
         startAt: String,
         endAt: String,
         alarm: Time?,
-    ) {
+    ) = simTongApiCall {
         scheduleAPI.addPersonalSchedule(
             request = AddPersonalScheduleRequest(
                 title = title,
@@ -45,7 +46,7 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
         startAt: String,
         endAt: String,
         alarm: Time?,
-    ) {
+    ) = simTongApiCall {
         scheduleAPI.changePersonalSchedule(
             scheduleId = scheduleId,
             request = ChangePersonalScheduleRequest(
@@ -59,7 +60,7 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
 
     override suspend fun deletePersonalSchedule(
         scheduleId: UUID,
-    ) {
+    ) = simTongApiCall {
         scheduleAPI.deletePersonalSchedule(
             scheduleId = scheduleId,
         )

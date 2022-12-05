@@ -1,6 +1,7 @@
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteEmailDataSource
+import com.comit.data.util.simTongApiCall
 import com.comit.remote.api.EmailAPI
 import javax.inject.Inject
 
@@ -10,8 +11,8 @@ class RemoteEmailDataSourceImpl @Inject constructor(
 
     override suspend fun sendEmailCode(
         email: String,
-    ) {
-        return emailAPI.sendEmailCode(
+    ) = simTongApiCall {
+        emailAPI.sendEmailCode(
             email = email,
         )
     }
@@ -19,8 +20,8 @@ class RemoteEmailDataSourceImpl @Inject constructor(
     override suspend fun checkEmailCode(
         email: String,
         code: String,
-    ) {
-        return emailAPI.checkEmailCode(
+    ) = simTongApiCall {
+        emailAPI.checkEmailCode(
             email = email,
             code = code,
         )

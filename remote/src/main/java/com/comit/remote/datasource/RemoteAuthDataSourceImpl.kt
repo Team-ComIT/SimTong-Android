@@ -1,6 +1,7 @@
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteAuthDataSource
+import com.comit.data.util.simTongApiCall
 import com.comit.model.Token
 import com.comit.model.User
 import com.comit.remote.api.AuthAPI
@@ -21,8 +22,8 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun signIn(
         employeeNumber: Int,
         password: String
-    ): Token {
-        return authAPI.signIn(
+    ): Token = simTongApiCall {
+        authAPI.signIn(
             request = SignInRequest(
                 employeeNumber = employeeNumber,
                 password = password,
@@ -33,7 +34,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun verificationEmployee(
         name: String,
         employeeNumber: String,
-    ) {
+    ) = simTongApiCall {
         authAPI.verificationEmployee(
             name = name,
             employeeNumber = employeeNumber,
@@ -47,8 +48,8 @@ class RemoteAuthDataSourceImpl @Inject constructor(
         password: String,
         nickname: String?,
         profileImagePath: String?
-    ): Token {
-        return authAPI.signUp(
+    ): Token = simTongApiCall {
+        authAPI.signUp(
             request = SignUpRequest(
                 name = name,
                 employeeNumber = employeeNumber,
@@ -62,7 +63,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun checkNicknameDuplication(
         nickname: String,
-    ) {
+    ) = simTongApiCall {
         authAPI.checkNicknameDuplication(
             nickname = nickname,
         )
@@ -70,7 +71,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun changeSpot(
         spotId: UUID,
-    ) {
+    ) = simTongApiCall {
         authAPI.changeSpot(
             request = ChangeSpotRequest(
                 spotId = spotId,
@@ -80,7 +81,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun changeProfileImage(
         profileImagePath: String,
-    ) {
+    ) = simTongApiCall {
         authAPI.changeProfileImage(
             request = ChangeProfileImageRequest(
                 profileImagePath = profileImagePath,
@@ -90,7 +91,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun changeEmail(
         email: String,
-    ) {
+    ) = simTongApiCall {
         authAPI.changeEmail(
             request = ChangeEmailRequest(
                 email = email,
@@ -100,7 +101,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun changeNickname(
         nickname: String,
-    ) {
+    ) = simTongApiCall {
         authAPI.changeNickname(
             request = ChangeNicknameRequest(
                 nickname = nickname,
@@ -108,7 +109,8 @@ class RemoteAuthDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun fetchUserInformation(): User {
-        return authAPI.fetchUserInformation().toModel()
-    }
+    override suspend fun fetchUserInformation(): User =
+        simTongApiCall {
+            authAPI.fetchUserInformation().toModel()
+        }
 }
