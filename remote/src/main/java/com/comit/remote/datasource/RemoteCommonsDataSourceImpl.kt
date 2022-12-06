@@ -7,6 +7,8 @@
 package com.comit.remote.datasource
 
 import com.comit.data.datasource.RemoteCommonsDataSource
+import com.comit.data.util.simTongApiCall
+import com.comit.data.util.trySafeReissueToken
 import com.comit.model.SpotList
 import com.comit.model.Token
 import com.comit.remote.api.CommonsAPI
@@ -22,8 +24,8 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
         name: String,
         spotId: String,
         email: String,
-    ): String {
-        return commonsAPI.findEmployeeNumber(
+    ): String = simTongApiCall {
+        commonsAPI.findEmployeeNumber(
             name = name,
             spotId = spotId,
             email = email,
@@ -32,20 +34,16 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
 
     override suspend fun tokenReissue(
         refreshToken: String,
-    ): Token {
-        return try {
-            commonsAPI.tokenReissue(
-                refreshToken = refreshToken,
-            ).toModel()
-        } catch (e: Throwable) {
-            throw IllegalStateException("Need Login")
-        }
+    ): Token = trySafeReissueToken {
+        commonsAPI.tokenReissue(
+            refreshToken = refreshToken,
+        ).toModel()
     }
 
     override suspend fun findAccountExist(
         employeeNumber: Int,
         email: String,
-    ) {
+    ) = simTongApiCall {
         commonsAPI.findAccountExist(
             employeeNumber = employeeNumber,
             email = email,
@@ -54,7 +52,7 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
 
     override suspend fun findEmailDuplication(
         email: String,
-    ) {
+    ) = simTongApiCall {
         commonsAPI.findEmailDuplication(
             email = email,
         )
@@ -63,22 +61,23 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
     override suspend fun changePassword(
         password: String,
         newPassword: String,
-    ) {
+    ) = simTongApiCall {
         commonsAPI.changePassword(
             password = password,
             newPassword = newPassword,
         )
     }
 
-    override suspend fun fetchSpots(): SpotList {
-        return commonsAPI.fetchSpots().toModel()
-    }
+    override suspend fun fetchSpots(): SpotList =
+        simTongApiCall {
+            commonsAPI.fetchSpots().toModel()
+        }
 
     override suspend fun initializationPassword(
         email: String,
         employeeNumber: Int,
         newPassword: String,
-    ) {
+    ) = simTongApiCall {
         commonsAPI.initializationPassword(
             request = InitializationPasswordRequest(
                 email = email,

@@ -49,6 +49,9 @@ private val TextBtnPadding = PaddingValues(
     all = 3.dp,
 )
 
+private const val ErrMsgIdOrPasswordNotCorrect = "사원번호나 비밀번호가 일치하지 않습니다."
+private const val ErrMsgIdIsNotNumber = "사원번호는 숫자로만 이루어져 있어야 합니다."
+
 @OptIn(InternalCoroutinesApi::class)
 @Composable
 fun SignInScreen(
@@ -65,6 +68,19 @@ fun SignInScreen(
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN
                 )
+            }
+            SignInSideEffect.IdOrPasswordNotCorrect -> {
+                vm.inputErrMsgPassword(
+                    msg = ErrMsgIdOrPasswordNotCorrect,
+                )
+            }
+            SignInSideEffect.IdWasNotNumber -> {
+                vm.inputErrMsgEmployeeNumber(
+                    msg = ErrMsgIdIsNotNumber,
+                )
+            }
+            SignInSideEffect.NetworkError -> {
+                // TODO()
             }
         }
     }
@@ -113,8 +129,8 @@ fun SignInScreen(
             text = stringResource(id = R.string.log_in),
             onClick = {
                 vm.signIn(
-                    employeeNumber = 1299999990,
-                    password = "1234567890",
+                    employeeNumber = signInState.employeeNumber,
+                    password = signInState.password,
                 )
             },
             enabled = signInState.employeeNumber.isNotEmpty() &&
