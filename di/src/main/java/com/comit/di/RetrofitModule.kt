@@ -1,7 +1,10 @@
 package com.comit.di
 
 import android.util.Log
+import com.comit.data.datasource.LocalAuthDataSource
+import com.comit.data.datasource.RemoteCommonsDataSource
 import com.comit.data.interceptor.AuthorizationInterceptor
+import com.comit.local.datasource.LocalAuthDataSourceImpl
 import com.comit.remote.api.AuthAPI
 import com.comit.remote.api.CommonsAPI
 import com.comit.remote.api.EmailAPI
@@ -9,6 +12,7 @@ import com.comit.remote.api.FilesAPI
 import com.comit.remote.api.HolidayAPI
 import com.comit.remote.api.MenuAPI
 import com.comit.remote.api.ScheduleAPI
+import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,27 +31,33 @@ object RetrofitModule {
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor { message -> Log.v("HTTP", message) }
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
+            .setLevel(HttpLoggingInterceptor.Level.BASIC)
 
     @Provides
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         authorizationInterceptor: AuthorizationInterceptor,
-    ): OkHttpClient =
+    ): OkHttpClient = synchronized(
+        lock = this,
+    ) {
         OkHttpClient.Builder()
-            .addInterceptor(authorizationInterceptor)
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(authorizationInterceptor)
             .build()
+    }
 
     @Provides
     fun provideRetrofit(
         okHttpClient: OkHttpClient
-    ): Retrofit =
+    ): Retrofit = synchronized(
+        lock = this,
+    ) {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
 
     @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthAPI =
@@ -55,7 +65,7 @@ object RetrofitModule {
 
     @Provides
     fun provideCommonsAPI(retrofit: Retrofit): CommonsAPI =
-        retrofit.create((CommonsAPI::class.java))
+        retrofit.create(CommonsAPI::class.java)
 
     @Provides
     fun provideEmailAPI(retrofit: Retrofit): EmailAPI =

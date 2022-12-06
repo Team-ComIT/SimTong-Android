@@ -3,7 +3,9 @@
 package com.comit.di
 
 import com.comit.data.datasource.LocalAuthDataSource
+import com.comit.data.datasource.RemoteCommonsDataSource
 import com.comit.local.datasource.LocalAuthDataSourceImpl
+import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -41,12 +41,12 @@ abstract class RemoteDataSourceModule {
     @Singleton
     @Binds
     abstract fun provideRemoteCommonsDataSource(
-        remoteCommonsDataSourceImpl: RemoteCommonsDataSourceImpl,
+        remoteCommonsDataSourceImpl: RemoteCommonsDataSourceImpl
     ): RemoteCommonsDataSource
 
     @Singleton
     @Binds
-    abstract fun provideMenuDataSource(
+    abstract fun provideRemoteMenuDataSource(
         remoteMenuDataSourceImpl: RemoteMenuDataSourceImpl,
     ): RemoteMenuDataSource
 
@@ -58,13 +58,13 @@ abstract class RemoteDataSourceModule {
 
     @Singleton
     @Binds
-    abstract fun provideScheduleDataSource(
+    abstract fun provideRemoteScheduleDataSource(
         remoteScheduleDataSourceImpl: RemoteScheduleDataSourceImpl,
     ): RemoteScheduleDataSource
 
     @Singleton
     @Binds
-    abstract fun provideHolidayDataSource(
+    abstract fun provideRemoteHolidayDataSource(
         remoteHolidayDataSourceImpl: RemoteHolidayDataSourceImpl,
     ): RemoteHolidayDataSource
 }

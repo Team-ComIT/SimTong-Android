@@ -17,7 +17,7 @@ object ProvideContext {
     @Provides
     fun provideAuthPreference(
         @ApplicationContext context: Context,
-    ) = AuthPreferenceImpl(
+    ): AuthPreferenceImpl = AuthPreferenceImpl(
         context = context,
     )
 }
