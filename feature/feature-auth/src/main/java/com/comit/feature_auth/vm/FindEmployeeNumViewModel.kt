@@ -2,9 +2,12 @@ package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.usecase.commons.FetchSpotsUseCase
 import com.comit.domain.usecase.commons.FindEmployeeNumberUseCase
 import com.comit.feature_auth.mvi.FindEmployeeNumSideEffect
 import com.comit.feature_auth.mvi.FindEmployeeNumState
+import com.comit.feature_auth.screen.find.findEmployeeNumber.toUiModel
+import com.comit.model.SpotList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
@@ -18,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FindEmployeeNumViewModel @Inject constructor(
     private val findEmployeeNumberUseCase: FindEmployeeNumberUseCase,
+    private val fetchSpotsUseCase: FetchSpotsUseCase,
 ) : ContainerHost<FindEmployeeNumState, FindEmployeeNumSideEffect>, ViewModel() {
 
     override val container =
@@ -45,6 +49,18 @@ class FindEmployeeNumViewModel @Inject constructor(
         }
     }
 
+    fun fetchSpot() = intent {
+        viewModelScope.launch {
+            fetchSpotsUseCase()
+                .onSuccess {
+                    reduce { state.copy(placeList = it.toUiModel()) }
+                    postSideEffect(FindEmployeeNumSideEffect.FetchSpot)
+                }.onFailure {
+
+                }
+        }
+    }
+
     fun inputName(name: String) = intent {
         reduce { state.copy(name = name) }
     }
@@ -55,5 +71,9 @@ class FindEmployeeNumViewModel @Inject constructor(
 
     fun inputPlace(place: String) = intent {
         reduce { state.copy(place = place) }
+    }
+
+    fun inputPlaceId(placeId: String) = intent {
+        reduce { state.copy(placeId = placeId) }
     }
 }

@@ -1,23 +1,25 @@
 package com.comit.feature_auth.screen.find.findEmployeeNumber
 
-import androidx.compose.foundation.Canvas
+import android.service.autofill.OnClickAction
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.RadioButton
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,10 +30,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -43,18 +43,17 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
-import com.comit.core_design_system.modifier.simSelectable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body6
+import com.comit.core_design_system.typography.Body7
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.FindEmployeeNumSideEffect
 import com.comit.feature_auth.vm.FindEmployeeNumViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 const val DefaultPlace = "근무 지점 선택"
@@ -102,20 +101,32 @@ fun FindEmployeeNumScreen(
             is FindEmployeeNumSideEffect.NavigateToResultScreen -> {
                 navigateToResultScreen(it.employeeNum)
             }
+            is FindEmployeeNumSideEffect.FetchSpot -> {
+                coroutineScope.launch {
+                    localFocusManager.clearFocus()
+                    bottomSheetState.show()
+                }
+            }
         }
     }
 
     SimBottomSheetDialog(
+        useHandle = true,
         sheetState = bottomSheetState,
         sheetContent = {
-            FindPlaceBottomSheet(
-                onSelectedPlace = {
+            FindPlaceBottomSheetContent(
+                placeList = state.placeList,
+                onSelectedPlace = { name, id ->
                     findEmployeeNumViewModel.inputPlace(
-                        place = it,
+                        place = name,
                     )
+                    findEmployeeNumViewModel.inputPlaceId(
+                        placeId = id,
+                    )
+                    coroutineScope.launch {
+                        bottomSheetState.hide()
+                    }
                 },
-                coroutineScope = coroutineScope,
-                bottomSheetState = bottomSheetState
             )
         }
     ) {
@@ -124,7 +135,6 @@ fun FindEmployeeNumScreen(
                 .fillMaxHeight()
                 .padding(horizontal = 40.dp)
         ) {
-
             Spacer(modifier = Modifier.height(25.dp))
 
             SimTongTextField(
@@ -142,6 +152,7 @@ fun FindEmployeeNumScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
+            // TODO limsaehyun - 디자인 시스템 활용해야 함
             BasicButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -154,10 +165,7 @@ fun FindEmployeeNumScreen(
                 shape = RoundedCornerShape(5.dp),
                 enabled = true,
                 onClick = {
-                    coroutineScope.launch {
-                        localFocusManager.clearFocus()
-                        bottomSheetState.show()
-                    }
+                    findEmployeeNumViewModel.fetchSpot()
                 },
                 backgroundColor = centerButtonColor,
                 pressedBackgroundColor = SimTongColor.Gray100,
@@ -201,118 +209,81 @@ fun FindEmployeeNumScreen(
     }
 }
 
-data class FindPlaceDataSample(
-    val name: String,
-    val position: String
-)
-
-private const val DefaultSelected: Int = -1
-
-private const val BottomSheetStateHideDelay: Long = 400
-
-private val FakePlace =
-    (1..100).map {
-        FindPlaceDataSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
-    }.toList()
-
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-internal fun FindPlaceBottomSheet(
-    placeList: List<FindPlaceDataSample> = FakePlace,
-    onSelectedPlace: (String) -> Unit,
-    coroutineScope: CoroutineScope,
-    bottomSheetState: ModalBottomSheetState,
+internal fun FindPlaceBottomSheetContent(
+    placeList: List<SpotUiModel>,
+    onSelectedPlace: (String, String) -> Unit,
 ) {
-    val scrollState = rememberScrollState()
-    var selectedValue by remember { mutableStateOf(DefaultSelected) }
 
-    val isSelect: (Int) -> Boolean = { selectedValue == it }
-
-    Column {
+    Column(
+        modifier = Modifier
+            .padding(
+                horizontal = 30.dp,
+                vertical = 32.dp,
+            )
+    ) {
         Body1(
+            modifier = Modifier,
             text = stringResource(id = R.string.choose_place),
-            modifier = Modifier
-                .padding(start = 30.dp, top = 32.dp)
         )
 
         Spacer(modifier = Modifier.height(17.dp))
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(scrollState)
-        ) {
-            FakePlace.forEachIndexed { index, item ->
-                Box(
-                    modifier = Modifier
-                        .height(60.dp)
-                        .simSelectable(
-                            selected = isSelect(index),
-                            onClick = {
-                                selectedValue = index
-                                coroutineScope.launch {
-                                    delay(BottomSheetStateHideDelay)
-                                    bottomSheetState.hide()
-                                }
-                            },
-                            role = Role.RadioButton
-                        )
-                ) {
-
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 30.dp)
-                    ) {
-                        Spacer(modifier = Modifier.height(15.dp))
-
-                        Body4(
-                            text = item.name,
-                            color = SimTongColor.Gray800
-                        )
-
-                        Spacer(modifier = Modifier.height(3.dp))
-
-                        Body8(
-                            text = item.position,
-                            color = SimTongColor.Gray800
-                        )
-                        Canvas(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .wrapContentHeight(Alignment.Bottom)
-                        ) {
-                            val canvasWidth = size.width
-                            val canvasHeight = size.height
-
-                            drawLine(
-                                start = Offset(x = 0f, y = canvasHeight),
-                                end = Offset(x = canvasWidth, y = canvasHeight),
-                                color = SimTongColor.Gray800,
-                                strokeWidth = 0.1F
-                            )
-                        }
+        LazyColumn {
+            itemsIndexed(placeList) { index, place ->
+                FindPlaceBottomSheetContentPlaceBlock(
+                    name = place.name,
+                    location = place.location,
+                    onClick = {
+                        onSelectedPlace(it, place.id)
                     }
-
-                    SimRadioButton(
-                        checked = isSelect(index),
-                        onCheckedChange = {
-                            selectedValue = index
-                            onSelectedPlace(placeList[index].name)
-                            coroutineScope.launch {
-                                delay(BottomSheetStateHideDelay)
-                                bottomSheetState.hide()
-                            }
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentWidth(Alignment.End)
-                            .fillMaxHeight()
-                            .wrapContentHeight(Alignment.CenterVertically)
-                            .padding(end = 33.dp)
-                    )
-                }
+                )
             }
+        }
+    }
+}
+
+@Composable
+private fun FindPlaceBottomSheetContentPlaceBlock(
+    name: String,
+    location: String,
+    onClick: (String) -> Unit,
+) {
+
+    var checked by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = Modifier.height(59.dp),
+    ) {
+        Divider(
+            color = SimTongColor.Gray500,
+            thickness = 0.1.dp,
+        )
+
+        Row(
+            modifier = Modifier.padding(vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Column {
+                Body4(
+                    text = name,
+                    color = SimTongColor.Gray800,
+                )
+                Body8(
+                    text = location,
+                    color = SimTongColor.Gray600,
+                )
+            }
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            SimRadioButton(
+                checked = checked,
+                onCheckedChange = {
+                    checked = true
+                    onClick(name)
+                },
+            )
         }
     }
 }
@@ -339,7 +310,7 @@ fun FindEmployeeNumResultScreen(
         Spacer(modifier = Modifier.height(5.dp))
 
         Body3(
-            text = employeeNumber.toString(),
+            text = employeeNumber,
             color = SimTongColor.Gray800,
             modifier = Modifier
                 .background(
