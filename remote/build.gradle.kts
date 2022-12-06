@@ -38,6 +38,7 @@ android {
 dependencies {
     implementation(projects.model)
     implementation(projects.data)
+    implementation(projects.common)
 
     implementation(Dependency.Kotlin.COROUTINES_CORE)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)
