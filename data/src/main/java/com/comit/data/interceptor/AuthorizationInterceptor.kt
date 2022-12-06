@@ -15,7 +15,8 @@ private data class CustomRequest(
     val method: CustomRestMethod,
 )
 
-// TODO ("모든 Method를 포함하는 ALL 을 만들기 - SIMT-50")
+// TODO ("[중요] limsaehyun - Interceptor 토큰 자동 재발급 로직 - SIMT-60")
+// TODO ("limsaehyun - 모든 Method를 포함하는 ALL 을 만들기 - SIMT-50")
 internal enum class CustomRestMethod {
     GET,
     POST,
@@ -95,7 +96,7 @@ class AuthorizationInterceptor @Inject constructor(
     }
 
     companion object {
-        // TODO ("좀 더 잘 처리하는 방법 고민하기 - SIMT-49")
+        // TODO ("limsaehyun - 좀 더 잘 처리하는 방법 고민하기 - SIMT-49")
         const val BEARER_HEADER = "Bearer"
         const val AUTHORIZATION = "Authorization"
     }
