@@ -42,13 +42,13 @@ private val ignoreRequest = listOf(
     CustomRequest("/users/verification-employee", CustomRestMethod.GET),
     CustomRequest("/users", CustomRestMethod.POST),
     CustomRequest("/users/nickname/duplication", CustomRestMethod.GET),
+    CustomRequest("/commons/spot", CustomRestMethod.GET)
 )
 
 class AuthorizationInterceptor @Inject constructor(
+//    private val remoteCommonsDataSource: RemoteCommonsDataSource,
     private val localAuthDataSource: LocalAuthDataSource,
-    private val remoteCommonsDataSource: RemoteCommonsDataSource,
 ) : Interceptor {
-
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         val path = request.url().encodedPath()
@@ -69,19 +69,19 @@ class AuthorizationInterceptor @Inject constructor(
                 localAuthDataSource.fetchRefreshToken().first()
             }
 
-            val response = runBlocking {
-                remoteCommonsDataSource.tokenReissue(
-                    refreshToken = refreshToken,
-                )
-            }
-
-            runBlocking {
-                localAuthDataSource.apply {
-                    saveAccessToken(response.accessToken)
-                    saveRefreshToken(response.refreshToken)
-                    saveExpiredAt(LocalDateTime.parse(response.accessTokenExp))
-                }
-            }
+//            val response = runBlocking {
+//                remoteCommonsDataSource.tokenReissue(
+//                    refreshToken = refreshToken,
+//                )
+//            }
+//
+//            runBlocking {
+//                localAuthDataSource.apply {
+//                    saveAccessToken(response.accessToken)
+//                    saveRefreshToken(response.refreshToken)
+//                    saveExpiredAt(response.accessTokenExp)
+//                }
+//            }
         }
 
         val accessToken = runBlocking { localAuthDataSource.fetchAccessToken() }
