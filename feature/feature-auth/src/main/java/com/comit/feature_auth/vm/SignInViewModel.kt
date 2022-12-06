@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signIn
+package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
