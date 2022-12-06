@@ -1,5 +1,6 @@
 package com.comit.remote.mapper
 
+import com.comit.common.domain.unit.toLocalDateTime
 import com.comit.model.HolidayList
 import com.comit.model.MenuList
 import com.comit.model.ScheduleList
@@ -19,14 +20,14 @@ import com.comit.remote.response.users.SignUpResponse
 internal fun SignInResponse.toModel() =
     Token(
         accessToken = accessToken,
-        accessTokenExp = accessTokenExp,
+        accessTokenExp = accessTokenExp.toLocalDateTime(),
         refreshToken = refreshToken,
     )
 
 internal fun SignUpResponse.toModel() =
     Token(
         accessToken = accessToken,
-        accessTokenExp = accessTokenExp,
+        accessTokenExp = accessTokenExp.toLocalDateTime(),
         refreshToken = refreshToken,
     )
 
@@ -55,7 +56,7 @@ internal fun FetchSpotsResponse.toModel(): SpotList {
 internal fun ReissueTokenResponse.toModel() =
     Token(
         accessToken = accessToken,
-        accessTokenExp = accessTokenExp,
+        accessTokenExp = accessTokenExp.toLocalDateTime(),
         refreshToken = refreshToken,
     )
 
