@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.find.password
+package com.comit.feature_auth.screen.find.findEmployeeNumber
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
