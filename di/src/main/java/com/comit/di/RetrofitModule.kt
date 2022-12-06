@@ -1,7 +1,14 @@
 package com.comit.di
 
 import android.util.Log
+import com.comit.data.interceptor.AuthorizationInterceptor
 import com.comit.remote.api.AuthAPI
+import com.comit.remote.api.CommonsAPI
+import com.comit.remote.api.EmailAPI
+import com.comit.remote.api.FilesAPI
+import com.comit.remote.api.HolidayAPI
+import com.comit.remote.api.MenuAPI
+import com.comit.remote.api.ScheduleAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,9 +31,11 @@ object RetrofitModule {
 
     @Provides
     fun provideOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        authorizationInterceptor: AuthorizationInterceptor,
     ): OkHttpClient =
         OkHttpClient.Builder()
+            .addInterceptor(authorizationInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .build()
 
@@ -43,4 +52,28 @@ object RetrofitModule {
     @Provides
     fun provideAuthApi(retrofit: Retrofit): AuthAPI =
         retrofit.create(AuthAPI::class.java)
+
+    @Provides
+    fun provideCommonsAPI(retrofit: Retrofit): CommonsAPI =
+        retrofit.create((CommonsAPI::class.java))
+
+    @Provides
+    fun provideEmailAPI(retrofit: Retrofit): EmailAPI =
+        retrofit.create(EmailAPI::class.java)
+
+    @Provides
+    fun provideFilesAPI(retrofit: Retrofit): FilesAPI =
+        retrofit.create(FilesAPI::class.java)
+
+    @Provides
+    fun provideHolidayAPI(retrofit: Retrofit): HolidayAPI =
+        retrofit.create(HolidayAPI::class.java)
+
+    @Provides
+    fun provideMenuAPI(retrofit: Retrofit): MenuAPI =
+        retrofit.create(MenuAPI::class.java)
+
+    @Provides
+    fun provideScheduleAPI(retrofit: Retrofit): ScheduleAPI =
+        retrofit.create(ScheduleAPI::class.java)
 }
