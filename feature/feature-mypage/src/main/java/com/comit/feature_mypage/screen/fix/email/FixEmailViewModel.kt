@@ -1,4 +1,4 @@
-package com.comit.feature_mypage.screen.fix
+package com.comit.feature_mypage.screen.fix.email
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

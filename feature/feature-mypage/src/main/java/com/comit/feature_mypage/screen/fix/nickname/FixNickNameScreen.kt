@@ -73,7 +73,10 @@ internal fun FixNickNameScreen(
 
         SimTongTextField(
             value = fixNickNameInState.nickname,
-            onValueChange = { vm.inPutNickName(it) },
+            onValueChange = {
+                vm.inPutNickName(it)
+                vm.inPutErrMsgNickName(null)
+                            },
             title = stringResource(id = R.string.nick_name_input),
             error = fixNickNameInState.errNicknameMsg,
         )

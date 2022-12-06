@@ -1,4 +1,4 @@
-package com.comit.feature_mypage.screen.fix
+package com.comit.feature_mypage.screen.fix.password
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
+import com.comit.feature_mypage.screen.fix.FixBaseScreen
 import kotlin.math.abs
 
 enum class FixPasswordStep(
