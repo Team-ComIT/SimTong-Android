@@ -37,17 +37,17 @@ class MyPageViewModel @Inject constructor(
                 .onFailure {
                     reduce {
                         state.copy(
-                            name = ERROR_MESSAGE_NAME,
-                            nickname = ERROR_MESSAGE_NICKNAME,
-                            email = ERROR_MESSAGE_EMAIL,
-                            spot = ERROR_MESSAGE_SPOT,
+                            name = EmailException.ERROR_MESSAGE_NAME,
+                            nickname = EmailException.ERROR_MESSAGE_NICKNAME,
+                            email = EmailException.ERROR_MESSAGE_EMAIL,
+                            spot = EmailException.ERROR_MESSAGE_SPOT,
                         )
                     }
                 }
         }
     }
 
-    companion object {
+    private object EmailException {
         const val ERROR_MESSAGE_NAME = "회원님의"
         const val ERROR_MESSAGE_NICKNAME = "정보를"
         const val ERROR_MESSAGE_EMAIL = "불러오는데"
