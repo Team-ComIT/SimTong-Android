@@ -2,7 +2,7 @@ package com.comit.core_design_system.util
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
 
 object MealsTime {
     const val launch = 900
