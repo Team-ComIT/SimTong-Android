@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 object MealsTime {
     const val launch = 900
 
