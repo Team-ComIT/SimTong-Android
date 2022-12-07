@@ -2,12 +2,11 @@ package com.comit.feature_auth.screen.find.password
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,45 +16,47 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 
 @Composable
-fun FindPasswordFixPasswordScreen() {
-    var newPassword by remember { mutableStateOf("") }
-    var newPasswordAgain by remember { mutableStateOf("") }
-    var newPasswordError by remember { mutableStateOf<String?>(null) }
-    var newPasswordAgainError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(newPassword == "" || newPasswordAgain == "")
+fun FindPasswordFixPasswordScreen(
+    newPassword: String,
+    onNewPasswordChanged: (String) -> Unit,
+    newPasswordCheck: String,
+    onNewPasswordCheckChanged: (String) -> Unit,
+    fieldErrNewPassword: String?,
+    fieldErrNewPasswordCheck: String?,
+    fixPassword: () -> Unit,
+) {
 
-    val errorMsg = stringResource(id = R.string.error_message)
+    val buttonEnabled = newPassword.isNotEmpty() && newPasswordCheck.isNotEmpty()
 
     Column(
         modifier = Modifier
-            .padding(start = 40.dp, end = 40.dp)
+            .fillMaxSize()
+            .padding(
+                horizontal = 40.dp,
+            ),
     ) {
         Spacer(modifier = Modifier.height(24.dp))
 
         SimTongTextField(
             value = newPassword,
             onValueChange = {
-                newPassword = it
-                newPasswordError = null
-                newPasswordAgainError = null
+                onNewPasswordChanged(it)
             },
             isPassword = true,
-            error = newPasswordError,
-            hint = stringResource(id = R.string.new_password)
+            error = fieldErrNewPassword,
+            hint = stringResource(id = R.string.new_password),
         )
 
         Spacer(modifier = Modifier.height(25.dp))
 
         SimTongTextField(
-            value = newPasswordAgain,
+            value = newPasswordCheck,
             onValueChange = {
-                newPasswordAgain = it
-                newPasswordError = null
-                newPasswordAgainError = null
+                onNewPasswordCheckChanged(it)
             },
             isPassword = true,
-            error = newPasswordAgainError,
-            hint = stringResource(id = R.string.new_password_again)
+            error = fieldErrNewPasswordCheck,
+            hint = stringResource(id = R.string.new_password_again),
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -63,10 +64,9 @@ fun FindPasswordFixPasswordScreen() {
         SimTongBigRoundButton(
             text = stringResource(id = R.string.next),
             onClick = {
-                newPasswordError = ""
-                newPasswordAgainError = errorMsg
+                fixPassword()
             },
-            enabled = buttonEnabled
+            enabled = buttonEnabled,
         )
     }
 }
