@@ -16,13 +16,13 @@ data class FindPasswordState(
 
 sealed class FindPasswordSideEffect {
 
-    object NavigateToSignIn: FindPasswordSideEffect()
+    object NavigateToSignIn : FindPasswordSideEffect()
 
-    object UserIsAlready: FindPasswordSideEffect()
+    object UserIsAlready : FindPasswordSideEffect()
 
-    object UserNotFound: FindPasswordSideEffect()
+    object UserNotFound : FindPasswordSideEffect()
 
-    object EmailValidError: FindPasswordSideEffect()
+    object EmailValidError : FindPasswordSideEffect()
 
-    object EmployeeNumNotNum: FindPasswordSideEffect()
+    object EmployeeNumNotNum : FindPasswordSideEffect()
 }

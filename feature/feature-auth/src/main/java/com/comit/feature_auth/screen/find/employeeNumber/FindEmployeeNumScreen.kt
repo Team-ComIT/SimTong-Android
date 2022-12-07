@@ -336,6 +336,5 @@ fun PreviewShowEmployeeScreen() {
         name = "임세현",
         employeeNumber = "123213112",
     ) {
-
     }
 }

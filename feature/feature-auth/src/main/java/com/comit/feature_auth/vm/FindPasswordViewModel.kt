@@ -17,8 +17,6 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
-private const val EmployeeNumIsNotNum = "사원번호는 숫자로 이루어져 있어야 합니다."
-
 @HiltViewModel
 class FindPasswordViewModel @Inject constructor(
     private val changePasswordUseCase: ChangePasswordUseCase,
@@ -35,7 +33,7 @@ class FindPasswordViewModel @Inject constructor(
         inputFieldErrEmployeeNum(null)
 
         viewModelScope.launch {
-            if(employeeNum.toIntOrNull() == null) {
+            if (employeeNum.toIntOrNull() == null) {
                 postSideEffect(FindPasswordSideEffect.EmployeeNumNotNum)
                 return@launch
             }
@@ -67,9 +65,7 @@ class FindPasswordViewModel @Inject constructor(
                     newPassword = newPassword
                 )
             ).onSuccess {
-
             }.onFailure {
-
             }
         }
     }

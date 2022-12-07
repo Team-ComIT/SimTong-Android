@@ -42,7 +42,6 @@ class FindEmployeeNumViewModel @Inject constructor(
                     sideEffect = FindEmployeeNumSideEffect.NavigateToResultScreen(it)
                 )
             }.onFailure {
-
             }
         }
     }
@@ -54,7 +53,6 @@ class FindEmployeeNumViewModel @Inject constructor(
                     reduce { state.copy(placeList = it.toUiModel()) }
                     postSideEffect(FindEmployeeNumSideEffect.FetchSpot)
                 }.onFailure {
-
                 }
         }
     }

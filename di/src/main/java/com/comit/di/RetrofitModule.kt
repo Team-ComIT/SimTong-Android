@@ -1,10 +1,7 @@
 package com.comit.di
 
 import android.util.Log
-import com.comit.data.datasource.LocalAuthDataSource
-import com.comit.data.datasource.RemoteCommonsDataSource
 import com.comit.data.interceptor.AuthorizationInterceptor
-import com.comit.local.datasource.LocalAuthDataSourceImpl
 import com.comit.remote.api.AuthAPI
 import com.comit.remote.api.CommonsAPI
 import com.comit.remote.api.EmailAPI
@@ -12,7 +9,6 @@ import com.comit.remote.api.FilesAPI
 import com.comit.remote.api.HolidayAPI
 import com.comit.remote.api.MenuAPI
 import com.comit.remote.api.ScheduleAPI
-import com.comit.remote.datasource.RemoteCommonsDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

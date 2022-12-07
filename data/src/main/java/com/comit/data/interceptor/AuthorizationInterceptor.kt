@@ -1,7 +1,8 @@
+@file:Suppress("UnusedPrivateMember")
+
 package com.comit.data.interceptor
 
 import com.comit.data.datasource.LocalAuthDataSource
-import com.comit.data.datasource.RemoteCommonsDataSource
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor

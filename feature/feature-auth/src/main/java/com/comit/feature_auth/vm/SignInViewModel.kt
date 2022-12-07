@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.usecase.commons.FindEmployeeNumberUseCase
 import com.comit.domain.usecase.users.SignInUseCase
 import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.feature_auth.mvi.SignInState

@@ -82,10 +82,3 @@ fun AuthFindScreen(
         )
     }
 }
-
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
-@Preview(showBackground = true)
-@Composable
-fun PreviewAuthFindScreen() {
-}
