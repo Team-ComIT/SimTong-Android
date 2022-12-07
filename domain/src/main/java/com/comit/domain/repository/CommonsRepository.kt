@@ -1,5 +1,6 @@
 package com.comit.domain.repository
 
+import com.comit.domain.usecase.commons.CheckOldPasswordUseCase
 import com.comit.model.SpotList
 
 interface CommonsRepository {
@@ -26,6 +27,10 @@ interface CommonsRepository {
     suspend fun changePassword(
         password: String,
         newPassword: String,
+    )
+
+    suspend fun checkOldPassword(
+        oldPassword: String,
     )
 
     suspend fun fetchSpots(): SpotList

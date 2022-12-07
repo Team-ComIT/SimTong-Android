@@ -46,6 +46,12 @@ private val ignoreRequest = listOf(
     CustomRequest("/users/nickname/duplication", CustomRestMethod.GET),
     CustomRequest("/commons/spot", CustomRestMethod.GET),
     CustomRequest("/commons/account/existence", CustomRestMethod.GET),
+
+    // TODO: TEST용 인터셉터 고쳐지면 삭제 필수
+    CustomRequest("/users/information", CustomRestMethod.GET),
+    CustomRequest("/users/nickname", CustomRestMethod.PUT),
+    CustomRequest("/commons/password", CustomRestMethod.PUT),
+    CustomRequest("/commons/password/compare", CustomRestMethod.GET),
 )
 
 class AuthorizationInterceptor @Inject constructor(

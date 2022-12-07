@@ -40,6 +40,11 @@ interface CommonsAPI {
         @Query("new_password") newPassword: String,
     )
 
+    @GET("$COMMONS/password/compare")
+    suspend fun checkOldPassword(
+        @Query("password") oldPassword: String,
+    )
+
     @GET("$COMMONS/spot")
     suspend fun fetchSpots(): FetchSpotsResponse
 

@@ -27,7 +27,7 @@ object RetrofitModule {
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor { message -> Log.v("HTTP", message) }
-            .setLevel(HttpLoggingInterceptor.Level.BASIC)
+            .setLevel(HttpLoggingInterceptor.Level.BODY)
 
     @Provides
     fun provideOkHttpClient(
