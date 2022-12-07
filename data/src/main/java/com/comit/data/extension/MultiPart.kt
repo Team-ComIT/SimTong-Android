@@ -1,6 +1,7 @@
 package com.comit.data.extension
 
 import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.io.File
@@ -8,7 +9,7 @@ import java.io.File
 internal fun File.toMultipart(
     fileName: String,
 ): MultipartBody.Part {
-    val fileBody = RequestBody.create(MediaType.parse("image/jpeg"), this)
+    val fileBody = RequestBody.create("image/jpeg".toMediaTypeOrNull(), this)
     return MultipartBody.Part.createFormData(fileName, this.name, fileBody)
 }
 
