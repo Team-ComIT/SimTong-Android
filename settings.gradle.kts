@@ -51,7 +51,7 @@ for (project in rootProject.children) {
 rootProject.name = "SimTong-Android"
 include(":app")
 include(":feature")
-include(":common")
+include(":common-util")
 include(":core")
 include(":core-design-system")
 include(":feature:feature-mypage")
@@ -64,3 +64,4 @@ include(":navigator")
 include(":di")
 include(":feature:feature-home")
 include(":model")
+include(":common-compose")
