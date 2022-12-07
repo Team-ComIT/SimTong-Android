@@ -46,6 +46,9 @@ private val ignoreRequest = listOf(
     CustomRequest("/users/nickname/duplication", CustomRestMethod.GET),
     CustomRequest("/commons/spot", CustomRestMethod.GET),
     CustomRequest("/commons/account/existence", CustomRestMethod.GET),
+    CustomRequest("/emails/code", CustomRestMethod.POST),
+    CustomRequest("/emails", CustomRestMethod.GET),
+    CustomRequest("/commons/password/initialization", CustomRestMethod.PUT)
 )
 
 class AuthorizationInterceptor @Inject constructor(
