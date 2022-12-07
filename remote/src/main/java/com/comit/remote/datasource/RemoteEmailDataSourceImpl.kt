@@ -3,6 +3,7 @@ package com.comit.remote.datasource
 import com.comit.data.datasource.RemoteEmailDataSource
 import com.comit.data.util.simTongApiCall
 import com.comit.remote.api.EmailAPI
+import com.comit.remote.request.emails.EmailCodeRequest
 import javax.inject.Inject
 
 class RemoteEmailDataSourceImpl @Inject constructor(
@@ -13,7 +14,9 @@ class RemoteEmailDataSourceImpl @Inject constructor(
         email: String,
     ) = simTongApiCall {
         emailAPI.sendEmailCode(
-            email = email,
+            request = EmailCodeRequest(
+                email = email,
+            ),
         )
     }
 

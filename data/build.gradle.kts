@@ -39,6 +39,7 @@ android {
 dependencies {
     implementation(projects.model)
     implementation(projects.domain)
+    implementation(projects.commonUtil)
 
     implementation(Dependency.Moshi.MOSHI)
     kapt(Dependency.Moshi.MOSHI_COMPILER)
@@ -49,6 +50,8 @@ dependencies {
 
     implementation(Dependency.Retrofit.RETROFIT)
     implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
+
+    implementation(Dependency.OkHttp.OKHTTP)
 
     implementation(Dependency.Room.ROOM_KTX)
     kapt(Dependency.Room.ROOM_COMPILER)
