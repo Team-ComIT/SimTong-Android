@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.signIn
+package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -29,6 +29,7 @@ class SignInViewModel @Inject constructor(
         password: String,
     ) = intent {
         viewModelScope.launch {
+            clearErrorMessage()
 
             try {
                 employeeNumber.toInt()
@@ -39,8 +40,8 @@ class SignInViewModel @Inject constructor(
 
             signInUseCase(
                 params = SignInUseCase.Params(
-                    employeeNumber = employeeNumber.toInt(),
-                    password = password
+                    employeeNumber = 1299999990,
+                    password = "1234567890"
                 ),
             ).onSuccess {
                 postSideEffect(SignInSideEffect.NavigateToHomeScreen)
@@ -54,6 +55,11 @@ class SignInViewModel @Inject constructor(
         }
     }
 
+    private fun clearErrorMessage() {
+        inputErrMsgPassword(msg = null)
+        inputErrMsgEmployeeNumber(msg = null)
+    }
+
     fun inputEmployeeNumber(employeeNumber: String) = intent {
         reduce { state.copy(employeeNumber = employeeNumber) }
     }
@@ -62,11 +68,11 @@ class SignInViewModel @Inject constructor(
         reduce { state.copy(password = msg) }
     }
 
-    fun inputErrMsgEmployeeNumber(msg: String) = intent {
+    fun inputErrMsgEmployeeNumber(msg: String?) = intent {
         reduce { state.copy(errMsgEmployeeNumber = msg) }
     }
 
-    fun inputErrMsgPassword(msg: String) = intent {
+    fun inputErrMsgPassword(msg: String?) = intent {
         reduce { state.copy(errMsgPassword = msg) }
     }
 }

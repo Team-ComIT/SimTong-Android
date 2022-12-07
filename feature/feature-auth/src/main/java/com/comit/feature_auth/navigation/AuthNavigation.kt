@@ -12,7 +12,7 @@ import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
-@OptIn(ExperimentalPagerApi::class, ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalPagerApi::class)
 fun NavGraphBuilder.authNavigation(
     navController: NavController,
 ) {

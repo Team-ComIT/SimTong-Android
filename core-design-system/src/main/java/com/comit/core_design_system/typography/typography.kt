@@ -13,6 +13,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
@@ -175,6 +176,7 @@ fun Title1(
     color: Color = SimTongColor.Black,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -184,6 +186,7 @@ fun Title1(
         text = text,
         style = SimTongTypography.title1,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -194,6 +197,7 @@ fun Title2(
     color: Color = SimTongColor.Black,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -203,6 +207,7 @@ fun Title2(
         text = text,
         style = SimTongTypography.title2,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -213,6 +218,7 @@ fun Title3(
     color: Color = SimTongColor.Black,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -222,6 +228,7 @@ fun Title3(
         text = text,
         style = SimTongTypography.title3,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -232,6 +239,7 @@ fun Body1(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -241,6 +249,7 @@ fun Body1(
         text = text,
         style = SimTongTypography.body1,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -251,6 +260,7 @@ fun Body2(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -260,6 +270,7 @@ fun Body2(
         text = text,
         style = SimTongTypography.body2,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -270,6 +281,7 @@ fun Body3(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -279,6 +291,7 @@ fun Body3(
         text = text,
         style = SimTongTypography.body3,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -289,6 +302,7 @@ fun Body4(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -298,6 +312,7 @@ fun Body4(
         text = text,
         style = SimTongTypography.body4,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -308,6 +323,7 @@ fun Body5(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -317,6 +333,7 @@ fun Body5(
         text = text,
         style = SimTongTypography.body5,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -327,6 +344,7 @@ fun Body6(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -336,6 +354,7 @@ fun Body6(
         text = text,
         style = SimTongTypography.body6,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -346,6 +365,7 @@ fun Body7(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -355,6 +375,7 @@ fun Body7(
         text = text,
         style = SimTongTypography.body7,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -365,6 +386,7 @@ fun Body8(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -374,6 +396,7 @@ fun Body8(
         text = text,
         style = SimTongTypography.body8,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -384,6 +407,7 @@ fun Body9(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -393,6 +417,7 @@ fun Body9(
         text = text,
         style = SimTongTypography.body9,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -405,6 +430,7 @@ fun UnderlineBody9(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -431,6 +457,7 @@ fun UnderlineBody9(
         },
         style = SimTongTypography.body9,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -441,6 +468,7 @@ fun Body10(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -450,6 +478,7 @@ fun Body10(
         text = text,
         style = SimTongTypography.body10,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -460,6 +489,7 @@ fun Body11(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -469,6 +499,7 @@ fun Body11(
         text = text,
         style = SimTongTypography.body11,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -479,6 +510,7 @@ fun Body12(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -488,6 +520,7 @@ fun Body12(
         text = text,
         style = SimTongTypography.body12,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -500,6 +533,7 @@ fun UnderlineBody12(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -526,6 +560,7 @@ fun UnderlineBody12(
         },
         style = SimTongTypography.body12,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -536,6 +571,7 @@ fun Body13(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -545,6 +581,7 @@ fun Body13(
         text = text,
         style = SimTongTypography.body13,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -556,6 +593,7 @@ fun LineHeightBody13(
     rippleEnabled: Boolean = false,
     lineHeight: TextUnit,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -565,7 +603,8 @@ fun LineHeightBody13(
         text = text,
         style = SimTongTypography.body13,
         color = color,
-        lineHeight = lineHeight
+        lineHeight = lineHeight,
+        textAlign = textAlign,
     )
 }
 
@@ -576,6 +615,7 @@ fun Body14(
     color: Color = SimTongColor.Gray800,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -585,6 +625,7 @@ fun Body14(
         text = text,
         style = SimTongTypography.body14,
         color = color,
+        textAlign = textAlign,
     )
 }
 
@@ -595,6 +636,7 @@ fun Error(
     color: Color = SimTongColor.Error,
     rippleEnabled: Boolean = false,
     onClick: (() -> Unit)? = null,
+    textAlign: TextAlign = TextAlign.Start,
 ) {
     Text(
         modifier = modifier.simClickable(
@@ -604,5 +646,6 @@ fun Error(
         text = text,
         style = SimTongTypography.body8,
         color = color,
+        textAlign = textAlign,
     )
 }

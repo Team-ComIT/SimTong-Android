@@ -1,5 +1,6 @@
 package com.comit.data.datasource
 
+import com.comit.model.Token
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
 
@@ -12,4 +13,6 @@ interface LocalAuthDataSource {
     suspend fun saveAccessToken(token: String)
     suspend fun saveRefreshToken(token: String)
     suspend fun saveExpiredAt(expiredAt: LocalDateTime)
+
+    suspend fun saveToken(token: Token)
 }
