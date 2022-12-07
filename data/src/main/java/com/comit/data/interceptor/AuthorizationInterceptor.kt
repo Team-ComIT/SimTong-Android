@@ -52,6 +52,7 @@ private val ignoreRequest = listOf(
     CustomRequest("/users/nickname", CustomRestMethod.PUT),
     CustomRequest("/commons/password", CustomRestMethod.PUT),
     CustomRequest("/commons/password/compare", CustomRestMethod.GET),
+    CustomRequest("/users/spot",CustomRestMethod.PUT),
 )
 
 class AuthorizationInterceptor @Inject constructor(

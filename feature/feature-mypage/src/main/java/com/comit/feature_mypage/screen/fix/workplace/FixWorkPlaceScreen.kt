@@ -1,6 +1,5 @@
 package com.comit.feature_mypage.screen.fix.workplace
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,34 +32,21 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.ToastWrapper
+import com.comit.common.rememberToast
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.modifier.simSelectable
-import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_mypage.R
-import com.comit.feature_mypage.mvi.FetchWorkPlaceSideEffect
-import com.comit.feature_mypage.mvi.FetchWorkPlaceState
+import com.comit.feature_mypage.mvi.FixWorkPlaceSideEffect
 import kotlinx.coroutines.InternalCoroutinesApi
-
-private var placeName by mutableStateOf(SignInDefault.DefaultPlaceName)
-
-object SignInDefault {
-    const val DefaultPlaceName = "근무 지점 선택"
-}
-
-data class WorkPlaceSample(
-    val name: String,
-    val position: String
-)
+import java.util.UUID
 
 private const val DefaultSelected: Int = -1
-
-private const val ItemsSampleMapperStart: Int = 1
-private const val ItemsSampleMapperEnd: Int = 100
 
 private val FixWorkPlaceHeight: Dp = 60.dp
 
@@ -75,27 +61,27 @@ private const val FetchWorkPlaceFail = "근무지점 리스트를 불러오는�
 @Composable
 fun FixWorkPlaceScreen(
     navController: NavController,
-    fetchWorkPlaceViewModel: FetchWorkPlaceViewModel = hiltViewModel(),
+    vm: FixWorkPlaceViewModel = hiltViewModel(),
 ) {
-    val fetchWorkPlaceContainer = fetchWorkPlaceViewModel.container
-    val fetchWorkPlaceState = fetchWorkPlaceContainer.stateFlow.collectAsState().value
-    val fetchWorkPlaceSideEffect = fetchWorkPlaceContainer.sideEffectFlow
+    val toast = rememberToast()
 
-    fetchWorkPlaceViewModel.fetchWorkPlace()
+    val fixWorkPlaceContainer = vm.container
+    val fixWorkPlaceState = fixWorkPlaceContainer.stateFlow.collectAsState().value
+    val fixWorkPlaceSideEffect = fixWorkPlaceContainer.sideEffectFlow
 
-    fetchWorkPlaceSideEffect.observeWithLifecycle() {
+    vm.fetchWorkPlace()
+
+    fixWorkPlaceSideEffect.observeWithLifecycle() {
         when (it) {
-            FetchWorkPlaceSideEffect.FetchWorkPlaceFail -> {
-                fetchWorkPlaceViewModel.inPutErrMsg(FetchWorkPlaceFail)
-            }
+            FixWorkPlaceSideEffect.ChangeWorkPlaceSuccess -> navController.popBackStack()
+            FixWorkPlaceSideEffect.ChangeWorkPlaceFail -> toast(message = fixWorkPlaceState.errMsgSpotId)
+            FixWorkPlaceSideEffect.FetchWorkPlaceFail -> vm.inPutErrMsg(FetchWorkPlaceFail)
         }
     }
     
     val scrollState = rememberScrollState()
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
     val isSelect: (Int) -> Boolean = { selectedValue == it }
-
-    var enabledSideBtn by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Header(
@@ -104,9 +90,9 @@ fun FixWorkPlaceScreen(
             headerText = stringResource(id = R.string.work_place_fix),
             sideBtnText = stringResource(id = R.string.check),
             enabledBackBtn = true,
-            enabledTextBtn = enabledSideBtn,
+            enabledTextBtn = fixWorkPlaceState.spotId != null,
             onTextBtnClicked = {
-                // TODO ("수정 요청 보내기")
+                vm.changeWorkPlace(fixWorkPlaceState.spotId!!)
             },
             onPrevious = {
                 navController.popBackStack()
@@ -120,7 +106,7 @@ fun FixWorkPlaceScreen(
                 .fillMaxWidth()
                 .verticalScroll(scrollState),
         ) {
-            fetchWorkPlaceState.spotList.forEachIndexed { index, item ->
+            fixWorkPlaceState.spotList.forEachIndexed { index, item ->
                 Box(
                     modifier = Modifier
                         .height(FixWorkPlaceHeight)
@@ -128,8 +114,7 @@ fun FixWorkPlaceScreen(
                             selected = isSelect(index),
                             onClick = {
                                 selectedValue = index
-                                placeName = item.name
-                                enabledSideBtn = true
+                                vm.inPutSpotId(UUID.fromString(item.id))
                             },
                             role = Role.RadioButton,
                         )
@@ -189,15 +174,14 @@ fun FixWorkPlaceScreen(
                         checked = isSelect(index),
                         onCheckedChange = {
                             selectedValue = index
-                            placeName = item.name
-                            enabledSideBtn = true
+                            vm.inPutSpotId(UUID.fromString(item.id))
                         },
                     )
                 }
             }
         }
 
-        Body4(text = fetchWorkPlaceState.errMsgSpotList)
+        Body4(text = fixWorkPlaceState.errMsgSpotList)
     }
 }
 
