@@ -16,6 +16,7 @@ import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.OtherHttpException
 import com.comit.domain.exception.ServerException
 import com.comit.domain.exception.TimeOutException
+import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.UnknownException
 import kotlinx.coroutines.Dispatchers
@@ -53,6 +54,9 @@ suspend inline fun <T> simTongApiCall(
                 message = e.message(),
             )
             409 -> ConflictException(
+                message = e.message(),
+            )
+            429 -> TooManyRequestException(
                 message = e.message(),
             )
             500, 501, 502, 503 -> ServerException(

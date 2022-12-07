@@ -79,3 +79,7 @@ class OtherHttpException(
 class UnknownException(
     override val message: String?,
 ) : RuntimeException()
+
+class TooManyRequestException(
+    override val message: String?
+) : RuntimeException()
