@@ -130,8 +130,8 @@ fun SignInScreen(
             text = stringResource(id = R.string.log_in),
             onClick = {
                 vm.signIn(
-                    employeeNumber = signInState.employeeNumber,
-                    password = signInState.password,
+                    employeeNumber = "129999999",
+                    password = "1234567890",
                 )
             },
             enabled = signInState.employeeNumber.isNotEmpty() &&

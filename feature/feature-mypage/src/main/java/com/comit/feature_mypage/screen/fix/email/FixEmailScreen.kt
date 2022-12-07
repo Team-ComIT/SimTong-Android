@@ -26,6 +26,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core.observeWithLifecycle
+import com.comit.common.rememberToast
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.color.SimTongColor
@@ -35,6 +36,7 @@ import com.comit.core_design_system.util.AnimatedScreenSlide
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
+import com.comit.feature_mypage.mvi.FixEmailState
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -42,16 +44,16 @@ import kotlinx.coroutines.delay
 @Stable
 private val InputCertificationNumberTotalTime: Int = 180
 
-private var email = mutableStateOf("")
-private var certificationNumber = mutableStateOf("")
-
-private const val EmailTextErrorException = ""
-private const val EmailCertificationException = ""
-private const val SameEmailException = ""
-private const val ServerException = ""
-private const val NoInternetException = ""
-
 // TODO: 에러 메세지 표시지는 추가가 필요합니다/
+private const val SendCodeFinish = "인증 코드 전송을 성공하였습니다."
+private const val EmailTextErrorException = "이메일 형식이 올바르지 않습니다."
+private const val TooManyRequestsException =
+    "e-mail 인증코드는 30분 최대 5회 발급 가능합니다.\n" +
+        "잠시뒤 다시 시도해주세요."
+private const val SameEmailException = "이미 사용중인 이메일입니다."
+private const val ServerException = "서버와 통신에 실패했습니다."
+private const val NoInternetException = "인터넷 연결 상태를 확인해주세요."
+private const val CheckCodeFail = "인증 코드가 알맞지 않습니다"
 
 @OptIn(InternalCoroutinesApi::class)
 @ExperimentalPagerApi
@@ -64,16 +66,20 @@ internal fun FixEmailScreen(
     val fixEmailState = fixEmailContainer.stateFlow.collectAsState().value
     val fixEmailEffect = fixEmailContainer.sideEffectFlow
 
+    var isLastPage by remember { mutableStateOf(false) }
+    val toast = rememberToast()
+
     fixEmailEffect.observeWithLifecycle {
         when (it) {
-            FixEmailSideEffect.FixEmailFinish -> {
-
+            FixEmailSideEffect.SendCodeFinish -> {
+                isLastPage = true
+                toast(message = SendCodeFinish)
             }
             FixEmailSideEffect.EmailTextErrorException -> {
                 vm.inputErrMsgEmail(msg = EmailTextErrorException)
             }
-            FixEmailSideEffect.EmailCertificationException -> {
-                vm.inputErrMsgEmail(msg = EmailCertificationException)
+            FixEmailSideEffect.TooManyRequestsException -> {
+                vm.inputErrMsgEmail(msg = TooManyRequestsException)
             }
             FixEmailSideEffect.SameEmailException -> {
                 vm.inputErrMsgEmail(msg = SameEmailException)
@@ -84,54 +90,70 @@ internal fun FixEmailScreen(
             FixEmailSideEffect.NoInternetException -> {
                 vm.inputErrMsgEmail(msg = NoInternetException)
             }
+            FixEmailSideEffect.CheckCodeSuccess -> {
+                navController.popBackStack()
+            }
+            FixEmailSideEffect.CheckCodeFail -> {
+                vm.inputErrMsgCode(msg = CheckCodeFail)
+            }
         }
     }
-
-    var emailError by remember { mutableStateOf<String?>(null) }
-
-    var isLastPage by remember { mutableStateOf(false) }
 
     val headerText =
         if (isLastPage) stringResource(id = R.string.certification_number_input)
         else stringResource(id = R.string.email_fix)
 
     val btnText =
-        if (isLastPage) stringResource(id = R.string.certification_number_get)
-        else stringResource(id = R.string.check)
+        if (isLastPage) stringResource(id = R.string.check)
+        else stringResource(id = R.string.certification_number_get)
 
     val textTitle =
         if (isLastPage) stringResource(id = R.string.certification_number)
         else stringResource(id = R.string.email_input)
 
     val btnEnabled =
-        if (isLastPage) certificationNumber.value.isNotEmpty()
-        else email.value.isNotEmpty()
+        if (isLastPage) fixEmailState.code.length == 6
+        else fixEmailState.email.isNotEmpty()
 
     FixBaseScreen(
         header = headerText,
         onPrevious = {
             if (!isLastPage) {
-                email.value = ""
                 navController.popBackStack()
             } else {
-                certificationNumber.value = ""
+                vm.inputMsgCode(msg = "")
+                vm.inputErrMsgCode(msg = null)
             }
             isLastPage = !isLastPage
         },
         btnText = btnText,
         onNext = {
-            emailError = ""
-            isLastPage = true
+            if (isLastPage) {
+                vm.checkEmailCode(
+                    email = fixEmailState.email,
+                    code = fixEmailState.code
+                )
+            } else {
+                isLastPage = true
+            }
         },
         btnEnabled = btnEnabled
     ) {
 
         if (!isLastPage) {
-            InputEmailScreen(textTitle = textTitle)
+            InputEmailScreen(
+                textTitle = textTitle,
+                vm = vm,
+                fixEmailState = fixEmailState
+            )
         }
 
         AnimatedScreenSlide(visible = isLastPage) {
-            InputCertificationNumber(textTitle = textTitle)
+            InputCertificationNumber(
+                textTitle = textTitle,
+                vm = vm,
+                fixEmailState = fixEmailState
+            )
         }
     }
 }
@@ -139,20 +161,26 @@ internal fun FixEmailScreen(
 @Composable
 private fun InputEmailScreen(
     textTitle: String,
+    vm: FixEmailViewModel,
+    fixEmailState: FixEmailState,
 ) {
     Column() {
         Spacer(modifier = Modifier.height(16.dp))
 
         SimTongTextField(
-            value = email.value,
-            onValueChange = { email.value = it },
-            title = textTitle
+            value = fixEmailState.email,
+            onValueChange = {
+                vm.inputMsgEmail(msg = it)
+                vm.inputErrMsgEmail(msg = null)
+            },
+            title = textTitle,
+            error = fixEmailState.errEmail
         )
     }
 }
 
 @Stable
-private val InputCertificationNumberHeight: Dp = 70.dp
+private val InputCertificationNumberHeight: Dp = 90.dp
 
 @Stable
 private val OneMinute: Int = 60
@@ -166,6 +194,8 @@ private val CheckDigit: Int = 10
 @Composable
 internal fun InputCertificationNumber(
     textTitle: String,
+    vm: FixEmailViewModel,
+    fixEmailState: FixEmailState,
 ) {
 
     val leftTime = stringResource(id = R.string.left_time)
@@ -191,10 +221,14 @@ internal fun InputCertificationNumber(
 
         Box(modifier = Modifier.height(InputCertificationNumberHeight)) {
             SimTongTextField(
-                value = certificationNumber.value,
-                onValueChange = { certificationNumber.value = it },
+                value = fixEmailState.code,
+                onValueChange = {
+                    vm.inputMsgCode(msg = it)
+                    vm.inputErrMsgCode(msg = null)
+                },
                 title = textTitle,
-                keyboardType = KeyboardType.Number
+                keyboardType = KeyboardType.Number,
+                error = fixEmailState.errCode
             )
 
             Body10(
@@ -207,12 +241,12 @@ internal fun InputCertificationNumber(
             )
         }
 
-        Spacer(modifier = Modifier.height(18.dp))
-
         SimTongBigRoundButton(
             text = stringResource(id = R.string.resend),
             color = SimTongButtonColor.WHITE,
             onClick = {
+                vm.inputMsgCode(msg = "")
+                vm.inputErrMsgCode(msg = null)
                 totalTime = InputCertificationNumberTotalTime
             }
         )

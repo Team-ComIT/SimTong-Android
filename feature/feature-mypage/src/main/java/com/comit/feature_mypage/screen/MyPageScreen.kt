@@ -102,9 +102,7 @@ fun MyPageScreen(
             // TODO ("갤러리 접근")
         }
 
-        Spacer(modifier = Modifier.height(90.dp))
-
-        MyPageDescription(
+        MyPageDescriptionNoClickable(
             title = stringResource(
                 id = R.string.kr_name,
             ),
@@ -154,15 +152,6 @@ fun MyPageScreen(
                 )
             }
         )
-        MyPageDescriptionImage(
-            title = stringResource(
-                id = R.string.kr_my_page_sign_in
-            ),
-            color = SimTongColor.MainColor300,
-            onClick = {
-                // TODO 로그아웃
-            }
-        )
     }
 }
 
@@ -194,6 +183,32 @@ private fun MyPageProfileImage(
         ) {
             onClickAddBtn()
         }
+    }
+}
+
+@Composable
+private fun MyPageDescriptionNoClickable(
+    title: String,
+    content: String,
+) {
+    Row(
+        modifier = Modifier
+            .height(45.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Body5(
+            text = title,
+            color = SimTongColor.Gray800
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Body5(
+            text = content,
+            color = SimTongColor.Gray300
+        )
     }
 }
 

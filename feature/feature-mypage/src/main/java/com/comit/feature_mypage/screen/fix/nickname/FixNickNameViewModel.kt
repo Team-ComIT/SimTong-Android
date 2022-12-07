@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
+import com.comit.domain.exception.ForBiddenException
 import com.comit.domain.exception.ServerException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.usecase.users.ChangeNicknameUseCase
@@ -39,6 +40,7 @@ class FixNickNameViewModel @Inject constructor(
                 when (it) {
                     is BadRequestException -> postSideEffect(FixNickNameSideEffect.NickNameTextException)
                     is UnAuthorizedException -> postSideEffect(FixNickNameSideEffect.TokenException)
+                    is ForBiddenException -> postSideEffect(FixNickNameSideEffect.TokenException)
                     is ConflictException -> postSideEffect(FixNickNameSideEffect.SameNickNameException)
                     is ServerException -> postSideEffect(FixNickNameSideEffect.ServerException)
                 }
@@ -50,7 +52,7 @@ class FixNickNameViewModel @Inject constructor(
         reduce { state.copy(nickname = msg) }
     }
 
-    fun inPutErrMsgNickName(msg: String) = intent {
+    fun inPutErrMsgNickName(msg: String?) = intent {
         reduce { state.copy(errNicknameMsg = msg) }
     }
 }
