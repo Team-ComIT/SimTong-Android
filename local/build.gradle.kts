@@ -33,7 +33,8 @@ android {
 dependencies {
     implementation(projects.data)
     implementation(projects.model)
-    implementation(projects.common)
+    implementation(projects.commonUtil)
+    implementation(projects.commonCompose)
 
     implementation(Dependency.Room.ROOM_RUNTIME)
     implementation(Dependency.Room.ROOM_KTX)

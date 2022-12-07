@@ -1,10 +1,11 @@
 plugins {
     id(BuildPlugins.ANDROID_LIBRARY_PLUGIN)
-    id(BuildPlugins.KOTLIN_ANDROID)
+    id(BuildPlugins.KOTLIN_ANDROID_PLUGIN)
     id(BuildPlugins.KOTLIN_KAPT)
 }
 
 android {
+    namespace = "com.commit.common"
     compileSdk = ProjectProperties.COMPILE_SDK_VERSION
 
     defaultConfig {
@@ -33,22 +34,22 @@ android {
     kotlinOptions {
         jvmTarget = ProjectProperties.JAVA_VERSION.toString()
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
+        kotlinCompilerVersion = ProjectProperties.KOTLIN_VERSION
+    }
 }
 
 dependencies {
-    implementation(projects.model)
-    implementation(projects.data)
-    implementation(projects.commonUtil)
+    implementation(projects.coreDesignSystem)
 
-    implementation(Dependency.Kotlin.COROUTINES_CORE)
-    implementation(Dependency.Kotlin.COROUTINES_ANDROID)
-
-    implementation(Dependency.Hilt.HILT_ANDROID)
-    kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
-
-    implementation(Dependency.Retrofit.RETROFIT)
-    implementation(Dependency.Retrofit.RETROFIT_CONVERTER_GSON)
-
-    testImplementation(Dependency.UnitTest.JUNIT)
-    testImplementation(Dependency.UnitTest.MOCKITO)
+    implementation(Dependency.Compose.COMPOSE_ACTIVITY)
+    implementation(Dependency.Compose.COMPOSE_MATERIAL)
+    implementation(Dependency.Compose.COMPOSE_UI)
+    implementation(Dependency.Compose.COMPOSE_UI_TOOL)
 }

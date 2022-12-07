@@ -22,12 +22,12 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.comit.common.compose.noRippleClickable
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcon
+import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9

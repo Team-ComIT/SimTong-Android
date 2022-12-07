@@ -46,6 +46,8 @@ dependencies {
     implementation(projects.navigator)
     implementation(projects.domain)
     implementation(projects.core)
+    implementation(projects.commonUtil)
+    implementation(projects.commonCompose)
     implementation(projects.coreDesignSystem)
 
     implementation(Dependency.Ui.CORE_KTX)

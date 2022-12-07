@@ -1,4 +1,4 @@
-package com.comit.common.compose
+package com.comit.common
 
 import android.content.Context
 import android.widget.Toast
