@@ -48,6 +48,7 @@ dependencies {
     implementation(projects.core)
     implementation(projects.coreDesignSystem)
     implementation(projects.commonUtil)
+    implementation(projects.commonCompose)
     implementation(projects.model)
 
     implementation(Dependency.Ui.CORE_KTX)

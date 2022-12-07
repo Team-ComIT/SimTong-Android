@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.compose.SimTongSimpleLayout
-import com.comit.common.domain.format.isPasswordFormat
+import com.comit.common.format.isPasswordFormat
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.BigHeader

@@ -13,7 +13,6 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 import com.comit.core_design_system.util.runIf
 
-@Stable
 fun Modifier.simClickable(
     rippleEnabled: Boolean = true,
     rippleColor: Color? = null,
@@ -33,7 +32,6 @@ fun Modifier.simClickable(
     }
 }
 
-@Stable
 fun Modifier.noRippleClickable(
     onClick: () -> Unit,
 ): Modifier = composed {
@@ -45,7 +43,6 @@ fun Modifier.noRippleClickable(
     }
 }
 
-@Stable
 fun Modifier.simSelectable(
     selected: Boolean,
     rippleEnabled: Boolean = true,

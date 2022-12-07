@@ -5,6 +5,7 @@ plugins {
 }
 
 android {
+    namespace = "com.commit.common"
     compileSdk = ProjectProperties.COMPILE_SDK_VERSION
 
     defaultConfig {
@@ -25,15 +26,6 @@ android {
         }
     }
 
-    buildFeatures {
-        compose = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.COMPOSE
-        kotlinCompilerVersion = ProjectProperties.KOTLIN_VERSION
-    }
-
     compileOptions {
         sourceCompatibility = ProjectProperties.JAVA_VERSION
         targetCompatibility = ProjectProperties.JAVA_VERSION
@@ -42,17 +34,22 @@ android {
     kotlinOptions {
         jvmTarget = ProjectProperties.JAVA_VERSION.toString()
     }
+
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.COMPOSE
+        kotlinCompilerVersion = ProjectProperties.KOTLIN_VERSION
+    }
 }
 
 dependencies {
-    implementation(projects.commonCompose)
+    implementation(projects.coreDesignSystem)
 
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
+    implementation(Dependency.Compose.COMPOSE_MATERIAL)
+    implementation(Dependency.Compose.COMPOSE_UI)
     implementation(Dependency.Compose.COMPOSE_UI_TOOL)
-
-    implementation(Dependency.LifeCycle.LIFECYCLE_RUNTIME)
-
-    implementation(Dependency.Kotlin.KOTLIN_STDLIB)
-    implementation(Dependency.Kotlin.COROUTINES_ANDROID)
-    implementation(Dependency.Kotlin.COROUTINES_CORE)
 }

@@ -26,9 +26,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.comit.common.domain.unit.dp
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
+import com.comit.core_design_system.util.dp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 const val CARD_HEIGHT = 56
