@@ -1,8 +1,7 @@
 package com.comit.feature_auth.mvi
 
-import com.comit.feature_auth.screen.find.findEmployeeNumber.DefaultPlace
-import com.comit.feature_auth.screen.find.findEmployeeNumber.SpotUiModel
-import java.util.UUID
+import com.comit.feature_auth.screen.find.employeeNumber.DefaultPlace
+import com.comit.feature_auth.screen.find.employeeNumber.SpotUiModel
 
 data class FindEmployeeNumState(
 

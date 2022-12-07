@@ -1,6 +1,5 @@
-package com.comit.feature_auth.screen.find.findEmployeeNumber
+package com.comit.feature_auth.screen.find.employeeNumber
 
-import android.service.autofill.OnClickAction
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
@@ -13,13 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Divider
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.RadioButton
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,12 +43,10 @@ import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body6
-import com.comit.core_design_system.typography.Body7
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.FindEmployeeNumSideEffect
 import com.comit.feature_auth.vm.FindEmployeeNumViewModel
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 

@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.find.findEmployeeNumber
+package com.comit.feature_auth.screen.find
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
@@ -19,6 +19,9 @@ import androidx.navigation.NavController
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.TabBar
 import com.comit.feature_auth.R
+import com.comit.feature_auth.screen.find.employeeNumber.FindEmployeeNumResultScreen
+import com.comit.feature_auth.screen.find.employeeNumber.FindEmployeeNumScreen
+import com.comit.feature_auth.screen.find.password.FindPasswordScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 private val AuthFindScreenTabBarHeight = 35.dp
@@ -27,34 +30,18 @@ private const val FindEmployeeNumberScreen = 0
 private const val FindPasswordScreen = 1
 private const val FindEmployeeResultScreen = 2
 
-//TODO(limsaehyun - 더미 데이터 교체 필요)
-@ExperimentalPagerApi
 @ExperimentalMaterialApi
+@ExperimentalPagerApi
 @Composable
 fun AuthFindScreen(
     navController: NavController,
 ) {
-
-    AuthFindScreenBasic(
-        onPrevious = {
-            navController.popBackStack()
-        },
-    )
-}
-
-@ExperimentalMaterialApi
-@ExperimentalPagerApi
-@Composable
-private fun AuthFindScreenBasic(
-    onPrevious: () -> Unit,
-) {
     Column {
-
         var index by remember { mutableStateOf(0) }
         var number by remember { mutableStateOf("") }
 
         BigHeader {
-            onPrevious()
+            navController.popBackStack()
         }
 
         Spacer(modifier = Modifier.height(31.dp))
@@ -77,11 +64,17 @@ private fun AuthFindScreenBasic(
                                 number = it
                             }
                         )
-                        FindPasswordScreen -> FindPasswordScreen()
+                        FindPasswordScreen -> FindPasswordScreen(
+                            onPrevious = {
+                                navController.popBackStack()
+                            }
+                        )
                         FindEmployeeResultScreen -> FindEmployeeNumResultScreen(
                             name = "asd",
                             employeeNumber = number,
-                            onPrevious = onPrevious,
+                            onPrevious = {
+                                navController.popBackStack()
+                            },
                         )
                     }
                 }

@@ -1,4 +1,4 @@
-package com.comit.feature_auth.screen.find.findEmployeeNumber
+package com.comit.feature_auth.screen.find.employeeNumber
 
 import com.comit.model.SpotList
 

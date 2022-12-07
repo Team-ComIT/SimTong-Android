@@ -6,11 +6,9 @@ import com.comit.domain.usecase.commons.FetchSpotsUseCase
 import com.comit.domain.usecase.commons.FindEmployeeNumberUseCase
 import com.comit.feature_auth.mvi.FindEmployeeNumSideEffect
 import com.comit.feature_auth.mvi.FindEmployeeNumState
-import com.comit.feature_auth.screen.find.findEmployeeNumber.toUiModel
-import com.comit.model.SpotList
+import com.comit.feature_auth.screen.find.employeeNumber.toUiModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect

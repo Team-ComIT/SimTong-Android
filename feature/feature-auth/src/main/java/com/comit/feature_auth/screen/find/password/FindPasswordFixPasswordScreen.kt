@@ -18,7 +18,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 
 @Composable
-fun FixPasswordScreen() {
+fun FindPasswordFixPasswordScreen() {
     var newPassword by remember { mutableStateOf("") }
     var newPasswordAgain by remember { mutableStateOf("") }
     var newPasswordError by remember { mutableStateOf<String?>(null) }
@@ -72,8 +72,3 @@ fun FixPasswordScreen() {
     }
 }
 
-@Preview
-@Composable
-fun PreviewFixPassword() {
-    FixPasswordScreen()
-}
