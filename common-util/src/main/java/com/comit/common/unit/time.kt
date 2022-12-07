@@ -1,4 +1,4 @@
-package com.comit.common.domain.unit
+package com.comit.common.unit
 
 import android.annotation.SuppressLint
 import java.text.SimpleDateFormat

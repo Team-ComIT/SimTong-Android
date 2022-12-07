@@ -1,6 +1,6 @@
 @file:Suppress("ComplexCondition")
 
-package com.comit.common.domain.scope
+package com.comit.common.kotlin
 
 inline fun <T1 : Any, T2 : Any, R : Any> safeLet(
     p1: T1?,

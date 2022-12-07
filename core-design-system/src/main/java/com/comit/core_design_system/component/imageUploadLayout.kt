@@ -26,10 +26,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.comit.common.android.parse.parseBitmap
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
+import com.comit.core_design_system.util.parseBitmap
 
 private const val TakePhotoError: String = "이미지를 가져오던 중 오류가 발생하였습니다."
 

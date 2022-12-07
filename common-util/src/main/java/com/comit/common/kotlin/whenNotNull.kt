@@ -1,4 +1,4 @@
-package com.comit.common.domain.scope
+package com.comit.common.kotlin
 
 fun <T : Any, R : Any> whenAllNotNull(vararg options: T?, block: (List<T>) -> R) {
     if (options.all { it != null }) {
