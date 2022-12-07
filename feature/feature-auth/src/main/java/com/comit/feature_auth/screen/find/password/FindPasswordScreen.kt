@@ -1,89 +1,70 @@
 package com.comit.feature_auth.screen.find.password
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.comit.core_design_system.button.SimTongBigRoundButton
-import com.comit.core_design_system.button.SimTongButtonColor
-import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.component.SimTongTextField
-import com.comit.feature_auth.R
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.comit.core.observeWithLifecycle
+import com.comit.feature_auth.mvi.FindPasswordSideEffect
+import com.comit.feature_auth.vm.FindPasswordViewModel
+import kotlinx.coroutines.InternalCoroutinesApi
 
+private const val FindPasswordCheckUserScreen = 0
+private const val FindPasswordEmailCodeScreen = 1
+private const val FindPasswordFixPasswordScreen = 2
+
+private const val UserNotFound = "입력하신 정보가 올바르지 않습니다"
+private const val EmailValidError = "올바른 이메일 형식을 입력해주세요"
+private const val EmployeeNumNotNum = "사원번호가 올바르지 않은 형태입니다"
+
+@OptIn(InternalCoroutinesApi::class)
 @Composable
-fun FindPasswordScreen() {
-    var employeeNum by remember { mutableStateOf<String?>(null) }
-    var eMail by remember { mutableStateOf<String?>(null) }
-    var employeeNumError by remember { mutableStateOf<String?>(null) }
-    var emailError by remember { mutableStateOf<String?>(null) }
-    val buttonEnabled = !(employeeNum.isNullOrEmpty() || eMail.isNullOrEmpty())
+fun FindPasswordScreen(
+    onPrevious: () -> Unit,
+    findPasswordViewModel: FindPasswordViewModel = hiltViewModel(),
+) {
+    val container = findPasswordViewModel.container
+    val state = container.stateFlow.collectAsState().value
+    val sideEffect = container.sideEffectFlow
 
-    val errorMsg = stringResource(id = R.string.error_message)
-
-    Column(
-        modifier = Modifier
-            .fillMaxHeight()
-            .padding(horizontal = 40.dp)
-    ) {
-
-        Spacer(modifier = Modifier.height(25.dp))
-
-        SimTongTextField(
-            value = employeeNum ?: "",
-            onValueChange = {
-                employeeNum = it
-                employeeNumError = null
-                emailError = null
-            },
-            hintBackgroundColor = SimTongColor.Gray100,
-            backgroundColor = SimTongColor.Gray50,
-            hint = stringResource(id = R.string.employee_number),
-            error = employeeNumError
-        )
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        SimTongTextField(
-            value = eMail ?: "",
-            onValueChange = {
-                eMail = it
-                employeeNumError = null
-                emailError = null
-            },
-            hintBackgroundColor = SimTongColor.Gray100,
-            backgroundColor = SimTongColor.Gray50,
-            hint = stringResource(id = R.string.eng_email),
-            error = emailError,
-            sideBtnText = stringResource(id = R.string.certification),
-            enabledSideBtn = true,
-            simTongButtonColor = if (eMail.isNullOrEmpty()) SimTongButtonColor.GRAY else SimTongButtonColor.RED,
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        SimTongBigRoundButton(
-            text = stringResource(id = R.string.find_password),
-            onClick = {
-                employeeNumError = ""
-                emailError = errorMsg
-            },
-            enabled = buttonEnabled
-        )
+    sideEffect.observeWithLifecycle {
+        when (it) {
+            is FindPasswordSideEffect.UserNotFound -> {
+                findPasswordViewModel.inputEmail(UserNotFound)
+            }
+            is FindPasswordSideEffect.UserIsAlready -> {
+                findPasswordViewModel.navigatePage(FindPasswordEmailCodeScreen)
+            }
+            is FindPasswordSideEffect.NavigateToSignIn -> {
+                onPrevious()
+            }
+            is FindPasswordSideEffect.EmailValidError -> {
+                findPasswordViewModel.inputFieldErrEmail(EmailValidError)
+            }
+            is FindPasswordSideEffect.EmployeeNumNotNum -> {
+                findPasswordViewModel.inputFieldErrEmployeeNum(EmployeeNumNotNum)
+            }
+        }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun PreviewFindPasswordScreen() {
-    FindPasswordScreen()
+    Crossfade(targetState = state.pageState) { pageState ->
+        when (pageState) {
+            FindPasswordCheckUserScreen -> FindPasswordCheckUserScreen(
+                employeeNumber = state.employeeNumber,
+                email = state.email,
+                fieldErrEmail = state.fieldErrEmail,
+                fieldErrEmployeeNumber = state.fieldErrEmployeeNumber,
+                inputEmail = { findPasswordViewModel.inputEmail(it) },
+                inputEmployeeNum = { findPasswordViewModel.inputEmployeeNum(it) },
+                checkAccountExist = {
+                    findPasswordViewModel.checkAccountExist(
+                        employeeNum = state.employeeNumber,
+                        email = state.email,
+                    )
+                }
+            )
+            FindPasswordEmailCodeScreen -> FindPasswordEmailCodeScreen()
+            FindPasswordFixPasswordScreen -> FindPasswordFixPasswordScreen()
+        }
+    }
 }

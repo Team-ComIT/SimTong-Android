@@ -1,5 +1,6 @@
 package com.comit.data.repository
 
+import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.domain.repository.AuthRepository
 import com.comit.model.User
@@ -8,17 +9,19 @@ import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val remoteAuthDataSource: RemoteAuthDataSource,
+    private val localAuthDataSource: LocalAuthDataSource,
 ) : AuthRepository {
 
     override suspend fun signIn(
         employeeNumber: Int,
         password: String,
     ) {
-        // TODO ("local에 저장")
         remoteAuthDataSource.signIn(
             employeeNumber = employeeNumber,
             password = password,
-        )
+        ).also {
+            localAuthDataSource.saveToken(it)
+        }
     }
 
     override suspend fun verificationEmployee(
@@ -39,7 +42,6 @@ class AuthRepositoryImpl @Inject constructor(
         nickname: String?,
         profileImagePath: String?
     ) {
-        // TODO ("local에 저장")
         remoteAuthDataSource.signUp(
             name = name,
             employeeNumber = employeeNumber,
@@ -47,7 +49,9 @@ class AuthRepositoryImpl @Inject constructor(
             password = password,
             nickname = nickname,
             profileImagePath = profileImagePath,
-        )
+        ).also {
+            localAuthDataSource.saveToken(it)
+        }
     }
 
     override suspend fun checkNicknameDuplication(

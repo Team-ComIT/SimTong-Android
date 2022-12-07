@@ -27,7 +27,7 @@ import com.comit.feature_auth.R
 private val CertificateNumberLength: Int = 6
 
 @Composable
-fun CheckCertificationNumberScreen() {
+fun FindPasswordEmailCodeScreen() {
 
     var certificationNumber by remember { mutableStateOf<String?>(null) }
     var certificationNumberError by remember { mutableStateOf<String?>(null) }
@@ -86,5 +86,5 @@ fun CheckCertificationNumberScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PreviewCheckCertificationNumber() {
-    CheckCertificationNumberScreen()
+    FindPasswordEmailCodeScreen()
 }
