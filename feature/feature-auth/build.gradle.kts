@@ -47,7 +47,7 @@ dependencies {
     implementation(projects.domain)
     implementation(projects.core)
     implementation(projects.coreDesignSystem)
-    implementation(projects.common)
+    implementation(projects.commonUtil)
     implementation(projects.model)
 
     implementation(Dependency.Ui.CORE_KTX)

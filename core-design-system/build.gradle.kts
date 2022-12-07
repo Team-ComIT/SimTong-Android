@@ -44,7 +44,7 @@ android {
 }
 
 dependencies {
-    implementation(projects.common)
+    implementation(projects.commonUtil)
 
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
     implementation(Dependency.Compose.COMPOSE_MATERIAL)
