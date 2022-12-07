@@ -1,5 +1,6 @@
 package com.comit.remote.api
 
+import com.comit.remote.request.emails.EmailCodeRequest
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -9,7 +10,7 @@ interface EmailAPI {
 
     @POST("$EMAILS/code")
     suspend fun sendEmailCode(
-        @Body email: String,
+        @Body request: EmailCodeRequest,
     )
 
     @GET("$EMAILS")
