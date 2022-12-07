@@ -11,6 +11,9 @@
     <string name="sign_up_terms_agreed_all">전체 약관 동의</string>
 
     <!--    용어 정의-->
+    <string name="resend">재전송</string>
+    <string name="check">확인</string>
+
     <string name="mind_share">마음을 나누다.</string>
     <string name="password">비밀번호</string>
     <string name="password_input">비밀번호 입력</string>

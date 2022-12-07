@@ -31,7 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.comit.common.compose.SimTongSimpleLayout
+import com.comit.common.SimTongSimpleLayout
 import com.comit.core_design_system.button.SimTextCheckBox
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor

@@ -1,4 +1,8 @@
-package com.comit.common.compose
+@file:Suppress(
+    "MagicNumber",
+)
+
+package com.comit.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -7,36 +11,62 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.tooling.preview.Preview
+import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.typography.Body10
 import kotlinx.coroutines.delay
 
-@Composable
-fun SimTimer(
-    totalTime: Int,
-) {
-    var totalTime by remember {
-        mutableStateOf(totalTime)
-    }
+private const val MinuteForSecond: Int = 60
 
-    val minute = totalTime / 60
+@Composable
+fun SimCountDownTimer(
+    totalTime: Int,
+    onTimeChanged: (Int) -> Unit,
+    onFinished: (() -> Unit)? = null,
+    onClickRestart: (() -> Unit)? = null,
+) {
+    val minute = totalTime / MinuteForSecond
     val second =
-        if (10 <= totalTime % 60) totalTime % 60
-        else "0" + totalTime % 60
+        if (10 <= totalTime % MinuteForSecond) totalTime % MinuteForSecond
+        else "0" + totalTime % MinuteForSecond
 
     LaunchedEffect(key1 = totalTime) {
         if (totalTime > 0) {
             delay(1000)
-            totalTime -= 1
+            onTimeChanged(totalTime - 1)
+        } else {
+            if (onFinished != null) {
+                onFinished()
+            }
         }
     }
 
-//    Body10(
-//        text = "남은시간 $minute : $second",
-//        color = SimTongColor.MainColor,
-//    )
+    if (totalTime > 0) {
+        Body10(
+            text = "남은시간 $minute : $second",
+            color = SimTongColor.MainColor,
+        )
+    } else {
+        Body10(
+            text = "재전송",
+            color = SimTongColor.MainColor,
+            onClick = {
+                if (onClickRestart != null) {
+                    onClickRestart()
+                }
+            },
+        )
+    }
 }
 
 @Preview
 @Composable
 fun PreviewSimTimer() {
-    SimTimer(totalTime = 100)
+    var totalTime by remember { mutableStateOf(5) }
+
+    SimCountDownTimer(
+        totalTime = totalTime,
+        onClickRestart = {},
+        onTimeChanged = { totalTime = it },
+        onFinished = {}
+    )
 }
