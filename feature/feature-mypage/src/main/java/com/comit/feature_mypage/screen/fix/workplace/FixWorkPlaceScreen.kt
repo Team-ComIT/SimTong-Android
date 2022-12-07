@@ -1,5 +1,6 @@
-package com.comit.feature_mypage.screen.fix
+package com.comit.feature_mypage.screen.fix.workplace
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,15 +30,21 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.modifier.simSelectable
+import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_mypage.R
+import com.comit.feature_mypage.mvi.FetchWorkPlaceSideEffect
+import com.comit.feature_mypage.mvi.FetchWorkPlaceState
+import kotlinx.coroutines.InternalCoroutinesApi
 
 private var placeName by mutableStateOf(SignInDefault.DefaultPlaceName)
 
@@ -61,11 +69,28 @@ private val FixWorkPlaceHeaderPadding = PaddingValues(
     start = 26.dp, end = 30.dp,
 )
 
+private const val FetchWorkPlaceFail = "근무지점 리스트를 불러오는데 실패했습니다."
+
+@OptIn(InternalCoroutinesApi::class)
 @Composable
-internal fun FixWorkPlaceScreen(
+fun FixWorkPlaceScreen(
     navController: NavController,
-    items: List<WorkPlaceSample>,
+    fetchWorkPlaceViewModel: FetchWorkPlaceViewModel = hiltViewModel(),
 ) {
+    val fetchWorkPlaceContainer = fetchWorkPlaceViewModel.container
+    val fetchWorkPlaceState = fetchWorkPlaceContainer.stateFlow.collectAsState().value
+    val fetchWorkPlaceSideEffect = fetchWorkPlaceContainer.sideEffectFlow
+
+    fetchWorkPlaceViewModel.fetchWorkPlace()
+
+    fetchWorkPlaceSideEffect.observeWithLifecycle() {
+        when (it) {
+            FetchWorkPlaceSideEffect.FetchWorkPlaceFail -> {
+                fetchWorkPlaceViewModel.inPutErrMsg(FetchWorkPlaceFail)
+            }
+        }
+    }
+    
     val scrollState = rememberScrollState()
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
     val isSelect: (Int) -> Boolean = { selectedValue == it }
@@ -88,14 +113,14 @@ internal fun FixWorkPlaceScreen(
             },
         )
 
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(15.dp))
 
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .verticalScroll(scrollState),
         ) {
-            items.forEachIndexed { index, item ->
+            fetchWorkPlaceState.spotList.forEachIndexed { index, item ->
                 Box(
                     modifier = Modifier
                         .height(FixWorkPlaceHeight)
@@ -126,7 +151,7 @@ internal fun FixWorkPlaceScreen(
                         Spacer(modifier = Modifier.height(3.dp))
 
                         Body8(
-                            text = item.position,
+                            text = item.location,
                             color = SimTongColor.Gray800,
                         )
                         Canvas(
@@ -171,13 +196,10 @@ internal fun FixWorkPlaceScreen(
                 }
             }
         }
+
+        Body4(text = fetchWorkPlaceState.errMsgSpotList)
     }
 }
-
-internal val fakeItems =
-    (ItemsSampleMapperStart..ItemsSampleMapperEnd).map {
-        WorkPlaceSample("성심당 ${it}호 점", "대전광역시 서구 계룡로 598 롯데백화점 1층")
-    }.toList()
 
 @Preview(showBackground = true)
 @Composable
@@ -185,6 +207,5 @@ fun PreviewFixWorkPlaceScreen() {
 
     FixWorkPlaceScreen(
         navController = rememberNavController(),
-        items = fakeItems,
     )
 }
