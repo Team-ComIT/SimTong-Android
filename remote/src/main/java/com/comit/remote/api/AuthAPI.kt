@@ -9,6 +9,7 @@ import com.comit.remote.request.users.SignUpRequest
 import com.comit.remote.response.users.FetchUserInformationResponse
 import com.comit.remote.response.users.SignInResponse
 import com.comit.remote.response.users.SignUpResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -41,7 +42,7 @@ interface AuthAPI {
     @PUT("$USERS/spot")
     suspend fun changeSpot(
         @Body request: ChangeSpotRequest
-    )
+    ): Response<Unit>
 
     @PUT("$USERS/profile-image")
     suspend fun changeProfileImage(

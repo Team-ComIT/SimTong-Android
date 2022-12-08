@@ -71,12 +71,14 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun changeSpot(
         spotId: UUID,
-    ) = simTongApiCall {
-        authAPI.changeSpot(
-            request = ChangeSpotRequest(
-                spotId = spotId,
+    ) {
+        simTongApiCall {
+            authAPI.changeSpot(
+                request = ChangeSpotRequest(
+                    spotId = spotId,
+                )
             )
-        )
+        }
     }
 
     override suspend fun changeProfileImage(
