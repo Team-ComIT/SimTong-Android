@@ -14,15 +14,14 @@ import com.comit.feature_auth.navigation.authNavigation
 import com.comit.feature_home.navigation.homeNavigation
 import com.comit.feature_mypage.navigation.myPageNavigation
 import com.comit.navigator.SimTongRoute
-import dagger.hilt.android.AndroidEntryPoint
 import com.comit.simtong.handler.SimTongExceptionHandler
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
