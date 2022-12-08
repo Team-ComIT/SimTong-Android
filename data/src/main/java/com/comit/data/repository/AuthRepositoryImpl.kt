@@ -2,14 +2,18 @@ package com.comit.data.repository
 
 import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteAuthDataSource
+import com.comit.data.datasource.RemoteFileDataSource
+import com.comit.data.extension.toMultipart
 import com.comit.domain.repository.AuthRepository
 import com.comit.model.User
+import java.io.File
 import java.util.UUID
 import javax.inject.Inject
 
 class AuthRepositoryImpl @Inject constructor(
     private val remoteAuthDataSource: RemoteAuthDataSource,
     private val localAuthDataSource: LocalAuthDataSource,
+    private val remoteFileDataSource: RemoteFileDataSource,
 ) : AuthRepository {
 
     override suspend fun signIn(
@@ -40,8 +44,10 @@ class AuthRepositoryImpl @Inject constructor(
         email: String,
         password: String,
         nickname: String?,
-        profileImagePath: String?
+        profileImage: File?
     ) {
+        val profileImagePath = profileImage?.let { getImagePathByFile(it) }
+
         remoteAuthDataSource.signUp(
             name = name,
             employeeNumber = employeeNumber,
@@ -96,5 +102,13 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun fetchUserInformation(): User {
         return remoteAuthDataSource.fetchUserInformation()
+    }
+
+    private suspend fun getImagePathByFile(
+        file: File,
+    ): String {
+        return remoteFileDataSource.uploadFile(
+            file = file.toMultipart("file"),
+        )
     }
 }

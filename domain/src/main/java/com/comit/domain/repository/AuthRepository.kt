@@ -1,6 +1,7 @@
 package com.comit.domain.repository
 
 import com.comit.model.User
+import java.io.File
 import java.util.UUID
 
 interface AuthRepository {
@@ -21,7 +22,7 @@ interface AuthRepository {
         email: String,
         password: String,
         nickname: String?,
-        profileImagePath: String?,
+        profileImage: File?,
     )
 
     suspend fun checkNicknameDuplication(

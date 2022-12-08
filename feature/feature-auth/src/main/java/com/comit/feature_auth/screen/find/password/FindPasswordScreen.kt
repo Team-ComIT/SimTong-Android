@@ -57,6 +57,7 @@ fun FindPasswordScreen(
                 toast(
                     message = EmailVerifyAlready,
                 )
+                findPasswordViewModel.navigatePage(FindPasswordFixPasswordScreen)
             }
             is FindPasswordSideEffect.TooManyRequest -> {
                 toast(
