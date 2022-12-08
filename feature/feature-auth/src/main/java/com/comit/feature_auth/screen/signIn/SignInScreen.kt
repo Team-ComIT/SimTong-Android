@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.traceEventEnd
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -68,7 +69,11 @@ fun SignInScreen(
             SignInSideEffect.NavigateToHomeScreen -> {
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN
-                )
+                ) {
+                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
+                        inclusive = true
+                    }
+                }
             }
             SignInSideEffect.IdOrPasswordNotCorrect -> {
                 vm.inputErrMsgPassword(
@@ -134,8 +139,7 @@ fun SignInScreen(
                     password = "1234567890",
                 )
             },
-            enabled = signInState.employeeNumber.isNotEmpty() &&
-                signInState.password.isNotEmpty(),
+            enabled = signInState.employeeNumber.isNotEmpty() && signInState.password.isNotEmpty(),
         )
 
         Spacer(modifier = Modifier.height(16.dp))

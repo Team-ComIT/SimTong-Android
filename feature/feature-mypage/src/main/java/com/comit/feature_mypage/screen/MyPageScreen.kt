@@ -101,6 +101,8 @@ fun MyPageScreen(
         ) {
             // TODO ("갤러리 접근")
         }
+        
+        Spacer(modifier = Modifier.height(80.dp))
 
         MyPageDescriptionNoClickable(
             title = stringResource(
@@ -150,6 +152,25 @@ fun MyPageScreen(
                 navController.navigate(
                     route = SimTongScreen.MyPage.FIX_PASSWORD
                 )
+            }
+        )
+        MyPageDescriptionImage(
+            title = stringResource(
+                id = R.string.kr_my_page_sign_in
+            ),
+            color = SimTongColor.MainColor300,
+            onClick = {
+                // TODO: Token 삭제, 전체 popUp
+                navController.navigate(
+                    route = SimTongScreen.Auth.SIGN_IN
+                ) {
+                    popUpTo(route = SimTongScreen.MyPage.MAIN) {
+                        inclusive = true
+                    }
+                    popUpTo(route = SimTongScreen.Home.MAIN) {
+                        inclusive = true
+                    }
+                }
             }
         )
     }
@@ -274,60 +295,60 @@ private fun MyPageDescriptionImage(
     }
 }
 
-//if (!editMode) {
-//
-//    )
-//    MyPageDescription(
-//        title = stringResource(
-//            id = R.string.kr_change_password,
-//        ),
-//        // TODO: SIMT-55
-//        content = "*********",
-//        onClick = {
-//            navController.navigate(
-//                route = SimTongScreen.MyPage.FIX_PASSWORD,
-//            )
-//        }
-//    )
-//} else {
-//    Spacer(modifier = Modifier.height(19.dp))
-//
-//    Body3(
-//        text = MyPageFakeData.nickname,
-//        color = SimTongColor.Black,
-//    )
-//
-//    Spacer(modifier = Modifier.height(4.dp))
-//
-//    Body5(
-//        text = MyPageFakeData.nickname,
-//        color = SimTongColor.Gray300,
-//    )
-//
-//    Spacer(modifier = Modifier.height(45.dp))
-//
-//    Column(
-//        verticalArrangement = Arrangement.spacedBy(29.dp)
-//    ) {
-//        MyPageEditModeMenu(
-//            title = stringResource(
-//                id = R.string.kr_my_page_edit_my_information,
-//            ),
-//            content = stringResource(
-//                id = R.string.kr_my_page_edit_my_information_description,
-//            ),
-//            enabledNextIcon = true,
-//        ) {
-//        }
-//
-//        MyPageEditModeMenu(
-//            title = stringResource(id = R.string.kr_my_page_sign_in),
-//            titleColor = SimTongColor.MainColor,
-//            content = stringResource(
-//                id = R.string.kr_my_page_sign_in_description,
-//            ),
-//        )
-//    }
+/* if (!editMode) {
+
+    )
+    MyPageDescription(
+        title = stringResource(
+            id = R.string.kr_change_password,
+        ),
+        // TODO: SIMT-55
+        content = "*********",
+        onClick = {
+            navController.navigate(
+                route = SimTongScreen.MyPage.FIX_PASSWORD,
+            )
+        }
+    )
+} else {
+    Spacer(modifier = Modifier.height(19.dp))
+
+    Body3(
+        text = MyPageFakeData.nickname,
+        color = SimTongColor.Black,
+    )
+
+    Spacer(modifier = Modifier.height(4.dp))
+
+    Body5(
+        text = MyPageFakeData.nickname,
+        color = SimTongColor.Gray300,
+    )
+
+    Spacer(modifier = Modifier.height(45.dp))
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(29.dp)
+    ) {
+        MyPageEditModeMenu(
+            title = stringResource(
+                id = R.string.kr_my_page_edit_my_information,
+            ),
+            content = stringResource(
+                id = R.string.kr_my_page_edit_my_information_description,
+            ),
+            enabledNextIcon = true,
+        ) {
+        }
+
+        MyPageEditModeMenu(
+            title = stringResource(id = R.string.kr_my_page_sign_in),
+            titleColor = SimTongColor.MainColor,
+            content = stringResource(
+                id = R.string.kr_my_page_sign_in_description,
+            ),
+        )
+    } */
 
 /* @Composable
 private fun MyPageEditModeMenu(
