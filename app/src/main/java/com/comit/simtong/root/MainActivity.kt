@@ -15,6 +15,7 @@ import com.comit.feature_home.navigation.homeNavigation
 import com.comit.feature_mypage.navigation.myPageNavigation
 import com.comit.navigator.SimTongRoute
 import dagger.hilt.android.AndroidEntryPoint
+import com.comit.simtong.handler.SimTongExceptionHandler
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -22,12 +23,20 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         installSplashScreen()
 
         setContent {
             val navController = rememberNavController()
+
+            Thread.setDefaultUncaughtExceptionHandler(
+                SimTongExceptionHandler(
+                    context = this,
+                    navController = navController,
+                )
+            )
 
             SimTongTheme(
                 darkTheme = false,
