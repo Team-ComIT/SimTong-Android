@@ -7,8 +7,8 @@ import androidx.navigation.navigation
 import com.comit.feature_mypage.screen.MyPageScreen
 import com.comit.feature_mypage.screen.fix.email.FixEmailScreen
 import com.comit.feature_mypage.screen.fix.nickname.FixNickNameScreen
-import com.comit.feature_mypage.screen.fix.workplace.FixWorkPlaceScreen
 import com.comit.feature_mypage.screen.fix.password.FixPassword
+import com.comit.feature_mypage.screen.fix.workplace.FixWorkPlaceScreen
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi

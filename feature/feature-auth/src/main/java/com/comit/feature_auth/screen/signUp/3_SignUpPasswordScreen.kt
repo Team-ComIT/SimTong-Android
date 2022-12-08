@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -30,8 +28,6 @@ import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
-import com.comit.feature_auth.mvi.SignUpState
-import com.comit.feature_auth.vm.SignUpViewModel
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 

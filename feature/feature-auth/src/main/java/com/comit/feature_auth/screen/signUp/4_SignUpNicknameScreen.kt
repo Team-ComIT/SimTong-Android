@@ -1,6 +1,5 @@
 package com.comit.feature_auth.screen.signUp
 
-import android.graphics.Bitmap
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.comit.common.SimTongSimpleLayout
@@ -23,8 +21,6 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 import kotlinx.coroutines.launch
 import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
 
 @Composable
 fun SignUpNicknameScreen(

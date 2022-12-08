@@ -1,6 +1,7 @@
+@file:Suppress("TooManyFunctions")
+
 package com.comit.feature_auth.vm
 
-import android.graphics.Bitmap
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.ConflictException
@@ -120,7 +121,7 @@ class SignUpViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(SignUpSideEffect.NavigateToHome)
             }.onFailure {
-                when(it) {
+                when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.SignUpConflict)
                 }
                 println("SIGNUP ERROR $it")

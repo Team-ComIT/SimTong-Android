@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 package com.comit.feature_auth.screen.signUp
 
 private const val FirstStep: Int = 1

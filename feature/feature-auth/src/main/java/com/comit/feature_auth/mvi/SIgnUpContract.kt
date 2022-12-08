@@ -1,6 +1,5 @@
 package com.comit.feature_auth.mvi
 
-import android.graphics.Bitmap
 import com.comit.feature_auth.screen.signUp.SignUpStep
 import java.io.File
 
@@ -30,19 +29,19 @@ data class SignUpState(
 
 sealed class SignUpSideEffect {
 
-    object NavigateToSignUpName: SignUpSideEffect()
-    object UserInfoMatchingFailed: SignUpSideEffect()
-    object ChangeStepToInputEmail: SignUpSideEffect()
+    object NavigateToSignUpName : SignUpSideEffect()
+    object UserInfoMatchingFailed : SignUpSideEffect()
+    object ChangeStepToInputEmail : SignUpSideEffect()
 
-    object EmailVerifyAlready: SignUpSideEffect()
-    object TooManyRequest: SignUpSideEffect()
-    object NavigateToSignUpVerify: SignUpSideEffect()
-    object EmailCodeNotCorrect: SignUpSideEffect()
+    object EmailVerifyAlready : SignUpSideEffect()
+    object TooManyRequest : SignUpSideEffect()
+    object NavigateToSignUpVerify : SignUpSideEffect()
+    object EmailCodeNotCorrect : SignUpSideEffect()
 
-    object NavigateToSignUpPassword: SignUpSideEffect()
+    object NavigateToSignUpPassword : SignUpSideEffect()
 
-    object NavigateToSignUpNickName: SignUpSideEffect()
+    object NavigateToSignUpNickName : SignUpSideEffect()
 
-    object NavigateToHome: SignUpSideEffect()
-    object SignUpConflict: SignUpSideEffect()
+    object NavigateToHome : SignUpSideEffect()
+    object SignUpConflict : SignUpSideEffect()
 }

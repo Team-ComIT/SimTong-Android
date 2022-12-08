@@ -43,7 +43,6 @@ import com.comit.feature_auth.R
 import kotlinx.coroutines.launch
 import kotlin.math.abs
 
-
 /**
  * TextField의 Offset을 계산합니다.
  */

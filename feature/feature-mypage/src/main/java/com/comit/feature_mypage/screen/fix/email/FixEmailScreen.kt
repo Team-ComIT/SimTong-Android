@@ -25,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.comit.core.observeWithLifecycle
 import com.comit.common.rememberToast
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.color.SimTongColor
@@ -35,8 +35,8 @@ import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.util.AnimatedScreenSlide
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
-import com.comit.feature_mypage.screen.fix.FixBaseScreen
 import com.comit.feature_mypage.mvi.FixEmailState
+import com.comit.feature_mypage.screen.fix.FixBaseScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
