@@ -1,6 +1,7 @@
 package com.comit.domain.usecase.users
 
 import com.comit.domain.repository.AuthRepository
+import java.io.File
 import javax.inject.Inject
 
 class SignUpUseCase @Inject constructor(
@@ -16,7 +17,7 @@ class SignUpUseCase @Inject constructor(
             email = params.email,
             password = params.password,
             nickname = params.nickname,
-            profileImagePath = params.profileImagePath,
+            profileImage = params.profileImage,
         )
     }
 
@@ -26,6 +27,6 @@ class SignUpUseCase @Inject constructor(
         val email: String,
         val password: String,
         val nickname: String?,
-        val profileImagePath: String?,
+        val profileImage: File?,
     )
 }
