@@ -6,6 +6,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.comit.feature_home.screen.HomeScreen
 import com.comit.feature_home.screen.closeday.WriteClosedDayScreen
+import com.comit.feature_home.screen.schedule.ShowSchedule
 import com.comit.navigator.SimTongScreen
 
 fun NavGraphBuilder.homeNavigation(
@@ -27,6 +28,13 @@ fun NavGraphBuilder.homeNavigation(
         ) {
             WriteClosedDayScreen(
                 navController = navController,
+            )
+        }
+        composable(
+            route = SimTongScreen.Home.SHOW_SCHEDULE,
+        ) {
+            ShowSchedule(
+                navController = navController
             )
         }
     }

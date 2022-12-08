@@ -45,6 +45,7 @@ import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title3
 import com.comit.core_design_system.util.currentMealsTime
 import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 
@@ -107,9 +108,7 @@ fun HomeScreen(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .height(HomeScreenTopRowHeight)
-                    .noRippleClickable { },
+                modifier = Modifier.height(HomeScreenTopRowHeight),
             ) {
                 Title3(text = stringResource(id = R.string.calendar))
 
@@ -127,6 +126,11 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(HomeCalendarHeight)
+                    .noRippleClickable {
+                        navController.navigate(
+                            route = SimTongScreen.Home.SHOW_SCHEDULE
+                        )
+                    }
             )
 
             Spacer(modifier = Modifier.height(30.dp))
