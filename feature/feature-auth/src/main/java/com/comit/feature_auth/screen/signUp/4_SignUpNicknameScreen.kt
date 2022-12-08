@@ -1,3 +1,5 @@
+@file:Suppress("UnusedPrivateMember")
+
 package com.comit.feature_auth.screen.signUp
 
 import androidx.activity.compose.BackHandler
@@ -56,7 +58,7 @@ fun SignUpNicknameScreen(
 
                 SimImageUploadLayout(
                     imageFile = {
-                        onProfileImgChanged(it)
+//                        onProfileImgChanged(it) TODO("SIMT-67")
                     },
                     onError = {
                         toast(
