@@ -2,7 +2,6 @@ package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.usecase.users.SignInUseCase
@@ -49,7 +48,6 @@ class SignInViewModel @Inject constructor(
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
                     is NotFoundException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
-                    is NoInternetException -> postSideEffect(SignInSideEffect.NetworkError)
                 }
             }
         }
