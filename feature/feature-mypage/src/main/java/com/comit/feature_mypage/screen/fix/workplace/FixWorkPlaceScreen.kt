@@ -187,7 +187,6 @@ fun FixWorkPlaceScreen(
     }
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewFixWorkPlaceScreen() {
