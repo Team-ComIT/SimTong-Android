@@ -1,5 +1,6 @@
 package com.comit.feature_mypage.screen.fix.password
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -102,11 +103,12 @@ internal fun FixPassword(
                 isLastPage = true
                 fixPasswordStep = FixPasswordStep.CHECK_PASSWORD
             }
-            FixPasswordStep.CHECK_PASSWORD ->
+            FixPasswordStep.CHECK_PASSWORD -> {
                 vm.fixPassword(
                     password = fixPasswordInState.oldPassword,
                     newPassword = fixPasswordInState.password,
                 )
+            }
         }
     }
     val btnBack = {

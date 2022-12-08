@@ -13,6 +13,7 @@ import com.comit.model.SpotList
 import com.comit.model.Token
 import com.comit.remote.api.CommonsAPI
 import com.comit.remote.mapper.toModel
+import com.comit.remote.request.commons.ChangePasswordRequest
 import com.comit.remote.request.commons.InitializationPasswordRequest
 import javax.inject.Inject
 
@@ -63,8 +64,10 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
         newPassword: String,
     ) = simTongApiCall {
         commonsAPI.changePassword(
-            password = password,
-            newPassword = newPassword,
+            request = ChangePasswordRequest(
+                password = password,
+                newPassword = newPassword,
+            )
         )
     }
 

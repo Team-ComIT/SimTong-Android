@@ -1,5 +1,6 @@
 package com.comit.remote.api
 
+import com.comit.remote.request.commons.ChangePasswordRequest
 import com.comit.remote.request.commons.InitializationPasswordRequest
 import com.comit.remote.response.commons.EmployeeNumberResponse
 import com.comit.remote.response.commons.FetchSpotsResponse
@@ -36,8 +37,7 @@ interface CommonsAPI {
 
     @PUT("$COMMONS/password")
     suspend fun changePassword(
-        @Query("password") password: String,
-        @Query("new_password") newPassword: String,
+        @Body request: ChangePasswordRequest,
     )
 
     @GET("$COMMONS/password/compare")
