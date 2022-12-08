@@ -14,7 +14,7 @@ class SignUpStep {
         NAME("이름을 입력해주세요.", FirstStep),
         EMPLOYEE_NUMBER("사원번호를 입력해주세요.", SecondStep),
         EMAIL("이메일을 입력해주세요.", ThirdStep),
-        AGREED("약관을 동의해주세요.", FourthStep),
+//        AGREED("약관을 동의해주세요.", FourthStep),
     }
 
     enum class InputPassword(
