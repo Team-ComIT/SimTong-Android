@@ -19,7 +19,7 @@ import javax.inject.Inject
 class FixPasswordViewModel @Inject constructor(
     private val checkOldPasswordUseCase: CheckOldPasswordUseCase,
     private val changePasswordUseCase: ChangePasswordUseCase,
-) : ContainerHost<FixPasswordState, FixPasswordInSideEffect>, ViewModel(){
+) : ContainerHost<FixPasswordState, FixPasswordInSideEffect>, ViewModel() {
 
     override val container = container<FixPasswordState, FixPasswordInSideEffect>(FixPasswordState())
 
@@ -70,6 +70,6 @@ class FixPasswordViewModel @Inject constructor(
     }
 
     fun inPutErrPassword(msg: String?) = intent {
-        reduce { state.copy(errMsgPassword = msg)}
+        reduce { state.copy(errMsgPassword = msg) }
     }
 }

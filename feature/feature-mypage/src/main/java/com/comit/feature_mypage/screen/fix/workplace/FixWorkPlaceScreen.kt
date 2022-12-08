@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.comit.common.ToastWrapper
 import com.comit.common.rememberToast
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimRadioButton
@@ -78,8 +77,8 @@ fun FixWorkPlaceScreen(
             FixWorkPlaceSideEffect.FetchWorkPlaceFail -> vm.inPutErrMsg(FetchWorkPlaceFail)
         }
     }
-    
     val scrollState = rememberScrollState()
+
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
     val isSelect: (Int) -> Boolean = { selectedValue == it }
 

@@ -60,7 +60,7 @@ class FixWorkPlaceViewModel @Inject constructor(
         reduce { state.copy(spotId = msg) }
     }
 
-    fun inPutErrMsg(msg: String) = intent{
+    fun inPutErrMsg(msg: String) = intent {
         reduce { state.copy(errMsgSpotList = msg) }
     }
 }
