@@ -15,6 +15,14 @@
     <string name="schedule_comment">일정 작성</string>
     <string name="schedule_fix">일정 수정</string>
     <string name="schedule_make">일정 생성</string>
+    <string name="title">제목</string>
+    <string name="title_hint">제목을 입력해주세요.</string>
+    <string name="date">날짜</string>
+    <string name="date_start_hint">XXXX.XX.XX 부터</string>
+    <string name="date_finish_hint">XXXX.XX.XX 까지</string>
+    <string name="alarm">알림</string>
+    <string name="alarm_hint">XX 시 XX 분</string>
+    <string name="check">확인</string>
 
     <!--달력-->
     <string name="calendar_rest_day">휴</string>
