@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterialApi::class)
 
-package com.comit.feature_home.screen
+package com.comit.feature_home.screen.closeday
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
