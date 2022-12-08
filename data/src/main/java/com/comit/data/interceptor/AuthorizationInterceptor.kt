@@ -56,6 +56,7 @@ private val ignoreRequest = listOf(
     CustomRequest("/commons/account/existence", CustomRestMethod.GET),
     CustomRequest("/emails/code", CustomRestMethod.POST),
     CustomRequest("/emails", CustomRestMethod.GET),
+    CustomRequest("/files", CustomRestMethod.POST),
     CustomRequest("/commons/password/initialization", CustomRestMethod.PUT),
 )
 
@@ -69,7 +70,8 @@ class AuthorizationInterceptor @Inject constructor(
 
         if (method == CustomRestMethod.ALL && ignoreRequest.any { it.path == path }) {
             return chain.proceed(request)
-        } else if (ignoreRequest.contains(CustomRequest(path, method))) {
+        }
+        if (ignoreRequest.contains(CustomRequest(path, method))) {
             return chain.proceed(request)
         }
 

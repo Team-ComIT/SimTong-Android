@@ -8,9 +8,9 @@ import android.os.Build
 import android.provider.MediaStore
 import androidx.annotation.RequiresApi
 
-@RequiresApi(Build.VERSION_CODES.P)
+@Suppress("DEPRECATION", "NewApi")
 internal fun Uri.parseBitmap(context: Context): Bitmap {
-    return when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) { // 28
+    return when (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         true -> {
             val source = ImageDecoder.createSource(context.contentResolver, this)
             ImageDecoder.decodeBitmap(source)
