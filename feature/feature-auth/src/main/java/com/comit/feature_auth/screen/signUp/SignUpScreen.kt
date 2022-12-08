@@ -1,5 +1,7 @@
 package com.comit.feature_auth.screen.signUp
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.animation.Crossfade
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

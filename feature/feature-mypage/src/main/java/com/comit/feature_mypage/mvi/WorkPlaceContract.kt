@@ -32,9 +32,9 @@ fun SpotList.Spot.toStateSpot() = FixWorkPlaceState.Spot(
 
 sealed class FixWorkPlaceSideEffect {
 
-    object ChangeWorkPlaceSuccess: FixWorkPlaceSideEffect()
+    object ChangeWorkPlaceSuccess : FixWorkPlaceSideEffect()
 
-    object ChangeWorkPlaceFail: FixWorkPlaceSideEffect()
+    object ChangeWorkPlaceFail : FixWorkPlaceSideEffect()
 
-    object FetchWorkPlaceFail: FixWorkPlaceSideEffect()
+    object FetchWorkPlaceFail : FixWorkPlaceSideEffect()
 }

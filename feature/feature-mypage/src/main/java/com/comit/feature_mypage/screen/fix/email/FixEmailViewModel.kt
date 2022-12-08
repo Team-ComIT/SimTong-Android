@@ -7,10 +7,8 @@ import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.ServerException
 import com.comit.domain.exception.TooManyRequestsException
-import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.usecase.email.CheckEmailCodeUseCase
 import com.comit.domain.usecase.email.SendEmailCodeUseCase
-import com.comit.domain.usecase.users.ChangeEmailUseCase
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.mvi.FixEmailState
 import dagger.hilt.android.lifecycle.HiltViewModel

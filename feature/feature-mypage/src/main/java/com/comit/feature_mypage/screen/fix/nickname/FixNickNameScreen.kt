@@ -39,7 +39,7 @@ internal fun FixNickNameScreen(
     fixNickNameSideEffect.observeWithLifecycle() {
         when (it) {
             FixNickNameSideEffect.FixNickNameSuccess -> {
-
+                navController.popBackStack()
             }
             FixNickNameSideEffect.NickNameTextException -> {
                 vm.inPutErrMsgNickName(msg = NickNameTextException)
@@ -72,7 +72,7 @@ internal fun FixNickNameScreen(
             onValueChange = {
                 vm.inPutNickName(it)
                 vm.inPutErrMsgNickName(null)
-                            },
+            },
             title = stringResource(id = R.string.nick_name_input),
             error = fixNickNameInState.errNicknameMsg,
         )

@@ -1,6 +1,5 @@
 package com.comit.domain.repository
 
-import com.comit.domain.usecase.commons.CheckOldPasswordUseCase
 import com.comit.model.SpotList
 
 interface CommonsRepository {

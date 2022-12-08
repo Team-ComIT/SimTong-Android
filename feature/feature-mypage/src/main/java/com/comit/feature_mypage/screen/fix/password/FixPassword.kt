@@ -142,15 +142,13 @@ internal fun FixPassword(
         if (isLastPage) stringResource(id = R.string.check)
         else stringResource(id = R.string.next)
 
-    val btnEnabled =
-        when (fixPasswordStep) {
-            FixPasswordStep.OLD_PASSWORD -> fixPasswordInState.oldPassword.isNotEmpty()
-            FixPasswordStep.PASSWORD -> fixPasswordInState.password.isNotEmpty() && fixPasswordInState.oldPassword.isNotEmpty()
-            FixPasswordStep.CHECK_PASSWORD ->
-                passwordCheck == fixPasswordInState.password
-                        && fixPasswordInState.password.isNotEmpty()
-                        && fixPasswordInState.oldPassword.isNotEmpty()
-        }
+    val btnEnabled = when (fixPasswordStep) {
+        FixPasswordStep.OLD_PASSWORD -> fixPasswordInState.oldPassword.isNotEmpty()
+        FixPasswordStep.PASSWORD ->
+            fixPasswordInState.password.isNotEmpty() && fixPasswordInState.oldPassword.isNotEmpty()
+        FixPasswordStep.CHECK_PASSWORD ->
+            passwordCheck == fixPasswordInState.password && fixPasswordInState.password.isNotEmpty()
+    }
 
     FixBaseScreen(
         header = stringResource(id = R.string.password_fix),
@@ -172,7 +170,7 @@ internal fun FixPassword(
                     value = passwordCheck,
                     onValueChange = { passwordCheck = it },
                     title = stringResource(id = R.string.password_input_again),
-                    error = if(fixPasswordInState.errMsgPassword != null) "" else null,
+                    error = if (fixPasswordInState.errMsgPassword != null) "" else null,
                 )
             }
 

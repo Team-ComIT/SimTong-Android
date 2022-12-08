@@ -10,11 +10,11 @@ data class FixPasswordState(
 
 sealed class FixPasswordInSideEffect {
 
-    object OldPasswordCorrect: FixPasswordInSideEffect()
+    object OldPasswordCorrect : FixPasswordInSideEffect()
 
-    object OldPasswordNotCorrect: FixPasswordInSideEffect()
+    object OldPasswordNotCorrect : FixPasswordInSideEffect()
 
-    object FixPasswordSuccess: FixPasswordInSideEffect()
+    object FixPasswordSuccess : FixPasswordInSideEffect()
 
-    object FixPasswordFail: FixPasswordInSideEffect()
+    object FixPasswordFail : FixPasswordInSideEffect()
 }

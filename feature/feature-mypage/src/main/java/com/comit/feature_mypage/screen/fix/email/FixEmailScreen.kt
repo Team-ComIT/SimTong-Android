@@ -44,6 +44,8 @@ import kotlinx.coroutines.delay
 @Stable
 private val InputCertificationNumberTotalTime: Int = 180
 
+private const val EmailLength: Int = 6
+
 // TODO: 에러 메세지 표시지는 추가가 필요합니다/
 private const val SendCodeFinish = "인증 코드 전송을 성공하였습니다."
 private const val EmailTextErrorException = "이메일 형식이 올바르지 않습니다."
@@ -112,7 +114,7 @@ internal fun FixEmailScreen(
         else stringResource(id = R.string.email_input)
 
     val btnEnabled =
-        if (isLastPage) fixEmailState.code.length == 6
+        if (isLastPage) fixEmailState.code.length == EmailLength
         else fixEmailState.email.isNotEmpty()
 
     FixBaseScreen(

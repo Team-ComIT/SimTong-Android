@@ -8,13 +8,13 @@ data class FixNickNameState(
 
 sealed class FixNickNameSideEffect {
 
-    object FixNickNameSuccess: FixNickNameSideEffect()
+    object FixNickNameSuccess : FixNickNameSideEffect()
 
-    object NickNameTextException: FixNickNameSideEffect()
+    object NickNameTextException : FixNickNameSideEffect()
 
-    object TokenException: FixNickNameSideEffect()
+    object TokenException : FixNickNameSideEffect()
 
-    object SameNickNameException: FixNickNameSideEffect()
+    object SameNickNameException : FixNickNameSideEffect()
 
-    object ServerException: FixNickNameSideEffect()
+    object ServerException : FixNickNameSideEffect()
 }
