@@ -136,7 +136,9 @@ internal fun FixEmailScreen(
                     code = fixEmailState.code
                 )
             } else {
-                isLastPage = true
+                vm.sendEmailCode(
+                    email = fixEmailState.email
+                )
             }
         },
         btnEnabled = btnEnabled

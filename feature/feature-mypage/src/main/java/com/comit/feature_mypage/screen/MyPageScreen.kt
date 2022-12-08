@@ -1,8 +1,6 @@
 package com.comit.feature_mypage.screen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,16 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,8 +30,6 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.typography.Body13
-import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
 import com.comit.navigator.SimTongScreen
@@ -101,7 +91,6 @@ fun MyPageScreen(
         ) {
             // TODO ("갤러리 접근")
         }
-        
         Spacer(modifier = Modifier.height(80.dp))
 
         MyPageDescriptionNoClickable(
@@ -286,7 +275,8 @@ private fun MyPageDescriptionImage(
 
         Image(
             painter = painterResource(
-                id = SimTongIcon.Gray400_Next.drawableId),
+                id = SimTongIcon.Gray400_Next.drawableId
+            ),
             contentDescription = SimTongIcon.Gray400_Next.contentDescription,
             modifier = Modifier
                 .fillMaxWidth()
