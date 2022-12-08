@@ -73,8 +73,4 @@ class SignInViewModel @Inject constructor(
     fun inputErrMsgPassword(msg: String?) = intent {
         reduce { state.copy(errMsgPassword = msg) }
     }
-
-    companion object {
-        const val ERROR_MESSAGE_NOT_CORRECT = "정보가 일치하지 않습니다."
-    }
 }

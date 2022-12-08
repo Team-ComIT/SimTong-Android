@@ -56,6 +56,13 @@ class ConflictException(
 ) : RuntimeException()
 
 /**
+ * 요청 횟수 제한이 초과될 경우 발생하는 RuntimeException
+ * HttpStatus가 429일 경우 발생합니다.
+ */
+class TooManyRequestsException(
+    override val message: String?,
+) : RuntimeException()
+/**
  * 서버에서 에러가 발생 할 경우 발생하는 RuntimeException
  * Http Status가 50X일 경우 발생합니다
  */

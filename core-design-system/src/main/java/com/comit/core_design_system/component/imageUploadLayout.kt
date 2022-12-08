@@ -1,11 +1,14 @@
+
 package com.comit.core_design_system.component
 
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Build
 import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -47,7 +50,9 @@ fun SimImageUploadLayout(
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    bitmap = uri.parseBitmap(context)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        bitmap = uri.parseBitmap(context)
+                    }
                     imageFile(bitmap!!)
                 } ?: run {
                     if (onError != null) {
@@ -108,6 +113,7 @@ internal val takePhotoFromAlbumIntent =
         putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
     }
 
+@RequiresApi(Build.VERSION_CODES.P)
 @Preview
 @Composable
 fun PreviewImageUpload() {

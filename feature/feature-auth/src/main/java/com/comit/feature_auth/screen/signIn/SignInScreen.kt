@@ -68,7 +68,11 @@ fun SignInScreen(
             SignInSideEffect.NavigateToHomeScreen -> {
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN
-                )
+                ) {
+                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
+                        inclusive = true
+                    }
+                }
             }
             SignInSideEffect.IdOrPasswordNotCorrect -> {
                 vm.inputErrMsgPassword(
@@ -130,12 +134,18 @@ fun SignInScreen(
             text = stringResource(id = R.string.log_in),
             onClick = {
                 vm.signIn(
-                    employeeNumber = signInState.employeeNumber,
-                    password = signInState.password,
+                    employeeNumber = "129999999",
+                    password = "1234567890",
                 )
+                navController.navigate(
+                    route = SimTongScreen.Home.MAIN
+                ) {
+                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
+                        inclusive = true
+                    }
+                }
             },
-            enabled = signInState.employeeNumber.isNotEmpty() &&
-                signInState.password.isNotEmpty(),
+            enabled = signInState.employeeNumber.isNotEmpty() && signInState.password.isNotEmpty(),
         )
 
         Spacer(modifier = Modifier.height(16.dp))

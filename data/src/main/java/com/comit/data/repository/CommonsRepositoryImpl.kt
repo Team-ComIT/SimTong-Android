@@ -58,6 +58,14 @@ class CommonsRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun checkOldPassword(
+        oldPassword: String
+    ) {
+        remoteCommonsDataSource.checkPassword(
+            oldPassword = oldPassword,
+        )
+    }
+
     override suspend fun fetchSpots(): SpotList {
         return remoteCommonsDataSource.fetchSpots()
     }

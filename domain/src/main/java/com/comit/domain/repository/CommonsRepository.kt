@@ -28,6 +28,10 @@ interface CommonsRepository {
         newPassword: String,
     )
 
+    suspend fun checkOldPassword(
+        oldPassword: String,
+    )
+
     suspend fun fetchSpots(): SpotList
 
     suspend fun initializationPassword(

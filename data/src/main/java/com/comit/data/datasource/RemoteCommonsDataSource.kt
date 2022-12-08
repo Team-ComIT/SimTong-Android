@@ -29,6 +29,10 @@ interface RemoteCommonsDataSource {
         newPassword: String,
     )
 
+    suspend fun checkPassword(
+        oldPassword: String
+    )
+
     suspend fun fetchSpots(): SpotList
 
     suspend fun initializationPassword(
