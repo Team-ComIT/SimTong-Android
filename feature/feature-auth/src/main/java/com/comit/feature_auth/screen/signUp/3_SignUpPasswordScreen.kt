@@ -53,21 +53,25 @@ private fun textFieldOffset(
 
 @Composable
 fun SignUpPasswordScreen(
-    state: SignUpState,
-    viewModel: SignUpViewModel,
+    signUpPasswordStep: SignUpStep.InputPassword,
+    password: String,
+    onPasswordChanged: (String) -> Unit,
+    checkPassword: String,
+    onCheckPasswordChanged: (String) -> Unit,
+    navigatePage: (SignUpStep.InputPassword) -> Unit,
     toPrevious: () -> Unit,
     toNext: () -> Unit,
 ) {
     val toNextBtnClicked = {
-        when (state.signUpPasswordStep) {
-            SignUpStep.InputPassword.Password -> viewModel.navigatePasswordStep(SignUpStep.InputPassword.CheckPassword)
+        when (signUpPasswordStep) {
+            SignUpStep.InputPassword.Password -> navigatePage(SignUpStep.InputPassword.CheckPassword)
             SignUpStep.InputPassword.CheckPassword -> toNext()
         }
     }
 
     val toPreviousBtnClicked = {
-        when (state.signUpPasswordStep) {
-            SignUpStep.InputPassword.CheckPassword -> viewModel.navigatePasswordStep(SignUpStep.InputPassword.Password)
+        when (signUpPasswordStep) {
+            SignUpStep.InputPassword.CheckPassword -> navigatePage(SignUpStep.InputPassword.Password)
             SignUpStep.InputPassword.Password -> toPrevious()
         }
     }
@@ -77,22 +81,19 @@ fun SignUpPasswordScreen(
     val passwordOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputPassword.Password,
-            currentStep = state.signUpPasswordStep,
+            currentStep = signUpPasswordStep,
         )
     )
 
     val checkPasswordOffset by animateDpAsState(
         textFieldOffset(
             step = SignUpStep.InputPassword.CheckPassword,
-            currentStep = state.signUpPasswordStep,
+            currentStep = signUpPasswordStep,
         )
     )
 
-    var password by remember { mutableStateOf("") }
-    var checkPassword by remember { mutableStateOf("") }
-
     val btnEnabled = {
-        when (state.signUpPasswordStep) {
+        when (signUpPasswordStep) {
             SignUpStep.InputPassword.Password -> password.isNotEmpty()
             SignUpStep.InputPassword.CheckPassword -> checkPassword.isNotEmpty()
         }
@@ -119,18 +120,19 @@ fun SignUpPasswordScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 AnimatedVisibility(
-                    visible = state.signUpPasswordStep == SignUpStep.InputPassword.CheckPassword,
+                    visible = signUpPasswordStep == SignUpStep.InputPassword.CheckPassword,
                     enter = TextFieldEnterAnimation,
                 ) {
                     SimTongTextField(
                         modifier = Modifier.offset(y = checkPasswordOffset),
                         value = checkPassword,
                         isPassword = true,
-                        onValueChange = { checkPassword = it },
+                        onValueChange = {
+                            onCheckPasswordChanged(it)
+                        },
                         title = stringResource(id = R.string.password_again),
-                        error = if (password == checkPassword)
-                            stringResource(id = R.string.error_message_password)
-                        else null,
+                        error = if (password != checkPassword)
+                            stringResource(id = R.string.error_message_password) else null,
                     )
                 }
 
@@ -140,9 +142,11 @@ fun SignUpPasswordScreen(
                     modifier = Modifier.offset(y = passwordOffset),
                     value = password,
                     isPassword = true,
-                    onValueChange = { password = it },
+                    onValueChange = {
+                        onPasswordChanged(it)
+                    },
                     title = stringResource(id = R.string.password_input),
-                    error = if (isPasswordFormat(password) && password.isNotEmpty()) stringResource(
+                    error = if (!isPasswordFormat(password) && password.isNotEmpty()) stringResource(
                         id = R.string.password_format_message
                     ) else null,
                 )
