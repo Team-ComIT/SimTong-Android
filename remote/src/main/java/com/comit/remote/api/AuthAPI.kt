@@ -57,7 +57,7 @@ interface AuthAPI {
     @PUT("$USERS/nickname")
     suspend fun changeNickname(
         @Body request: ChangeNicknameRequest,
-    )
+    ): Response<Unit>
 
     @GET("$USERS/information")
     suspend fun fetchUserInformation(): FetchUserInformationResponse

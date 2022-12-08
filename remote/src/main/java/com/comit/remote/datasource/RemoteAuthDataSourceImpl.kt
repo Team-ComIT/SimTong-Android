@@ -103,12 +103,14 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun changeNickname(
         nickname: String,
-    ) = simTongApiCall {
-        authAPI.changeNickname(
-            request = ChangeNicknameRequest(
-                nickname = nickname,
+    ) {
+        simTongApiCall {
+            authAPI.changeNickname(
+                request = ChangeNicknameRequest(
+                    nickname = nickname,
+                )
             )
-        )
+        }
     }
 
     override suspend fun fetchUserInformation(): User =
