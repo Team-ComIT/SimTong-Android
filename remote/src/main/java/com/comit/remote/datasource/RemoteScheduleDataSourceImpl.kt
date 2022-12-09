@@ -60,9 +60,11 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
 
     override suspend fun deletePersonalSchedule(
         scheduleId: UUID,
-    ) = simTongApiCall {
-        scheduleAPI.deletePersonalSchedule(
-            scheduleId = scheduleId,
-        )
+    ) {
+        simTongApiCall {
+            scheduleAPI.deletePersonalSchedule(
+                scheduleId = scheduleId,
+            )
+        }
     }
 }

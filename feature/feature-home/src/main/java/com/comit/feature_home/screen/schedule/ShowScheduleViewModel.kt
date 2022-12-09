@@ -2,6 +2,7 @@ package com.comit.feature_home.screen.schedule
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.usecase.schedule.DeletePersonalScheduleUseCase
 import com.comit.domain.usecase.schedule.FetchPersonalScheduleUseCase
 import com.comit.feature_home.mvi.FetchScheduleSideEffect
 import com.comit.feature_home.mvi.FetchScheduleState
@@ -13,12 +14,14 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import java.util.UUID
 import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
 class ShowScheduleViewModel @Inject constructor(
-  private val fetchPersonalScheduleUseCase: FetchPersonalScheduleUseCase
+  private val fetchPersonalScheduleUseCase: FetchPersonalScheduleUseCase,
+  private val deletePersonalScheduleUseCase: DeletePersonalScheduleUseCase,
 ) : ContainerHost<FetchScheduleState, FetchScheduleSideEffect>, ViewModel() {
 
   override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
@@ -37,6 +40,20 @@ class ShowScheduleViewModel @Inject constructor(
         }
       }.onFailure {
         postSideEffect(FetchScheduleSideEffect.FetchScheduleFail)
+      }
+    }
+  }
+
+  fun deleteSchedule(
+    id: UUID
+  ) = intent {
+    viewModelScope.launch {
+      deletePersonalScheduleUseCase(
+        scheduleId = id
+      ).onSuccess {
+        postSideEffect(FetchScheduleSideEffect.DeleteScheduleSuccess)
+      }.onFailure {
+        postSideEffect(FetchScheduleSideEffect.DeleteScheduleFail)
       }
     }
   }

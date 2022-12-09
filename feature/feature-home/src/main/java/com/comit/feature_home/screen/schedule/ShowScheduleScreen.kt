@@ -2,16 +2,13 @@
 
 package com.comit.feature_home.screen.schedule
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,12 +17,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -48,6 +42,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.comit.common.rememberToast
 import com.comit.core.observeWithLifecycle
+import com.comit.core_design_system.button.SimTongButtonColor
+import com.comit.core_design_system.button.SimTongSmallRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
@@ -61,11 +57,13 @@ import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.mvi.FetchScheduleSideEffect
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.sql.Date
-import java.util.*
+import java.util.UUID
+import java.util.GregorianCalendar
+import java.util.Calendar
+
 
 @Stable
 private val HorizontalPadding = PaddingValues(
@@ -113,68 +111,116 @@ fun ShowScheduleScreen(
         showScheduleViewModel.showSchedule(date)
     }
 
-    showScheduleSideEffect.observeWithLifecycle() {
-        when (it) {
-            FetchScheduleSideEffect.FetchScheduleFail -> {
-                toast(message = "일정을 불러오는데 실패했습니다.")
-            }
-        }
-    }
-
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
     val coroutineScope = rememberCoroutineScope()
 
     var scheduleId by remember { mutableStateOf("") }
+    var scheduleTitle by remember { mutableStateOf("") }
+
+    showScheduleSideEffect.observeWithLifecycle() {
+        when (it) {
+            FetchScheduleSideEffect.FetchScheduleFail -> {
+                toast(message = "일정을 불러오는데 실패했습니다.")
+            }
+            FetchScheduleSideEffect.DeleteScheduleSuccess -> {
+                coroutineScope.launch {
+                    bottomSheetState.hide()
+                }
+                showScheduleViewModel.showSchedule(date)
+            }
+            FetchScheduleSideEffect.DeleteScheduleFail -> {
+                toast(message = "일정 삭제를 실패했습니다.")
+            }
+        }
+    }
 
     Column {
         SimBottomSheetDialog(
             sheetState = bottomSheetState,
             sheetContent = {
-                Column(modifier = Modifier.height(200.dp)) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                            .simClickable {
+                var deleteCheck by remember { mutableStateOf(false) }
 
+                if(deleteCheck) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(HorizontalPadding)
+                    ) {
+                        Body3(text = "\"$scheduleTitle\"일정을 삭제합니다.")
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        Row() {
+                            SimTongSmallRoundButton(
+                                text = stringResource(id = R.string.cancel),
+                                color = SimTongButtonColor.GRAY,
+                                modifier = Modifier
+                                    .width(170.dp)
+                                    .height(50.dp)
+                            ) {
+                                deleteCheck = false
                             }
-                    ) {
-                        Spacer(modifier = Modifier.width(30.dp))
 
-                        Body5(text = stringResource(id = R.string.schedule_fix_do))
-                    }
-
-                    Canvas(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(HorizontalPadding)
-                    ) {
-                        val canvasWidth = size.width
-                        val canvasHeight = size.height
-
-                        drawLine(
-                            start = Offset(x = 0f, y = canvasHeight),
-                            end = Offset(x = canvasWidth, y = canvasHeight),
-                            color = SimTongColor.Gray200,
-                            strokeWidth = 2F,
-                        )
-                    }
-
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp)
-                            .simClickable {
-
+                            SimTongSmallRoundButton(
+                                text = stringResource(id = R.string.confirm),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .wrapContentWidth(Alignment.End)
+                                    .width(170.dp)
+                                    .height(50.dp)
+                            ) {
+                                showScheduleViewModel.deleteSchedule(UUID.fromString(scheduleId))
                             }
-                    ) {
-                        Spacer(modifier = Modifier.width(30.dp))
+                        }
+                        
+                        Spacer(modifier = Modifier.height(20.dp))
+                    }
+                } else {
+                    Column(modifier = Modifier.height(200.dp)) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                                .simClickable {
 
-                        Body5(text = stringResource(id = R.string.schedule_delete_do))
+                                }
+                        ) {
+                            Spacer(modifier = Modifier.width(30.dp))
+
+                            Body5(text = stringResource(id = R.string.schedule_fix_do))
+                        }
+
+                        Canvas(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(HorizontalPadding)
+                        ) {
+                            val canvasWidth = size.width
+                            val canvasHeight = size.height
+
+                            drawLine(
+                                start = Offset(x = 0f, y = canvasHeight),
+                                end = Offset(x = canvasWidth, y = canvasHeight),
+                                color = SimTongColor.Gray200,
+                                strokeWidth = 2F,
+                            )
+                        }
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp)
+                                .simClickable {
+                                    deleteCheck = true
+                                }
+                        ) {
+                            Spacer(modifier = Modifier.width(30.dp))
+
+                            Body5(text = stringResource(id = R.string.schedule_delete_do))
+                        }
                     }
                 }
             }
@@ -256,11 +302,12 @@ fun ShowScheduleScreen(
                             start_At = it.start_At,
                             end_At = it.end_At,
                             title = it.title,
-                            onScheduleClicked = { id ->
+                            onScheduleClicked = {
                                 coroutineScope.launch {
                                     bottomSheetState.show()
                                 }
-                                scheduleId = id
+                                scheduleId = it.id
+                                scheduleTitle = it.title
                             },
                         )
                     }
@@ -276,7 +323,7 @@ fun ScheduleItem(
     start_At: String,
     end_At: String,
     title: String,
-    onScheduleClicked: (String) -> Unit,
+    onScheduleClicked: () -> Unit,
 ) {
     val today = false
     val titleColor = if (today) SimTongColor.Gray800 else SimTongColor.Gray300
@@ -288,7 +335,7 @@ fun ScheduleItem(
             .fillMaxWidth()
             .height(48.dp)
             .simClickable {
-                onScheduleClicked(id)
+                onScheduleClicked()
             }
     ) {
         Row(
