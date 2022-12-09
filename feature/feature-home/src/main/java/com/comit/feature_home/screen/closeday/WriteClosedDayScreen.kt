@@ -1,10 +1,11 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class)
 
 package com.comit.feature_home.screen.closeday
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +20,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,39 +29,38 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body6
-import com.comit.feature_home.calendar.SimTongCalendarDate
-import com.comit.feature_home.calendar.SimTongCalendarList
-import com.comit.feature_home.calendar.WeekTopRow
-import com.comit.feature_home.calendar.getWorkCountList
-import com.comit.feature_home.calendar.organizeList
-import com.comit.feature_home.screen.GetHolidayViewModel
+import com.comit.feature_home.calendar.SimTongCalendar
 import com.example.feature_home.R
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.util.Calendar
+import java.sql.Date
 import java.util.GregorianCalendar
 
+
+private val HomeCalendarHeight: Dp = 422.dp
+
 @Stable
-private val SimTongCalendarTotalRound = RoundedCornerShape(20.dp)
+private val CalendarPadding = PaddingValues(
+    horizontal = 20.dp
+)
 
 @Composable
 fun WriteClosedDayScreen(
-    navController: NavController,
-    getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
+    navController: NavController
 ) {
-
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
@@ -78,11 +77,7 @@ fun WriteClosedDayScreen(
     var yearT by remember { mutableStateOf(thisYear) }
     var monthT by remember { mutableStateOf(thisMonth) }
     var dayT by remember { mutableStateOf(thisDay) }
-
-    var checkMonth by remember { mutableStateOf(0) }
-    // var restDayList by remember { mutableStateOf(getRestDayList(getHolidayViewModel, getHolidayState, thisYear, thisMonth)) }
-    var workCountList by remember { mutableStateOf(getWorkCountList(thisYear, thisMonth)) }
-    // var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
+    var date by remember { mutableStateOf<Date>(Date.valueOf("$yearT-$monthT-$dayT")) }
 
     SimBottomSheetDialog(
         useHandle = true,
@@ -117,6 +112,17 @@ fun WriteClosedDayScreen(
                         color = saveColor,
                         onClick = {
                             if (saveEnabled) {
+                                when (workStateText) {
+                                    workClose -> {
+
+                                    }
+                                    workAnnual -> {
+
+                                    }
+                                    else -> {
+
+                                    }
+                                }
                                 coroutineScope.launch {
                                     bottomSheetState.hide()
                                 }
@@ -169,85 +175,34 @@ fun WriteClosedDayScreen(
             }
         }
     ) {
-        var checkMonth by remember { mutableStateOf(0) }
 
-        val today = GregorianCalendar()
-        val calendar = GregorianCalendar(
-            today.get(Calendar.YEAR),
-            today.get(Calendar.MONTH),
-            today.get(Calendar.DATE)
-        )
-
-        var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
-        var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-
-        var workCountList by remember { mutableStateOf(getWorkCountList(year, month)) }
-
-        var calendarList by remember {
-            mutableStateOf(
-                organizeList(
-                    0,
-                    listOf(),
-                    workCountList
-                )
-            )
-        }
-
-        LaunchedEffect(getHolidayViewModel) {
-            getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
-        }
-
-        val lifecycle = LocalLifecycleOwner.current
-        LaunchedEffect(getHolidayViewModel) {
-            getHolidayViewModel.holidayList.observe(lifecycle) {
-                calendarList = organizeList(checkMonth, it, workCountList)
-            }
-        }
-
-        Column(
-            modifier = Modifier
-                .background(
-                    color = SimTongColor.Gray50,
-                    shape = SimTongCalendarTotalRound
-                )
-        ) {
-            Spacer(modifier = Modifier.height(15.dp))
-
-            SimTongCalendarDate(
-                year = year.toString(),
-                month = month.toString(),
-                onBeforeClicked = {
-                    checkMonth--
-                    calendar.add(Calendar.MONTH, checkMonth)
-                    month = calendar.get(Calendar.MONTH) + 1
-                    year = calendar.get(Calendar.YEAR)
-                    getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
-                    workCountList = getWorkCountList(year, month)
-                },
-                onNextClicked = {
-                    checkMonth++
-                    calendar.add(Calendar.MONTH, checkMonth)
-                    month = calendar.get(Calendar.MONTH) + 1
-                    year = calendar.get(Calendar.YEAR)
-                    getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
-                    workCountList = getWorkCountList(year, month)
+        SimTongCalendar(
+            onNextClicked = {
+                monthT = it.toString().substring(3, 5).toInt()
+                yearT = it.toString().substring(0, 2).toInt()
+                date = it
+            },
+            onBeforeClicked = {
+                monthT = it.toString().substring(3, 5).toInt()
+                yearT = it.toString().substring(0, 2).toInt()
+                date = it
+            },
+            onItemClicked = { _day, _workState ->
+                workState = _workState
+                workStateText = _workState
+                dayT = _day
+                coroutineScope.launch {
+                    bottomSheetState.show()
                 }
-            )
-
-            Spacer(modifier = Modifier.height(37.dp))
-
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 14.dp)
-                    .fillMaxWidth()
-            ) {
-                WeekTopRow()
-
-                SimTongCalendarList(list = calendarList)
-            }
-        }
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(HomeCalendarHeight)
+                .padding(CalendarPadding)
+        )
     }
 }
+
 
 @Composable
 fun WriteCloseDayItem(
@@ -285,5 +240,5 @@ fun WriteCloseDayItem(
 @Composable
 @Preview(showBackground = true)
 fun ShowWriteClosedDayScreen() {
-    // WriteClosedDayScreen(navController = rememberNavController())
+    WriteClosedDayScreen(navController = rememberNavController())
 }
