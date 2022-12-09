@@ -13,16 +13,16 @@ interface RemoteScheduleDataSource {
 
     suspend fun addPersonalSchedule(
         title: String,
-        startAt: String,
-        endAt: String,
+        startAt: Date,
+        endAt: Date,
         alarm: Time?,
     )
 
     suspend fun changePersonalSchedule(
         scheduleId: UUID,
         title: String,
-        startAt: String,
-        endAt: String,
+        startAt: Date,
+        endAt: Date,
         alarm: Time?,
     )
 

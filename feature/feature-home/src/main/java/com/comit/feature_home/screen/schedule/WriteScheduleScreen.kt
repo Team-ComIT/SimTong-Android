@@ -2,6 +2,7 @@
 
 package com.comit.feature_home.screen.schedule
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -28,6 +29,10 @@ import com.comit.feature_home.mvi.WriteScheduleSideInEffect
 import com.comit.feature_home.mvi.WriteScheduleState
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
+import java.sql.Date
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun WriteScheduleScreen(
@@ -80,8 +85,13 @@ fun WriteScheduleScreen(
                 hint = stringResource(id = R.string.title_hint),
                 onValueChange = {
                     vm.inputTitle(msg = it)
+                    vm.inputErrMsgTitle(null)
+                    vm.inputErrMsgScheduleStart(null)
+                    vm.inputErrMsgScheduleEnd(null)
+                    vm.inputErrMsgAlarm(null)
                 },
-                title = stringResource(id = R.string.title)
+                title = stringResource(id = R.string.title),
+                error = writeScheduleState.errMsgTitle
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -91,8 +101,13 @@ fun WriteScheduleScreen(
                 hint = stringResource(id = R.string.date_start_hint),
                 onValueChange = {
                     vm.inputScheduleStart(msg = it)
+                    vm.inputErrMsgTitle(null)
+                    vm.inputErrMsgScheduleStart(null)
+                    vm.inputErrMsgScheduleEnd(null)
+                    vm.inputErrMsgAlarm(null)
                 },
-                title = stringResource(id = R.string.date)
+                title = stringResource(id = R.string.date),
+                error = writeScheduleState.errMsgScheduleStart
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -102,7 +117,12 @@ fun WriteScheduleScreen(
                 hint = stringResource(id = R.string.date_finish_hint),
                 onValueChange = {
                     vm.inputScheduleEnd(msg = it)
+                    vm.inputErrMsgTitle(null)
+                    vm.inputErrMsgScheduleStart(null)
+                    vm.inputErrMsgScheduleEnd(null)
+                    vm.inputErrMsgAlarm(null)
                 },
+                error = writeScheduleState.errMsgTitle
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -112,15 +132,56 @@ fun WriteScheduleScreen(
                 hint = stringResource(id = R.string.alarm_hint),
                 onValueChange = {
                     vm.inputAlarm(msg = it)
+                    vm.inputErrMsgTitle(null)
+                    vm.inputErrMsgScheduleStart(null)
+                    vm.inputErrMsgScheduleEnd(null)
+                    vm.inputErrMsgAlarm(null)
                 },
-                title = stringResource(id = R.string.alarm)
+                title = stringResource(id = R.string.alarm),
+                error = writeScheduleState.errMsgAlarm
             )
         }
         SimTongBigRoundButton(
             text = stringResource(id = R.string.check),
             enabled = btnEnabled,
             onClick = {
-                navController.popBackStack()
+                try {
+                    val dateFormatter = SimpleDateFormat("yyyy-MM-DD")
+
+                    Log.d("TAG", "WriteScheduleScreen: ")
+                    Log.d("TAG", "WriteScheduleScreen: "+Date.valueOf("2022-12-09"))
+                    if(writeScheduleState.alarm.isNotEmpty()) {
+                        vm.writeSchedule(
+                            title = writeScheduleState.title,
+                            scheduleStart = dateFormatter.parse(writeScheduleState.scheduleStart)!!,
+                            scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd),
+                            alarm = Time.valueOf(writeScheduleState.alarm)!!
+                        )
+                    } else {
+                        vm.writeSchedule(
+                            title = writeScheduleState.title,
+                            scheduleStart = dateFormatter.parse(writeScheduleState.scheduleStart)!!,
+                            scheduleEnd = dateFormatter.parse(writeScheduleState.scheduleEnd)!!,
+                            alarm = null
+                        )
+                    }
+//                    vm.writeSchedule(
+//                        title = title,
+//                        scheduleStart = dateFormatter.parse(scheduleStart)!!,
+//                        scheduleEnd = dateFormatter.parse(scheduleEnd)!!,
+//                        alarm = timeFormatter.parse(alarm) as Time,
+//                    )
+                    Log.d("TAG", "scheduleStart: "+dateFormatter.format(dateFormatter.parse(writeScheduleState.scheduleStart)!!))
+                    Log.d("TAG", "scheduleEnd: "+dateFormatter.format(dateFormatter.parse(writeScheduleState.scheduleEnd)!!))
+                    navController.popBackStack()
+
+                } catch (e: Exception) {
+                    vm.inputErrMsgTitle("")
+                    vm.inputErrMsgScheduleStart("")
+                    vm.inputErrMsgScheduleEnd("")
+                    vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")
+                }
+
             },
             modifier = Modifier
                 .fillMaxHeight()

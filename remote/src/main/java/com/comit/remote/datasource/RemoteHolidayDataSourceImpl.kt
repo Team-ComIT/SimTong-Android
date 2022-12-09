@@ -1,5 +1,6 @@
 package com.comit.remote.datasource
 
+import android.util.Log
 import com.comit.data.datasource.RemoteHolidayDataSource
 import com.comit.data.util.simTongApiCall
 import com.comit.model.HolidayList

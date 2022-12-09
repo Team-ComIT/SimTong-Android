@@ -22,8 +22,8 @@ class ScheduleRepositoryImpl @Inject constructor(
 
     override suspend fun addPersonalSchedule(
         title: String,
-        startAt: String,
-        endAt: String,
+        startAt: Date,
+        endAt: Date,
         alarm: Time?,
     ) {
         remoteScheduleDataSource.addPersonalSchedule(
@@ -37,8 +37,8 @@ class ScheduleRepositoryImpl @Inject constructor(
     override suspend fun changePersonalSchedule(
         scheduleId: UUID,
         title: String,
-        startAt: String,
-        endAt: String,
+        startAt: Date,
+        endAt: Date,
         alarm: Time?,
     ) {
         remoteScheduleDataSource.changePersonalSchedule(

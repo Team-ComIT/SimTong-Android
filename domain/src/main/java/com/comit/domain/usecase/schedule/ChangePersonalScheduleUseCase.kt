@@ -2,7 +2,7 @@ package com.comit.domain.usecase.schedule
 
 import com.comit.domain.repository.ScheduleRepository
 import java.sql.Time
-import java.util.UUID
+import java.util.*
 import javax.inject.Inject
 
 class ChangePersonalScheduleUseCase @Inject constructor(
@@ -24,8 +24,8 @@ class ChangePersonalScheduleUseCase @Inject constructor(
     data class Params(
         val scheduleId: UUID,
         val title: String,
-        val startAt: String,
-        val endAt: String,
+        val startAt: Date,
+        val endAt: Date,
         val alarms: Time?,
     )
 }

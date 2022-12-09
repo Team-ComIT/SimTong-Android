@@ -7,6 +7,7 @@
 
 package com.comit.data.util
 
+import android.util.Log
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.ForBiddenException

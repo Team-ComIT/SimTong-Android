@@ -133,6 +133,9 @@ fun SignInScreen(
                     employeeNumber = signInState.employeeNumber,
                     password = signInState.password,
                 )
+                navController.navigate(
+                    route = SimTongScreen.Home.MAIN
+                )
             },
             enabled = signInState.employeeNumber.isNotEmpty() &&
                 signInState.password.isNotEmpty(),

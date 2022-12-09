@@ -11,6 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.sql.Time
+import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,9 +23,9 @@ class WriteScheduleViewModel @Inject constructor(
 
     fun writeSchedule(
         title: String,
-        scheduleStart: String,
-        scheduleEnd: String,
-        alarm: Time,
+        scheduleStart: Date,
+        scheduleEnd: Date,
+        alarm: Time?,
     ) = intent {
         addPersonalScheduleUseCase(
             params = AddPersonalScheduleUseCase.Params(
@@ -44,15 +45,31 @@ class WriteScheduleViewModel @Inject constructor(
         reduce { state.copy(title = msg) }
     }
 
+    fun inputErrMsgTitle(msg: String?) = intent {
+        reduce { state.copy(errMsgTitle = msg) }
+    }
+
     fun inputScheduleStart(msg: String) = intent {
         reduce { state.copy(scheduleStart = msg) }
+    }
+
+    fun inputErrMsgScheduleStart(msg: String?) = intent {
+        reduce { state.copy(errMsgScheduleStart = msg) }
     }
 
     fun inputScheduleEnd(msg: String) = intent {
         reduce { state.copy(scheduleEnd = msg) }
     }
 
+    fun inputErrMsgScheduleEnd(msg: String?) = intent {
+        reduce { state.copy(errMsgScheduleEnd = msg) }
+    }
+
     fun inputAlarm(msg: String) = intent {
         reduce { state.copy(alarm = msg) }
+    }
+
+    fun inputErrMsgAlarm(msg: String?) = intent {
+        reduce { state.copy(errMsgAlarm = msg) }
     }
 }

@@ -2,6 +2,14 @@ package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import android.util.Log
+import androidx.compose.material.BottomDrawerState
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.comit.feature_home.mvi.FetchHolidayState
+import com.comit.feature_home.screen.GetHolidayViewModel
+import java.sql.Date
 import java.time.LocalDate
 import kotlin.collections.ArrayList
 
@@ -87,16 +95,28 @@ private const val MonthStart: Int = 1
 private const val MonthEnd: Int = 31
 
 fun getRestDayList(
+    vm: GetHolidayViewModel,
+    state: FetchHolidayState,
     year: Int,
     month: Int
 ): ArrayList<Boolean> {
     val restDayList = ArrayList<Boolean>()
 
-    for (i in MonthStart..MonthEnd) {
-        if (year + month == 0) {
-            restDayList.add(true)
-        } else {
-            restDayList.add(false)
+    val year = String.format("%02d", year)
+    val month = String.format("%02d", month)
+
+    try {
+        vm.getHolidayList(Date.valueOf("$year-$month-01"))
+    } catch (_: Exception) { }
+
+    for (i in 0..30) {
+        restDayList.add(false)
+    }
+
+    for(i in 0 until state.holidayList.size) {
+        val listItem = state.holidayList[i]
+        if(listItem.type == TypeName.HOLIDAY) {
+            restDayList[listItem.date[9].toString().toInt()] = true
         }
     }
 
@@ -135,4 +155,8 @@ fun getWorkCountList(
     }
 
     return workCountList
+}
+
+object TypeName {
+    const val HOLIDAY = "HOLIDAY"
 }

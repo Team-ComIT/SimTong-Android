@@ -22,6 +22,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -34,6 +35,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.color.SimTongColor
@@ -51,6 +54,7 @@ import com.comit.feature_home.calendar.getAnnualDayList
 import com.comit.feature_home.calendar.getRestDayList
 import com.comit.feature_home.calendar.getWorkCountList
 import com.comit.feature_home.calendar.organizeList
+import com.comit.feature_home.screen.GetHolidayViewModel
 import com.example.feature_home.R
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -58,8 +62,12 @@ import java.util.GregorianCalendar
 
 @Composable
 fun WriteClosedDayScreen(
-    navController: NavController
+    navController: NavController,
+    getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
 ) {
+    val getHolidayContainer = getHolidayViewModel.container
+    val getHolidayState = getHolidayContainer.stateFlow.collectAsState().value
+
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
@@ -78,7 +86,7 @@ fun WriteClosedDayScreen(
     var dayT by remember { mutableStateOf(thisDay) }
 
     var checkMonth by remember { mutableStateOf(0) }
-    var restDayList by remember { mutableStateOf(getRestDayList(thisYear, thisMonth)) }
+    var restDayList by remember { mutableStateOf(getRestDayList(getHolidayViewModel, getHolidayState, thisYear, thisMonth)) }
     var annualDayList by remember { mutableStateOf(getAnnualDayList(thisYear, thisMonth)) }
     var workCountList by remember { mutableStateOf(getWorkCountList(thisYear, thisMonth)) }
     var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
@@ -245,7 +253,7 @@ fun WriteClosedDayScreen(
                             monthT = month
                             year = calendar.get(Calendar.YEAR)
                             yearT = year
-                            restDayList = getRestDayList(year, month)
+                            restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
                             annualDayList = getAnnualDayList(year, month)
                             workCountList = getWorkCountList(year, month)
                             calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
@@ -257,7 +265,7 @@ fun WriteClosedDayScreen(
                             monthT = month
                             year = calendar.get(Calendar.YEAR)
                             yearT = year
-                            restDayList = getRestDayList(year, month)
+                            restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
                             annualDayList = getAnnualDayList(year, month)
                             workCountList = getWorkCountList(year, month)
                             calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
@@ -327,5 +335,5 @@ fun WriteCloseDayItem(
 @Composable
 @Preview(showBackground = true)
 fun ShowWriteClosedDayScreen() {
-    WriteClosedDayScreen(navController = rememberNavController())
+    // WriteClosedDayScreen(navController = rememberNavController())
 }
