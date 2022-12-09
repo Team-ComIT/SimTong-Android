@@ -18,7 +18,7 @@ import com.comit.common.SimTongSimpleLayout
 import com.comit.common.rememberToast
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
-import com.comit.core_design_system.component.SimImageUploadLayout
+import com.comit.common.SimImageUploadLayout
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 import kotlinx.coroutines.launch
@@ -58,7 +58,7 @@ fun SignUpNicknameScreen(
 
                 SimImageUploadLayout(
                     imageFile = {
-//                        onProfileImgChanged(it) TODO("SIMT-67")
+                        onProfileImgChanged(it)
                     },
                     onError = {
                         toast(

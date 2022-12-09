@@ -47,6 +47,9 @@ android {
 
 dependencies {
     implementation(projects.coreDesignSystem)
+    implementation(projects.commonUtil)
+
+    implementation(Dependency.COIL.COIL)
 
     implementation(Dependency.Compose.COMPOSE_ACTIVITY)
     implementation(Dependency.Compose.COMPOSE_MATERIAL)
