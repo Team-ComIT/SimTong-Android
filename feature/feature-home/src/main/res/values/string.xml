@@ -15,7 +15,9 @@
     <string name="schedule_all">전체 일정</string>
     <string name="schedule_comment">일정 작성</string>
     <string name="schedule_fix">일정 수정</string>
+    <string name="schedule_fix_do">일정 수정하기</string>
     <string name="schedule_make">일정 생성</string>
+    <string name="schedule_delete_do">일정 삭제하기</string>
     <string name="title">제목</string>
     <string name="title_hint">제목을 입력해주세요.</string>
     <string name="date">날짜</string>

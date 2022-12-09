@@ -129,7 +129,10 @@ fun HomeScreen(
                         navController.navigate(
                             route = SimTongScreen.Home.SHOW_SCHEDULE
                         )
-                    }
+                    },
+                onItemClicked = { _, _ ->
+                    navController.navigate(route = SimTongScreen.Home.SHOW_SCHEDULE)
+                }
             )
 
             Spacer(modifier = Modifier.height(30.dp))
