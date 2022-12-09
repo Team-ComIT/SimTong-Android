@@ -13,6 +13,7 @@ sealed class SimTongScreen(
     object Home : SimTongScreen("Home") {
         const val MAIN = "HOME_MAIN"
         const val CLOSE_DAY = "CLOSE_DAY"
+        const val HOLIDAY = "HOLIDAY"
     }
 
     object MyPage : SimTongScreen("MyPage") {
