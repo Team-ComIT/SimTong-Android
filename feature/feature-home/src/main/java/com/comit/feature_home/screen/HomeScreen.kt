@@ -156,6 +156,11 @@ fun HomeScreen(
                 content = stringResource(
                     id = R.string.my_pay_info_content,
                 ),
+                onClick = {
+                    navController.navigate(
+                        route = SimTongScreen.Home.SALARY,
+                    )
+                }
             )
 
             Spacer(modifier = Modifier.height(16.dp))

@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.comit.feature_home.screen.SalaryWebViewScreen
 import com.comit.feature_home.screen.HomeScreen
 import com.comit.feature_home.screen.WriteClosedDayScreen
 import com.comit.navigator.SimTongScreen
@@ -28,6 +29,11 @@ fun NavGraphBuilder.homeNavigation(
             WriteClosedDayScreen(
                 navController = navController,
             )
+        }
+        composable(
+            route = SimTongScreen.Home.SALARY,
+        ) {
+            SalaryWebViewScreen()
         }
     }
 }
