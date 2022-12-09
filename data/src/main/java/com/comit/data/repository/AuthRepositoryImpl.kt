@@ -3,7 +3,7 @@ package com.comit.data.repository
 import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.data.datasource.RemoteFileDataSource
-import com.comit.data.extension.toMultipart
+import com.comit.data.util.FormDataUtil
 import com.comit.domain.repository.AuthRepository
 import com.comit.model.User
 import java.io.File
@@ -46,7 +46,11 @@ class AuthRepositoryImpl @Inject constructor(
         nickname: String?,
         profileImage: File?
     ) {
-        val profileImagePath = profileImage?.let { getImagePathByFile(it) }
+        val profileImagePath = profileImage?.let {
+            getImagePathByFile(
+                file = profileImage,
+            )
+        }
 
         remoteAuthDataSource.signUp(
             name = name,
@@ -108,7 +112,10 @@ class AuthRepositoryImpl @Inject constructor(
         file: File,
     ): String {
         return remoteFileDataSource.uploadFile(
-            file = file.toMultipart("file"),
+            file = FormDataUtil.getImageMultipart(
+                key = "file",
+                file = file,
+            ),
         )
     }
 }

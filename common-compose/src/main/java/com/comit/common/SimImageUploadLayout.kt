@@ -1,5 +1,4 @@
-
-package com.comit.core_design_system.component
+package com.comit.common
 
 import android.app.Activity
 import android.content.Intent
@@ -29,10 +28,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.comit.common.convert.UriUtil
+import com.comit.common.unit.parseBitmap
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.util.parseBitmap
+import java.io.File
 
 private const val TakePhotoError: String = "이미지를 가져오던 중 오류가 발생하였습니다."
 
@@ -40,7 +41,7 @@ private val ImageSize: Dp = 100.dp
 
 @Composable
 fun SimImageUploadLayout(
-    imageFile: (Bitmap) -> Unit,
+    imageFile: (File) -> Unit,
     onError: ((String) -> Unit)? = null,
 ) {
     val context = LocalContext.current
@@ -53,7 +54,12 @@ fun SimImageUploadLayout(
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
                         bitmap = uri.parseBitmap(context)
                     }
-                    imageFile(bitmap!!)
+                    imageFile(
+                        UriUtil.toFile(
+                            context = context,
+                            uri = uri,
+                        )
+                    )
                 } ?: run {
                     if (onError != null) {
                         onError(TakePhotoError)
