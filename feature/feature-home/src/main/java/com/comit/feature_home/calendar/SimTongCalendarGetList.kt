@@ -2,11 +2,6 @@ package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import android.util.Log
-import androidx.compose.material.BottomDrawerState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.screen.GetHolidayViewModel
 import java.sql.Date
@@ -21,8 +16,7 @@ private const val Week: Int = 7
 
 fun organizeList(
     checkMonth: Int,
-    restDayList: List<Boolean>,
-    annualDayList: List<Boolean>,
+    holidayList: List<FetchHolidayState.Holiday>,
     workCountList: List<Int>,
 ): ArrayList<SimTongCalendarData> {
     val calendarList = ArrayList<SimTongCalendarData>()
@@ -31,10 +25,27 @@ fun organizeList(
     val min = calendar.get(Calendar.DAY_OF_WEEK) - 1
     val max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
     val year = calendar.get(Calendar.YEAR)
-    val mouth = calendar.get(Calendar.MONTH) + 1
+    val month = calendar.get(Calendar.MONTH) + 1
 
     val lastCalendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth - 1, 1)
     val lastMax = lastCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+    val restDayList = ArrayList<Boolean>()
+    val annualDayList = ArrayList<Boolean>()
+
+    for (i in 0..30) {
+        restDayList.add(false)
+        annualDayList.add(false)
+    }
+
+    for (element in holidayList) {
+        if (element.type == TypeName.HOLIDAY) {
+            restDayList[element.date[9].toString().toInt() - 1] = true
+        }
+        if (element.type == TypeName.ANNUAL) {
+            annualDayList[element.date[9].toString().toInt() - 1] = true
+        }
+    }
 
     for (i in min - 1 downTo 0) {
         calendarList.add(
@@ -52,7 +63,7 @@ fun organizeList(
 
     for (i in 1..max) {
 
-        val dayOfWeek = LocalDate.of(year, mouth, i).dayOfWeek.value
+        val dayOfWeek = LocalDate.of(year, month, i).dayOfWeek.value
         val weekend = dayOfWeek == Saturday || dayOfWeek == Sunday
         val todayCheck = today.get(Calendar.DATE) == i && checkMonth == 0
 
@@ -67,7 +78,6 @@ fun organizeList(
                 today = todayCheck
             )
         )
-        // Log.d("TAG", "organizeList: "+calendarList[i].restDay)
     }
 
     for (i in 1..Week) {
@@ -97,7 +107,7 @@ private const val MonthEnd: Int = 31
 
 fun getRestDayList(
     vm: GetHolidayViewModel,
-    state: FetchHolidayState,
+    holidayList: List<FetchHolidayState.Holiday>,
     year: Int,
     month: Int
 ): ArrayList<Boolean> {
@@ -114,9 +124,9 @@ fun getRestDayList(
         restDayList.add(false)
     }
 
-    for(i in 0 until state.holidayList.size) {
-        val listItem = state.holidayList[i]
-        if(listItem.type == TypeName.HOLIDAY) {
+    for (i in 0 until holidayList.size) {
+        val listItem = holidayList[i]
+        if (listItem.type == TypeName.HOLIDAY) {
             restDayList[listItem.date[9].toString().toInt() - 1] = true
         }
     }
@@ -160,4 +170,5 @@ fun getWorkCountList(
 
 object TypeName {
     const val HOLIDAY = "HOLIDAY"
+    const val ANNUAL = "ANNUAL"
 }

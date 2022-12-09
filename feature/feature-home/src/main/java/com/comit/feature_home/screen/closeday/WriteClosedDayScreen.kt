@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class)
 
 package com.comit.feature_home.screen.closeday
 
@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,12 +16,9 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -31,29 +27,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
-import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.typography.Body1
-import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body6
-import com.comit.feature_home.calendar.SimTongCalendarDate
-import com.comit.feature_home.calendar.SimTongCalendarList
-import com.comit.feature_home.calendar.WeekTopRow
 import com.comit.feature_home.calendar.getAnnualDayList
-import com.comit.feature_home.calendar.getRestDayList
 import com.comit.feature_home.calendar.getWorkCountList
-import com.comit.feature_home.calendar.organizeList
 import com.comit.feature_home.screen.GetHolidayViewModel
 import com.example.feature_home.R
 import kotlinx.coroutines.launch
@@ -65,8 +51,6 @@ fun WriteClosedDayScreen(
     navController: NavController,
     getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
 ) {
-    val getHolidayContainer = getHolidayViewModel.container
-    val getHolidayState = getHolidayContainer.stateFlow.collectAsState().value
 
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
@@ -86,10 +70,9 @@ fun WriteClosedDayScreen(
     var dayT by remember { mutableStateOf(thisDay) }
 
     var checkMonth by remember { mutableStateOf(0) }
-    var restDayList by remember { mutableStateOf(getRestDayList(getHolidayViewModel, getHolidayState, thisYear, thisMonth)) }
-    var annualDayList by remember { mutableStateOf(getAnnualDayList(thisYear, thisMonth)) }
+    // var restDayList by remember { mutableStateOf(getRestDayList(getHolidayViewModel, getHolidayState, thisYear, thisMonth)) }
     var workCountList by remember { mutableStateOf(getWorkCountList(thisYear, thisMonth)) }
-    var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
+    // var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
 
     SimBottomSheetDialog(
         useHandle = true,
@@ -124,15 +107,15 @@ fun WriteClosedDayScreen(
                         color = saveColor,
                         onClick = {
                             if (saveEnabled) {
-                                restDayList[dayT - 1] = false
+                                // restDayList[dayT - 1] = false
                                 annualDayList[dayT - 1] = false
 
                                 if (workStateText == workClose) {
-                                    restDayList[dayT - 1] = true
+                                    //   restDayList[dayT - 1] = true
                                 } else if (workStateText == workAnnual) {
                                     annualDayList[dayT - 1] = true
                                 }
-                                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                                // calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
 
                                 coroutineScope.launch {
                                     bottomSheetState.hide()
@@ -186,116 +169,116 @@ fun WriteClosedDayScreen(
             }
         }
     ) {
-        val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
-        var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
-        var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-
-        Column(modifier = Modifier.fillMaxSize()) {
-            Spacer(modifier = Modifier.height(22.5.dp))
-
-            Row(
-                modifier = Modifier
-                    .padding(horizontal = 26.dp)
-            ) {
-                IconButton(
-                    modifier = Modifier.size(24.dp),
-                    onClick = {
-                        navController.popBackStack()
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = SimTongIcon.Back_Big.drawableId),
-                        contentDescription = SimTongIcon.Back_Big.contentDescription
-                    )
-                }
-                Body3(
-                    text = stringResource(id = R.string.schedule_day_write),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.CenterHorizontally)
-                        .padding(end = 24.dp)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(44.dp))
-
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .fillMaxWidth()
-                    .height(420.dp)
-                    .background(
-                        color = SimTongColor.Gray50,
-                        shape = RoundedCornerShape(20.dp)
-                    )
-            ) {
-                Spacer(modifier = Modifier.height(15.dp))
-
-                Column(
-                    modifier = Modifier
-                        .padding(horizontal = 20.dp)
-                        .fillMaxWidth()
-                        .height(420.dp)
-                        .background(
-                            color = SimTongColor.Gray50,
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                ) {
-                    Spacer(modifier = Modifier.height(15.dp))
-
-                    SimTongCalendarDate(
-                        year = year.toString(),
-                        month = month.toString(),
-                        onBeforeClicked = {
-                            checkMonth --
-                            calendar.add(Calendar.MONTH, checkMonth)
-                            month = calendar.get(Calendar.MONTH) + 1
-                            monthT = month
-                            year = calendar.get(Calendar.YEAR)
-                            yearT = year
-                            restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
-                            annualDayList = getAnnualDayList(year, month)
-                            workCountList = getWorkCountList(year, month)
-                            calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
-                        },
-                        onNextClicked = {
-                            checkMonth ++
-                            calendar.add(Calendar.MONTH, checkMonth)
-                            month = calendar.get(Calendar.MONTH) + 1
-                            monthT = month
-                            year = calendar.get(Calendar.YEAR)
-                            yearT = year
-                            restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
-                            annualDayList = getAnnualDayList(year, month)
-                            workCountList = getWorkCountList(year, month)
-                            calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
-                        }
-                    )
-
-                    Spacer(modifier = Modifier.height(37.dp))
-
-                    Column(
-                        modifier = Modifier
-                            .padding(horizontal = 14.dp)
-                            .fillMaxWidth()
-                    ) {
-                        WeekTopRow()
-
-                        SimTongCalendarList(
-                            list = calendarList,
-                            onItemClicked = { _day, _workState ->
-                                workState = _workState
-                                workStateText = _workState
-                                dayT = _day
-                                coroutineScope.launch {
-                                    bottomSheetState.show()
-                                }
-                            }
-                        )
-                    }
-                }
-            }
-        }
+//        val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+//        var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
+//        var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+//
+//        Column(modifier = Modifier.fillMaxSize()) {
+//            Spacer(modifier = Modifier.height(22.5.dp))
+//
+//            Row(
+//                modifier = Modifier
+//                    .padding(horizontal = 26.dp)
+//            ) {
+//                IconButton(
+//                    modifier = Modifier.size(24.dp),
+//                    onClick = {
+//                        navController.popBackStack()
+//                    }
+//                ) {
+//                    Icon(
+//                        painter = painterResource(id = SimTongIcon.Back_Big.drawableId),
+//                        contentDescription = SimTongIcon.Back_Big.contentDescription
+//                    )
+//                }
+//                Body3(
+//                    text = stringResource(id = R.string.schedule_day_write),
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .wrapContentWidth(Alignment.CenterHorizontally)
+//                        .padding(end = 24.dp)
+//                )
+//            }
+//
+//            Spacer(modifier = Modifier.height(44.dp))
+//
+//            Column(
+//                modifier = Modifier
+//                    .padding(horizontal = 20.dp)
+//                    .fillMaxWidth()
+//                    .height(420.dp)
+//                    .background(
+//                        color = SimTongColor.Gray50,
+//                        shape = RoundedCornerShape(20.dp)
+//                    )
+//            ) {
+//                Spacer(modifier = Modifier.height(15.dp))
+//
+//                Column(
+//                    modifier = Modifier
+//                        .padding(horizontal = 20.dp)
+//                        .fillMaxWidth()
+//                        .height(420.dp)
+//                        .background(
+//                            color = SimTongColor.Gray50,
+//                            shape = RoundedCornerShape(20.dp)
+//                        )
+//                ) {
+//                    Spacer(modifier = Modifier.height(15.dp))
+//
+//                    SimTongCalendarDate(
+//                        year = year.toString(),
+//                        month = month.toString(),
+//                        onBeforeClicked = {
+//                            checkMonth --
+//                            calendar.add(Calendar.MONTH, checkMonth)
+//                            month = calendar.get(Calendar.MONTH) + 1
+//                            monthT = month
+//                            year = calendar.get(Calendar.YEAR)
+//                            yearT = year
+//                            restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
+//                            annualDayList = getAnnualDayList(year, month)
+//                            workCountList = getWorkCountList(year, month)
+//                            calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+//                        },
+//                        onNextClicked = {
+//                            checkMonth ++
+//                            calendar.add(Calendar.MONTH, checkMonth)
+//                            month = calendar.get(Calendar.MONTH) + 1
+//                            monthT = month
+//                            year = calendar.get(Calendar.YEAR)
+//                            yearT = year
+//                            restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
+//                            annualDayList = getAnnualDayList(year, month)
+//                            workCountList = getWorkCountList(year, month)
+//                            calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+//                        }
+//                    )
+//
+//                    Spacer(modifier = Modifier.height(37.dp))
+//
+//                    Column(
+//                        modifier = Modifier
+//                            .padding(horizontal = 14.dp)
+//                            .fillMaxWidth()
+//                    ) {
+//                        WeekTopRow()
+//
+//                        SimTongCalendarList(
+//                            list = calendarList,
+//                            onItemClicked = { _day, _workState ->
+//                                workState = _workState
+//                                workStateText = _workState
+//                                dayT = _day
+//                                coroutineScope.launch {
+//                                    bottomSheetState.show()
+//                                }
+//                            }
+//                        )
+//                    }
+//                }
+//            }
+// /        }
     }
 }
 

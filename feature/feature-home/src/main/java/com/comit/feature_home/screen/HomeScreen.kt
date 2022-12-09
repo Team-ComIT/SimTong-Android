@@ -39,14 +39,12 @@ import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.noRippleClickable
-import com.comit.core_design_system.modifier.noTempRippleClickable
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title3
 import com.comit.core_design_system.util.currentMealsTime
 import com.comit.feature_home.calendar.SimTongCalendar
-import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 

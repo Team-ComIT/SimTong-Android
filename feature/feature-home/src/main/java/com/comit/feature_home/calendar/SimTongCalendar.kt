@@ -1,3 +1,5 @@
+@file:OptIn(DelicateCoroutinesApi::class, InternalCoroutinesApi::class)
+
 package com.comit.feature_home.calendar
 
 import androidx.compose.foundation.background
@@ -19,16 +21,16 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,8 +48,9 @@ import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
 import com.comit.feature_home.screen.GetHolidayViewModel
 import com.example.feature_home.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.InternalCoroutinesApi
+import java.sql.Date
 import java.util.Calendar
 import java.util.GregorianCalendar
 
@@ -80,22 +83,40 @@ fun SimTongCalendar(
     modifier: Modifier = Modifier,
     getHolidayViewModel: GetHolidayViewModel = hiltViewModel()
 ) {
-
-    val getHolidayContainer = getHolidayViewModel.container
-    val getHolidayState = getHolidayContainer.stateFlow.collectAsState().value
-
     var checkMonth by remember { mutableStateOf(0) }
 
     val today = GregorianCalendar()
-    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+    val calendar = GregorianCalendar(
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH),
+        today.get(Calendar.DATE)
+    )
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
 
-    var restDayList by remember { mutableStateOf(getRestDayList(getHolidayViewModel, getHolidayState, year, month)) }
-    var annualDayList by remember { mutableStateOf(getAnnualDayList(year, month)) }
     var workCountList by remember { mutableStateOf(getWorkCountList(year, month)) }
-    var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
+
+    var calendarList by remember {
+        mutableStateOf(
+            organizeList(
+                0,
+                listOf(),
+                workCountList
+            )
+        )
+    }
+
+    LaunchedEffect(getHolidayViewModel) {
+        getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
+    }
+
+    val lifecycle = LocalLifecycleOwner.current
+    LaunchedEffect(getHolidayViewModel) {
+        getHolidayViewModel.holidayList.observe(lifecycle) {
+            calendarList = organizeList(checkMonth, it, workCountList)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -110,24 +131,23 @@ fun SimTongCalendar(
             year = year.toString(),
             month = month.toString(),
             onBeforeClicked = {
-                checkMonth --
+                checkMonth--
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-                restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
-                annualDayList = getAnnualDayList(year, month)
+                getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
+                // restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
                 workCountList = getWorkCountList(year, month)
-                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                // calendarList = organizeList(checkMonth, getHolidayState.holidayList, workCountList)
             },
             onNextClicked = {
-                checkMonth ++
+                checkMonth++
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-                restDayList = getRestDayList(getHolidayViewModel, getHolidayState, year, month)
-                annualDayList = getAnnualDayList(year, month)
+                getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
                 workCountList = getWorkCountList(year, month)
-                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                // calendarList = organizeList(checkMonth, getHolidayState.holidayList, workCountList)
             }
         )
 

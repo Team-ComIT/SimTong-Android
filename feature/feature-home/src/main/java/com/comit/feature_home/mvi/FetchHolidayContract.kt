@@ -1,10 +1,9 @@
 package com.comit.feature_home.mvi
 
 import com.comit.model.HolidayList
-import kotlin.reflect.typeOf
 
 data class FetchHolidayState(
-    val holidayList: List<Holiday> = listOf()
+    val holidayList: List<Holiday>
 ) {
     data class Holiday(
         val date: String,
@@ -23,4 +22,7 @@ fun HolidayList.Holiday.toStateHoliday() = FetchHolidayState.Holiday(
     type = title,
 )
 
-sealed class FetchHolidaySideEffect
+sealed class FetchHolidaySideEffect {
+
+    object FetchHolidaySuccess : FetchHolidaySideEffect()
+}

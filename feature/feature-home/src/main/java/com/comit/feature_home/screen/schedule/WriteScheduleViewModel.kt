@@ -37,7 +37,6 @@ class WriteScheduleViewModel @Inject constructor(
         ).onSuccess {
             postSideEffect(WriteScheduleSideInEffect.WriteScheduleSuccess)
         }.onFailure {
-
         }
     }
 

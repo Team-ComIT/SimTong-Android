@@ -26,13 +26,12 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
-import com.comit.feature_home.mvi.WriteScheduleState
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.sql.Date
 import java.sql.Time
+import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun WriteScheduleScreen(
@@ -149,8 +148,8 @@ fun WriteScheduleScreen(
                     val dateFormatter = SimpleDateFormat("yyyy-MM-DD")
 
                     Log.d("TAG", "WriteScheduleScreen: ")
-                    Log.d("TAG", "WriteScheduleScreen: "+Date.valueOf("2022-12-09"))
-                    if(writeScheduleState.alarm.isNotEmpty()) {
+                    Log.d("TAG", "WriteScheduleScreen: " + Date.valueOf("2022-12-09"))
+                    if (writeScheduleState.alarm.isNotEmpty()) {
                         vm.writeSchedule(
                             title = writeScheduleState.title,
                             scheduleStart = dateFormatter.parse(writeScheduleState.scheduleStart)!!,
@@ -171,17 +170,15 @@ fun WriteScheduleScreen(
 //                        scheduleEnd = dateFormatter.parse(scheduleEnd)!!,
 //                        alarm = timeFormatter.parse(alarm) as Time,
 //                    )
-                    Log.d("TAG", "scheduleStart: "+dateFormatter.format(dateFormatter.parse(writeScheduleState.scheduleStart)!!))
-                    Log.d("TAG", "scheduleEnd: "+dateFormatter.format(dateFormatter.parse(writeScheduleState.scheduleEnd)!!))
+                    Log.d("TAG", "scheduleStart: " + dateFormatter.format(dateFormatter.parse(writeScheduleState.scheduleStart)!!))
+                    Log.d("TAG", "scheduleEnd: " + dateFormatter.format(dateFormatter.parse(writeScheduleState.scheduleEnd)!!))
                     navController.popBackStack()
-
-                } catch (e: Exception) {
+                } catch (e: ParseException) {
                     vm.inputErrMsgTitle("")
                     vm.inputErrMsgScheduleStart("")
                     vm.inputErrMsgScheduleEnd("")
                     vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")
                 }
-
             },
             modifier = Modifier
                 .fillMaxHeight()
