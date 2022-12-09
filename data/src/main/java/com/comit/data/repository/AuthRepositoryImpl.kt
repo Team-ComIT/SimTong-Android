@@ -3,7 +3,6 @@ package com.comit.data.repository
 import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.data.datasource.RemoteFileDataSource
-import com.comit.data.extension.toMultipart
 import com.comit.data.util.FormDataUtil
 import com.comit.domain.repository.AuthRepository
 import com.comit.model.User

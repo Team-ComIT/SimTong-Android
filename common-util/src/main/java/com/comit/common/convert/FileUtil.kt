@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.comit.common.convert
 
 import android.content.Context

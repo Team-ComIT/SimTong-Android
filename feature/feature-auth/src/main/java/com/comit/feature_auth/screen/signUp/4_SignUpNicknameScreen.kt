@@ -14,11 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.comit.common.SimImageUploadLayout
 import com.comit.common.SimTongSimpleLayout
 import com.comit.common.rememberToast
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
-import com.comit.common.SimImageUploadLayout
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 import kotlinx.coroutines.launch
