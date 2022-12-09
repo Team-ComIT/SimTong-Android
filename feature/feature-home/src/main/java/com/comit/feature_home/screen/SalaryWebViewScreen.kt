@@ -8,7 +8,7 @@ import com.google.accompanist.web.rememberWebViewState
 private const val WebViewURL = "https://em.sungsimdang.co.kr:8443/"
 
 @Composable
-fun HolidayWebViewScreen() {
+fun SalaryWebViewScreen() {
     val webViewState =
         rememberWebViewState(
             url = WebViewURL,
@@ -23,5 +23,5 @@ fun HolidayWebViewScreen() {
 @Preview
 @Composable
 fun PreviewHolidayWebViewScreen() {
-    HolidayWebViewScreen()
+    SalaryWebViewScreen()
 }

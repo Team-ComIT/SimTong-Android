@@ -158,7 +158,7 @@ fun HomeScreen(
                 ),
                 onClick = {
                     navController.navigate(
-                        route = SimTongScreen.Home.HOLIDAY,
+                        route = SimTongScreen.Home.SALARY,
                     )
                 }
             )
