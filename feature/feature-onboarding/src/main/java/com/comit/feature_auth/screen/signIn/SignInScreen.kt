@@ -137,17 +137,6 @@ fun SignInScreen(
                     employeeNumber = "129999999",
                     password = "1234567890",
                 )
-                navController.navigate(
-                    route = SimTongScreen.Home.MAIN
-<<<<<<< HEAD:feature/feature-auth/src/main/java/com/comit/feature_auth/screen/signIn/SignInScreen.kt
-                )
-=======
-                ) {
-                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
-                        inclusive = true
-                    }
-                }
->>>>>>> develop:feature/feature-onboarding/src/main/java/com/comit/feature_auth/screen/signIn/SignInScreen.kt
             },
             enabled = signInState.employeeNumber.isNotEmpty() && signInState.password.isNotEmpty(),
         )

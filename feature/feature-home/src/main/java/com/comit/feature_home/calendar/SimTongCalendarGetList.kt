@@ -67,6 +67,7 @@ fun organizeList(
                 today = todayCheck
             )
         )
+        // Log.d("TAG", "organizeList: "+calendarList[i].restDay)
     }
 
     for (i in 1..Week) {
@@ -116,7 +117,7 @@ fun getRestDayList(
     for(i in 0 until state.holidayList.size) {
         val listItem = state.holidayList[i]
         if(listItem.type == TypeName.HOLIDAY) {
-            restDayList[listItem.date[9].toString().toInt()] = true
+            restDayList[listItem.date[9].toString().toInt() - 1] = true
         }
     }
 

@@ -23,7 +23,4 @@ fun HolidayList.Holiday.toStateHoliday() = FetchHolidayState.Holiday(
     type = title,
 )
 
-sealed class FetchHolidaySideEffect {
-
-    object FetchHolidayFail : FetchHolidaySideEffect()
-}
+sealed class FetchHolidaySideEffect
