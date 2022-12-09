@@ -27,7 +27,7 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.noTempRippleClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9
@@ -152,7 +152,7 @@ fun SignInScreen(
 
         Body8(
             modifier = Modifier
-                .noRippleClickable {
+                .noTempRippleClickable {
                     navController.navigate(
                         route = SimTongScreen.Auth.AUTH_FIND,
                     )

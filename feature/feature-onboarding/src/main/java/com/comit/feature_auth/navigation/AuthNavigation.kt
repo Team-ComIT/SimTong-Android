@@ -8,6 +8,7 @@ import androidx.navigation.navigation
 import com.comit.feature_auth.screen.find.AuthFindScreen
 import com.comit.feature_auth.screen.signIn.SignInScreen
 import com.comit.feature_auth.screen.signUp.SignUpScreen
+import com.comit.feature_auth.screen.splash.StartScreen
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -17,9 +18,17 @@ fun NavGraphBuilder.authNavigation(
     navController: NavController,
 ) {
     navigation(
-        startDestination = SimTongScreen.Auth.SIGN_IN,
+        startDestination = SimTongScreen.Auth.SPLASH,
         route = SimTongRoute.Auth.name,
     ) {
+        composable(
+            route = SimTongScreen.Auth.SPLASH,
+        ) {
+            StartScreen(
+                navController = navController,
+            )
+        }
+
         composable(
             route = SimTongScreen.Auth.SIGN_IN,
         ) {

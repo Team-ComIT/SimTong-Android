@@ -56,7 +56,7 @@ dependencies {
     implementation(projects.data)
     implementation(projects.domain)
     implementation(projects.di)
-    implementation(projects.feature.featureAuth)
+    implementation(projects.feature.featureOnboarding)
     implementation(projects.feature.featureMypage)
     implementation(projects.feature.featureHome)
     implementation(projects.coreDesignSystem)
