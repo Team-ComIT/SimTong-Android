@@ -9,8 +9,7 @@ import com.comit.local.extension.fetchLongPreference
 import com.comit.local.extension.fetchStringPreference
 import com.comit.local.extension.toEpochSecond
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import java.time.LocalDateTime
 import javax.inject.Inject
 
@@ -31,12 +30,10 @@ class AuthPreferenceImpl @Inject constructor(
     }
 
     override fun fetchExpiredAt(): Flow<LocalDateTime> {
-        return flow {
-            context.fetchLongPreference(
-                key = EXPIRED_AT,
-            ).collect {
-                it.epochSecondToLocalDateTime()
-            }
+        return context.fetchLongPreference(
+            key = EXPIRED_AT,
+        ).map {
+            it.epochSecondToLocalDateTime()
         }
     }
 

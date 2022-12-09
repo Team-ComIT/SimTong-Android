@@ -12,12 +12,12 @@ interface FilesAPI {
     @Multipart
     @POST("$FILES")
     suspend fun uploadFile(
-        @Part("file") file: MultipartBody.Part,
+        @Part file: MultipartBody.Part,
     ): FileResponse
 
     @POST("$FILES/list")
     suspend fun uploadFileList(
-        @Part("files") files: List<MultipartBody.Part>,
+        @Part files: List<MultipartBody.Part>,
     ): FileListResponse
 
     private companion object {

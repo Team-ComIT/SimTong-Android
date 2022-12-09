@@ -113,6 +113,11 @@ class SimTongIcon private constructor(
         )
 
         @Stable
+        val Gray400_Next = SimTongIcon(
+            drawableId = R.drawable.ic_next_gray400
+        )
+
+        @Stable
         val Gray_Next = SimTongIcon(
             drawableId = R.drawable.ic_next_gray,
             contentDescription = "gray next icon"
@@ -236,6 +241,12 @@ class SimTongIcon private constructor(
         val Logo = SimTongIcon(
             drawableId = R.drawable.ic_logo,
             contentDescription = "logo icon"
+        )
+
+        @Stable
+        val Profile_Big = SimTongIcon(
+            drawableId = R.drawable.ic_profile_big,
+            contentDescription = "profile big"
         )
     }
 }

@@ -1,7 +1,6 @@
 package com.comit.feature_mypage.screen
 
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,13 +10,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -26,6 +22,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.button.SimTongIconButton
@@ -33,8 +30,6 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.typography.Body13
-import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
 import com.comit.navigator.SimTongScreen
@@ -64,9 +59,13 @@ object MyPageFakeData {
 @Composable
 fun MyPageScreen(
     navController: NavController,
+    vm: MyPageViewModel = hiltViewModel(),
 ) {
+    val myPageContainer = vm.container
+    val myPageInState = myPageContainer.stateFlow.collectAsState().value
 
-    var editMode by remember { mutableStateOf(false) }
+    // TODO: LaunchedEffect 적용 필요
+    vm.fetchUserInformation()
 
     Column(
         modifier = Modifier
@@ -82,116 +81,87 @@ fun MyPageScreen(
             onPrevious = {
                 navController.popBackStack()
             },
-            sideBtnText = stringResource(
-                id = if (editMode) R.string.kr_edit else R.string.check,
-            ),
-            onTextBtnClicked = {
-                editMode = !editMode
-            },
             modifier = Modifier.padding(horizontal = 20.dp)
         )
 
         Spacer(modifier = Modifier.height(22.dp))
 
         MyPageProfileImage(
-            imageUrl = MyPageFakeData.image,
+            imageUrl = myPageInState.profileImagePath,
         ) {
             // TODO ("갤러리 접근")
         }
+        Spacer(modifier = Modifier.height(80.dp))
 
-        if (!editMode) {
-            Spacer(modifier = Modifier.height(90.dp))
-
-            MyPageDescription(
-                title = stringResource(
-                    id = R.string.kr_name,
-                ),
-                content = MyPageFakeData.name,
-            )
-            MyPageDescription(
-                title = stringResource(
-                    id = R.string.kr_nickname,
-                ),
-                content = MyPageFakeData.nickname,
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.MyPage.FIX_NICKNAME,
-                    )
-                }
-            )
-            MyPageDescription(
-                title = stringResource(
-                    id = R.string.eng_email,
-                ),
-                content = MyPageFakeData.email,
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.MyPage.FIX_EMAIL,
-                    )
-                }
-            )
-            MyPageDescription(
-                title = stringResource(
-                    id = R.string.kr_workplace,
-                ),
-                content = MyPageFakeData.workplace,
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.MyPage.FIX_WORKPLACE,
-                    )
-                }
-            )
-            MyPageDescription(
-                title = stringResource(
-                    id = R.string.kr_change_password,
-                ),
-                content = MyPageFakeData.changePassword,
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.MyPage.FIX_PASSWORD,
-                    )
-                }
-            )
-        } else {
-            Spacer(modifier = Modifier.height(19.dp))
-
-            Body3(
-                text = MyPageFakeData.nickname,
-                color = SimTongColor.Black,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Body5(
-                text = MyPageFakeData.nickname,
-                color = SimTongColor.Gray300,
-            )
-
-            Spacer(modifier = Modifier.height(45.dp))
-
-            Column(
-                verticalArrangement = Arrangement.spacedBy(29.dp)
-            ) {
-                MyPageEditModeMenu(
-                    title = stringResource(
-                        id = R.string.kr_my_page_edit_my_information,
-                    ),
-                    content = stringResource(
-                        id = R.string.kr_my_page_edit_my_information_description,
-                    ),
-                    enabledNextIcon = true,
-                ) {
-                }
-
-                MyPageEditModeMenu(
-                    title = stringResource(id = R.string.kr_my_page_sign_in),
-                    titleColor = SimTongColor.MainColor,
-                    content = stringResource(
-                        id = R.string.kr_my_page_sign_in_description,
-                    ),
+        MyPageDescriptionNoClickable(
+            title = stringResource(
+                id = R.string.kr_name,
+            ),
+            content = myPageInState.name,
+        )
+        MyPageDescription(
+            title = stringResource(
+                id = R.string.kr_nickname,
+            ),
+            content = myPageInState.nickname,
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.MyPage.FIX_NICKNAME,
                 )
             }
-        }
+        )
+        MyPageDescription(
+            title = stringResource(
+                id = R.string.eng_email,
+            ),
+            content = myPageInState.email,
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.MyPage.FIX_EMAIL,
+                )
+            }
+        )
+        MyPageDescription(
+            title = stringResource(
+                id = R.string.kr_workplace,
+            ),
+            content = myPageInState.spot,
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.MyPage.FIX_WORKPLACE,
+                )
+            }
+        )
+        MyPageDescriptionImage(
+            title = stringResource(
+                id = R.string.password_fix
+            ),
+            color = SimTongColor.Gray800,
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.MyPage.FIX_PASSWORD
+                )
+            }
+        )
+        MyPageDescriptionImage(
+            title = stringResource(
+                id = R.string.kr_my_page_sign_in
+            ),
+            color = SimTongColor.MainColor300,
+            onClick = {
+                // TODO: Token 삭제, 전체 popUp
+                navController.navigate(
+                    route = SimTongScreen.Auth.SIGN_IN
+                ) {
+                    popUpTo(route = SimTongScreen.MyPage.MAIN) {
+                        inclusive = true
+                    }
+                    popUpTo(route = SimTongScreen.Home.MAIN) {
+                        inclusive = true
+                    }
+                }
+            }
+        )
     }
 }
 
@@ -204,7 +174,11 @@ private fun MyPageProfileImage(
         modifier = Modifier
             .size(80.dp),
     ) {
-        GlideImage(imageModel = imageUrl, Modifier.clip(CircleShape))
+        GlideImage(
+            imageModel = imageUrl,
+            modifier = Modifier.clip(CircleShape),
+            error = painterResource(id = SimTongIcon.Profile_Big.drawableId)
+        )
 
         SimTongIconButton(
             painter = painterResource(
@@ -223,38 +197,150 @@ private fun MyPageProfileImage(
 }
 
 @Composable
+private fun MyPageDescriptionNoClickable(
+    title: String,
+    content: String,
+) {
+    Row(
+        modifier = Modifier
+            .height(45.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Body5(
+            text = title,
+            color = SimTongColor.Gray800
+        )
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        Body5(
+            text = content,
+            color = SimTongColor.Gray300
+        )
+    }
+}
+
+@Composable
 private fun MyPageDescription(
     title: String,
     content: String,
     onClick: (() -> Unit)? = null,
 ) {
-    Column {
-        Row(
-            modifier = Modifier
-                .height(45.dp)
-                .fillMaxWidth()
-                .simClickable(
-                    onClick = onClick ?: {}
-                )
-                .padding(horizontal = 20.dp),
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Body5(
-                text = title,
-                color = SimTongColor.Gray800
+    Row(
+        modifier = Modifier
+            .height(45.dp)
+            .fillMaxWidth()
+            .simClickable(
+                onClick = onClick ?: {}
             )
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Body5(
+            text = title,
+            color = SimTongColor.Gray800
+        )
 
-            Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.weight(1f))
 
-            Body5(
-                text = content,
-                color = SimTongColor.Gray300
-            )
-        }
+        Body5(
+            text = content,
+            color = SimTongColor.Gray300
+        )
     }
 }
 
 @Composable
+private fun MyPageDescriptionImage(
+    title: String,
+    color: Color,
+    onClick: (() -> Unit)? = null
+) {
+    Row(
+        modifier = Modifier
+            .height(45.dp)
+            .fillMaxWidth()
+            .simClickable(
+                onClick = onClick ?: {}
+            )
+            .padding(horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Body5(
+            text = title,
+            color = color
+        )
+
+        Image(
+            painter = painterResource(
+                id = SimTongIcon.Gray400_Next.drawableId
+            ),
+            contentDescription = SimTongIcon.Gray400_Next.contentDescription,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentWidth(Alignment.End)
+        )
+    }
+}
+
+/* if (!editMode) {
+
+    )
+    MyPageDescription(
+        title = stringResource(
+            id = R.string.kr_change_password,
+        ),
+        // TODO: SIMT-55
+        content = "*********",
+        onClick = {
+            navController.navigate(
+                route = SimTongScreen.MyPage.FIX_PASSWORD,
+            )
+        }
+    )
+} else {
+    Spacer(modifier = Modifier.height(19.dp))
+
+    Body3(
+        text = MyPageFakeData.nickname,
+        color = SimTongColor.Black,
+    )
+
+    Spacer(modifier = Modifier.height(4.dp))
+
+    Body5(
+        text = MyPageFakeData.nickname,
+        color = SimTongColor.Gray300,
+    )
+
+    Spacer(modifier = Modifier.height(45.dp))
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(29.dp)
+    ) {
+        MyPageEditModeMenu(
+            title = stringResource(
+                id = R.string.kr_my_page_edit_my_information,
+            ),
+            content = stringResource(
+                id = R.string.kr_my_page_edit_my_information_description,
+            ),
+            enabledNextIcon = true,
+        ) {
+        }
+
+        MyPageEditModeMenu(
+            title = stringResource(id = R.string.kr_my_page_sign_in),
+            titleColor = SimTongColor.MainColor,
+            content = stringResource(
+                id = R.string.kr_my_page_sign_in_description,
+            ),
+        )
+    } */
+
+/* @Composable
 private fun MyPageEditModeMenu(
     title: String,
     titleColor: Color = SimTongColor.Black,
@@ -293,7 +379,7 @@ private fun MyPageEditModeMenu(
             )
         }
     }
-}
+} */
 
 @Preview(showBackground = true)
 @Composable

@@ -7,6 +7,7 @@ import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.domain.exception.NeedLoginException
 import com.comit.model.Token
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
@@ -55,7 +56,8 @@ private val ignoreRequest = listOf(
     CustomRequest("/commons/account/existence", CustomRestMethod.GET),
     CustomRequest("/emails/code", CustomRestMethod.POST),
     CustomRequest("/emails", CustomRestMethod.GET),
-    CustomRequest("/commons/password/initialization", CustomRestMethod.PUT)
+    CustomRequest("/files", CustomRestMethod.POST),
+    CustomRequest("/commons/password/initialization", CustomRestMethod.PUT),
 )
 
 class AuthorizationInterceptor @Inject constructor(
@@ -68,7 +70,8 @@ class AuthorizationInterceptor @Inject constructor(
 
         if (method == CustomRestMethod.ALL && ignoreRequest.any { it.path == path }) {
             return chain.proceed(request)
-        } else if (ignoreRequest.contains(CustomRequest(path, method))) {
+        }
+        if (ignoreRequest.contains(CustomRequest(path, method))) {
             return chain.proceed(request)
         }
 
@@ -80,19 +83,21 @@ class AuthorizationInterceptor @Inject constructor(
 
         if (expiredAt.isBefore(currentTime)) {
             val client = OkHttpClient()
-            val refreshToken = runBlocking { localAuthDataSource.fetchRefreshToken() }
+            val refreshToken = runBlocking {
+                localAuthDataSource.fetchRefreshToken().first()
+            }
 
             val tokenRefreshRequest = Request.Builder()
                 .url(REISSUE_TOKEN_URL)
                 .put("".toRequestBody("application/json".toMediaTypeOrNull()))
-                .addHeader(REFRESH_TOKEN, "$BEARER_HEADER $refreshToken")
+                .addHeader(REFRESH_TOKEN, refreshToken)
                 .build()
             val response = client.newCall(tokenRefreshRequest).execute()
 
             if (response.isSuccessful) {
                 val token = Gson().fromJson(
-                    response.body!!.toString(),
-                    ReissueTokenResponse::class.java
+                    response.body!!.string(),
+                    ReissueToken::class.java
                 )
                 runBlocking {
                     localAuthDataSource.saveToken(
@@ -107,7 +112,7 @@ class AuthorizationInterceptor @Inject constructor(
         }
 
         val accessToken = runBlocking {
-            localAuthDataSource.fetchAccessToken()
+            localAuthDataSource.fetchAccessToken().first()
         }
 
         return chain.proceed(
@@ -118,8 +123,16 @@ class AuthorizationInterceptor @Inject constructor(
         )
     }
 
+    data class ReissueToken(
+        @SerializedName("access_token")
+        val accessToken: String,
+        @SerializedName("access_token_exp")
+        val accessTokenExp: String,
+        @SerializedName("refresh_token")
+        val refreshToken: String,
+    )
+
     companion object {
-        // TODO ("limsaehyun - 좀 더 잘 처리하는 방법 고민하기 - SIMT-49")
         const val BEARER_HEADER = "Bearer"
         const val AUTHORIZATION = "Authorization"
         const val REFRESH_TOKEN = "Refresh-Token"

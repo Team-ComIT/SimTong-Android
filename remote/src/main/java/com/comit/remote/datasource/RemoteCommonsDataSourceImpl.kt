@@ -68,6 +68,14 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
         )
     }
 
+    override suspend fun checkPassword(
+        oldPassword: String
+    ) = simTongApiCall {
+        commonsAPI.checkOldPassword(
+            oldPassword = oldPassword
+        )
+    }
+
     override suspend fun fetchSpots(): SpotList =
         simTongApiCall {
             commonsAPI.fetchSpots().toModel()
