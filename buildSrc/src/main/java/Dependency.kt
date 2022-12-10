@@ -63,6 +63,7 @@ object Dependency {
         const val COMPOSE_ANI_NAV = "com.google.accompanist:accompanist-navigation-animation:${Versions.ANI_NAV}"
         const val COMPOSE_LANDSCAPIST = "com.github.skydoves:landscapist-glide:${Versions.LANDSCAPIST}"
         const val COMPOSE_HILT_NAV = "androidx.hilt:hilt-navigation-compose:${Versions.HILT_NAV}"
+        const val COMPOSE_WEBVOEW = "com.google.accompanist:accompanist-webview:0.24.13-rc"
     }
 
     object Hilt {
