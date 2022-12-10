@@ -189,8 +189,10 @@ internal fun FixPassword(
                         vm.inPutErrPassword(msg = null)
                     },
                     title = stringResource(id = R.string.password_input),
-                    error = if (!isPasswordFormat(fixPasswordInState.password) && fixPasswordInState.password.isNotEmpty())
-                        stringResource(id = R.string.password_format_message) else fixPasswordInState.errMsgPassword,
+                    error = if (!isPasswordFormat(fixPasswordInState.password) &&
+                        fixPasswordInState.password.isNotEmpty()
+                    ) stringResource(id = R.string.password_format_message)
+                    else fixPasswordInState.errMsgPassword,
                 )
             }
 
