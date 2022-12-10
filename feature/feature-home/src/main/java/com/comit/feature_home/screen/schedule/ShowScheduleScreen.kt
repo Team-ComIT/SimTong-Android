@@ -2,6 +2,7 @@
 
 package com.comit.feature_home.screen.schedule
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -60,6 +61,10 @@ import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.sql.Date
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.UUID
 import java.util.GregorianCalendar
 import java.util.Calendar
@@ -325,7 +330,17 @@ fun ScheduleItem(
     title: String,
     onScheduleClicked: () -> Unit,
 ) {
-    val today = false
+    var today = false
+
+    val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+    val localDateNow = dateTimeFormatter.format(LocalDate.now())
+    val now = localDateNow.substring(0, 4) + localDateNow.substring(5,7) + localDateNow.substring(8)
+    val start = start_At.substring(0, 4) + start_At.substring(5,7) + start_At.substring(8)
+    val end = end_At.substring(0, 4) + end_At.substring(5,7) + end_At.substring(8)
+
+    if(start.toInt() <= now.toInt() && end >= now)
+        today = true
+
     val titleColor = if (today) SimTongColor.Gray800 else SimTongColor.Gray300
     val dateColor = if (today) SimTongColor.MainColor400 else SimTongColor.Gray300
 

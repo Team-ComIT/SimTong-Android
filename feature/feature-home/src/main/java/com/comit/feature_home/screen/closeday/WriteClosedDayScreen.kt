@@ -148,7 +148,7 @@ fun WriteClosedDayScreen(
                         onClick = {
                             val date = Date.valueOf("$yearT-$monthT-$dayT")
                             refresh = false
-                            
+
                             if (saveEnabled) {
                                 when (workStateText) {
                                     workClose -> {
