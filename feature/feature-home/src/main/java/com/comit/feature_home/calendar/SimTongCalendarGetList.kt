@@ -2,9 +2,9 @@ package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import android.util.Log
 import com.comit.feature_home.mvi.FetchHolidayState
-import com.comit.feature_home.screen.GetHolidayViewModel
-import java.sql.Date
+import com.comit.feature_home.mvi.FetchScheduleState
 import java.time.LocalDate
 import kotlin.collections.ArrayList
 
@@ -14,10 +14,14 @@ private const val Sunday: Int = 7
 
 private const val Week: Int = 7
 
+private const val MonthStart: Int = 1
+
+private const val MonthEnd: Int = 31
+
 fun organizeList(
     checkMonth: Int,
     holidayList: List<FetchHolidayState.Holiday>,
-    workCountList: List<Int>,
+    workCountList: List<FetchScheduleState.Schedule>?,
 ): ArrayList<SimTongCalendarData> {
     val calendarList = ArrayList<SimTongCalendarData>()
     val today = GregorianCalendar()
@@ -32,10 +36,12 @@ fun organizeList(
 
     val restDayList = ArrayList<Boolean>()
     val annualDayList = ArrayList<Boolean>()
+    val workDayList = ArrayList<Int>()
 
-    for (i in 0..30) {
+    for (i in MonthStart..MonthEnd) {
         restDayList.add(false)
         annualDayList.add(false)
+        workDayList.add(0)
     }
 
     for (element in holidayList) {
@@ -44,6 +50,21 @@ fun organizeList(
         }
         if (element.type == TypeName.ANNUAL) {
             annualDayList[element.date[9].toString().toInt() - 1] = true
+        }
+    }
+
+    if(workCountList != null) {
+        for(i in workCountList.indices) {
+            val start = workCountList[i].start_At.substring(8).toInt()
+            val end = workCountList[i].end_At.substring(8).toInt()
+
+            if(start == end) {
+                workDayList[start - 1] = workDayList[start - 1] + 1
+            } else {
+                for(j in start..end) {
+                    workDayList[j - 1]  = workDayList[j-1] + 1
+                }
+            }
         }
     }
 
@@ -70,7 +91,7 @@ fun organizeList(
         calendarList.add(
             SimTongCalendarData(
                 day = i.toString(),
-                workCount = workCountList[i - 1],
+                workCount = workDayList[i - 1],
                 weekend = weekend,
                 thisMouth = true,
                 restDay = restDayList[i - 1],
@@ -99,73 +120,6 @@ fun organizeList(
     }
 
     return calendarList
-}
-
-private const val MonthStart: Int = 1
-
-private const val MonthEnd: Int = 31
-
-fun getRestDayList(
-    vm: GetHolidayViewModel,
-    holidayList: List<FetchHolidayState.Holiday>,
-    year: Int,
-    month: Int
-): ArrayList<Boolean> {
-    val restDayList = ArrayList<Boolean>()
-
-    val year = String.format("%02d", year)
-    val month = String.format("%02d", month)
-
-    try {
-        vm.getHolidayList(Date.valueOf("$year-$month-01"))
-    } catch (_: Exception) { }
-
-    for (i in 0..30) {
-        restDayList.add(false)
-    }
-
-    for (i in 0 until holidayList.size) {
-        val listItem = holidayList[i]
-        if (listItem.type == TypeName.HOLIDAY) {
-            restDayList[listItem.date[9].toString().toInt() - 1] = true
-        }
-    }
-
-    return restDayList
-}
-
-fun getAnnualDayList(
-    year: Int,
-    month: Int
-): ArrayList<Boolean> {
-    val annualDayList = ArrayList<Boolean>()
-
-    for (i in MonthStart..MonthEnd) {
-        if (year + month == 0) {
-            annualDayList.add(false)
-        } else {
-            annualDayList.add(false)
-        }
-    }
-
-    return annualDayList
-}
-
-fun getWorkCountList(
-    year: Int,
-    month: Int
-): ArrayList<Int> {
-    val workCountList = ArrayList<Int>()
-
-    for (i in MonthStart..MonthEnd) {
-        if (year + month == 0) {
-            workCountList.add(i)
-        } else {
-            workCountList.add(0)
-        }
-    }
-
-    return workCountList
 }
 
 object TypeName {

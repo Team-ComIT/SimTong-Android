@@ -1,4 +1,4 @@
-package com.comit.feature_home.screen
+package com.comit.feature_home.calendar
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
