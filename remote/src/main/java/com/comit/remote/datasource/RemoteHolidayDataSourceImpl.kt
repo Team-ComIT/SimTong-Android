@@ -24,12 +24,12 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
     override suspend fun dayOffHolidays(
         date: String,
     ) = simTongApiCall {
-            holidayAPI.dayOffHolidays(
-                dayOffRequest = DayOffRequest(
-                    date = date
-                )
+        holidayAPI.dayOffHolidays(
+            dayOffRequest = DayOffRequest(
+                date = date
             )
-        }
+        )
+    }
 
     override suspend fun setAnnual(
         date: Date,

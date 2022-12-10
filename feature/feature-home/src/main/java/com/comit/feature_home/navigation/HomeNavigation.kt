@@ -4,8 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.comit.feature_home.screen.SalaryWebViewScreen
 import com.comit.feature_home.screen.HomeScreen
+import com.comit.feature_home.screen.SalaryWebViewScreen
 import com.comit.feature_home.screen.closeday.WriteClosedDayScreen
 import com.comit.feature_home.screen.schedule.ShowScheduleScreen
 import com.comit.feature_home.screen.schedule.WriteScheduleScreen

@@ -1,7 +1,6 @@
 
 package com.comit.feature_home.calendar
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,7 +44,7 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
-import com.comit.feature_home.screen.schedule.ShowScheduleViewModel
+import com.comit.feature_home.string
 import com.example.feature_home.R
 import java.sql.Date
 import java.util.Calendar
@@ -73,8 +72,8 @@ fun SimTongCalendar(
     getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
     getWorkCountViewModel: GetWorkCountViewModel = hiltViewModel(),
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
-    onBeforeClicked: (Date) -> Unit = {  },
-    onNextClicked: (Date) -> Unit = {  },
+    onBeforeClicked: (Date) -> Unit = { },
+    onNextClicked: (Date) -> Unit = { },
     refresh: Boolean = false
 ) {
     var checkMonth by remember { mutableStateOf(0) }
@@ -88,7 +87,7 @@ fun SimTongCalendar(
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-    var date by remember { mutableStateOf(Date.valueOf(year.toString() + "-" + String.format("%02d", month) + "-01")) }
+    var date by remember { mutableStateOf(Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")) }
 
     var calendarList by remember {
         mutableStateOf(
@@ -142,8 +141,7 @@ fun SimTongCalendar(
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-
-                date = Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01")
+                date = Date.valueOf(string.format("%02d", year) + "-" + string.format("%02d", month) + "-01")
                 getWorkCountViewModel.getWorkCountList(date)
                 onBeforeClicked(date)
             },
@@ -152,8 +150,7 @@ fun SimTongCalendar(
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-
-                date = Date.valueOf(year.toString() + "-" + String.format("%02d", month) + "-01")
+                date = Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")
                 getWorkCountViewModel.getWorkCountList(date)
                 onNextClicked(date)
             }

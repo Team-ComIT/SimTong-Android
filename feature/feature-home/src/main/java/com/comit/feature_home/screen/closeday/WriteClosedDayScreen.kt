@@ -1,6 +1,8 @@
-@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
+@file:OptIn(
+    ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
     InternalCoroutinesApi::class
 )
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
 package com.comit.feature_home.screen.closeday
 
@@ -52,15 +54,18 @@ import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body6
+import com.comit.feature_home.SubStringMonthEnd
+import com.comit.feature_home.SubStringMonthStart
+import com.comit.feature_home.SubStringYearEnd
+import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.mvi.CloseDaySideEffect
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
-import java.util.Calendar
 import java.sql.Date
+import java.util.Calendar
 import java.util.GregorianCalendar
-
 
 private val HomeCalendarHeight: Dp = 422.dp
 
@@ -135,7 +140,6 @@ fun WriteClosedDayScreen(
                     val _yearT = yearT.toString() + stringResource(id = R.string.calendar_year) + " "
                     val _monthT = monthT.toString() + stringResource(id = R.string.calendar_month) + " "
                     val _dayT = dayT.toString() + stringResource(id = R.string.calendar_day) + "은 "
-
 
                     Body6(
                         text = "$_yearT$_monthT$_dayT\"$workStateText\"입니다.",
@@ -241,12 +245,12 @@ fun WriteClosedDayScreen(
 
             SimTongCalendar(
                 onNextClicked = {
-                    monthT = it.toString().substring(5, 7).toInt()
-                    yearT = it.toString().substring(0, 4).toInt()
+                    monthT = it.toString().substring(SubStringMonthStart, SubStringMonthEnd).toInt()
+                    yearT = it.toString().substring(SubStringYearStart, SubStringYearEnd).toInt()
                 },
                 onBeforeClicked = {
-                    monthT = it.toString().substring(5, 7).toInt()
-                    yearT = it.toString().substring(0, 4).toInt()
+                    monthT = it.toString().substring(SubStringMonthStart, SubStringMonthEnd).toInt()
+                    yearT = it.toString().substring(SubStringYearStart, SubStringYearEnd).toInt()
                 },
                 onItemClicked = { _day, _workState ->
                     workState = _workState
@@ -265,7 +269,6 @@ fun WriteClosedDayScreen(
         }
     }
 }
-
 
 @Composable
 fun WriteCloseDayItem(

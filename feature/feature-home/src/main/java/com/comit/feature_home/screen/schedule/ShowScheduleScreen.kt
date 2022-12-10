@@ -1,4 +1,5 @@
 @file:OptIn(InternalCoroutinesApi::class)
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
 package com.comit.feature_home.screen.schedule
 
@@ -53,8 +54,14 @@ import com.comit.core_design_system.typography.Body11
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body7
+import com.comit.feature_home.SubStringDay
+import com.comit.feature_home.SubStringMonthEnd
+import com.comit.feature_home.SubStringMonthStart
+import com.comit.feature_home.SubStringYearEnd
+import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.mvi.FetchScheduleSideEffect
+import com.comit.feature_home.string
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -62,10 +69,9 @@ import kotlinx.coroutines.launch
 import java.sql.Date
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.UUID
-import java.util.GregorianCalendar
 import java.util.Calendar
-
+import java.util.GregorianCalendar
+import java.util.UUID
 
 @Stable
 private val HorizontalPadding = PaddingValues(
@@ -101,10 +107,10 @@ fun ShowScheduleScreen(
     var date by remember {
         mutableStateOf<Date>(
             Date.valueOf(
-                String.format("%02d", calendar.get(Calendar.YEAR))
-                        + "-"
-                        + String.format("%02d", calendar.get(Calendar.MONTH) + 1)
-                        + "-01"
+                string.format("%02d", calendar.get(Calendar.YEAR)) +
+                    "-" +
+                    string.format("%02d", calendar.get(Calendar.MONTH) + 1) +
+                    "-01"
             )
         )
     }
@@ -176,7 +182,7 @@ fun ShowScheduleScreen(
                                 showScheduleViewModel.deleteSchedule(UUID.fromString(scheduleId))
                             }
                         }
-                        
+
                         Spacer(modifier = Modifier.height(20.dp))
                     }
                 } else {
@@ -187,7 +193,6 @@ fun ShowScheduleScreen(
                                 .fillMaxWidth()
                                 .height(50.dp)
                                 .simClickable {
-
                                 }
                         ) {
                             Spacer(modifier = Modifier.width(30.dp))
@@ -301,9 +306,8 @@ fun ShowScheduleScreen(
                 LazyColumn() {
                     items(showScheduleState.scheduleList) {
                         ScheduleItem(
-                            id = it.id,
-                            start_At = it.start_At,
-                            end_At = it.end_At,
+                            startAt = it.startAt,
+                            endAt = it.endAt,
                             title = it.title,
                             onScheduleClicked = {
                                 deleteCheck = false
@@ -323,9 +327,8 @@ fun ShowScheduleScreen(
 
 @Composable
 fun ScheduleItem(
-    id: String,
-    start_At: String,
-    end_At: String,
+    startAt: String,
+    endAt: String,
     title: String,
     onScheduleClicked: () -> Unit,
 ) {
@@ -333,11 +336,17 @@ fun ScheduleItem(
 
     val dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val localDateNow = dateTimeFormatter.format(LocalDate.now())
-    val now = localDateNow.substring(0, 4) + localDateNow.substring(5,7) + localDateNow.substring(8)
-    val start = start_At.substring(0, 4) + start_At.substring(5,7) + start_At.substring(8)
-    val end = end_At.substring(0, 4) + end_At.substring(5,7) + end_At.substring(8)
+    val now = localDateNow.substring(SubStringYearStart, SubStringYearEnd) +
+        localDateNow.substring(SubStringMonthStart, SubStringMonthEnd) +
+        localDateNow.substring(SubStringDay)
+    val start = startAt.substring(SubStringYearStart, SubStringYearStart) +
+        startAt.substring(SubStringMonthStart, SubStringMonthEnd) +
+        startAt.substring(SubStringDay)
+    val end = endAt.substring(SubStringYearStart, SubStringYearEnd) +
+        endAt.substring(SubStringMonthStart, SubStringMonthEnd) +
+        endAt.substring(SubStringDay)
 
-    if(start.toInt() <= now.toInt() && end >= now)
+    if (start.toInt() <= now.toInt() && end >= now)
         today = true
 
     val titleColor = if (today) SimTongColor.Gray800 else SimTongColor.Gray300
@@ -377,7 +386,7 @@ fun ScheduleItem(
                 )
 
                 Body11(
-                    text = "$start_At ~ $end_At",
+                    text = "$startAt ~ $endAt",
                     color = dateColor
                 )
             }

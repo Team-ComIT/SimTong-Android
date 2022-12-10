@@ -14,47 +14,47 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.util.UUID
 import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class ShowScheduleViewModel @Inject constructor(
-  private val fetchPersonalScheduleUseCase: FetchPersonalScheduleUseCase,
-  private val deletePersonalScheduleUseCase: DeletePersonalScheduleUseCase,
+    private val fetchPersonalScheduleUseCase: FetchPersonalScheduleUseCase,
+    private val deletePersonalScheduleUseCase: DeletePersonalScheduleUseCase,
 ) : ContainerHost<FetchScheduleState, FetchScheduleSideEffect>, ViewModel() {
 
-  override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
+    override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
 
-  fun showSchedule(
-    date: Date
-  ) = intent {
-    viewModelScope.launch {
-      fetchPersonalScheduleUseCase(
-        date = date
-      ).onSuccess {
-        reduce {
-          state.copy(
-            scheduleList = it.toState().scheduleList
-          )
+    fun showSchedule(
+        date: Date
+    ) = intent {
+        viewModelScope.launch {
+            fetchPersonalScheduleUseCase(
+                date = date
+            ).onSuccess {
+                reduce {
+                    state.copy(
+                        scheduleList = it.toState().scheduleList
+                    )
+                }
+            }.onFailure {
+                postSideEffect(FetchScheduleSideEffect.FetchScheduleFail)
+            }
         }
-      }.onFailure {
-        postSideEffect(FetchScheduleSideEffect.FetchScheduleFail)
-      }
     }
-  }
 
-  fun deleteSchedule(
-    id: UUID
-  ) = intent {
-    viewModelScope.launch {
-      deletePersonalScheduleUseCase(
-        scheduleId = id
-      ).onSuccess {
-        postSideEffect(FetchScheduleSideEffect.DeleteScheduleSuccess)
-      }.onFailure {
-        postSideEffect(FetchScheduleSideEffect.DeleteScheduleFail)
-      }
+    fun deleteSchedule(
+        id: UUID
+    ) = intent {
+        viewModelScope.launch {
+            deletePersonalScheduleUseCase(
+                scheduleId = id
+            ).onSuccess {
+                postSideEffect(FetchScheduleSideEffect.DeleteScheduleSuccess)
+            }.onFailure {
+                postSideEffect(FetchScheduleSideEffect.DeleteScheduleFail)
+            }
+        }
     }
-  }
 }

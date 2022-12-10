@@ -1,4 +1,5 @@
 @file:OptIn(InternalCoroutinesApi::class)
+@file:Suppress("OPT_IN_IS_NOT_ENABLED", "TooGenericExceptionCaught", "SwallowedException")
 
 package com.comit.feature_home.screen.schedule
 
@@ -60,7 +61,8 @@ fun WriteScheduleScreen(
                 vm.inputErrMsgTitle("")
                 vm.inputErrMsgScheduleStart("")
                 vm.inputErrMsgScheduleEnd("")
-                vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")            }
+                vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")
+            }
         }
     }
 
@@ -142,8 +144,8 @@ fun WriteScheduleScreen(
         }
 
         val btnEnabled = writeScheduleState.title.isNotEmpty() &&
-                writeScheduleState.scheduleStart.isNotEmpty() &&
-                writeScheduleState.scheduleEnd.isNotEmpty()
+            writeScheduleState.scheduleStart.isNotEmpty() &&
+            writeScheduleState.scheduleEnd.isNotEmpty()
 
         SimTongBigRoundButton(
             text = stringResource(id = R.string.check),
@@ -171,7 +173,6 @@ fun WriteScheduleScreen(
                     vm.inputErrMsgScheduleEnd("")
                     vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")
                 }
-
             },
             modifier = Modifier
                 .fillMaxHeight()

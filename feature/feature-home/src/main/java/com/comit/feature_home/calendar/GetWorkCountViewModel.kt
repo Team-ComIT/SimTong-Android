@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class GetWorkCountViewModel @Inject constructor(
     private val fetchPersonalScheduleUseCase: FetchPersonalScheduleUseCase
-): ViewModel() {
+) : ViewModel() {
 
     private val _workCountList: MutableLiveData<List<FetchScheduleState.Schedule>> = MutableLiveData()
     val workCountList: LiveData<List<FetchScheduleState.Schedule>> = _workCountList

@@ -1,8 +1,10 @@
+@file:Suppress("ComplexMethod", "NestedBlockDepth")
+
 package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import android.util.Log
+import com.comit.feature_home.SubStringDay
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.FetchScheduleState
 import java.time.LocalDate
@@ -23,6 +25,7 @@ fun organizeList(
     holidayList: List<FetchHolidayState.Holiday>,
     workCountList: List<FetchScheduleState.Schedule>?,
 ): ArrayList<SimTongCalendarData> {
+
     val calendarList = ArrayList<SimTongCalendarData>()
     val today = GregorianCalendar()
     val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
@@ -46,23 +49,23 @@ fun organizeList(
 
     for (element in holidayList) {
         if (element.type == TypeName.HOLIDAY) {
-            restDayList[element.date.substring(8).toInt() - 1] = true
+            restDayList[element.date.substring(SubStringDay).toInt() - 1] = true
         }
         if (element.type == TypeName.ANNUAL) {
-            annualDayList[element.date.substring(8).toInt() - 1] = true
+            annualDayList[element.date.substring(SubStringDay).toInt() - 1] = true
         }
     }
 
-    if(workCountList != null) {
-        for(i in workCountList.indices) {
-            val start = workCountList[i].start_At.substring(8).toInt()
-            val end = workCountList[i].end_At.substring(8).toInt()
+    if (workCountList != null) {
+        for (i in workCountList.indices) {
+            val start = workCountList[i].startAt.substring(SubStringDay).toInt()
+            val end = workCountList[i].endAt.substring(SubStringDay).toInt()
 
-            if(start == end) {
+            if (start == end) {
                 workDayList[start - 1] = workDayList[start - 1] + 1
             } else {
-                for(j in start..end) {
-                    workDayList[j - 1]  = workDayList[j-1] + 1
+                for (j in start..end) {
+                    workDayList[j - 1] = workDayList[j - 1] + 1
                 }
             }
         }

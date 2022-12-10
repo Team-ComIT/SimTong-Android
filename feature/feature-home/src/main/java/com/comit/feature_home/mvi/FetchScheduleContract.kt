@@ -7,8 +7,8 @@ data class FetchScheduleState(
 ) {
     data class Schedule(
         val id: String = "",
-        val start_At: String = "",
-        val end_At: String = "",
+        val startAt: String = "",
+        val endAt: String = "",
         val title: String = ""
     )
 }
@@ -21,8 +21,8 @@ fun ScheduleList.toState() = FetchScheduleState(
 
 fun ScheduleList.Schedule.toStateSchedule() = FetchScheduleState.Schedule(
     id = id,
-    start_At = startAt,
-    end_At = endAt,
+    startAt = startAt,
+    endAt = endAt,
     title = title
 )
 
@@ -30,7 +30,7 @@ sealed class FetchScheduleSideEffect {
 
     object FetchScheduleFail : FetchScheduleSideEffect()
 
-    object DeleteScheduleSuccess: FetchScheduleSideEffect()
+    object DeleteScheduleSuccess : FetchScheduleSideEffect()
 
-    object DeleteScheduleFail: FetchScheduleSideEffect()
+    object DeleteScheduleFail : FetchScheduleSideEffect()
 }
