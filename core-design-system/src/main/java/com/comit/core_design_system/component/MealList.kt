@@ -20,6 +20,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
+import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.typography.Body13
+import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body7
 
@@ -29,22 +32,23 @@ data class Meal(
 )
 
 @Composable
-fun MealListVersion2(
+fun MealList(
     meals: List<Meal>,
 ) {
     val state = rememberLazyListState(
         initialFirstVisibleItemIndex = 3,
-        initialFirstVisibleItemScrollOffset = -10
+        initialFirstVisibleItemScrollOffset = -60
     )
 
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(8.dp),
         state = state,
     ) {
-        itemsIndexed(meals) { _, meal ->
+        itemsIndexed(meals) { index, meal ->
             MeaContent(
                 date = meal.date,
                 meals = meal.food,
+                isCurrentDay = index == 3,
             )
         }
     }
@@ -54,30 +58,37 @@ fun MealListVersion2(
 fun MeaContent(
     date: String,
     meals: List<String>,
+    isCurrentDay: Boolean,
 ) {
     Box(
-        modifier = Modifier.size(168.dp, 272.dp)
+        modifier = Modifier.size(111.dp, 192.dp)
     ) {
         Image(
             painter = painterResource(
-                id = R.drawable.bg_meal_menu,
+                id = if (isCurrentDay) R.drawable.img_meal_red else R.drawable.img_meal_white,
             ),
             contentDescription = null,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         )
 
         Column(
-            modifier = Modifier.padding(20.dp),
+            modifier = Modifier.padding(14.dp),
         ) {
-            Body7(text = date)
+            Body14(
+                text = date,
+                color = if (isCurrentDay) SimTongColor.White else SimTongColor.Gray800,
+            )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             LazyColumn(
-                verticalArrangement = Arrangement.spacedBy(18.dp)
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 items(meals) {
-                    Body4(text = it)
+                    Body13(
+                        text = it,
+                        color = if (isCurrentDay) SimTongColor.White else SimTongColor.Gray800,
+                    )
                 }
             }
         }
@@ -87,15 +98,15 @@ fun MeaContent(
 @Preview
 @Composable
 fun PreviewMealListVersion2() {
-    MealListVersion2(
+    MealList(
         meals = listOf(
-            Meal("12월 1일", listOf("1", "2", "3", "4", "5")),
-            Meal("12월 2일", listOf("1", "2", "3", "4", "5")),
-            Meal("12월 3일", listOf("1", "2", "3", "4", "5")),
-            Meal("12월 4일", listOf("1", "2", "3", "4", "5")),
-            Meal("12월 5일", listOf("1", "2", "3", "4", "5")),
-            Meal("12월 6일", listOf("1", "2", "3", "4", "5")),
-            Meal("12월 7일", listOf("1", "2", "3", "4", "5")),
+            Meal("12월 1일", listOf("1", "2", "3", "4", "5", "6")),
+            Meal("12월 2일", listOf("1", "2", "3", "4", "5", "6")),
+            Meal("12월 3일", listOf("1", "2", "3", "4", "5", "6")),
+            Meal("12월 4일", listOf("1", "2", "3", "4", "5", "6")),
+            Meal("12월 5일", listOf("1", "2", "3", "4", "5", "6")),
+            Meal("12월 6일", listOf("1", "2", "3", "4", "5", "6")),
+            Meal("12월 7일", listOf("1", "2", "3", "4", "5", "6")),
         )
     )
 }
