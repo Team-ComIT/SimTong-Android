@@ -6,6 +6,7 @@ package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.common.format.isEmailFormat
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.NotFoundException
@@ -51,14 +52,22 @@ class FindPasswordViewModel @Inject constructor(
                 )
             ).onSuccess {
                 postSideEffect(FindPasswordSideEffect.NavigateToSignIn)
+            }.onFailure {
             }
         }
     }
 
     fun sendEmailCode() = intent {
+        val email = state.email
+
+        if (!email.isEmailFormat()) {
+            postSideEffect(FindPasswordSideEffect.EmailFormat)
+            return@intent
+        }
+
         viewModelScope.launch {
             sendEmailCodeUseCase(
-                email = state.email,
+                email = email,
             ).onFailure {
                 when (it) {
                     is ConflictException -> postSideEffect(FindPasswordSideEffect.EmailVerifyAlready)

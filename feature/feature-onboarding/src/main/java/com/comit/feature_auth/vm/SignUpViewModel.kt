@@ -4,6 +4,8 @@ package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.common.format.isEmailFormat
+import com.comit.common.unit.sizeInKb
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
@@ -25,6 +27,8 @@ import java.io.File
 import javax.inject.Inject
 
 private const val EmployeeNumIsNum = "사원번호는 숫자로 이루어져 있어야 합니다"
+
+internal const val ImageLimitSizeInKB: Int = 1024
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -65,11 +69,18 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun sendEmailCode() = intent {
+        val email = state.email
+
+        if (!email.isEmailFormat()) {
+            postSideEffect(SignUpSideEffect.EmailValid)
+            return@intent
+        }
+
         viewModelScope.launch {
             sendEmailCodeUseCase(
-                email = state.email,
+                email = email,
             ).onSuccess {
-                postSideEffect(SignUpSideEffect.NavigateToSignUpVerify)
+                postSideEffect(SignUpSideEffect.NavigateToSignUpVerify(email))
             }.onFailure {
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.EmailVerifyAlready)
@@ -108,6 +119,11 @@ class SignUpViewModel @Inject constructor(
         nickname: String?,
         profileImage: File?,
     ) = intent {
+        if (profileImage != null && profileImage.sizeInKb > ImageLimitSizeInKB) {
+            postSideEffect(SignUpSideEffect.ProfileImageSizeLimit(profileImage.sizeInKb))
+            return@intent
+        }
+
         viewModelScope.launch {
             signUpUseCase(
                 params = SignUpUseCase.Params(
@@ -124,7 +140,6 @@ class SignUpViewModel @Inject constructor(
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.SignUpConflict)
                 }
-                println("SIGNUP ERROR $it")
             }
         }
     }
@@ -179,5 +194,9 @@ class SignUpViewModel @Inject constructor(
 
     fun inputFieldErrVerifyCode(message: String) = intent {
         reduce { state.copy(fieldErrVerifyCode = message) }
+    }
+
+    fun inputFieldErrEmail(message: String) = intent {
+        reduce { state.copy(fieldErrEmail = message) }
     }
 }

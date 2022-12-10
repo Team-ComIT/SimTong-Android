@@ -10,7 +10,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.SimTongBigRoundButton
-import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
@@ -56,9 +55,6 @@ fun FindPasswordCheckUserScreen(
             hintBackgroundColor = SimTongColor.Gray100,
             backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.eng_email),
-            sideBtnText = stringResource(id = R.string.certification),
-            enabledSideBtn = true,
-            simTongButtonColor = if (email.isEmpty()) SimTongButtonColor.GRAY else SimTongButtonColor.RED,
             error = fieldErrEmail,
         )
 

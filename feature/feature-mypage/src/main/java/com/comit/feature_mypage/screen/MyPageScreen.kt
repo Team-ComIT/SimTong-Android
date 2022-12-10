@@ -40,9 +40,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.comit.common.convert.UriUtil
+import com.comit.common.convert.limitSize
 import com.comit.common.rememberToast
 import com.comit.common.takePhotoFromAlbumIntent
 import com.comit.common.unit.parseBitmap
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
@@ -50,9 +52,12 @@ import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
+import com.comit.feature_mypage.mvi.MyPageSideEffect
 import com.comit.navigator.SimTongScreen
+import kotlinx.coroutines.InternalCoroutinesApi
 import java.io.File
 
+@OptIn(InternalCoroutinesApi::class)
 @Composable
 fun MyPageScreen(
     navController: NavController,
@@ -60,7 +65,18 @@ fun MyPageScreen(
 ) {
     val myPageContainer = vm.container
     val myPageInState = myPageContainer.stateFlow.collectAsState().value
+    val myPageSideEffect = myPageContainer.sideEffectFlow
     val toast = rememberToast()
+
+    myPageSideEffect.observeWithLifecycle {
+        when (it) {
+            is MyPageSideEffect.LimitSize -> {
+                toast(
+                    message = "파일 크기가 제한을 초과했습니다. (제한: ${ImageLimitSizeInKB}KB, 현재: ${it.size})",
+                )
+            }
+        }
+    }
 
     LaunchedEffect(key1 = vm) {
         vm.fetchUserInformation()
@@ -88,7 +104,7 @@ fun MyPageScreen(
         MyPageProfileImage(
             imageFile = {
                 vm.changeProfileImage(
-                    profileImg = it,
+                    profileImg = it.limitSize(),
                 )
             },
             image = myPageInState.profileImagePath,

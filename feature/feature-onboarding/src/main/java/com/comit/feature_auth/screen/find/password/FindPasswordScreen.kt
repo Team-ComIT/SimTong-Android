@@ -25,6 +25,7 @@ private const val TooManyRequest = "인증 요청 횟수를 초과하였습니�
 private const val EmailCodeNotCorrect = "유효하지 않는 인증코드입니다"
 
 private const val SuccessFixPassword = "비밀번호 변경이 완료되었습니다."
+private const val EmailValidMessage = "올바른 이메일 형식을 입력해주세요."
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
@@ -71,10 +72,15 @@ fun FindPasswordScreen(
                 findPasswordViewModel.inputFieldErrEmailCode(EmailCodeNotCorrect)
             }
             is FindPasswordSideEffect.NavigateToSignIn -> {
+                navController.popBackStack()
                 toast(
                     message = SuccessFixPassword,
                 )
-                navController.popBackStack()
+            }
+            is FindPasswordSideEffect.EmailFormat -> {
+                findPasswordViewModel.inputFieldErrEmailCode(
+                    msg = EmailValidMessage,
+                )
             }
         }
     }
@@ -128,8 +134,6 @@ fun FindPasswordScreen(
                 onNewPasswordCheckChanged = {
                     findPasswordViewModel.inputNewPasswordCheck(it)
                 },
-                fieldErrNewPassword = state.fieldErrNewPassword,
-                fieldErrNewPasswordCheck = state.fieldErrNewPasswordCheck,
                 fixPassword = {
                     findPasswordViewModel.initializationPassword(
                         email = state.email,

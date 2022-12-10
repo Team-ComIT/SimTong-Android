@@ -8,4 +8,9 @@ data class MyPageState(
     val profileImagePath: String? = null,
 )
 
-sealed class MyPageSideEffect
+sealed class MyPageSideEffect {
+
+    data class LimitSize(
+        val size: Double,
+    ) : MyPageSideEffect()
+}

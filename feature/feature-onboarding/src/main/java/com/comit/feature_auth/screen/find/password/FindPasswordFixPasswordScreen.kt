@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.comit.common.format.isPasswordFormat
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
@@ -21,8 +22,6 @@ fun FindPasswordFixPasswordScreen(
     onNewPasswordChanged: (String) -> Unit,
     newPasswordCheck: String,
     onNewPasswordCheckChanged: (String) -> Unit,
-    fieldErrNewPassword: String?,
-    fieldErrNewPasswordCheck: String?,
     fixPassword: () -> Unit,
 ) {
 
@@ -43,7 +42,9 @@ fun FindPasswordFixPasswordScreen(
                 onNewPasswordChanged(it)
             },
             isPassword = true,
-            error = fieldErrNewPassword,
+            error = if (!isPasswordFormat(newPassword) && newPassword.isNotEmpty()) stringResource(
+                id = R.string.password_format_message
+            ) else null,
             hint = stringResource(id = R.string.new_password),
         )
 
@@ -55,7 +56,8 @@ fun FindPasswordFixPasswordScreen(
                 onNewPasswordCheckChanged(it)
             },
             isPassword = true,
-            error = fieldErrNewPasswordCheck,
+            error = if (newPassword != newPasswordCheck)
+                stringResource(id = R.string.error_message_password) else null,
             hint = stringResource(id = R.string.new_password_again),
         )
 

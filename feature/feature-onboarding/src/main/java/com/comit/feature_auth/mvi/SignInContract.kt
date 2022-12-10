@@ -14,7 +14,5 @@ sealed class SignInSideEffect {
 
     object IdOrPasswordNotCorrect : SignInSideEffect()
 
-    object NetworkError : SignInSideEffect()
-
     object IdWasNotNumber : SignInSideEffect()
 }

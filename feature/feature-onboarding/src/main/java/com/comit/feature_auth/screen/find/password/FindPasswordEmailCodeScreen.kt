@@ -25,7 +25,7 @@ import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_auth.R
 
-private const val EmailCodeCountDownTime: Int = 10
+private const val EmailCodeCountDownTime: Int = 180
 
 @Composable
 fun FindPasswordEmailCodeScreen(

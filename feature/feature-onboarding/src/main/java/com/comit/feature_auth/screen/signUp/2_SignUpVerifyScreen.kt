@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 fun SignUpVerifyScreen(
     toPrevious: () -> Unit,
     checkVerifyCode: () -> Unit,
+    fieldErrEmailCode: String? = null,
     verifyCode: String,
     onVerifyCodeChanged: (String) -> Unit,
 ) {
@@ -53,6 +54,7 @@ fun SignUpVerifyScreen(
                     value = verifyCode,
                     onValueChange = { onVerifyCodeChanged(it) },
                     title = stringResource(id = R.string.verify_code),
+                    error = fieldErrEmailCode,
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))

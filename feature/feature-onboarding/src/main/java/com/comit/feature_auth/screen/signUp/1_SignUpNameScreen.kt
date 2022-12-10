@@ -89,6 +89,7 @@ fun SignUpNameScreen(
     fieldErrEmployeeNumber: String?,
     onEmployeeNumberChanged: (String) -> Unit,
     email: String,
+    fieldErrEmail: String?,
     onEmailChanged: (String) -> Unit,
     signUpNameStep: SignUpStep.InputUserInfo,
     navigatePage: (SignUpStep.InputUserInfo) -> Unit,
@@ -269,6 +270,7 @@ fun SignUpNameScreen(
                             onValueChange = {
                                 onEmailChanged(it)
                             },
+                            error = fieldErrEmail,
                         )
                     }
 
