@@ -42,6 +42,17 @@ fun Modifier.noRippleClickable(
     }
 }
 
+fun Modifier.noTempRippleClickable(
+    onClick: () -> Unit,
+): Modifier = composed {
+    clickable(
+        indication = null,
+        interactionSource = remember { MutableInteractionSource() },
+    ) {
+        onClick()
+    }
+}
+
 fun Modifier.simSelectable(
     selected: Boolean,
     rippleEnabled: Boolean = true,
