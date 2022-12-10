@@ -13,7 +13,7 @@ class RemoteMenuDataSourceImpl @Inject constructor(
 ) : RemoteMenuDataSource {
 
     override suspend fun fetchMenu(
-        date: Date,
+        date: String,
     ): MenuList = simTongApiCall {
         menuAPI.fetchMenu(
             date = date,
