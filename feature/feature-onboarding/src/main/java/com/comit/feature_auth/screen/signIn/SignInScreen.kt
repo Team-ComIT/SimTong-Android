@@ -84,9 +84,6 @@ fun SignInScreen(
                     msg = ErrMsgIdIsNotNumber,
                 )
             }
-            SignInSideEffect.NetworkError -> {
-                // TODO()
-            }
         }
     }
 
