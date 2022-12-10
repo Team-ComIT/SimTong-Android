@@ -92,7 +92,11 @@ internal fun SignUpScreen(
                 )
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN,
-                )
+                ) {
+                    popUpTo(route = SimTongScreen.Auth.SIGN_UP) {
+                        inclusive = true
+                    }
+                }
             }
             is SignUpSideEffect.SignUpConflict -> {
                 toast(
