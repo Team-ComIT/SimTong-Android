@@ -11,6 +11,8 @@ data class FindEmployeeNumState(
     val placeId: String = "",
     val placeList: List<SpotUiModel> = emptyList(),
 
+    val employeeNum: String = "",
+
     val errMsgName: String? = null,
     val errMsgPlace: String? = null,
     val errMsgEmail: String? = null,
@@ -21,6 +23,8 @@ sealed class FindEmployeeNumSideEffect {
     data class NavigateToResultScreen(
         val employeeNum: String,
     ) : FindEmployeeNumSideEffect()
+
+    object UserInfoNotMatched: FindEmployeeNumSideEffect()
 
     object FetchSpot : FindEmployeeNumSideEffect()
 }
