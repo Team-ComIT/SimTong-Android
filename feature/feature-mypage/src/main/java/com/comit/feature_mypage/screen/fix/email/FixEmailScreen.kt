@@ -58,7 +58,6 @@ private const val NoInternetException = "인터넷 연결 상태를 확인해주
 private const val CheckCodeFail = "인증 코드가 알맞지 않습니다"
 
 @OptIn(InternalCoroutinesApi::class)
-@ExperimentalPagerApi
 @Composable
 internal fun FixEmailScreen(
     navController: NavController,

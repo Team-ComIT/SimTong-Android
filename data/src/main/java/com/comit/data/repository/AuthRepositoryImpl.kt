@@ -81,8 +81,12 @@ class AuthRepositoryImpl @Inject constructor(
     }
 
     override suspend fun changeProfileImage(
-        profileImagePath: String,
+        profileImg: File,
     ) {
+        val profileImagePath = getImagePathByFile(
+            file = profileImg,
+        )
+
         remoteAuthDataSource.changeProfileImage(
             profileImagePath = profileImagePath,
         )

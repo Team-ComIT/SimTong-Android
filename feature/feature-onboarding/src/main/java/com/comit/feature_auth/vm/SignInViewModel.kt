@@ -30,17 +30,14 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             clearErrorMessage()
 
-            try {
-                employeeNumber.toInt()
-            } catch (e: NumberFormatException) {
+            if (employeeNumber.toIntOrNull() == null) {
                 postSideEffect(SignInSideEffect.IdWasNotNumber)
-                return@launch
             }
 
             signInUseCase(
                 params = SignInUseCase.Params(
-                    employeeNumber = 1299999990,
-                    password = "1234567890"
+                    employeeNumber = employeeNumber.toInt(),
+                    password = password
                 ),
             ).onSuccess {
                 postSideEffect(SignInSideEffect.NavigateToHomeScreen)

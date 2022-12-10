@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.comit.feature_auth.screen.splash
 
 import androidx.compose.animation.core.tween

@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -68,7 +69,9 @@ fun FixWorkPlaceScreen(
     val fixWorkPlaceState = fixWorkPlaceContainer.stateFlow.collectAsState().value
     val fixWorkPlaceSideEffect = fixWorkPlaceContainer.sideEffectFlow
 
-    vm.fetchWorkPlace()
+    LaunchedEffect(key1 = vm) {
+        vm.fetchWorkPlace()
+    }
 
     fixWorkPlaceSideEffect.observeWithLifecycle() {
         when (it) {
