@@ -15,6 +15,7 @@ sealed class SimTongScreen(
         const val CLOSE_DAY = "CLOSE_DAY"
         const val SHOW_SCHEDULE = "SHOW_SCHEDULE"
         const val WRITE_SCHEDULE = "WRITE_SCHEDULE"
+        const val SALARY = "SALARY"
     }
 
     object MyPage : SimTongScreen("MyPage") {

@@ -46,5 +46,10 @@ fun NavGraphBuilder.homeNavigation(
                 navController = navController,
             )
         }
+        composable(
+            route = SimTongScreen.Home.SALARY,
+        ) {
+            SalaryWebViewScreen()
+        }
     }
 }
