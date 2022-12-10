@@ -90,13 +90,15 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
         email: String,
         employeeNumber: Int,
         newPassword: String,
-    ) = simTongApiCall {
-        commonsAPI.initializationPassword(
-            request = InitializationPasswordRequest(
-                email = email,
-                employeeNumber = employeeNumber,
-                newPassword = newPassword
+    ) {
+        simTongApiCall {
+            commonsAPI.initializationPassword(
+                request = InitializationPasswordRequest(
+                    email = email,
+                    employeeNumber = employeeNumber,
+                    newPassword = newPassword
+                )
             )
-        )
+        }
     }
 }
