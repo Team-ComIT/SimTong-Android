@@ -4,7 +4,6 @@
 
 package com.comit.feature_home.screen.closeday
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -46,7 +45,6 @@ import androidx.navigation.compose.rememberNavController
 import com.comit.common.rememberToast
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.noRippleClickable
@@ -99,12 +97,15 @@ fun WriteClosedDayScreen(
     var monthT by remember { mutableStateOf(thisMonth) }
     var dayT by remember { mutableStateOf(thisDay) }
 
+    var refresh by remember { mutableStateOf(false) }
+
     closeDaySideEffect.observeWithLifecycle() {
         when (it) {
             CloseDaySideEffect.CloseDayChangeSuccess -> {
                 coroutineScope.launch {
                     bottomSheetState.hide()
                 }
+                refresh = true
             }
             CloseDaySideEffect.CloseDayChangeFail -> {
                 toast(message = closeDayState.messageFail)
@@ -146,7 +147,8 @@ fun WriteClosedDayScreen(
                         color = saveColor,
                         onClick = {
                             val date = Date.valueOf("$yearT-$monthT-$dayT")
-                            Log.d("TAG", "WriteClosedDayScreen: $date")
+                            refresh = false
+                            
                             if (saveEnabled) {
                                 when (workStateText) {
                                     workClose -> {
@@ -257,7 +259,8 @@ fun WriteClosedDayScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(HomeCalendarHeight)
-                    .padding(CalendarPadding)
+                    .padding(CalendarPadding),
+                refresh = refresh
             )
         }
     }

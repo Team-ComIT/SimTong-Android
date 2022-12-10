@@ -74,7 +74,8 @@ fun SimTongCalendar(
     getWorkCountViewModel: GetWorkCountViewModel = hiltViewModel(),
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
     onBeforeClicked: (Date) -> Unit = {  },
-    onNextClicked: (Date) -> Unit = {  }
+    onNextClicked: (Date) -> Unit = {  },
+    refresh: Boolean = false
 ) {
     var checkMonth by remember { mutableStateOf(0) }
 
@@ -106,10 +107,15 @@ fun SimTongCalendar(
     val lifecycle = LocalLifecycleOwner.current
     var workCountList = getWorkCountViewModel.workCountList.value
 
+    if (refresh) {
+        LaunchedEffect(getWorkCountViewModel) {
+            getWorkCountViewModel.getWorkCountList(date)
+        }
+    }
+
     LaunchedEffect(getWorkCountViewModel) {
         getWorkCountViewModel.workCountList.observe(lifecycle) {
             workCountList = it
-            Log.d("TAG", "SimTongCalendar: "+workCountList?.size)
             getHolidayViewModel.getHolidayList(date)
         }
     }
