@@ -3,6 +3,7 @@
     "SwallowedException",
     "MagicNumber",
     "RethrowCaughtException",
+    "ComplexMethod",
 )
 
 package com.comit.data.util

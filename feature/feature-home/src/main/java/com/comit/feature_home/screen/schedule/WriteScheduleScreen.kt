@@ -20,36 +20,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
+import com.comit.feature_home.string
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.sql.Date
 import java.sql.Time
+import java.util.UUID
 
 @Composable
 fun WriteScheduleScreen(
     navController: NavController,
     isNew: Boolean = false,
+    scheduleId: String = "",
     title: String = "",
     scheduleStart: String = "",
     scheduleEnd: String = "",
-    alarm: String = "",
     vm: WriteScheduleViewModel = hiltViewModel(),
 ) {
     val writeScheduleContainer = vm.container
     val writeScheduleState = writeScheduleContainer.stateFlow.collectAsState().value
     val writeScheduleSideInEffect = writeScheduleContainer.sideEffectFlow
 
-    LaunchedEffect(vm) {
-        vm.inputTitle(msg = title)
-        vm.inputScheduleStart(msg = scheduleStart)
-        vm.inputScheduleEnd(msg = scheduleEnd)
-        vm.inputAlarm(msg = alarm)
+    if (!isNew) {
+        LaunchedEffect(vm) {
+            vm.inputTitle(msg = title)
+            vm.inputScheduleStart(msg = scheduleStart)
+            vm.inputScheduleEnd(msg = scheduleEnd)
+        }
     }
 
     writeScheduleSideInEffect.observeWithLifecycle() {
@@ -68,7 +70,11 @@ fun WriteScheduleScreen(
 
     val headerText =
         if (isNew) stringResource(id = R.string.schedule_make)
-        else stringResource(id = R.string.schedule_write)
+        else stringResource(id = R.string.schedule_fix)
+
+    val alarmHint =
+        if (isNew) stringResource(id = R.string.alarm_hint)
+        else stringResource(id = R.string.alarm_hint_should)
 
     Column {
         BigHeader(
@@ -130,7 +136,7 @@ fun WriteScheduleScreen(
 
             SimTongTextField(
                 value = writeScheduleState.alarm,
-                hint = stringResource(id = R.string.alarm_hint),
+                hint = alarmHint,
                 onValueChange = {
                     vm.inputAlarm(msg = it)
                     vm.inputErrMsgTitle(null)
@@ -153,19 +159,39 @@ fun WriteScheduleScreen(
             onClick = {
                 try {
                     if (writeScheduleState.alarm.isNotEmpty()) {
-                        vm.writeSchedule(
-                            title = writeScheduleState.title,
-                            scheduleStart = Date.valueOf(writeScheduleState.scheduleStart)!!,
-                            scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd),
-                            alarm = Time.valueOf(writeScheduleState.alarm).toString()
-                        )
+                        if (isNew) {
+                            vm.writeSchedule(
+                                title = writeScheduleState.title,
+                                scheduleStart = Date.valueOf(writeScheduleState.scheduleStart),
+                                scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd),
+                                alarm = Time.valueOf(writeScheduleState.alarm).toString()
+                            )
+                        } else {
+                            vm.changeSchedule(
+                                scheduleId = UUID.fromString(scheduleId),
+                                title = writeScheduleState.title,
+                                startAt = Date.valueOf(writeScheduleState.scheduleStart),
+                                endAt = Date.valueOf(writeScheduleState.scheduleEnd),
+                                alarm = Time.valueOf(writeScheduleState.alarm).toString()
+                            )
+                        }
                     } else {
-                        vm.writeSchedule(
-                            title = writeScheduleState.title,
-                            scheduleStart = Date.valueOf(writeScheduleState.scheduleStart)!!,
-                            scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd)!!,
-                            alarm = null
-                        )
+                        if (isNew) {
+                            vm.writeSchedule(
+                                title = writeScheduleState.title,
+                                scheduleStart = Date.valueOf(writeScheduleState.scheduleStart)!!,
+                                scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd)!!,
+                                alarm = null
+                            )
+                        } else {
+                            vm.changeSchedule(
+                                scheduleId = UUID.fromString(scheduleId),
+                                title = writeScheduleState.title,
+                                startAt = Date.valueOf(writeScheduleState.scheduleStart),
+                                endAt = Date.valueOf(writeScheduleState.scheduleEnd),
+                                alarm = null
+                            )
+                        }
                     }
                 } catch (e: Exception) {
                     vm.inputErrMsgTitle("")
@@ -185,8 +211,8 @@ fun WriteScheduleScreen(
 @Preview(showBackground = true)
 @Composable
 fun ShowWriteSchedule() {
-    WriteScheduleScreen(
-        navController = rememberNavController(),
-        isNew = true
-    )
+//    WriteScheduleScreen(
+//        navController = rememberNavController(),
+//        isNew = true
+//    )
 }

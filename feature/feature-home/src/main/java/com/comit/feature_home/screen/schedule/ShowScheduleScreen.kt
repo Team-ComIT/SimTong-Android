@@ -126,6 +126,8 @@ fun ShowScheduleScreen(
 
     var scheduleId by remember { mutableStateOf("") }
     var scheduleTitle by remember { mutableStateOf("") }
+    var scheduleStart by remember { mutableStateOf("") }
+    var scheduleEnd by remember { mutableStateOf("") }
 
     showScheduleSideEffect.observeWithLifecycle() {
         when (it) {
@@ -193,6 +195,12 @@ fun ShowScheduleScreen(
                                 .fillMaxWidth()
                                 .height(50.dp)
                                 .simClickable {
+                                    navController.navigate(
+                                        route = SimTongScreen.Home.WRITE_SCHEDULE +
+                                            "isNew${false}" + "scheduleId$scheduleId" +
+                                            "title$scheduleTitle" + "scheduleStart$scheduleStart" +
+                                            "scheduleEnd$scheduleEnd"
+                                    )
                                 }
                         ) {
                             Spacer(modifier = Modifier.width(30.dp))
@@ -289,7 +297,10 @@ fun ShowScheduleScreen(
                     IconButton(
                         onClick = {
                             navController.navigate(
-                                route = SimTongScreen.Home.WRITE_SCHEDULE
+                                route = SimTongScreen.Home.WRITE_SCHEDULE +
+                                    "isNew${true}" + "scheduleId${"k"}" +
+                                    "title${"s"}" + "scheduleStart${"i"}" +
+                                    "scheduleEnd${"a"}"
                             )
                         },
                         modifier = Modifier
@@ -316,6 +327,8 @@ fun ShowScheduleScreen(
                                 }
                                 scheduleId = it.id
                                 scheduleTitle = it.title
+                                scheduleStart = it.startAt
+                                scheduleEnd = it.endAt
                             },
                         )
                     }

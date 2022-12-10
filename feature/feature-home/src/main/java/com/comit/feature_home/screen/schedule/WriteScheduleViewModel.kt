@@ -2,6 +2,7 @@ package com.comit.feature_home.screen.schedule
 
 import androidx.lifecycle.ViewModel
 import com.comit.domain.usecase.schedule.AddPersonalScheduleUseCase
+import com.comit.domain.usecase.schedule.ChangePersonalScheduleUseCase
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
 import com.comit.feature_home.mvi.WriteScheduleState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -11,11 +12,13 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.util.Date
+import java.util.UUID
 import javax.inject.Inject
 
 @HiltViewModel
 class WriteScheduleViewModel @Inject constructor(
     private val addPersonalScheduleUseCase: AddPersonalScheduleUseCase,
+    private val changePersonalScheduleUseCase: ChangePersonalScheduleUseCase,
 ) : ContainerHost<WriteScheduleState, WriteScheduleSideInEffect>, ViewModel() {
 
     override val container = container<WriteScheduleState, WriteScheduleSideInEffect>(WriteScheduleState())
@@ -31,6 +34,28 @@ class WriteScheduleViewModel @Inject constructor(
                 title = title,
                 startAt = scheduleStart,
                 endAt = scheduleEnd,
+                alarms = alarm
+            )
+        ).onSuccess {
+            postSideEffect(WriteScheduleSideInEffect.WriteScheduleSuccess)
+        }.onFailure {
+            postSideEffect(WriteScheduleSideInEffect.WriteScheduleFail)
+        }
+    }
+
+    fun changeSchedule(
+        scheduleId: UUID,
+        title: String,
+        startAt: Date,
+        endAt: Date,
+        alarm: String?,
+    ) = intent {
+        changePersonalScheduleUseCase(
+            params = ChangePersonalScheduleUseCase.Params(
+                scheduleId = scheduleId,
+                title = title,
+                startAt = startAt,
+                endAt = endAt,
                 alarms = alarm
             )
         ).onSuccess {
