@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.format.isPasswordFormat
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
@@ -188,7 +189,8 @@ internal fun FixPassword(
                         vm.inPutErrPassword(msg = null)
                     },
                     title = stringResource(id = R.string.password_input),
-                    error = fixPasswordInState.errMsgPassword,
+                    error = if (!isPasswordFormat(fixPasswordInState.password) && fixPasswordInState.password.isNotEmpty())
+                        stringResource(id = R.string.password_format_message) else fixPasswordInState.errMsgPassword,
                 )
             }
 
