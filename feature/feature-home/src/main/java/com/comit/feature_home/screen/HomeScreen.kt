@@ -101,7 +101,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .padding(HomeScreenPadding)
+            .verticalScroll(scrollState)
+            .padding(HomeScreenPadding),
     ) {
         Header(
             headerText = "",
@@ -117,89 +118,83 @@ fun HomeScreen(
             },
         )
 
-        Column(
-            modifier = Modifier
-                .verticalScroll(scrollState),
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.height(HomeScreenTopRowHeight),
         ) {
+            Title3(text = stringResource(id = R.string.calendar))
 
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.height(HomeScreenTopRowHeight),
-            ) {
-                Title3(text = stringResource(id = R.string.calendar))
+            Spacer(modifier = Modifier.width(8.dp))
 
-                Spacer(modifier = Modifier.width(8.dp))
+            Icon(
+                painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
+                contentDescription = SimTongIcon.Gray_Next.contentDescription,
+            )
+        }
 
-                Icon(
-                    painter = painterResource(id = SimTongIcon.Gray_Next.drawableId),
-                    contentDescription = SimTongIcon.Gray_Next.contentDescription,
+        Spacer(modifier = Modifier.height(15.dp))
+
+        SimTongCalendar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(HomeCalendarHeight)
+                .noRippleClickable {
+                    navController.navigate(
+                        route = SimTongScreen.Home.SHOW_SCHEDULE
+                    )
+                },
+            onItemClicked = { _, _ ->
+                navController.navigate(route = SimTongScreen.Home.SHOW_SCHEDULE)
+            }
+        )
+
+        Spacer(modifier = Modifier.height(30.dp))
+
+        Title3(
+            text = stringResource(
+                id = R.string.employee_menu,
+            )
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        MealList(
+            meals = state.mealList,
+        )
+
+        Spacer(modifier = Modifier.height(27.dp))
+
+        HomeBottomIconLayout(
+            painter = painterResource(
+                id = R.drawable.ic_home_coin,
+            ),
+            title = stringResource(
+                id = R.string.my_pay_info,
+            ),
+            content = stringResource(
+                id = R.string.my_pay_info_content,
+            ),
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.Home.SALARY,
                 )
             }
+        )
 
-            Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-            SimTongCalendar(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(HomeCalendarHeight)
-                    .noRippleClickable {
-                        navController.navigate(
-                            route = SimTongScreen.Home.SHOW_SCHEDULE
-                        )
-                    },
-                onItemClicked = { _, _ ->
-                    navController.navigate(route = SimTongScreen.Home.SHOW_SCHEDULE)
-                }
-            )
-
-            Spacer(modifier = Modifier.height(30.dp))
-
-            Title3(
-                text = stringResource(
-                    id = R.string.employee_menu,
+        HomeBottomIconLayout(
+            painter = painterResource(id = R.drawable.ic_home_schedule),
+            title = stringResource(id = R.string.schedule_write),
+            content = stringResource(id = R.string.schedule_write_content),
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.Home.CLOSE_DAY,
                 )
-            )
+            }
+        )
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            MealList(
-                meals = state.mealList,
-            )
-
-            Spacer(modifier = Modifier.height(27.dp))
-
-            HomeBottomIconLayout(
-                painter = painterResource(
-                    id = R.drawable.ic_home_coin,
-                ),
-                title = stringResource(
-                    id = R.string.my_pay_info,
-                ),
-                content = stringResource(
-                    id = R.string.my_pay_info_content,
-                ),
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.Home.SALARY,
-                    )
-                }
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            HomeBottomIconLayout(
-                painter = painterResource(id = R.drawable.ic_home_schedule),
-                title = stringResource(id = R.string.schedule_write),
-                content = stringResource(id = R.string.schedule_write_content),
-                onClick = {
-                    navController.navigate(
-                        route = SimTongScreen.Home.CLOSE_DAY,
-                    )
-                }
-            )
-
-            Spacer(modifier = Modifier.height(46.dp))
-        }
+        Spacer(modifier = Modifier.height(46.dp))
     }
 }
 

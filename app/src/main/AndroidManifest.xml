@@ -17,7 +17,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@drawable/ic_logo"
+        android:roundIcon="@color/cardview_light_background"
         android:supportsRtl="true"
         android:theme="@style/Theme.SimTongAndroid"
         tools:targetApi="32">
