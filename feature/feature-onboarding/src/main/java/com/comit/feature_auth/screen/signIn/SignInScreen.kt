@@ -133,17 +133,10 @@ fun SignInScreen(
                 .fillMaxWidth(),
             text = stringResource(id = R.string.log_in),
             onClick = {
-//                vm.signIn(
-//                    employeeNumber = "129999999",
-//                    password = "qwer1234",
-//                )
-                navController.navigate(
-                    route = SimTongScreen.Home.MAIN
-                ) {
-                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
-                        inclusive = true
-                    }
-                }
+                vm.signIn(
+                    employeeNumber = signInState.employeeNumber,
+                    password = signInState.password,
+                )
             },
             enabled = signInState.employeeNumber.isNotEmpty() && signInState.password.isNotEmpty(),
         )
