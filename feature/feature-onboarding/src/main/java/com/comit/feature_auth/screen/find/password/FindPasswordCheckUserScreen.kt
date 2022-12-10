@@ -56,9 +56,6 @@ fun FindPasswordCheckUserScreen(
             hintBackgroundColor = SimTongColor.Gray100,
             backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.eng_email),
-            sideBtnText = stringResource(id = R.string.certification),
-            enabledSideBtn = true,
-            simTongButtonColor = if (email.isEmpty()) SimTongButtonColor.GRAY else SimTongButtonColor.RED,
             error = fieldErrEmail,
         )
 
