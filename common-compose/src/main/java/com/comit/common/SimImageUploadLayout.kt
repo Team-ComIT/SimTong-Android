@@ -43,6 +43,7 @@ private val ImageSize: Dp = 100.dp
 fun SimImageUploadLayout(
     imageFile: (File) -> Unit,
     onError: ((String) -> Unit)? = null,
+    defaultImage: String? = null,
 ) {
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
@@ -108,7 +109,7 @@ fun SimImageUploadLayout(
     }
 }
 
-internal val takePhotoFromAlbumIntent =
+val takePhotoFromAlbumIntent =
     Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
         type = "image/*"
         action = Intent.ACTION_GET_CONTENT
