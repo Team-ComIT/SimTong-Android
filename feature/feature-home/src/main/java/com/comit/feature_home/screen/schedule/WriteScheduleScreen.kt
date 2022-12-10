@@ -16,6 +16,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -98,7 +99,7 @@ fun WriteScheduleScreen(
                     vm.inputErrMsgAlarm(null)
                 },
                 title = stringResource(id = R.string.title),
-                error = writeScheduleState.errMsgTitle
+                error = writeScheduleState.errMsgTitle,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -114,7 +115,8 @@ fun WriteScheduleScreen(
                     vm.inputErrMsgAlarm(null)
                 },
                 title = stringResource(id = R.string.date),
-                error = writeScheduleState.errMsgScheduleStart
+                keyboardType = KeyboardType.Number,
+                error = writeScheduleState.errMsgScheduleStart,
             )
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -129,7 +131,8 @@ fun WriteScheduleScreen(
                     vm.inputErrMsgScheduleEnd(null)
                     vm.inputErrMsgAlarm(null)
                 },
-                error = writeScheduleState.errMsgTitle
+                keyboardType = KeyboardType.Number,
+                error = writeScheduleState.errMsgTitle,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
