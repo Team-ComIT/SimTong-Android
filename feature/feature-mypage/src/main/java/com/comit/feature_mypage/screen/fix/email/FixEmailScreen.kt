@@ -18,7 +18,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -109,7 +108,7 @@ internal fun FixEmailScreen(
         else stringResource(id = R.string.certification_number_get)
 
     val textTitle =
-        if (isLastPage) stringResource(id = R.string.certification_number)
+        if (isLastPage) stringResource(id = R.string.certification_number_6)
         else stringResource(id = R.string.email_input)
 
     val btnEnabled =
@@ -200,7 +199,6 @@ internal fun InputCertificationNumber(
     vm: FixEmailViewModel,
     fixEmailState: FixEmailState,
 ) {
-
     val leftTime = stringResource(id = R.string.left_time)
 
     var totalTime by remember {
@@ -230,7 +228,6 @@ internal fun InputCertificationNumber(
                     vm.inputErrMsgCode(msg = null)
                 },
                 title = textTitle,
-                keyboardType = KeyboardType.Number,
                 error = fixEmailState.errCode
             )
 

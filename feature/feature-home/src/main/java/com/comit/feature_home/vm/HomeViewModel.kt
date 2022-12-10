@@ -3,15 +3,12 @@ package com.comit.feature_home.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.core_design_system.component.Meal
-import com.comit.core_design_system.component.MealList
 import com.comit.domain.model.MealEntity
 import com.comit.domain.usecase.menu.FetchMenuUseCase
-import com.comit.domain.usecase.menu.toEntity
 import com.comit.feature_home.contract.HomeSideEffect
 import com.comit.feature_home.contract.HomeState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce

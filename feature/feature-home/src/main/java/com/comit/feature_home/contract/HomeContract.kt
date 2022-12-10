@@ -7,6 +7,4 @@ data class HomeState(
     val mealList: List<Meal> = emptyList(),
 )
 
-sealed class HomeSideEffect {
-
-}
+sealed class HomeSideEffect
