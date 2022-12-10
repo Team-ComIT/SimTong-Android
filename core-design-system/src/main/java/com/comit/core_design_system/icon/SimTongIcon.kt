@@ -184,6 +184,12 @@ class SimTongIcon private constructor(
         )
 
         @Stable
+        val Option_horizontal_Bold = SimTongIcon(
+            drawableId = R.drawable.ic_option_horizontal_bold,
+            contentDescription = "bold horizontal option icon"
+        )
+
+        @Stable
         val Back_Small = SimTongIcon(
             drawableId = R.drawable.ic_back_small,
             contentDescription = "small back icon",
@@ -205,6 +211,18 @@ class SimTongIcon private constructor(
         val Beil_Off = SimTongIcon(
             drawableId = R.drawable.ic_beil_off,
             contentDescription = "beil off icon",
+        )
+
+        @Stable
+        val Schedule_On = SimTongIcon(
+            drawableId = R.drawable.ic_schedule_on,
+            contentDescription = "schedule on icon"
+        )
+
+        @Stable
+        val Schedule_Off = SimTongIcon(
+            drawableId = R.drawable.ic_schedule_off,
+            contentDescription = "schedule off icon"
         )
 
         @Stable

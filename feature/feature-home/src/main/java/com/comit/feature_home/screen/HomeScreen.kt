@@ -38,7 +38,7 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noTempRippleClickable
+import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
@@ -107,9 +107,7 @@ fun HomeScreen(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .height(HomeScreenTopRowHeight)
-                    .noTempRippleClickable { },
+                modifier = Modifier.height(HomeScreenTopRowHeight),
             ) {
                 Title3(text = stringResource(id = R.string.calendar))
 
@@ -127,6 +125,14 @@ fun HomeScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(HomeCalendarHeight)
+                    .noRippleClickable {
+                        navController.navigate(
+                            route = SimTongScreen.Home.SHOW_SCHEDULE
+                        )
+                    },
+                onItemClicked = { _, _ ->
+                    navController.navigate(route = SimTongScreen.Home.SHOW_SCHEDULE)
+                }
             )
 
             Spacer(modifier = Modifier.height(30.dp))

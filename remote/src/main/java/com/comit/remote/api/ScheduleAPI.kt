@@ -3,6 +3,7 @@ package com.comit.remote.api
 import com.comit.remote.request.schedules.AddPersonalScheduleRequest
 import com.comit.remote.request.schedules.ChangePersonalScheduleRequest
 import com.comit.remote.response.schedules.FetchPersonalScheduleResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -23,7 +24,7 @@ interface ScheduleAPI {
     @POST("$SCHEDULE")
     suspend fun addPersonalSchedule(
         @Body request: AddPersonalScheduleRequest,
-    )
+    ): Response<Unit>
 
     @PUT("$SCHEDULE/{schedule-id}")
     suspend fun changePersonalSchedule(
@@ -34,7 +35,7 @@ interface ScheduleAPI {
     @DELETE("$SCHEDULE/{schedule-id}")
     suspend fun deletePersonalSchedule(
         @Path("schedule-id") scheduleId: UUID,
-    )
+    ): Response<Unit>
 
     private companion object {
         const val SCHEDULE = "schedules"

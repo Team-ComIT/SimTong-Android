@@ -1,7 +1,7 @@
 package com.comit.domain.usecase.schedule
 
 import com.comit.domain.repository.ScheduleRepository
-import java.sql.Time
+import java.util.Date
 import javax.inject.Inject
 
 class AddPersonalScheduleUseCase @Inject constructor(
@@ -21,8 +21,8 @@ class AddPersonalScheduleUseCase @Inject constructor(
 
     data class Params(
         val title: String,
-        val startAt: String,
-        val endAt: String,
-        val alarms: Time?,
+        val startAt: Date,
+        val endAt: Date,
+        val alarms: String?,
     )
 }

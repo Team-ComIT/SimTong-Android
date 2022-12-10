@@ -13,7 +13,7 @@ data class FetchHolidaysResponse(
         @field:SerializedName("date")
         val date: String,
 
-        @field:SerializedName("title")
+        @field:SerializedName("type")
         val title: String,
     )
 }
