@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalPagerApi::class)
+
 package com.comit.feature_mypage.navigation
 
 import androidx.navigation.NavController
@@ -13,7 +15,6 @@ import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
-@ExperimentalPagerApi
 fun NavGraphBuilder.myPageNavigation(
     navController: NavController,
 ) {

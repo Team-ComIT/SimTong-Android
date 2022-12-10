@@ -15,4 +15,6 @@ data class WriteScheduleState(
 sealed class WriteScheduleSideInEffect {
 
     object WriteScheduleSuccess : WriteScheduleSideInEffect()
+
+    object WriteScheduleFail : WriteScheduleSideInEffect()
 }

@@ -25,7 +25,7 @@ class WriteScheduleViewModel @Inject constructor(
         title: String,
         scheduleStart: Date,
         scheduleEnd: Date,
-        alarm: Time?,
+        alarm: String?,
     ) = intent {
         addPersonalScheduleUseCase(
             params = AddPersonalScheduleUseCase.Params(
@@ -37,6 +37,7 @@ class WriteScheduleViewModel @Inject constructor(
         ).onSuccess {
             postSideEffect(WriteScheduleSideInEffect.WriteScheduleSuccess)
         }.onFailure {
+            postSideEffect(WriteScheduleSideInEffect.WriteScheduleFail)
         }
     }
 

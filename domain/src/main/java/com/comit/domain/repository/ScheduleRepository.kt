@@ -15,7 +15,7 @@ interface ScheduleRepository {
         title: String,
         startAt: Date,
         endAt: Date,
-        alarm: Time?,
+        alarm: String?,
     )
 
     suspend fun changePersonalSchedule(

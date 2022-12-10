@@ -24,7 +24,7 @@ interface ScheduleAPI {
     @POST("$SCHEDULE")
     suspend fun addPersonalSchedule(
         @Body request: AddPersonalScheduleRequest,
-    )
+    ): Response<Unit>
 
     @PUT("$SCHEDULE/{schedule-id}")
     suspend fun changePersonalSchedule(

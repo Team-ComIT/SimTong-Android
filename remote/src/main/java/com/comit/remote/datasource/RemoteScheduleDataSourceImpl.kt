@@ -28,16 +28,18 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
         title: String,
         startAt: Date,
         endAt: Date,
-        alarm: Time?,
-    ) = simTongApiCall {
-        scheduleAPI.addPersonalSchedule(
-            request = AddPersonalScheduleRequest(
-                title = title,
-                startAt = startAt,
-                endAt = endAt,
-                alarm = alarm,
+        alarm: String ?,
+    ) {
+        simTongApiCall {
+            scheduleAPI.addPersonalSchedule(
+                request = AddPersonalScheduleRequest(
+                    title = title,
+                    startAt = startAt.toString(),
+                    endAt = endAt.toString(),
+                    alarm = alarm,
+                )
             )
-        )
+        }
     }
 
     override suspend fun changePersonalSchedule(

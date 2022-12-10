@@ -24,7 +24,7 @@ class ScheduleRepositoryImpl @Inject constructor(
         title: String,
         startAt: Date,
         endAt: Date,
-        alarm: Time?,
+        alarm: String?,
     ) {
         remoteScheduleDataSource.addPersonalSchedule(
             title = title,

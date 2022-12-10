@@ -10,11 +10,11 @@ data class AddPersonalScheduleRequest(
     val title: String,
 
     @SerializedName("start_at")
-    val startAt: Date,
+    val startAt: String,
 
     @SerializedName("end_at")
-    val endAt: Date,
+    val endAt: String,
 
     @SerializedName("alarm")
-    val alarm: Time?,
+    val alarm: String ?,
 )

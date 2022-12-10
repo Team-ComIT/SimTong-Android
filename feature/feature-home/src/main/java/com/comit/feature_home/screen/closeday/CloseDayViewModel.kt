@@ -1,6 +1,5 @@
 package com.comit.feature_home.screen.closeday
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.usecase.holiday.DayOffHolidaysUseCase
