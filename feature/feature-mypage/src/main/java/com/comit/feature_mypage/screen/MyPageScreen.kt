@@ -1,5 +1,10 @@
 package com.comit.feature_mypage.screen
 
+import android.app.Activity
+import android.graphics.Bitmap
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,17 +20,27 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import com.comit.common.convert.UriUtil
+import com.comit.common.rememberToast
+import com.comit.common.takePhotoFromAlbumIntent
+import com.comit.common.unit.parseBitmap
 import com.comit.core_design_system.button.SimTongIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
@@ -34,28 +49,7 @@ import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
 import com.comit.navigator.SimTongScreen
-import com.skydoves.landscapist.glide.GlideImage
-
-/**
- * MyPage UI 구현을 위한 fake data
- */
-object MyPageFakeData {
-
-    const val image = "https://avatars.githubusercontent.com/u/27887884?v=4"
-    const val name = "임세현"
-    const val nickname = "skeat"
-    const val email = "sh007100@naver.com"
-    const val workplace = "성심당 본점"
-    const val changePassword = "****"
-}
-
-/**
- * SimTong의 [MyPageScreen] 구현합니다.
- * [TODO]
- * 현재 MyPageScreen 은 더미 데이터를 통해 UI만 구현된 상태입니다.
- * 또한 UI쪽에서는 click effect가 자연스럽지 않습니다.
- * 이는 추후에 개선되어야 합니다.
- */
+import java.io.File
 
 @Composable
 fun MyPageScreen(
@@ -64,6 +58,7 @@ fun MyPageScreen(
 ) {
     val myPageContainer = vm.container
     val myPageInState = myPageContainer.stateFlow.collectAsState().value
+    val toast = rememberToast()
 
     LaunchedEffect(key1 = vm) {
         vm.fetchUserInformation()
@@ -89,10 +84,19 @@ fun MyPageScreen(
         Spacer(modifier = Modifier.height(22.dp))
 
         MyPageProfileImage(
-            imageUrl = myPageInState.profileImagePath,
-        ) {
-            // TODO ("갤러리 접근")
-        }
+            imageFile = {
+                vm.changeProfileImage(
+                    profileImg = it,
+                )
+            },
+            image = myPageInState.profileImagePath,
+            onError = {
+                toast(
+                    message = it,
+                )
+            }
+        )
+
         Spacer(modifier = Modifier.height(80.dp))
 
         MyPageDescriptionNoClickable(
@@ -167,20 +171,67 @@ fun MyPageScreen(
     }
 }
 
+private const val TakePhotoError: String = "이미지를 가져오던 중 오류가 발생하였습니다."
+
 @Composable
 private fun MyPageProfileImage(
-    imageUrl: String,
-    onClickAddBtn: () -> Unit,
+    imageFile: (File) -> Unit,
+    image: String?,
+    onError: (String) -> Unit,
 ) {
+    var bitmap by remember { mutableStateOf<Bitmap?>(null) }
+
+    val context = LocalContext.current
+    val takePhotoFromAlbumLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                        bitmap = uri.parseBitmap(context)
+                    }
+                    imageFile(
+                        UriUtil.toFile(
+                            context = context,
+                            uri = uri,
+                        )
+                    )
+                } ?: run {
+                    onError(TakePhotoError)
+                }
+            } else if (result.resultCode != Activity.RESULT_CANCELED) {
+                onError(TakePhotoError)
+            }
+        }
+
     Box(
         modifier = Modifier
-            .size(80.dp),
+            .size(80.dp)
+            .simClickable(
+                rippleEnabled = false,
+            ) {
+                takePhotoFromAlbumLauncher.launch(takePhotoFromAlbumIntent)
+            },
     ) {
-        GlideImage(
-            imageModel = imageUrl,
-            modifier = Modifier.clip(CircleShape),
-            error = painterResource(id = SimTongIcon.Profile_Big.drawableId)
-        )
+
+        if (bitmap == null) {
+            AsyncImage(
+                model = image,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape),
+            )
+        } else {
+            AsyncImage(
+                model = bitmap,
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(CircleShape),
+            )
+        }
 
         SimTongIconButton(
             painter = painterResource(
@@ -192,9 +243,9 @@ private fun MyPageProfileImage(
             modifier = Modifier
                 .size(24.dp)
                 .align(Alignment.BottomEnd),
-        ) {
-            onClickAddBtn()
-        }
+            onClick = {
+            }
+        )
     }
 }
 
@@ -386,7 +437,13 @@ private fun MyPageEditModeMenu(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
-    MyPageScreen(
-        navController = rememberNavController()
+//    MyPageScreen(
+//        navController = rememberNavController()
+//    )
+
+    MyPageProfileImage(
+        imageFile = {},
+        image = "https://image-simtong.s3.ap-northeast-2.amazonaws.com/93b3f8b0-d8ad-479d-8c0d-2543adcdb13f%40304937114_653768432600870_2305993713800447703_n.png",
+        onError = {}
     )
 }
