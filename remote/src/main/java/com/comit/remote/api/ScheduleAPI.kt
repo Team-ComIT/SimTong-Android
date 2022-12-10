@@ -30,7 +30,7 @@ interface ScheduleAPI {
     suspend fun changePersonalSchedule(
         @Path("schedule-id") scheduleId: UUID,
         @Body request: ChangePersonalScheduleRequest,
-    )
+    ): Response<Unit>
 
     @DELETE("$SCHEDULE/{schedule-id}")
     suspend fun deletePersonalSchedule(

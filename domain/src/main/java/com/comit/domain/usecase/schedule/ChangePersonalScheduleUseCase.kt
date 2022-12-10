@@ -26,6 +26,6 @@ class ChangePersonalScheduleUseCase @Inject constructor(
         val title: String,
         val startAt: Date,
         val endAt: Date,
-        val alarms: Time?,
+        val alarms: String?,
     )
 }
