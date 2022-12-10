@@ -3,6 +3,7 @@
     "SwallowedException",
     "MagicNumber",
     "RethrowCaughtException",
+    "ComplexMethod",
 )
 
 package com.comit.data.util
@@ -44,9 +45,15 @@ suspend inline fun <T> simTongApiCall(
                 message = e.message,
                 fieldErrors = emptyList(),
             )
-            401 -> UnAuthorizedException(
-                message = e.message(),
-            )
+            401 -> {
+                if (e.message == "만료된 토큰") {
+                    NeedLoginException()
+                } else {
+                    UnAuthorizedException(
+                        message = e.message(),
+                    )
+                }
+            }
             403 -> ForBiddenException(
                 message = e.message(),
             )

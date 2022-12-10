@@ -1,3 +1,5 @@
+@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+
 package com.comit.feature_auth.screen.splash
 
 import androidx.compose.animation.core.tween
@@ -37,6 +39,10 @@ private val imageList = listOf(
     R.drawable.bg_splash_page6,
 )
 
+const val Delay: Long = 3000
+
+const val Tween: Int = 600
+
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun StartScreen(
@@ -48,10 +54,10 @@ fun StartScreen(
 
     LaunchedEffect(key1 = Unit) {
         while (true) {
-            delay(3000)
+            delay(Delay)
             pagerState.animateScrollToPage(
                 page = (pagerState.currentPage + 1) % (pagerState.pageCount),
-                animationSpec = tween(600)
+                animationSpec = tween(Tween)
             )
         }
     }

@@ -137,13 +137,6 @@ fun SignInScreen(
                     employeeNumber = signInState.employeeNumber,
                     password = signInState.password,
                 )
-                navController.navigate(
-                    route = SimTongScreen.Home.MAIN
-                ) {
-                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
-                        inclusive = true
-                    }
-                }
             },
             enabled = signInState.employeeNumber.isNotEmpty() && signInState.password.isNotEmpty(),
         )

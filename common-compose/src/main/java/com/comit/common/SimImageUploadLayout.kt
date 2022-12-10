@@ -108,7 +108,7 @@ fun SimImageUploadLayout(
     }
 }
 
-internal val takePhotoFromAlbumIntent =
+val takePhotoFromAlbumIntent =
     Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
         type = "image/*"
         action = Intent.ACTION_GET_CONTENT

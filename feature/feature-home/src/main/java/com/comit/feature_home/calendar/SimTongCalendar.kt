@@ -1,9 +1,9 @@
+
 package com.comit.feature_home.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,8 +19,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -28,11 +28,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.noRippleClickable
@@ -42,9 +44,9 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
+import com.comit.feature_home.string
 import com.example.feature_home.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
+import java.sql.Date
 import java.util.Calendar
 import java.util.GregorianCalendar
 
@@ -61,33 +63,66 @@ data class SimTongCalendarData(
 private const val Week: Int = 7
 
 @Stable
-private val SimTongCalendarTotalHeight: Dp = 420.dp
-
-@Stable
 private val SimTongCalendarTotalRound = RoundedCornerShape(20.dp)
-
-@Stable
-private val SimTongCalendarTotalHorizontalPadding = PaddingValues(
-    horizontal = 20.dp
-)
 
 @ExperimentalMaterialApi
 @Composable
 fun SimTongCalendar(
     modifier: Modifier = Modifier,
+    getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
+    getWorkCountViewModel: GetWorkCountViewModel = hiltViewModel(),
+    onItemClicked: (Int, String) -> Unit = { _, _ -> },
+    onBeforeClicked: (Date) -> Unit = { },
+    onNextClicked: (Date) -> Unit = { },
+    refresh: Boolean = false
 ) {
     var checkMonth by remember { mutableStateOf(0) }
 
     val today = GregorianCalendar()
-    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
+    val calendar = GregorianCalendar(
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH),
+        today.get(Calendar.DATE)
+    )
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+    var date by remember { mutableStateOf(Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")) }
 
-    var restDayList by remember { mutableStateOf(getRestDayList(year, month)) }
-    var annualDayList by remember { mutableStateOf(getAnnualDayList(year, month)) }
-    var workCountList by remember { mutableStateOf(getWorkCountList(year, month)) }
-    var calendarList by remember { mutableStateOf(organizeList(0, restDayList, annualDayList, workCountList)) }
+    var calendarList by remember {
+        mutableStateOf(
+            organizeList(
+                0,
+                listOf(),
+                listOf()
+            )
+        )
+    }
+
+    LaunchedEffect(getWorkCountViewModel) {
+        getWorkCountViewModel.getWorkCountList(date)
+    }
+
+    val lifecycle = LocalLifecycleOwner.current
+    var workCountList = getWorkCountViewModel.workCountList.value
+
+    if (refresh) {
+        LaunchedEffect(getWorkCountViewModel) {
+            getWorkCountViewModel.getWorkCountList(date)
+        }
+    }
+
+    LaunchedEffect(getWorkCountViewModel) {
+        getWorkCountViewModel.workCountList.observe(lifecycle) {
+            workCountList = it
+            getHolidayViewModel.getHolidayList(date)
+        }
+    }
+    LaunchedEffect(getHolidayViewModel) {
+        getHolidayViewModel.holidayList.observe(lifecycle) {
+            calendarList = organizeList(checkMonth, it, workCountList)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -102,102 +137,22 @@ fun SimTongCalendar(
             year = year.toString(),
             month = month.toString(),
             onBeforeClicked = {
-                checkMonth --
+                checkMonth--
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-                restDayList = getRestDayList(year, month)
-                annualDayList = getAnnualDayList(year, month)
-                workCountList = getWorkCountList(year, month)
-                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                date = Date.valueOf(string.format("%02d", year) + "-" + string.format("%02d", month) + "-01")
+                getWorkCountViewModel.getWorkCountList(date)
+                onBeforeClicked(date)
             },
             onNextClicked = {
-                checkMonth ++
+                checkMonth++
                 calendar.add(Calendar.MONTH, checkMonth)
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-                restDayList = getRestDayList(year, month)
-                annualDayList = getAnnualDayList(year, month)
-                workCountList = getWorkCountList(year, month)
-                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
-            }
-        )
-
-        Spacer(modifier = Modifier.height(37.dp))
-
-        Column(
-            modifier = Modifier
-                .padding(horizontal = 14.dp)
-                .fillMaxWidth()
-        ) {
-            WeekTopRow()
-
-            SimTongCalendarList(list = calendarList)
-        }
-    }
-}
-
-@ExperimentalMaterialApi
-@Composable
-fun SimTongCalendar(
-    coroutineScope: CoroutineScope,
-    bottomSheetValue: ModalBottomSheetState,
-    restDayList: ArrayList<Boolean>,
-    annualDayList: ArrayList<Boolean>,
-    calendarList: ArrayList<SimTongCalendarData>,
-    onDateClicked: (String, String, String, String) -> Unit,
-    onMonthChanged: (Int, Int) -> Unit,
-) {
-    var checkMonth by remember { mutableStateOf(0) }
-
-    val today = GregorianCalendar()
-    val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH), today.get(Calendar.DATE))
-
-    var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
-    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-
-    var restDayList by remember { mutableStateOf(restDayList) }
-    var annualDayList by remember { mutableStateOf(annualDayList) }
-    var workCountList by remember { mutableStateOf(getWorkCountList(year, month)) }
-    var calendarList by remember { mutableStateOf(calendarList) }
-
-    Column(
-        modifier = Modifier
-            .padding(SimTongCalendarTotalHorizontalPadding)
-            .fillMaxWidth()
-            .height(SimTongCalendarTotalHeight)
-            .background(
-                color = SimTongColor.Gray50,
-                shape = SimTongCalendarTotalRound
-            )
-    ) {
-
-        Spacer(modifier = Modifier.height(15.dp))
-
-        SimTongCalendarDate(
-            year = year.toString(),
-            month = month.toString(),
-            onBeforeClicked = {
-                checkMonth --
-                calendar.add(Calendar.MONTH, checkMonth)
-                month = calendar.get(Calendar.MONTH) + 1
-                year = calendar.get(Calendar.YEAR)
-                onMonthChanged(year, month)
-                restDayList = getRestDayList(year, month)
-                annualDayList = getAnnualDayList(year, month)
-                workCountList = getWorkCountList(year, month)
-                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
-            },
-            onNextClicked = {
-                checkMonth ++
-                calendar.add(Calendar.MONTH, checkMonth)
-                month = calendar.get(Calendar.MONTH) + 1
-                year = calendar.get(Calendar.YEAR)
-                onMonthChanged(year, month)
-                restDayList = getRestDayList(year, month)
-                annualDayList = getAnnualDayList(year, month)
-                workCountList = getWorkCountList(year, month)
-                calendarList = organizeList(checkMonth, restDayList, annualDayList, workCountList)
+                date = Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")
+                getWorkCountViewModel.getWorkCountList(date)
+                onNextClicked(date)
             }
         )
 
@@ -212,12 +167,7 @@ fun SimTongCalendar(
 
             SimTongCalendarList(
                 list = calendarList,
-                onItemClicked = { day, workState ->
-                    onDateClicked(year.toString(), month.toString(), day.toString(), workState)
-                    coroutineScope.launch {
-                        bottomSheetValue.show()
-                    }
-                }
+                onItemClicked = onItemClicked
             )
         }
     }
@@ -319,8 +269,7 @@ fun WeekTopRow() {
 @Composable
 fun SimTongCalendarList(
     list: List<SimTongCalendarData>,
-    onItemClicked: (Int, String) -> Unit = { day, workState -> },
-    onCalendarClicked: () -> Unit = {}
+    onItemClicked: (Int, String) -> Unit = { _, _ -> },
 ) {
     Column(
         modifier = Modifier.fillMaxSize()
@@ -343,7 +292,6 @@ fun SimTongCalendarList(
                         annualDay = it.annualDay,
                         today = it.today,
                         onItemClicked = onItemClicked,
-                        onCalendarClicked = onCalendarClicked,
                         modifier = Modifier
                             .fillParentMaxWidth(1.toFloat() / 7.toFloat())
                     )
@@ -370,7 +318,6 @@ fun SimTongCalendarItem(
     annualDay: Boolean,
     today: Boolean,
     onItemClicked: (Int, String) -> Unit,
-    onCalendarClicked: () -> Unit
 ) {
     val textColor =
         if (weekend) SimTongColor.Gray300
@@ -393,7 +340,6 @@ fun SimTongCalendarItem(
             if (thisMouth && !weekend) {
                 onItemClicked(day.toInt(), workState)
             }
-            onCalendarClicked()
         }
     ) {
         if (today) {

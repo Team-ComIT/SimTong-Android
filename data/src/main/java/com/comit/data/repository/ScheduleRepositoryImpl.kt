@@ -3,7 +3,6 @@ package com.comit.data.repository
 import com.comit.data.datasource.RemoteScheduleDataSource
 import com.comit.domain.repository.ScheduleRepository
 import com.comit.model.ScheduleList
-import java.sql.Time
 import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
@@ -22,9 +21,9 @@ class ScheduleRepositoryImpl @Inject constructor(
 
     override suspend fun addPersonalSchedule(
         title: String,
-        startAt: String,
-        endAt: String,
-        alarm: Time?,
+        startAt: Date,
+        endAt: Date,
+        alarm: String?,
     ) {
         remoteScheduleDataSource.addPersonalSchedule(
             title = title,
@@ -37,9 +36,9 @@ class ScheduleRepositoryImpl @Inject constructor(
     override suspend fun changePersonalSchedule(
         scheduleId: UUID,
         title: String,
-        startAt: String,
-        endAt: String,
-        alarm: Time?,
+        startAt: Date,
+        endAt: Date,
+        alarm: String?,
     ) {
         remoteScheduleDataSource.changePersonalSchedule(
             scheduleId = scheduleId,

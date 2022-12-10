@@ -1,7 +1,6 @@
 package com.comit.domain.repository
 
 import com.comit.model.ScheduleList
-import java.sql.Time
 import java.util.Date
 import java.util.UUID
 
@@ -13,17 +12,17 @@ interface ScheduleRepository {
 
     suspend fun addPersonalSchedule(
         title: String,
-        startAt: String,
-        endAt: String,
-        alarm: Time?,
+        startAt: Date,
+        endAt: Date,
+        alarm: String?,
     )
 
     suspend fun changePersonalSchedule(
         scheduleId: UUID,
         title: String,
-        startAt: String,
-        endAt: String,
-        alarm: Time?,
+        startAt: Date,
+        endAt: Date,
+        alarm: String?,
     )
 
     suspend fun deletePersonalSchedule(

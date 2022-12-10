@@ -34,7 +34,7 @@ interface AuthRepository {
     )
 
     suspend fun changeProfileImage(
-        profileImagePath: String,
+        profileImg: File,
     )
 
     suspend fun changeEmail(

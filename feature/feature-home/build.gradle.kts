@@ -49,6 +49,7 @@ dependencies {
     implementation(projects.commonUtil)
     implementation(projects.commonCompose)
     implementation(projects.coreDesignSystem)
+    implementation(projects.model)
 
     implementation(Dependency.Ui.CORE_KTX)
     implementation(Dependency.Ui.APP_COMPAT)
@@ -63,6 +64,7 @@ dependencies {
     implementation(Dependency.Compose.COMPOSE_ANI_NAV)
     implementation(Dependency.Compose.COMPOSE_LANDSCAPIST)
     implementation(Dependency.Compose.COMPOSE_HILT_NAV)
+    implementation(Dependency.Compose.COMPOSE_WEBVOEW)
 
     implementation(Dependency.Hilt.HILT_ANDROID)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)

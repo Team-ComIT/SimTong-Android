@@ -5,6 +5,7 @@ import com.comit.data.util.simTongApiCall
 import com.comit.model.HolidayList
 import com.comit.remote.api.HolidayAPI
 import com.comit.remote.mapper.toModel
+import com.comit.remote.request.holidays.DayOffRequest
 import java.util.Date
 import javax.inject.Inject
 
@@ -21,10 +22,12 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
     }
 
     override suspend fun dayOffHolidays(
-        date: Date,
+        date: String,
     ) = simTongApiCall {
         holidayAPI.dayOffHolidays(
-            date = date,
+            dayOffRequest = DayOffRequest(
+                date = date
+            )
         )
     }
 
@@ -38,9 +41,11 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
 
     override suspend fun setWork(
         date: Date,
-    ) = simTongApiCall {
-        holidayAPI.setWork(
-            date = date,
-        )
+    ) {
+        simTongApiCall {
+            holidayAPI.setWork(
+                date = date,
+            )
+        }
     }
 }

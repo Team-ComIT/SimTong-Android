@@ -1,9 +1,11 @@
 package com.comit.remote.api
 
+import com.comit.remote.request.commons.ChangePasswordRequest
 import com.comit.remote.request.commons.InitializationPasswordRequest
 import com.comit.remote.response.commons.EmployeeNumberResponse
 import com.comit.remote.response.commons.FetchSpotsResponse
 import com.comit.remote.response.commons.ReissueTokenResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -36,9 +38,8 @@ interface CommonsAPI {
 
     @PUT("$COMMONS/password")
     suspend fun changePassword(
-        @Query("password") password: String,
-        @Query("new_password") newPassword: String,
-    )
+        @Body request: ChangePasswordRequest,
+    ): Response<Unit>
 
     @GET("$COMMONS/password/compare")
     suspend fun checkOldPassword(

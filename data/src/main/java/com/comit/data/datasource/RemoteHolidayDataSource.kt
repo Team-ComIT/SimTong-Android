@@ -10,7 +10,7 @@ interface RemoteHolidayDataSource {
     ): HolidayList
 
     suspend fun dayOffHolidays(
-        date: Date
+        date: String
     )
 
     suspend fun setAnnual(

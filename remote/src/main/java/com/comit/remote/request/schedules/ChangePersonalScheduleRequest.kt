@@ -1,7 +1,6 @@
 package com.comit.remote.request.schedules
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Time
 
 data class ChangePersonalScheduleRequest(
 
@@ -15,5 +14,5 @@ data class ChangePersonalScheduleRequest(
     val endAt: String,
 
     @SerializedName("alarm")
-    val alarm: Time?,
+    val alarm: String?,
 )
