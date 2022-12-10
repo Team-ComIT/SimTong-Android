@@ -27,6 +27,7 @@
     <string name="date_finish_hint">XXXX-XX-XX (까지)</string>
     <string name="alarm">알림</string>
     <string name="alarm_hint">HH:mm:ss (필수 x)</string>
+    <string name="alarm_hint_should">HH:mm:ss (필수)</string>
     <string name="check">확인</string>
 
     <!--달력-->

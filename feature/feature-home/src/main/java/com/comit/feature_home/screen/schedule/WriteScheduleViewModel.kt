@@ -57,7 +57,11 @@ class WriteScheduleViewModel @Inject constructor(
                 endAt = endAt,
                 alarms = alarm
             )
-        )
+        ).onSuccess {
+            postSideEffect(WriteScheduleSideInEffect.WriteScheduleSuccess)
+        }.onFailure {
+            postSideEffect(WriteScheduleSideInEffect.WriteScheduleFail)
+        }
     }
 
     fun inputTitle(msg: String) = intent {
