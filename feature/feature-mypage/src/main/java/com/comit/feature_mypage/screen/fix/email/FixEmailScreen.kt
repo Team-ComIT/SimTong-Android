@@ -1,5 +1,6 @@
 package com.comit.feature_mypage.screen.fix.email
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -109,7 +110,7 @@ internal fun FixEmailScreen(
         else stringResource(id = R.string.certification_number_get)
 
     val textTitle =
-        if (isLastPage) stringResource(id = R.string.certification_number)
+        if (isLastPage) stringResource(id = R.string.certification_number_6)
         else stringResource(id = R.string.email_input)
 
     val btnEnabled =
@@ -201,6 +202,7 @@ internal fun InputCertificationNumber(
     fixEmailState: FixEmailState,
 ) {
 
+    Log.d("TAG", "textTitle: "+textTitle)
     val leftTime = stringResource(id = R.string.left_time)
 
     var totalTime by remember {
@@ -230,7 +232,6 @@ internal fun InputCertificationNumber(
                     vm.inputErrMsgCode(msg = null)
                 },
                 title = textTitle,
-                keyboardType = KeyboardType.Number,
                 error = fixEmailState.errCode
             )
 
