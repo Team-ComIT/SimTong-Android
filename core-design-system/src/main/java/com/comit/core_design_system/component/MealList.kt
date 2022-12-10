@@ -23,13 +23,13 @@ import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body14
-import com.comit.core_design_system.typography.Body4
-import com.comit.core_design_system.typography.Body7
 
 data class Meal(
     val date: String,
     val food: List<String>
 )
+
+private const val MealContentIndex: Int = 3
 
 @Composable
 fun MealList(
@@ -48,7 +48,7 @@ fun MealList(
             MeaContent(
                 date = meal.date,
                 meals = meal.food,
-                isCurrentDay = index == 3,
+                isCurrentDay = index == MealContentIndex,
             )
         }
     }

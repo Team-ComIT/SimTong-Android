@@ -3,7 +3,6 @@ package com.comit.domain.usecase.menu
 import com.comit.domain.model.MealEntity
 import com.comit.domain.repository.MenuRepository
 import com.comit.model.MenuList
-import java.util.Date
 import javax.inject.Inject
 
 class FetchMenuUseCase @Inject constructor(

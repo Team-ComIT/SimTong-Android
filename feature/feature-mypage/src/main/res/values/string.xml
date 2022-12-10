@@ -25,15 +25,17 @@
 
     <string name="email_fix">이메일 수정</string>
     <string name="email_input">이메일 입력</string>
-    <string name="certification_number">인증번호</string>
     <string name="certification_number_get">인증번호 받기</string>
     <string name="certification_number_input">인증번호 입력</string>
+    <string name="certification_number_6">인증번호(6자리)</string>
+    <string name="certification_number">인증번호</string>
 
 
     <string name="password_fix">비밀번호 수정</string>
     <string name="password_old_input">기존 비밀번호 입력</string>
     <string name="password_input">비밀번호 입력</string>
     <string name="password_input_again">비밀번호 재입력</string>
+    <string name="password_format_message">영문과 숫자 그리고 특수 기호가 모두 포함되어야 합니다.\n($ 달러기호)(+,- 연산기호)(_ 언더라인)이외 특수문자는 사용이 불가 합니다.</string>
 
     <string name="ic_plus_description">마이페이지 추가 아이콘</string>
     

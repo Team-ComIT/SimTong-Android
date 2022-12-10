@@ -89,7 +89,7 @@ fun HomeScreen(
 
     val container = homeViewModel.container
     val state = container.stateFlow.collectAsState().value
-    val sideEffect = container.sideEffectFlow
+    // val sideEffect = container.sideEffectFlow
 
     val date = LocalDate.now()
 
