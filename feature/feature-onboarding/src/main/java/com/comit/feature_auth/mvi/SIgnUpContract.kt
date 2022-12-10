@@ -48,4 +48,8 @@ sealed class SignUpSideEffect {
 
     object NavigateToHome : SignUpSideEffect()
     object SignUpConflict : SignUpSideEffect()
+
+    data class ProfileImageSizeLimit(
+        val size: Double,
+    ): SignUpSideEffect()
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.comit.common.SimImageUploadLayout
 import com.comit.common.SimTongSimpleLayout
+import com.comit.common.convert.limitSize
 import com.comit.common.rememberToast
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -58,7 +59,7 @@ fun SignUpNicknameScreen(
 
                 SimImageUploadLayout(
                     imageFile = {
-                        onProfileImgChanged(it)
+                        onProfileImgChanged(it.limitSize())
                     },
                     onError = {
                         toast(

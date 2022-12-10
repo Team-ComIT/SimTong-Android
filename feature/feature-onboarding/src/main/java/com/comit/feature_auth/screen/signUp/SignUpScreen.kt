@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.comit.common.rememberToast
 import com.comit.core.observeWithLifecycle
 import com.comit.feature_auth.mvi.SignUpSideEffect
+import com.comit.feature_auth.vm.ImageLimitSizeInKB
 import com.comit.feature_auth.vm.SignUpViewModel
 import com.comit.navigator.SimTongScreen
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -104,6 +105,11 @@ internal fun SignUpScreen(
                     message = EmailValidMessage,
                 )
             }
+            is SignUpSideEffect.ProfileImageSizeLimit -> {
+                toast(
+                    message = "파일 크기가 제한을 초과했습니다. (제한: ${ImageLimitSizeInKB}KB, 현재: ${it})",
+                )
+            }
         }
     }
 
@@ -142,6 +148,7 @@ internal fun SignUpScreen(
                     },
                     verifyCode = state.verifyCode,
                     onVerifyCodeChanged = { viewModel.changeVerifyCode(it) },
+                    fieldErrEmailCode = state.fieldErrVerifyCode,
                 )
             }
             SIGN_UP_PASSWORD -> {
