@@ -142,12 +142,13 @@ fun ShowScheduleScreen(
     }
 
     Column {
+
+        var deleteCheck by remember { mutableStateOf(false) }
+
         SimBottomSheetDialog(
             sheetState = bottomSheetState,
             sheetContent = {
-                var deleteCheck by remember { mutableStateOf(false) }
-
-                if(deleteCheck) {
+                if (deleteCheck) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
                         modifier = Modifier.padding(HorizontalPadding)
@@ -161,7 +162,7 @@ fun ShowScheduleScreen(
                                 text = stringResource(id = R.string.cancel),
                                 color = SimTongButtonColor.GRAY,
                                 modifier = Modifier
-                                    .width(170.dp)
+                                    .width(150.dp)
                                     .height(50.dp)
                             ) {
                                 deleteCheck = false
@@ -172,7 +173,7 @@ fun ShowScheduleScreen(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .wrapContentWidth(Alignment.End)
-                                    .width(170.dp)
+                                    .width(150.dp)
                                     .height(50.dp)
                             ) {
                                 showScheduleViewModel.deleteSchedule(UUID.fromString(scheduleId))
@@ -308,6 +309,7 @@ fun ShowScheduleScreen(
                             end_At = it.end_At,
                             title = it.title,
                             onScheduleClicked = {
+                                deleteCheck = false
                                 coroutineScope.launch {
                                     bottomSheetState.show()
                                 }
