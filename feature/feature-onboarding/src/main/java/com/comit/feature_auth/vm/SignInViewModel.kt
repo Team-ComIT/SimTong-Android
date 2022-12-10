@@ -30,7 +30,9 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             clearErrorMessage()
 
-            if (employeeNumber.toIntOrNull() == null) {
+            try {
+                employeeNumber.toInt()
+            } catch (e: NumberFormatException) {
                 postSideEffect(SignInSideEffect.IdWasNotNumber)
             }
 

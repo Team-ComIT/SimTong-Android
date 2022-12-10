@@ -23,7 +23,9 @@ import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
@@ -32,21 +34,23 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.component.FoodList
 import com.comit.core_design_system.component.Header
+import com.comit.core_design_system.component.MealList
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title3
-import com.comit.core_design_system.util.currentMealsTime
 import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.feature_home.vm.HomeViewModel
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
+import java.time.LocalDate
 
 object HomeFakeData {
     val foodList = listOf(
@@ -79,8 +83,21 @@ private val HomeBottomIconLayoutImageSize: Dp = 28.dp
 @Composable
 fun HomeScreen(
     navController: NavController,
+    homeViewModel: HomeViewModel = hiltViewModel(),
 ) {
     val scrollState = rememberScrollState()
+
+    val container = homeViewModel.container
+    val state = container.stateFlow.collectAsState().value
+    val sideEffect = container.sideEffectFlow
+
+    val date = LocalDate.now()
+
+    LaunchedEffect(key1 = homeViewModel) {
+        homeViewModel.fetchMenu(
+            date = date.toString(),
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -145,9 +162,8 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            FoodList(
-                timeCheck = currentMealsTime(),
-                list = HomeFakeData.foodList,
+            MealList(
+                meals = state.mealList,
             )
 
             Spacer(modifier = Modifier.height(27.dp))

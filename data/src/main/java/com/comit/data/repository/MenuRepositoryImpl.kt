@@ -11,7 +11,7 @@ class MenuRepositoryImpl @Inject constructor(
 ) : MenuRepository {
 
     override suspend fun fetchMenu(
-        date: Date
+        date: String
     ): MenuList {
         return remoteMenuDataSource.fetchMenu(
             date = date,
