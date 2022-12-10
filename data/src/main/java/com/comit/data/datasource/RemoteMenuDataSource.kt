@@ -6,7 +6,7 @@ import java.util.Date
 interface RemoteMenuDataSource {
 
     suspend fun fetchMenu(
-        date: Date
+        date: String
     ): MenuList
 
     suspend fun fetchPublicMenu(
