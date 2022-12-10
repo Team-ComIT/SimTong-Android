@@ -6,5 +6,5 @@ import java.util.Date
 data class DayOffRequest(
 
     @field:SerializedName("date")
-    val date: Date
+    val date: String
 )

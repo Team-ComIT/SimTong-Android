@@ -152,7 +152,7 @@ fun WriteClosedDayScreen(
                             if (saveEnabled) {
                                 when (workStateText) {
                                     workClose -> {
-                                        closeDayViewModel.setHoliday(date)
+                                        closeDayViewModel.setHoliday("$yearT-$monthT-$dayT")
                                     }
                                     workAnnual -> {
                                         closeDayViewModel.setAnnualDay(date)

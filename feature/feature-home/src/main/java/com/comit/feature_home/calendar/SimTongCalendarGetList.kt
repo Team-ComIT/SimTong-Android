@@ -46,10 +46,10 @@ fun organizeList(
 
     for (element in holidayList) {
         if (element.type == TypeName.HOLIDAY) {
-            restDayList[element.date[9].toString().toInt() - 1] = true
+            restDayList[element.date.substring(8).toInt() - 1] = true
         }
         if (element.type == TypeName.ANNUAL) {
-            annualDayList[element.date[9].toString().toInt() - 1] = true
+            annualDayList[element.date.substring(8).toInt() - 1] = true
         }
     }
 

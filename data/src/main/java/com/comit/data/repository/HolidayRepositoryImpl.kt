@@ -19,7 +19,7 @@ class HolidayRepositoryImpl @Inject constructor(
     }
 
     override suspend fun dayOffHolidays(
-        date: Date,
+        date: String,
     ) {
         remoteHolidayDataSource.dayOffHolidays(
             date = date,

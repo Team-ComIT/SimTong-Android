@@ -26,7 +26,7 @@ class CloseDayViewModel @Inject constructor(
 
     override val container = container<CloseDayState, CloseDaySideEffect>(CloseDayState())
 
-    fun setHoliday(date: Date) = intent {
+    fun setHoliday(date: String) = intent {
         viewModelScope.launch {
             dayOffHolidaysUseCase(
                 date = date
