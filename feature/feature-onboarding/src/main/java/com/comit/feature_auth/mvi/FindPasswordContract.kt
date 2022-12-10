@@ -14,8 +14,6 @@ data class FindPasswordState(
     val fieldErrEmployeeNumber: String? = null,
     val fieldErrEmail: String? = null,
     val fieldErrEmailCode: String? = null,
-    val fieldErrNewPassword: String? = null,
-    val fieldErrNewPasswordCheck: String? = null,
 )
 
 sealed class FindPasswordSideEffect {
@@ -37,4 +35,6 @@ sealed class FindPasswordSideEffect {
     object NavigateToFixPassword : FindPasswordSideEffect()
 
     object EmailCodeNotCorrect : FindPasswordSideEffect()
+
+    object EmailFormat : FindPasswordSideEffect()
 }

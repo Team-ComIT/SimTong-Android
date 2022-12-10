@@ -26,7 +26,7 @@ private const val EmailVerifyCountOverMessage = "이메일 인증 횟수를 초�
 private const val EmailVerifyCodeNotCorrectMessage = "이메일 인증코드가 일치하지 않습니다."
 private const val SuccessToSignUpMessage = "회원가입에 성공했습니다!"
 private const val SignUpConflictMessage = "이미 가입되었거나, 닉네임이 이미 존재합니다."
-private const val EmailValidMessage = "올바른 이메일 형식을 입력해주세요!"
+private const val EmailValidMessage = "올바른 이메일 형식을 입력해주세요."
 private const val SuccessToSendEmail = "이메일 코드를 전송했습니다."
 
 /**
