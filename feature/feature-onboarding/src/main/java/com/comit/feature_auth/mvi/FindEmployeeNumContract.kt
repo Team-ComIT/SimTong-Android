@@ -24,7 +24,7 @@ sealed class FindEmployeeNumSideEffect {
         val employeeNum: String,
     ) : FindEmployeeNumSideEffect()
 
-    object UserInfoNotMatched: FindEmployeeNumSideEffect()
+    object UserInfoNotMatched : FindEmployeeNumSideEffect()
 
     object FetchSpot : FindEmployeeNumSideEffect()
 }

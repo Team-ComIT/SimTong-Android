@@ -2,9 +2,7 @@ package com.comit.feature_mypage.screen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.comit.common.convert.limitSize
 import com.comit.common.unit.sizeInKb
-import com.comit.common.unit.sizeInMb
 import com.comit.domain.exception.NeedLoginException
 import com.comit.domain.usecase.users.ChangeProfileImageUseCase
 import com.comit.domain.usecase.users.FetchUserInformationUseCase
@@ -60,7 +58,7 @@ class MyPageViewModel @Inject constructor(
     fun changeProfileImage(
         profileImg: File,
     ) = intent {
-        if(profileImg.sizeInKb > ImageLimitSizeInKB) {
+        if (profileImg.sizeInKb > ImageLimitSizeInKB) {
             postSideEffect(MyPageSideEffect.LimitSize(profileImg.sizeInKb))
             return@intent
         }

@@ -113,7 +113,7 @@ internal fun FindEmployeeNumMainScreen(
     }
 
     Crossfade(targetState = currentPage) { pageState ->
-        when(pageState) {
+        when (pageState) {
             FindEmployeeNumberScreen -> FindEmployeeNumberScreen(
                 name = state.name,
                 onNameChanged = {
@@ -195,7 +195,6 @@ private fun FindEmployeeNumberScreen(
 
     val centerButtonBorderColor =
         if (errMsgPlace == null) SimTongColor.Gray100 else SimTongColor.Error
-
 
     SimBottomSheetDialog(
         useHandle = true,

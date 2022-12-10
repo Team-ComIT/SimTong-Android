@@ -40,7 +40,7 @@ sealed class SignUpSideEffect {
         val email: String
     ) : SignUpSideEffect()
     object EmailCodeNotCorrect : SignUpSideEffect()
-    object EmailValid: SignUpSideEffect()
+    object EmailValid : SignUpSideEffect()
 
     object NavigateToSignUpPassword : SignUpSideEffect()
 
@@ -51,5 +51,5 @@ sealed class SignUpSideEffect {
 
     data class ProfileImageSizeLimit(
         val size: Double,
-    ): SignUpSideEffect()
+    ) : SignUpSideEffect()
 }

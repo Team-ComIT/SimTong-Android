@@ -12,5 +12,5 @@ sealed class MyPageSideEffect {
 
     data class LimitSize(
         val size: Double,
-    ): MyPageSideEffect()
+    ) : MyPageSideEffect()
 }

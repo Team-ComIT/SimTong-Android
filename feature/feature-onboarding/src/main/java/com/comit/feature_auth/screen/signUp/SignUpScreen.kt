@@ -111,7 +111,7 @@ internal fun SignUpScreen(
             }
             is SignUpSideEffect.ProfileImageSizeLimit -> {
                 toast(
-                    message = "파일 크기가 제한을 초과했습니다. (제한: ${ImageLimitSizeInKB}KB, 현재: ${it})",
+                    message = "파일 크기가 제한을 초과했습니다. (제한: ${ImageLimitSizeInKB}KB, 현재: $it)",
                 )
             }
         }

@@ -1,4 +1,9 @@
-@file:Suppress("MagicNumber")
+@file:Suppress(
+    "MagicNumber",
+    "TooGenericExceptionCaught",
+    "SwallowedException",
+    "UseCheckOrError",
+)
 
 package com.comit.common.convert
 

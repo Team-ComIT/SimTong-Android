@@ -69,7 +69,7 @@ fun MyPageScreen(
     val toast = rememberToast()
 
     myPageSideEffect.observeWithLifecycle {
-        when(it) {
+        when (it) {
             is MyPageSideEffect.LimitSize -> {
                 toast(
                     message = "파일 크기가 제한을 초과했습니다. (제한: ${ImageLimitSizeInKB}KB, 현재: ${it.size})",
@@ -81,8 +81,6 @@ fun MyPageScreen(
     LaunchedEffect(key1 = vm) {
         vm.fetchUserInformation()
     }
-
-
 
     Column(
         modifier = Modifier

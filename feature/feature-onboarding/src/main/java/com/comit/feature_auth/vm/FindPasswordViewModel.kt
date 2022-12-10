@@ -18,7 +18,6 @@ import com.comit.domain.usecase.email.CheckEmailCodeUseCase
 import com.comit.domain.usecase.email.SendEmailCodeUseCase
 import com.comit.feature_auth.mvi.FindPasswordSideEffect
 import com.comit.feature_auth.mvi.FindPasswordState
-import com.comit.feature_auth.mvi.SignUpSideEffect
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
@@ -54,7 +53,6 @@ class FindPasswordViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(FindPasswordSideEffect.NavigateToSignIn)
             }.onFailure {
-
             }
         }
     }
