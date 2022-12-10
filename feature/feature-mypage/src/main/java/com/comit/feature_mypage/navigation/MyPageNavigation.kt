@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalPagerApi::class)
-
 package com.comit.feature_mypage.navigation
 
 import androidx.navigation.NavController

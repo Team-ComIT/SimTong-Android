@@ -43,7 +43,6 @@ private val ImageSize: Dp = 100.dp
 fun SimImageUploadLayout(
     imageFile: (File) -> Unit,
     onError: ((String) -> Unit)? = null,
-    defaultImage: String? = null,
 ) {
     val context = LocalContext.current
     var bitmap by remember { mutableStateOf<Bitmap?>(null) }
