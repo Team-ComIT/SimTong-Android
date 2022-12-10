@@ -16,6 +16,7 @@ data class SignUpState(
     val employeeNumber: String = "",
     val fieldErrEmployeeNumber: String? = null,
     val email: String = "",
+    val fieldErrEmail: String? = null,
 
     val verifyCode: String = "",
     val fieldErrVerifyCode: String? = null,
@@ -35,8 +36,11 @@ sealed class SignUpSideEffect {
 
     object EmailVerifyAlready : SignUpSideEffect()
     object TooManyRequest : SignUpSideEffect()
-    object NavigateToSignUpVerify : SignUpSideEffect()
+    data class NavigateToSignUpVerify(
+        val email: String
+    ) : SignUpSideEffect()
     object EmailCodeNotCorrect : SignUpSideEffect()
+    object EmailValid: SignUpSideEffect()
 
     object NavigateToSignUpPassword : SignUpSideEffect()
 

@@ -4,6 +4,7 @@ package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.common.format.isEmailFormat
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
@@ -65,11 +66,18 @@ class SignUpViewModel @Inject constructor(
     }
 
     fun sendEmailCode() = intent {
+        val email = state.email
+
+        if(!email.isEmailFormat()) {
+            postSideEffect(SignUpSideEffect.EmailValid)
+            return@intent
+        }
+
         viewModelScope.launch {
             sendEmailCodeUseCase(
-                email = state.email,
+                email = email,
             ).onSuccess {
-                postSideEffect(SignUpSideEffect.NavigateToSignUpVerify)
+                postSideEffect(SignUpSideEffect.NavigateToSignUpVerify(email))
             }.onFailure {
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.EmailVerifyAlready)
@@ -179,5 +187,9 @@ class SignUpViewModel @Inject constructor(
 
     fun inputFieldErrVerifyCode(message: String) = intent {
         reduce { state.copy(fieldErrVerifyCode = message) }
+    }
+
+    fun inputFieldErrEmail(message: String) = intent {
+        reduce { state.copy(fieldErrEmail = message) }
     }
 }
