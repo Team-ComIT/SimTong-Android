@@ -102,11 +102,12 @@ internal fun FixPassword(
                 isLastPage = true
                 fixPasswordStep = FixPasswordStep.CHECK_PASSWORD
             }
-            FixPasswordStep.CHECK_PASSWORD ->
+            FixPasswordStep.CHECK_PASSWORD -> {
                 vm.fixPassword(
                     password = fixPasswordInState.oldPassword,
                     newPassword = fixPasswordInState.password,
                 )
+            }
         }
     }
     val btnBack = {

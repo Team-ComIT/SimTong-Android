@@ -13,7 +13,6 @@ import com.comit.feature_mypage.screen.fix.password.FixPassword
 import com.comit.feature_mypage.screen.fix.workplace.FixWorkPlaceScreen
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
-import com.google.accompanist.pager.ExperimentalPagerApi
 
 fun NavGraphBuilder.myPageNavigation(
     navController: NavController,

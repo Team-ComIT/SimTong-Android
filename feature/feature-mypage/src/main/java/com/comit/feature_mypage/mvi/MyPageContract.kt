@@ -5,7 +5,7 @@ data class MyPageState(
     val email: String = "",
     val nickname: String = "",
     val spot: String = "",
-    val profileImagePath: String = "",
+    val profileImagePath: String? = null,
 )
 
 sealed class MyPageSideEffect
