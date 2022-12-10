@@ -1,7 +1,10 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
+    InternalCoroutinesApi::class
+)
 
 package com.comit.feature_home.screen.closeday
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,10 +20,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,21 +35,29 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.rememberToast
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.typography.Body1
+import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body6
 import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.feature_home.mvi.CloseDaySideEffect
 import com.example.feature_home.R
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.sql.Date
@@ -59,8 +73,15 @@ private val CalendarPadding = PaddingValues(
 
 @Composable
 fun WriteClosedDayScreen(
-    navController: NavController
+    navController: NavController,
+    closeDayViewModel: CloseDayViewModel = hiltViewModel(),
 ) {
+    val toast = rememberToast()
+
+    val closeDayContainer = closeDayViewModel.container
+    val closeDayState = closeDayContainer.stateFlow.collectAsState().value
+    val closeDaySideEffect = closeDayContainer.sideEffectFlow
+
     val bottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden
     )
@@ -77,7 +98,19 @@ fun WriteClosedDayScreen(
     var yearT by remember { mutableStateOf(thisYear) }
     var monthT by remember { mutableStateOf(thisMonth) }
     var dayT by remember { mutableStateOf(thisDay) }
-    var date by remember { mutableStateOf<Date>(Date.valueOf("$yearT-$monthT-$dayT")) }
+
+    closeDaySideEffect.observeWithLifecycle() {
+        when (it) {
+            CloseDaySideEffect.CloseDayChangeSuccess -> {
+                coroutineScope.launch {
+                    bottomSheetState.hide()
+                }
+            }
+            CloseDaySideEffect.CloseDayChangeFail -> {
+                toast(message = closeDayState.messageFail)
+            }
+        }
+    }
 
     SimBottomSheetDialog(
         useHandle = true,
@@ -102,6 +135,7 @@ fun WriteClosedDayScreen(
                     val _monthT = monthT.toString() + stringResource(id = R.string.calendar_month) + " "
                     val _dayT = dayT.toString() + stringResource(id = R.string.calendar_day) + "은 "
 
+
                     Body6(
                         text = "$_yearT$_monthT$_dayT\"$workStateText\"입니다.",
                         color = SimTongColor.Gray800
@@ -111,20 +145,19 @@ fun WriteClosedDayScreen(
                         text = stringResource(id = R.string.save),
                         color = saveColor,
                         onClick = {
+                            val date = Date.valueOf("$yearT-$monthT-$dayT")
+                            Log.d("TAG", "WriteClosedDayScreen: $date")
                             if (saveEnabled) {
                                 when (workStateText) {
                                     workClose -> {
-
+                                        closeDayViewModel.setHoliday(date)
                                     }
                                     workAnnual -> {
-
+                                        closeDayViewModel.setAnnualDay(date)
                                     }
                                     else -> {
-
+                                        closeDayViewModel.setWorkDay(date)
                                     }
-                                }
-                                coroutineScope.launch {
-                                    bottomSheetState.hide()
                                 }
                             }
                         },
@@ -175,31 +208,58 @@ fun WriteClosedDayScreen(
             }
         }
     ) {
+        Column() {
+            Spacer(modifier = Modifier.height(22.5.dp))
 
-        SimTongCalendar(
-            onNextClicked = {
-                monthT = it.toString().substring(3, 5).toInt()
-                yearT = it.toString().substring(0, 2).toInt()
-                date = it
-            },
-            onBeforeClicked = {
-                monthT = it.toString().substring(3, 5).toInt()
-                yearT = it.toString().substring(0, 2).toInt()
-                date = it
-            },
-            onItemClicked = { _day, _workState ->
-                workState = _workState
-                workStateText = _workState
-                dayT = _day
-                coroutineScope.launch {
-                    bottomSheetState.show()
+            Row(
+                modifier = Modifier
+                    .padding(horizontal = 26.dp)
+            ) {
+                IconButton(
+                    modifier = Modifier.size(24.dp),
+                    onClick = {
+                        navController.popBackStack()
+                    }
+                ) {
+                    Icon(
+                        painter = painterResource(id = SimTongIcon.Back_Big.drawableId),
+                        contentDescription = SimTongIcon.Back_Big.contentDescription
+                    )
                 }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(HomeCalendarHeight)
-                .padding(CalendarPadding)
-        )
+                Body3(
+                    text = stringResource(id = R.string.schedule_day_write),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                        .padding(end = 24.dp)
+                )
+            }
+
+            Spacer(modifier = Modifier.height(44.dp))
+
+            SimTongCalendar(
+                onNextClicked = {
+                    monthT = it.toString().substring(5, 7).toInt()
+                    yearT = it.toString().substring(0, 4).toInt()
+                },
+                onBeforeClicked = {
+                    monthT = it.toString().substring(5, 7).toInt()
+                    yearT = it.toString().substring(0, 4).toInt()
+                },
+                onItemClicked = { _day, _workState ->
+                    workState = _workState
+                    workStateText = _workState
+                    dayT = _day
+                    coroutineScope.launch {
+                        bottomSheetState.show()
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(HomeCalendarHeight)
+                    .padding(CalendarPadding)
+            )
+        }
     }
 }
 

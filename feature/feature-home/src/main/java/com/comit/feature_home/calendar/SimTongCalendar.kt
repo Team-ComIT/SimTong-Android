@@ -1,11 +1,9 @@
-@file:OptIn(DelicateCoroutinesApi::class, InternalCoroutinesApi::class)
 
 package com.comit.feature_home.calendar
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -52,8 +50,6 @@ import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
 import com.comit.feature_home.screen.GetHolidayViewModel
 import com.example.feature_home.R
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.InternalCoroutinesApi
 import java.sql.Date
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -107,7 +103,7 @@ fun SimTongCalendar(
     }
 
     LaunchedEffect(getHolidayViewModel) {
-        getHolidayViewModel.getHolidayList(Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01"))
+        getHolidayViewModel.getHolidayList(Date.valueOf(year.toString() + "-" + String.format("%02d", month) + "-01"))
     }
 
     val lifecycle = LocalLifecycleOwner.current
@@ -146,7 +142,7 @@ fun SimTongCalendar(
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
 
-                val date = Date.valueOf(String.format("%02d", year) + "-" + String.format("%02d", month) + "-01")
+                val date = Date.valueOf(year.toString() + "-" + String.format("%02d", month) + "-01")
                 getHolidayViewModel.getHolidayList(date)
                 workCountList = getWorkCountList(year, month)
                 onNextClicked(date)
@@ -167,27 +163,6 @@ fun SimTongCalendar(
                 onItemClicked = onItemClicked
             )
         }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun BottomSheetCalendar(
-    sheetContent: @Composable () -> Unit,
-    content: @Composable () -> Unit
-) {
-    val bottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden
-    )
-    val coroutineScope = rememberCoroutineScope()
-
-    SimBottomSheetDialog(
-        sheetState = bottomSheetState,
-        sheetContent = {
-            sheetContent()
-        }
-    ) {
-        content()
     }
 }
 
