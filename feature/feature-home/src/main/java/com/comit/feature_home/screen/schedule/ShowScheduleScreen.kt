@@ -197,11 +197,9 @@ fun ShowScheduleScreen(
                                 .simClickable {
                                     navController.navigate(
                                         route = SimTongScreen.Home.WRITE_SCHEDULE +
-                                                "isNew${false}" +
-                                                "scheduleId${scheduleId}" +
-                                                "title${scheduleTitle}" +
-                                                "scheduleStart${scheduleStart}" +
-                                                "scheduleEnd${scheduleEnd}"
+                                            "isNew${false}" + "scheduleId$scheduleId" +
+                                            "title$scheduleTitle" + "scheduleStart$scheduleStart" +
+                                            "scheduleEnd$scheduleEnd"
                                     )
                                 }
                         ) {
@@ -300,11 +298,9 @@ fun ShowScheduleScreen(
                         onClick = {
                             navController.navigate(
                                 route = SimTongScreen.Home.WRITE_SCHEDULE +
-                                        "isNew${true}" +
-                                        "scheduleId${"k"}" +
-                                        "title${"s"}" +
-                                        "scheduleStart${"i"}" +
-                                        "scheduleEnd${"a"}"
+                                    "isNew${true}" + "scheduleId${"k"}" +
+                                    "title${"s"}" + "scheduleStart${"i"}" +
+                                    "scheduleEnd${"a"}"
                             )
                         },
                         modifier = Modifier

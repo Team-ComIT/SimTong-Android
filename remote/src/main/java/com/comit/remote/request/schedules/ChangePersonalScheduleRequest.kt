@@ -1,8 +1,6 @@
 package com.comit.remote.request.schedules
 
 import com.google.gson.annotations.SerializedName
-import java.sql.Time
-import java.util.Date
 
 data class ChangePersonalScheduleRequest(
 

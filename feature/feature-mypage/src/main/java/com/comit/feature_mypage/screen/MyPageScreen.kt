@@ -1,3 +1,5 @@
+@file:Suppress("MaxLineLength")
+
 package com.comit.feature_mypage.screen
 
 import android.app.Activity

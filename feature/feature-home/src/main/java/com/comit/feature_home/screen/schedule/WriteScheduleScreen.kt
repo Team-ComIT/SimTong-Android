@@ -19,9 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -48,7 +46,7 @@ fun WriteScheduleScreen(
     val writeScheduleState = writeScheduleContainer.stateFlow.collectAsState().value
     val writeScheduleSideInEffect = writeScheduleContainer.sideEffectFlow
 
-    if(!isNew) {
+    if (!isNew) {
         LaunchedEffect(vm) {
             vm.inputTitle(msg = title)
             vm.inputScheduleStart(msg = scheduleStart)
@@ -177,7 +175,6 @@ fun WriteScheduleScreen(
                                 alarm = Time.valueOf(writeScheduleState.alarm).toString()
                             )
                         }
-
                     } else {
                         if (isNew) {
                             vm.writeSchedule(
@@ -195,7 +192,6 @@ fun WriteScheduleScreen(
                                 alarm = null
                             )
                         }
-
                     }
                 } catch (e: Exception) {
                     vm.inputErrMsgTitle("")

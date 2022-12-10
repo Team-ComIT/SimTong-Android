@@ -1,3 +1,5 @@
+@file:Suppress("ktlintMainSourceSetCheck")
+
 package com.comit.feature_home.navigation
 
 import androidx.navigation.NavController
@@ -43,12 +45,10 @@ fun NavGraphBuilder.homeNavigation(
         }
         composable(
             route = SimTongScreen.Home.WRITE_SCHEDULE +
-                    "isNew{isNew}" +
-                    "scheduleId{scheduleId}" +
-                    "title{title}" +
-                    "scheduleStart{scheduleStart}" +
-                    "scheduleEnd{scheduleEnd}",
-                arguments = listOf(
+                "isNew{isNew}" + "scheduleId{scheduleId}" +
+                "title{title}" + "scheduleStart{scheduleStart}" +
+                "scheduleEnd{scheduleEnd}",
+            arguments = listOf(
                 navArgument(name = "isNew") {
                     type = NavType.BoolType
                     defaultValue = false
@@ -70,10 +70,11 @@ fun NavGraphBuilder.homeNavigation(
                     defaultValue = ""
                 },
             )
-        ) {    
+        ) {
+
             val isNew = it.arguments?.getBoolean("isNew") ?: false
             val scheduleId = it.arguments?.getString("scheduleId") ?: ""
-             val title = it.arguments?.getString("title") ?: ""
+            val title = it.arguments?.getString("title") ?: ""
             val scheduleStart = it.arguments?.getString("scheduleStart") ?: ""
             val scheduleEnd = it.arguments?.getString("scheduleEnd") ?: ""
 

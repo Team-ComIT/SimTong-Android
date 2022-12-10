@@ -1,7 +1,6 @@
 package com.comit.domain.usecase.schedule
 
 import com.comit.domain.repository.ScheduleRepository
-import java.sql.Time
 import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
