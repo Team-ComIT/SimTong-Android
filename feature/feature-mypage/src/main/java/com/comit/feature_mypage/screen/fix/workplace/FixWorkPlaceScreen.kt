@@ -12,8 +12,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
@@ -80,7 +80,6 @@ fun FixWorkPlaceScreen(
             FixWorkPlaceSideEffect.FetchWorkPlaceFail -> vm.inPutErrMsg(FetchWorkPlaceFail)
         }
     }
-    val scrollState = rememberScrollState()
 
     var selectedValue by remember { mutableStateOf(DefaultSelected) }
     val isSelect: (Int) -> Boolean = { selectedValue == it }
@@ -103,12 +102,8 @@ fun FixWorkPlaceScreen(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(scrollState),
-        ) {
-            fixWorkPlaceState.spotList.forEachIndexed { index, item ->
+        LazyColumn() {
+            itemsIndexed(fixWorkPlaceState.spotList) { index, item ->
                 Box(
                     modifier = Modifier
                         .height(FixWorkPlaceHeight)
@@ -121,7 +116,6 @@ fun FixWorkPlaceScreen(
                             role = Role.RadioButton,
                         )
                 ) {
-
                     Column(
                         modifier = Modifier
                             .padding(
