@@ -39,7 +39,7 @@ interface CommonsAPI {
     @PUT("$COMMONS/password")
     suspend fun changePassword(
         @Body request: ChangePasswordRequest,
-    ): Response<Unit>
+    )
 
     @GET("$COMMONS/password/compare")
     suspend fun checkOldPassword(
@@ -52,7 +52,7 @@ interface CommonsAPI {
     @PUT("$COMMONS/password/initialization")
     suspend fun initializationPassword(
         @Body request: InitializationPasswordRequest,
-    ): Response<Unit>
+    )
 
     private companion object {
         const val COMMONS = "commons"

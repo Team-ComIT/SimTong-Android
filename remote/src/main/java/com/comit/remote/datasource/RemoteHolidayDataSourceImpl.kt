@@ -41,11 +41,9 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
 
     override suspend fun setWork(
         date: Date,
-    ) {
-        simTongApiCall {
-            holidayAPI.setWork(
-                date = date,
-            )
-        }
+    ) = simTongApiCall {
+        holidayAPI.setWork(
+            date = date,
+        )
     }
 }

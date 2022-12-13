@@ -31,7 +31,7 @@ interface HolidayAPI {
     @DELETE("$HOLIDAYS/work")
     suspend fun setWork(
         @Query("date") date: Date
-    ): Response<Unit>
+    )
 
     private companion object {
         const val HOLIDAYS = "holidays"
