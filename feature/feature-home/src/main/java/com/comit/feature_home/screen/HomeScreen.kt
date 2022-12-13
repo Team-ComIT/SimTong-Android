@@ -101,8 +101,8 @@ fun HomeScreen(
 
     Column(
         modifier = Modifier
-            .verticalScroll(scrollState)
-            .padding(HomeScreenPadding),
+            .padding(HomeScreenPadding)
+            .verticalScroll(scrollState),
     ) {
         Header(
             headerText = "",

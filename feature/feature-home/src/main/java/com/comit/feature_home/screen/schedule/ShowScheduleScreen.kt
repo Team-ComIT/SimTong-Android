@@ -1,5 +1,5 @@
 @file:OptIn(InternalCoroutinesApi::class)
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+@file:Suppress("OPT_IN_IS_NOT_ENABLED", "MaxLineLength")
 
 package com.comit.feature_home.screen.schedule
 
@@ -196,10 +196,7 @@ fun ShowScheduleScreen(
                                 .height(50.dp)
                                 .simClickable {
                                     navController.navigate(
-                                        route = SimTongScreen.Home.WRITE_SCHEDULE +
-                                            "isNew${false}" + "scheduleId$scheduleId" +
-                                            "title$scheduleTitle" + "scheduleStart$scheduleStart" +
-                                            "scheduleEnd$scheduleEnd"
+                                        route = SimTongScreen.Home.WRITE_SCHEDULE + "isNew${false}" + "scheduleId$scheduleId" + "title$scheduleTitle" + "scheduleStart$scheduleStart" + "scheduleEnd$scheduleEnd"
                                     )
                                 }
                         ) {
@@ -370,9 +367,6 @@ fun ScheduleItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(48.dp)
-            .simClickable {
-                onScheduleClicked()
-            }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -404,13 +398,20 @@ fun ScheduleItem(
                 )
             }
 
-            Image(
-                painter = painterResource(id = SimTongIcon.Option_horizontal_Bold.drawableId),
-                contentDescription = SimTongIcon.Option_horizontal_Bold.contentDescription,
+            IconButton(
+                onClick = {
+                    onScheduleClicked()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .wrapContentWidth(Alignment.End)
-            )
+            ) {
+                Icon(
+                    painter = painterResource(id = SimTongIcon.Option_horizontal_Bold.drawableId),
+                    contentDescription = SimTongIcon.Option_horizontal_Bold.contentDescription,
+                    tint = SimTongColor.Gray300,
+                )
+            }
         }
     }
 }
