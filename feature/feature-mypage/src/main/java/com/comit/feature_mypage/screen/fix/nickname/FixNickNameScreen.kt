@@ -18,7 +18,7 @@ import com.comit.feature_mypage.mvi.FixNickNameSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
 import kotlinx.coroutines.InternalCoroutinesApi
 
-private const val NickNameTextException = "사용할 수 없는 닉네임입니다"
+private const val NickNameFormException = "사용할 수 없는 닉네임입니다"
 
 private const val TokenException = "토큰 만료 다시 로그인해주세요"
 
@@ -41,8 +41,8 @@ internal fun FixNickNameScreen(
             FixNickNameSideEffect.FixNickNameSuccess -> {
                 navController.popBackStack()
             }
-            FixNickNameSideEffect.NickNameTextException -> {
-                vm.inPutErrMsgNickName(msg = NickNameTextException)
+            FixNickNameSideEffect.NickNameFormException -> {
+                vm.inPutErrMsgNickName(msg = NickNameFormException)
             }
             FixNickNameSideEffect.TokenException -> {
                 vm.inPutErrMsgNickName(msg = TokenException)

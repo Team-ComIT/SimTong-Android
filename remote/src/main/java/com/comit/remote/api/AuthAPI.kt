@@ -42,7 +42,7 @@ interface AuthAPI {
     @PUT("$USERS/spot")
     suspend fun changeSpot(
         @Body request: ChangeSpotRequest
-    ): Response<Unit>
+    )
 
     @PUT("$USERS/profile-image")
     suspend fun changeProfileImage(
@@ -57,7 +57,7 @@ interface AuthAPI {
     @PUT("$USERS/nickname")
     suspend fun changeNickname(
         @Body request: ChangeNicknameRequest,
-    ): Response<Unit>
+    )
 
     @GET("$USERS/information")
     suspend fun fetchUserInformation(): FetchUserInformationResponse

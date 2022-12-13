@@ -2,6 +2,7 @@ package com.comit.data.datasource
 
 import com.comit.model.Token
 import com.comit.model.User
+import retrofit2.Response
 import java.util.UUID
 
 interface RemoteAuthDataSource {

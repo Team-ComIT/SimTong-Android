@@ -38,7 +38,7 @@ class FixNickNameViewModel @Inject constructor(
                 postSideEffect(FixNickNameSideEffect.FixNickNameSuccess)
             }.onFailure {
                 when (it) {
-                    is BadRequestException -> postSideEffect(FixNickNameSideEffect.NickNameTextException)
+                    is BadRequestException -> postSideEffect(FixNickNameSideEffect.NickNameFormException)
                     is UnAuthorizedException -> postSideEffect(FixNickNameSideEffect.TokenException)
                     is ForBiddenException -> postSideEffect(FixNickNameSideEffect.TokenException)
                     is ConflictException -> postSideEffect(FixNickNameSideEffect.SameNickNameException)
