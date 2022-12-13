@@ -1,5 +1,5 @@
 @file:OptIn(InternalCoroutinesApi::class)
-@file:Suppress("OPT_IN_IS_NOT_ENABLED")
+@file:Suppress("OPT_IN_IS_NOT_ENABLED", "MaxLineLength")
 
 package com.comit.feature_home.screen.schedule
 
@@ -197,10 +197,7 @@ fun ShowScheduleScreen(
                                 .height(50.dp)
                                 .simClickable {
                                     navController.navigate(
-                                        route = SimTongScreen.Home.WRITE_SCHEDULE +
-                                                "isNew${false}" + "scheduleId$scheduleId" +
-                                                "title$scheduleTitle" + "scheduleStart$scheduleStart" +
-                                                "scheduleEnd$scheduleEnd"
+                                        route = SimTongScreen.Home.WRITE_SCHEDULE + "isNew${false}" + "scheduleId$scheduleId" + "title$scheduleTitle" + "scheduleStart$scheduleStart" + "scheduleEnd$scheduleEnd"
                                     )
                                 }
                         ) {
