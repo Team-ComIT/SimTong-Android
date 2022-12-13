@@ -7,7 +7,7 @@ data class FixWorkPlaceState(
     val spotList: List<Spot> = listOf(),
     val spotId: UUID ? = null,
 
-    val errMsgSpotList: String = "",
+    val errMsgSpotList: String = "근무지점을 불러오는데 실패했습니다.",
     val errMsgSpotId: String = "근무지점을 수정하는데 실패했습니다."
 
 ) {

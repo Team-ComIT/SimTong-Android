@@ -77,7 +77,7 @@ fun FixWorkPlaceScreen(
         when (it) {
             FixWorkPlaceSideEffect.ChangeWorkPlaceSuccess -> navController.popBackStack()
             FixWorkPlaceSideEffect.ChangeWorkPlaceFail -> toast(message = fixWorkPlaceState.errMsgSpotId)
-            FixWorkPlaceSideEffect.FetchWorkPlaceFail -> vm.inPutErrMsg(FetchWorkPlaceFail)
+            FixWorkPlaceSideEffect.FetchWorkPlaceFail -> toast(message = fixWorkPlaceState.errMsgSpotList)
         }
     }
 
@@ -176,8 +176,6 @@ fun FixWorkPlaceScreen(
                 }
             }
         }
-
-        Body4(text = fixWorkPlaceState.errMsgSpotList)
     }
 }
 

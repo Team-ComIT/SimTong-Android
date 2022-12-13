@@ -59,8 +59,4 @@ class FixWorkPlaceViewModel @Inject constructor(
     fun inPutSpotId(msg: UUID?) = intent {
         reduce { state.copy(spotId = msg) }
     }
-
-    fun inPutErrMsg(msg: String) = intent {
-        reduce { state.copy(errMsgSpotList = msg) }
-    }
 }

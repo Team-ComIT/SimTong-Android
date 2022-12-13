@@ -1,6 +1,5 @@
 package com.comit.remote.datasource
 
-import android.util.Log
 import com.comit.data.datasource.RemoteAuthDataSource
 import com.comit.data.util.simTongApiCall
 import com.comit.model.Token
@@ -73,12 +72,12 @@ class RemoteAuthDataSourceImpl @Inject constructor(
     override suspend fun changeSpot(
         spotId: UUID,
     ) = simTongApiCall {
-            authAPI.changeSpot(
-                request = ChangeSpotRequest(
-                    spotId = spotId,
-                )
+        authAPI.changeSpot(
+            request = ChangeSpotRequest(
+                spotId = spotId,
             )
-        }
+        )
+    }
 
     override suspend fun changeProfileImage(
         profileImagePath: String,

@@ -6,6 +6,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import javax.inject.Inject
 
+@Suppress("MagicNumber")
 class EmptyBodyInterceptor @Inject constructor() : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
