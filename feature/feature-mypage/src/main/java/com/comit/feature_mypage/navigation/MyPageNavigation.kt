@@ -12,6 +12,7 @@ import com.comit.feature_mypage.screen.fix.email.InputCertificationScreen
 import com.comit.feature_mypage.screen.fix.nickname.FixNickNameScreen
 import com.comit.feature_mypage.screen.fix.password.FixPassword
 import com.comit.feature_mypage.screen.fix.workplace.FixWorkPlaceScreen
+import com.comit.feature_mypage.utils.MyPageDeepLinkKeyUtil
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 
@@ -39,9 +40,10 @@ fun NavGraphBuilder.myPageNavigation(
         }
 
         composable(
-            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER + "email{email}",
+            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER +
+                    MyPageDeepLinkKeyUtil.EMAIL + "{email}",
             arguments = listOf(
-                navArgument(name = "email") {
+                navArgument(MyPageDeepLinkKeyUtil.EMAIL) {
                     type = NavType.StringType
                     defaultValue = ""
                 }

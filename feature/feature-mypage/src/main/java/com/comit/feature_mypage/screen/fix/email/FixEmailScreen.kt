@@ -18,6 +18,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
+import com.comit.feature_mypage.utils.MyPageDeepLinkKeyUtil
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -48,7 +49,8 @@ internal fun FixEmailScreen(
             FixEmailSideEffect.SendCodeFinish -> {
                 toast(message = SendCodeFinish)
                 navController.navigate(
-                    route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER + "email$emailState"
+                    route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER +
+                            MyPageDeepLinkKeyUtil.EMAIL + emailState
                 )
             }
             FixEmailSideEffect.EmailNotCorrect -> {
