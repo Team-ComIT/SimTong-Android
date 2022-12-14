@@ -94,6 +94,9 @@ fun InputCertificationScreen(
                     popUpTo(route = SimTongScreen.MyPage.FIX_EMAIL) {
                         inclusive = true
                     }
+                    popUpTo(route = SimTongScreen.MyPage.MAIN) {
+                        inclusive = true
+                    }
                 }
             }
             InputCertificationSideEffect.EmailFormError -> {
