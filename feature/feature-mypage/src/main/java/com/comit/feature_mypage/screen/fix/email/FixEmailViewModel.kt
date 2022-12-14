@@ -4,10 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
-import com.comit.domain.exception.NoInternetException
-import com.comit.domain.exception.ServerException
 import com.comit.domain.exception.TooManyRequestsException
-import com.comit.domain.usecase.email.CheckEmailCodeUseCase
 import com.comit.domain.usecase.email.SendEmailCodeUseCase
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.mvi.FixEmailState

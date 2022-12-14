@@ -2,7 +2,6 @@ package com.comit.remote.api
 
 import com.comit.remote.request.holidays.DayOffRequest
 import com.comit.remote.response.holidays.FetchHolidaysResponse
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET

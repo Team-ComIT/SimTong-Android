@@ -5,7 +5,6 @@ import com.comit.remote.request.commons.InitializationPasswordRequest
 import com.comit.remote.response.commons.EmployeeNumberResponse
 import com.comit.remote.response.commons.FetchSpotsResponse
 import com.comit.remote.response.commons.ReissueTokenResponse
-import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT

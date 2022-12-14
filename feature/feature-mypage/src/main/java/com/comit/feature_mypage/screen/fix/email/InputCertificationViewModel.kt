@@ -3,8 +3,10 @@ package com.comit.feature_mypage.screen.fix.email
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.usecase.email.CheckEmailCodeUseCase
+import com.comit.domain.usecase.users.ChangeEmailUseCase
 import com.comit.feature_mypage.mvi.InputCertificationSideEffect
 import com.comit.feature_mypage.mvi.InputCertificationState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class InputCertificationViewModel @Inject constructor(
     private val checkEmailCodeUseCase: CheckEmailCodeUseCase,
+    private val changeEmailUseCase: ChangeEmailUseCase,
 ) : ContainerHost<InputCertificationState, InputCertificationSideEffect>, ViewModel() {
 
     override val container = container<InputCertificationState, InputCertificationSideEffect>(InputCertificationState())
@@ -39,6 +42,26 @@ class InputCertificationViewModel @Inject constructor(
                 when (it) {
                     is BadRequestException -> postSideEffect(InputCertificationSideEffect.CertificationNotValid)
                     is UnAuthorizedException -> postSideEffect(InputCertificationSideEffect.CertificationNotCorrect)
+                }
+            }
+        }
+    }
+
+    fun changeEmail(
+        email: String
+    ) = intent {
+        viewModelScope.launch {
+            changeEmailUseCase(
+                params = ChangeEmailUseCase.Params(
+                    email = email
+                )
+            ).onSuccess {
+                postSideEffect(InputCertificationSideEffect.ChangeEmailSuccess)
+            }.onFailure {
+                when (it) {
+                    is BadRequestException -> postSideEffect(InputCertificationSideEffect.EmailFormError)
+                    is UnAuthorizedException -> postSideEffect(InputCertificationSideEffect.CheckEmailFail)
+                    is ConflictException -> postSideEffect(InputCertificationSideEffect.SameEmailException)
                 }
             }
         }

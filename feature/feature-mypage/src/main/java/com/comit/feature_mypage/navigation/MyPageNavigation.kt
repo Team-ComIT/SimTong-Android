@@ -39,10 +39,14 @@ fun NavGraphBuilder.myPageNavigation(
         }
 
         composable(
-            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER +
-                    "email{email}"
+            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER + "email{email}",
+            arguments = listOf(
+                navArgument(name = "email") {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            ),
         ) {
-
             val email = it.arguments?.getString("email") ?: ""
 
             InputCertificationScreen(

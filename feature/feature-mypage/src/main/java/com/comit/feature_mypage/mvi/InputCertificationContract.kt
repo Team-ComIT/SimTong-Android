@@ -13,4 +13,12 @@ sealed class InputCertificationSideEffect {
     object CertificationNotValid : InputCertificationSideEffect()
 
     object CertificationNotCorrect : InputCertificationSideEffect()
+
+    object ChangeEmailSuccess : InputCertificationSideEffect()
+
+    object EmailFormError : InputCertificationSideEffect()
+
+    object CheckEmailFail : InputCertificationSideEffect()
+
+    object SameEmailException : InputCertificationSideEffect()
 }
