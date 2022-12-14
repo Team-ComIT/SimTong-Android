@@ -105,7 +105,8 @@ fun SimTongTextField(
     isPassword: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     imeAction: ImeAction = ImeAction.Default,
-    description: String? = null
+    description: String? = null,
+    singleLine: Boolean = true,
 ) {
     val borderColor: Color =
         if (error == null) SimTongColor.Gray100 else SimTongColor.Error
@@ -178,6 +179,7 @@ fun SimTongTextField(
                         keyboardType = keyboardType,
                         imeAction = imeAction,
                     ),
+                    singleLine = singleLine,
                 )
             }
         }
@@ -216,6 +218,7 @@ private fun SimTongBasicTextField(
         keyboardType = KeyboardType.Text,
         imeAction = ImeAction.Default,
     ),
+    singleLine: Boolean = true,
 ) {
     BasicTextField(
         modifier = Modifier
@@ -224,6 +227,7 @@ private fun SimTongBasicTextField(
         value = value,
         onValueChange = onValueChange,
         keyboardOptions = keyboardOptions,
+        singleLine = singleLine,
         visualTransformation =
         if (!passwordVisible && isPassword)
             PasswordVisualTransformation()
