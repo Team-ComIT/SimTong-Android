@@ -49,8 +49,8 @@ private const val OneMinute: Int = 60
 private const val OneSecondDelay: Long = 1000
 private const val CheckDigit: Int = 10
 
-private const val CertificationNotValid = "유효하지 않은 인증코드입니다"
-private const val CertificationNotCorrect = "인증코드가 일치하지 않습니다"
+private const val CertificationNotValidMessage = "유효하지 않은 인증코드입니다"
+private const val CertificationNotCorrectMessage = "인증코드가 일치하지 않습니다"
 
 private const val EmailFormError = "사용할 수 없는 이메일입니다"
 private const val CheckEmailFail = "이메일 인증을 실패했습니다"
@@ -79,10 +79,10 @@ fun InputCertificationScreen(
                 vm.changeEmail(email = email)
             }
             InputCertificationSideEffect.CertificationNotValid -> {
-                vm.inputErrMsgCode(msg = CertificationNotValid)
+                vm.inputErrMsgCode(msg = CertificationNotValidMessage)
             }
             InputCertificationSideEffect.CertificationNotCorrect -> {
-                vm.inputErrMsgCode(msg = CertificationNotCorrect)
+                vm.inputErrMsgCode(msg = CertificationNotCorrectMessage)
             }
             InputCertificationSideEffect.ChangeEmailSuccess -> {
                 navController.navigate(
