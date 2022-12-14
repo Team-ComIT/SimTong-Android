@@ -28,6 +28,7 @@ import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.SimTongSimpleLayout
@@ -271,6 +272,7 @@ fun SignUpNameScreen(
                                 onEmailChanged(it)
                             },
                             error = fieldErrEmail,
+                            keyboardType = KeyboardType.Email,
                         )
                     }
 
@@ -290,6 +292,7 @@ fun SignUpNameScreen(
                                 onEmployeeNumberChanged(it)
                             },
                             error = fieldErrEmployeeNumber,
+                            keyboardType = KeyboardType.Number,
                         )
                     }
 
