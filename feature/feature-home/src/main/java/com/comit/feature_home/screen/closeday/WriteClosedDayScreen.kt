@@ -6,6 +6,7 @@
 
 package com.comit.feature_home.screen.closeday
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -60,6 +61,7 @@ import com.comit.feature_home.SubStringYearEnd
 import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.mvi.CloseDaySideEffect
+import com.comit.feature_home.string
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -73,6 +75,11 @@ private val HomeCalendarHeight: Dp = 422.dp
 private val CalendarPadding = PaddingValues(
     horizontal = 20.dp
 )
+
+private const val DateInputWrongMessage = "잘못된 날짜 입력입니다"
+private const val TokenExceptionMessage = "토큰 만료. 다시 로그인해주세요"
+private const val DayOffExcessMessage = "일주일에 휴무일은 최대 2회입니다"
+private const val AlreadyWorkMessage = "이미 근무일입니다"
 
 @Composable
 fun WriteClosedDayScreen(
@@ -90,17 +97,16 @@ fun WriteClosedDayScreen(
     )
     val coroutineScope = rememberCoroutineScope()
 
-    val today = GregorianCalendar()
-    val thisYear = today.get(Calendar.YEAR)
-    val thisMonth = (today.get(Calendar.MONTH) + 1)
-    val thisDay = today.get(Calendar.DATE)
+    if (closeDayState.year.isEmpty()) {
+        val today = GregorianCalendar()
+        closeDayViewModel.inputYearState(today.get(Calendar.YEAR).toString())
+        closeDayViewModel.inputMonthState((today.get(Calendar.MONTH) + 1).toString())
+    }
 
     var workState by remember { mutableStateOf("") }
     var workStateText by remember { mutableStateOf("") }
 
-    var yearT by remember { mutableStateOf(thisYear) }
-    var monthT by remember { mutableStateOf(thisMonth) }
-    var dayT by remember { mutableStateOf(thisDay) }
+
 
     var refresh by remember { mutableStateOf(false) }
 
@@ -112,8 +118,20 @@ fun WriteClosedDayScreen(
                 }
                 refresh = true
             }
-            CloseDaySideEffect.CloseDayChangeFail -> {
-                toast(message = closeDayState.messageFail)
+            CloseDaySideEffect.DateInputWrong -> {
+                toast(message = DateInputWrongMessage)
+            }
+            CloseDaySideEffect.TokenException -> {
+                toast(message = TokenExceptionMessage)
+            }
+            CloseDaySideEffect.DayOffExcess -> {
+                toast(message = DayOffExcessMessage)
+            }
+            CloseDaySideEffect.AnnualDayChangeFail -> {
+                toast(message = "서비스 준비중입니다")
+            }
+            CloseDaySideEffect.AlreadyWork -> {
+                toast(message = AlreadyWorkMessage)
             }
         }
     }
@@ -137,12 +155,12 @@ fun WriteClosedDayScreen(
                         .padding(start = 20.dp, end = 30.dp, top = 17.dp)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
-                    val _yearT = yearT.toString() + stringResource(id = R.string.calendar_year) + " "
-                    val _monthT = monthT.toString() + stringResource(id = R.string.calendar_month) + " "
-                    val _dayT = dayT.toString() + stringResource(id = R.string.calendar_day) + "은 "
+                    val yearT = closeDayState.year + stringResource(id = R.string.calendar_year) + " "
+                    val monthT = closeDayState.month + stringResource(id = R.string.calendar_month) + " "
+                    val dayT = closeDayState.day + stringResource(id = R.string.calendar_day) + "은 "
 
                     Body6(
-                        text = "$_yearT$_monthT$_dayT\"$workStateText\"입니다.",
+                        text = "$yearT$monthT$dayT\"$workStateText\"입니다.",
                         color = SimTongColor.Gray800
                     )
 
@@ -150,7 +168,7 @@ fun WriteClosedDayScreen(
                         text = stringResource(id = R.string.save),
                         color = saveColor,
                         onClick = {
-                            val date = Date.valueOf("$yearT-$monthT-$dayT")
+                            val date = Date.valueOf("${closeDayState.year}-${closeDayState.month}-${closeDayState.day}")
                             refresh = false
 
                             if (saveEnabled) {
@@ -245,17 +263,17 @@ fun WriteClosedDayScreen(
 
             SimTongCalendar(
                 onNextClicked = {
-                    monthT = it.toString().substring(SubStringMonthStart, SubStringMonthEnd).toInt()
-                    yearT = it.toString().substring(SubStringYearStart, SubStringYearEnd).toInt()
+                    closeDayViewModel.inputMonthState(it.toString().substring(SubStringMonthStart, SubStringMonthEnd))
+                    closeDayViewModel.inputYearState(it.toString().substring(SubStringYearStart, SubStringYearEnd))
                 },
                 onBeforeClicked = {
-                    monthT = it.toString().substring(SubStringMonthStart, SubStringMonthEnd).toInt()
-                    yearT = it.toString().substring(SubStringYearStart, SubStringYearEnd).toInt()
+                    closeDayViewModel.inputMonthState(it.toString().substring(SubStringMonthStart, SubStringMonthEnd))
+                    closeDayViewModel.inputYearState(it.toString().substring(SubStringYearStart, SubStringYearEnd))
                 },
-                onItemClicked = { _day, _workState ->
+                onItemClicked = { day, _workState ->
                     workState = _workState
                     workStateText = _workState
-                    dayT = _day
+                    closeDayViewModel.inputDayState(string.format("%02d", day))
                     coroutineScope.launch {
                         bottomSheetState.show()
                     }

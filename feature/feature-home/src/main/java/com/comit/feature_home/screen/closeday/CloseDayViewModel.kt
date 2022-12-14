@@ -2,6 +2,11 @@ package com.comit.feature_home.screen.closeday
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.ConflictException
+import com.comit.domain.exception.NotFoundException
+import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.usecase.holiday.DayOffHolidaysUseCase
 import com.comit.domain.usecase.holiday.SetAnnualUseCase
 import com.comit.domain.usecase.holiday.SetWorkUseCase
@@ -12,6 +17,7 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import java.util.Date
 import javax.inject.Inject
@@ -32,7 +38,12 @@ class CloseDayViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(CloseDaySideEffect.CloseDayChangeSuccess)
             }.onFailure {
-                postSideEffect(CloseDaySideEffect.CloseDayChangeFail)
+                when (it) {
+                    is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
+                    is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
+                    is ConflictException -> postSideEffect(CloseDaySideEffect.DayOffExcess)
+                    else -> throw UnknownException(it.message)
+                }
             }
         }
     }
@@ -44,7 +55,7 @@ class CloseDayViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(CloseDaySideEffect.CloseDayChangeSuccess)
             }.onFailure {
-                postSideEffect(CloseDaySideEffect.CloseDayChangeFail)
+                postSideEffect(CloseDaySideEffect.AnnualDayChangeFail)
             }
         }
     }
@@ -56,8 +67,24 @@ class CloseDayViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(CloseDaySideEffect.CloseDayChangeSuccess)
             }.onFailure {
-                postSideEffect(CloseDaySideEffect.CloseDayChangeFail)
+                when (it) {
+                    is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
+                    is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
+                    is NotFoundException -> postSideEffect(CloseDaySideEffect.AlreadyWork)
+                }
             }
         }
+    }
+
+    fun inputYearState(msg: String) = intent {
+        reduce { state.copy(year = msg) }
+    }
+
+    fun inputMonthState(msg: String) = intent {
+        reduce { state.copy(month = msg) }
+    }
+
+    fun inputDayState(msg: String) = intent {
+        reduce { state.copy(day = msg) }
     }
 }
