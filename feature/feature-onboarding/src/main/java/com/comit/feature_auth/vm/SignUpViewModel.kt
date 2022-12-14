@@ -9,6 +9,7 @@ import com.comit.common.unit.sizeInKb
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.usecase.email.CheckEmailCodeUseCase
 import com.comit.domain.usecase.email.SendEmailCodeUseCase
 import com.comit.domain.usecase.users.SignUpUseCase
@@ -63,6 +64,7 @@ class SignUpViewModel @Inject constructor(
                     is UnAuthorizedException -> {
                         postSideEffect(SignUpSideEffect.UserInfoMatchingFailed)
                     }
+                    else -> throw UnknownException(it.message)
                 }
             }
         }
@@ -85,6 +87,7 @@ class SignUpViewModel @Inject constructor(
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.EmailVerifyAlready)
                     is TooManyRequestException -> postSideEffect(SignUpSideEffect.TooManyRequest)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }
@@ -105,6 +108,7 @@ class SignUpViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(SignUpSideEffect.EmailCodeNotCorrect)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }
@@ -139,6 +143,7 @@ class SignUpViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.SignUpConflict)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }
