@@ -1,5 +1,7 @@
 package com.comit.domain.usecase.menu
 
+import com.comit.domain.exception.NoInternetException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.model.MealEntity
 import com.comit.domain.repository.MenuRepository
 import com.comit.model.MenuList
@@ -17,6 +19,8 @@ class FetchMenuUseCase @Inject constructor(
         ).menu.map {
             it.toEntity()
         }
+    }.onFailure {
+        if (it is UnknownException) throw NoInternetException()
     }
 }
 

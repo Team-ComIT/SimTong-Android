@@ -1,5 +1,7 @@
 package com.comit.domain.usecase.users
 
+import com.comit.domain.exception.NoInternetException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.AuthRepository
 import javax.inject.Inject
 
@@ -13,6 +15,8 @@ class ChangeEmailUseCase @Inject constructor(
         repository.changeEmail(
             email = params.email,
         )
+    }.onFailure {
+        if (it is UnknownException) throw NoInternetException()
     }
 
     data class Params(
