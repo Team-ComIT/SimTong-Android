@@ -349,15 +349,14 @@ fun ScheduleItem(
     val now = localDateNow.substring(SubStringYearStart, SubStringYearEnd) +
         localDateNow.substring(SubStringMonthStart, SubStringMonthEnd) +
         localDateNow.substring(SubStringDay)
-    val start = startAt.substring(SubStringYearStart, SubStringYearStart) +
+    val start = startAt.substring(SubStringYearStart, SubStringYearEnd) +
         startAt.substring(SubStringMonthStart, SubStringMonthEnd) +
         startAt.substring(SubStringDay)
     val end = endAt.substring(SubStringYearStart, SubStringYearEnd) +
         endAt.substring(SubStringMonthStart, SubStringMonthEnd) +
         endAt.substring(SubStringDay)
 
-    if (start.toInt() <= now.toInt() && end >= now)
-        today = true
+    if (start.toInt() <= now.toInt() && end.toInt() >= now.toInt()) today = true
 
     val titleColor = if (today) SimTongColor.Gray800 else SimTongColor.Gray300
     val dateColor = if (today) SimTongColor.MainColor400 else SimTongColor.Gray300

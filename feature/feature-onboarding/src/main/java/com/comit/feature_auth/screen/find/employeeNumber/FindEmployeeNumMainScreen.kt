@@ -2,7 +2,6 @@ package com.comit.feature_auth.screen.find.employeeNumber
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,20 +34,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.comit.common.SimTongBtnField
 import com.comit.common.rememberToast
 import com.comit.core.observeWithLifecycle
-import com.comit.core_design_system.button.BasicButton
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.component.SimTongBtnField
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body4
-import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.FindEmployeeNumSideEffect
@@ -223,7 +219,7 @@ private fun FindEmployeeNumberScreen(
                 onClick = toFetchSpot,
                 value = place,
                 hint = WorkPlaceHint,
-                error = errMsgEmail
+                error = errMsgPlace
             )
 
             Spacer(modifier = Modifier.height(20.dp))
