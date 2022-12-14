@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.format.isNickNameFormat
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
@@ -74,7 +75,10 @@ internal fun FixNickNameScreen(
                 vm.inPutErrMsgNickName(null)
             },
             title = stringResource(id = R.string.nick_name_input),
-            error = fixNickNameInState.errNicknameMsg,
+            error = if (!isNickNameFormat(fixNickNameInState.nickname) &&
+                fixNickNameInState.nickname.isNotEmpty()
+            ) stringResource(id = R.string.nick_name_form)
+            else fixNickNameInState.errNicknameMsg
         )
     }
 }
