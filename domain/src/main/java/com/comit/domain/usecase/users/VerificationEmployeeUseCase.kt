@@ -1,5 +1,7 @@
 package com.comit.domain.usecase.users
 
+import com.comit.domain.exception.NoInternetException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.AuthRepository
 import javax.inject.Inject
 
@@ -14,6 +16,8 @@ class VerificationEmployeeUseCase @Inject constructor(
             name = params.name,
             employeeNumber = params.employeeNumber,
         )
+    }.onFailure {
+        if (it is UnknownException) throw NoInternetException()
     }
 
     data class Params(
