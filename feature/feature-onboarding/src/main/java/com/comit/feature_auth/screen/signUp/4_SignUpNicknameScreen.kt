@@ -77,7 +77,7 @@ fun SignUpNicknameScreen(
                     onValueChange = {
                         onNicknameChanged(it)
                     },
-                    error = if (!nickname.isNicknameFormat())
+                    error = if (!isNicknameFormat(nickname) && nickname.isNotEmpty())
                         stringResource(id = R.string.sign_up_nickname_format_message) else null,
                 )
             }
