@@ -26,7 +26,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.composed
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -42,7 +41,6 @@ import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.Error
-import com.comit.core_design_system.util.runIf
 
 @Stable
 private val TextFieldHeight: Dp = 44.dp
@@ -59,29 +57,18 @@ private val DefaultTextFieldRound: Dp = 5.dp
 @Composable
 fun SimTongBtnField(
     modifier: Modifier = Modifier,
-    basicClick: (() -> Unit),
+    onClick: () -> Unit,
     value: String,
-    onValueChange: (String) -> Unit,
     backgroundColor: Color = Color.White,
-    onClick: (() -> Unit)? = null,
     title: String? = null,
     hint: String? = null,
     hintBackgroundColor: Color? = SimTongColor.OtherColor.GrayEE,
-    enabledSideBtn: Boolean = false,
-    sideBtnText: String? = null,
-    simTongButtonColor: SimTongButtonColor = SimTongButtonColor.RED,
     round: Dp = DefaultTextFieldRound,
-    onSideBtnClick: (() -> Unit)? = null,
     error: String? = null,
-    isPassword: Boolean = false,
     description: String? = null
 ) {
     val borderColor: Color =
         if (error == null) SimTongColor.Gray100 else SimTongColor.Error
-
-    var passwordVisible by remember {
-        mutableStateOf(false)
-    }
 
     val hintBgColor: Color =
         hintBackgroundColor ?: Color.Transparent
@@ -91,7 +78,7 @@ fun SimTongBtnField(
 
     Column(
         modifier = modifier
-            .noRippleClickable { basicClick() },
+            .noRippleClickable { onClick() }
     ) {
         if (!title.isNullOrEmpty()) {
             Body8(
@@ -115,15 +102,6 @@ fun SimTongBtnField(
                     color = borderColor,
                     shape = RoundedCornerShape(round)
                 )
-                .runIf(onClick != null) {
-                    composed {
-                        simClickable(
-                            rippleEnabled = false
-                        ) {
-                            onClick!!
-                        }
-                    }
-                }
         ) {
             Row(
                 modifier = Modifier
@@ -132,18 +110,7 @@ fun SimTongBtnField(
             ) {
                 SimTongBasicBtnField(
                     value = value,
-                    onValueChange = onValueChange,
                     hint = hint,
-                    passwordVisible = passwordVisible,
-                    onPasswordVisibleChanged = {
-                        passwordVisible = it
-                    },
-                    enabledSideBtn = enabledSideBtn,
-                    sideBtnText = sideBtnText,
-                    round = round,
-                    onSideBtnClick = onSideBtnClick,
-                    simTongButtonColor = simTongButtonColor,
-                    isPassword = isPassword,
                 )
             }
         }
@@ -168,35 +135,8 @@ fun SimTongBtnField(
 @Composable
 private fun SimTongBasicBtnField(
     value: String,
-    onValueChange: (String) -> Unit,
     hint: String? = null,
-    passwordVisible: Boolean = false,
-    onPasswordVisibleChanged: (Boolean) -> Unit,
-    enabledSideBtn: Boolean = false,
-    sideBtnText: String? = null,
-    simTongButtonColor: SimTongButtonColor,
-    round: Dp = DefaultTextFieldRound,
-    onSideBtnClick: (() -> Unit)? = null,
-    isPassword: Boolean = false,
 ) {
-//    BasicTextField(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(start = BasicTextFieldStartPadding),
-//        value = value,
-//        onValueChange = onValueChange,
-//        keyboardOptions = keyboardOptions,
-//        visualTransformation =
-//        if (!passwordVisible && isPassword)
-//            PasswordVisualTransformation()
-//        else VisualTransformation.None,
-//        maxLines = 1,
-//        textStyle = SimTongTypography.body6,
-//        decorationBox = @Composable { innerTextField ->
-//
-//        },
-//    )
-
     Box(
         contentAlignment = Alignment.CenterStart,
         modifier = Modifier
@@ -211,60 +151,11 @@ private fun SimTongBasicBtnField(
                     text = hint,
                     color = SimTongColor.Gray400,
                 )
+            } else {
+                Body6(text = value)
             }
 
             Spacer(modifier = Modifier.weight(1f))
-
-            if (value.isNotEmpty()) {
-                Image(
-                    modifier = Modifier
-                        .simClickable(
-                            rippleEnabled = false,
-                        ) {
-                            onValueChange("")
-                        },
-                    painter = painterResource(
-                        id = SimTongIcon.Close.drawableId,
-                    ),
-                    contentDescription = SimTongIcon.Close.contentDescription,
-                )
-            }
-
-            if (isPassword) {
-                Image(
-                    modifier = Modifier
-                        .simClickable(
-                            rippleEnabled = false,
-                        ) {
-                            onPasswordVisibleChanged(!passwordVisible)
-                        },
-                    painter = painterResource(
-                        id = if (passwordVisible) SimTongIcon.Password_Visible.drawableId
-                        else SimTongIcon.Password_InVisible.drawableId,
-                    ),
-                    contentDescription =
-                    stringResource(
-                        if (passwordVisible) R.string.descriptiom_ic_password_visible
-                        else R.string.descriptiom_ic_password_invisible
-                    ),
-                    alpha = if (value.isNotEmpty()) 1f else 0f
-                )
-            }
-
-            Spacer(modifier = Modifier.width(9.dp))
-
-            if (enabledSideBtn) {
-
-                SimTongSideBtn(
-                    text = sideBtnText ?: "",
-                    round = round,
-                    color = simTongButtonColor,
-                ) {
-                    if (onSideBtnClick != null) {
-                        onSideBtnClick()
-                    }
-                }
-            }
         }
     }
 }

@@ -42,6 +42,7 @@ import com.comit.core_design_system.button.BasicButton
 import com.comit.core_design_system.button.SimRadioButton
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
+import com.comit.core_design_system.component.SimTongBtnField
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.modifier.simClickable
@@ -57,15 +58,12 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 
-const val DefaultPlace = "근무 지점 선택"
-
-internal fun String.isPlaceEmpty(): Boolean =
-    this == DefaultPlace
-
 private const val UserNotMatchedMessage = "입력한 정보에 해당하는 유저를 찾을 수 없습니다."
 
 private const val FindEmployeeNumberScreen: Int = 0
 private const val FindEmployeeNumberResultScreen: Int = 1
+
+private const val WorkPlaceHint = "근무 지점 선택"
 
 @OptIn(
     ExperimentalMaterialApi::class,
@@ -183,18 +181,7 @@ private fun FindEmployeeNumberScreen(
 ) {
 
     val underButtonEnabled =
-        !(name.isEmpty() || place.isPlaceEmpty() || email.isEmpty())
-
-    val centerButtonTextColor =
-        if (place == stringResource(id = R.string.choose_work_place))
-            SimTongColor.Gray300 else SimTongColor.Gray800
-
-    val centerButtonColor =
-        if (place == stringResource(id = R.string.choose_work_place))
-            SimTongColor.Gray100 else SimTongColor.Gray50
-
-    val centerButtonBorderColor =
-        if (errMsgPlace == null) SimTongColor.Gray100 else SimTongColor.Error
+        !(name.isEmpty() || place.isEmpty() || email.isEmpty())
 
     SimBottomSheetDialog(
         useHandle = true,
@@ -232,32 +219,12 @@ private fun FindEmployeeNumberScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // TODO limsaehyun - 디자인 시스템 활용해야 함
-            BasicButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(44.dp)
-                    .border(
-                        width = 1.dp,
-                        color = centerButtonBorderColor,
-                        shape = RoundedCornerShape(5.dp)
-                    ),
-                shape = RoundedCornerShape(5.dp),
-                enabled = true,
+            SimTongBtnField(
                 onClick = toFetchSpot,
-                backgroundColor = centerButtonColor,
-                pressedBackgroundColor = SimTongColor.Gray100,
-                disabledBackgroundColor = SimTongColor.Gray100,
-            ) {
-                Body6(
-                    text = place,
-                    color = centerButtonTextColor,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentWidth(Alignment.Start)
-                        .padding(start = 14.dp),
-                )
-            }
+                value = place,
+                hint = WorkPlaceHint,
+                error = errMsgEmail
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 
