@@ -6,7 +6,6 @@
 
 package com.comit.feature_home.screen.closeday
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -105,8 +104,6 @@ fun WriteClosedDayScreen(
 
     var workState by remember { mutableStateOf("") }
     var workStateText by remember { mutableStateOf("") }
-
-
 
     var refresh by remember { mutableStateOf(false) }
 
