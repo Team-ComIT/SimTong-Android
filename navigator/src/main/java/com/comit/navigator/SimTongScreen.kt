@@ -8,6 +8,7 @@ sealed class SimTongScreen(
         const val SIGN_IN = "SING_IN"
         const val SIGN_UP = "SIGN_UP"
         const val AUTH_FIND = "AUTH_FIND"
+        const val ERROR = "ERROR"
     }
 
     object Home : SimTongScreen("Home") {
