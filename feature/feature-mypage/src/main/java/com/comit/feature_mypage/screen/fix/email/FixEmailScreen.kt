@@ -49,8 +49,7 @@ internal fun FixEmailScreen(
             FixEmailSideEffect.SendCodeFinish -> {
                 toast(message = SendCodeFinish)
                 navController.navigate(
-                    route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER +
-                            MyPageDeepLinkKeyUtil.EMAIL + emailState
+                    route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER + MyPageDeepLinkKeyUtil.EMAIL + emailState
                 )
             }
             FixEmailSideEffect.EmailNotCorrect -> {

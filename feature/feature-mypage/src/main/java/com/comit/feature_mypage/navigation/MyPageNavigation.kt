@@ -40,8 +40,7 @@ fun NavGraphBuilder.myPageNavigation(
         }
 
         composable(
-            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER +
-                    MyPageDeepLinkKeyUtil.EMAIL + "{email}",
+            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER + MyPageDeepLinkKeyUtil.EMAIL + "{email}",
             arguments = listOf(
                 navArgument(MyPageDeepLinkKeyUtil.EMAIL) {
                     type = NavType.StringType
