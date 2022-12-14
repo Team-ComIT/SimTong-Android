@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.common.unit.sizeInKb
 import com.comit.domain.exception.NeedLoginException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.usecase.users.ChangeProfileImageUseCase
 import com.comit.domain.usecase.users.FetchUserInformationUseCase
 import com.comit.feature_mypage.mvi.MyPageSideEffect
@@ -69,6 +70,7 @@ class MyPageViewModel @Inject constructor(
             ).onFailure {
                 when (it) {
                     is NeedLoginException -> throw it
+                    else -> throw UnknownException(it.message)
                 }
             }
         }

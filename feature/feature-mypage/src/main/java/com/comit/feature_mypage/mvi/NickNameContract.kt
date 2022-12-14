@@ -10,7 +10,7 @@ sealed class FixNickNameSideEffect {
 
     object FixNickNameSuccess : FixNickNameSideEffect()
 
-    object NickNameTextException : FixNickNameSideEffect()
+    object NickNameFormException : FixNickNameSideEffect()
 
     object TokenException : FixNickNameSideEffect()
 

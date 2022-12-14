@@ -102,11 +102,7 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun changeNickname(
         nickname: String,
-    ) {
-        remoteAuthDataSource.changeNickname(
-            nickname = nickname,
-        )
-    }
+    ) = remoteAuthDataSource.changeNickname(nickname = nickname)
 
     override suspend fun fetchUserInformation(): User {
         return remoteAuthDataSource.fetchUserInformation()

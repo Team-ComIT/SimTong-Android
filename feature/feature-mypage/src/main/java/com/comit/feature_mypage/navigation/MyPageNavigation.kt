@@ -2,13 +2,17 @@ package com.comit.feature_mypage.navigation
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.comit.feature_mypage.screen.MyPageScreen
 import com.comit.feature_mypage.screen.fix.email.FixEmailScreen
+import com.comit.feature_mypage.screen.fix.email.InputCertificationScreen
 import com.comit.feature_mypage.screen.fix.nickname.FixNickNameScreen
 import com.comit.feature_mypage.screen.fix.password.FixPassword
 import com.comit.feature_mypage.screen.fix.workplace.FixWorkPlaceScreen
+import com.comit.feature_mypage.utils.MyPageDeepLinkKeyUtil
 import com.comit.navigator.SimTongRoute
 import com.comit.navigator.SimTongScreen
 
@@ -32,6 +36,23 @@ fun NavGraphBuilder.myPageNavigation(
         ) {
             FixEmailScreen(
                 navController = navController,
+            )
+        }
+
+        composable(
+            route = SimTongScreen.MyPage.INPUT_CERTIFICATION_NUMBER + MyPageDeepLinkKeyUtil.EMAIL + "{email}",
+            arguments = listOf(
+                navArgument(MyPageDeepLinkKeyUtil.EMAIL) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            ),
+        ) {
+            val email = it.arguments?.getString("email") ?: ""
+
+            InputCertificationScreen(
+                navController = navController,
+                email = email,
             )
         }
 

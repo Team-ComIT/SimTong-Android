@@ -55,7 +55,10 @@ private val FixWorkPlaceHeaderPadding = PaddingValues(
     start = 26.dp, end = 30.dp,
 )
 
-private const val FetchWorkPlaceFail = "근무지점 리스트를 불러오는데 실패했습니다."
+private const val NoIdException = "지점 아이디를 확인할 수 없습니다"
+private const val TokenException = "토큰만료. 다시 로그인해주세요"
+private const val NotFoundPlaceException = "해당 지점을 찾을 수 없습니다"
+private const val CannotChangePlaceTooMuch = "근무지점은 90일 동안 3회 이상 변경 불가합니다"
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
@@ -76,8 +79,11 @@ fun FixWorkPlaceScreen(
     fixWorkPlaceSideEffect.observeWithLifecycle() {
         when (it) {
             FixWorkPlaceSideEffect.ChangeWorkPlaceSuccess -> navController.popBackStack()
-            FixWorkPlaceSideEffect.ChangeWorkPlaceFail -> toast(message = fixWorkPlaceState.errMsgSpotId)
-            FixWorkPlaceSideEffect.FetchWorkPlaceFail -> vm.inPutErrMsg(FetchWorkPlaceFail)
+            FixWorkPlaceSideEffect.NoIdException -> toast(message = NoIdException)
+            FixWorkPlaceSideEffect.TokenException -> toast(message = TokenException)
+            FixWorkPlaceSideEffect.NotFoundPlaceException -> toast(message = NotFoundPlaceException)
+            FixWorkPlaceSideEffect.CannotChangePlaceTooMuch -> toast(message = CannotChangePlaceTooMuch)
+            FixWorkPlaceSideEffect.FetchWorkPlaceFail -> toast(message = fixWorkPlaceState.errMsgSpotList)
         }
     }
 
@@ -176,8 +182,6 @@ fun FixWorkPlaceScreen(
                 }
             }
         }
-
-        Body4(text = fixWorkPlaceState.errMsgSpotList)
     }
 }
 

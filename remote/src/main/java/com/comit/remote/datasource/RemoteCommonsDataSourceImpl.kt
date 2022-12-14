@@ -62,15 +62,13 @@ class RemoteCommonsDataSourceImpl @Inject constructor(
     override suspend fun changePassword(
         password: String,
         newPassword: String,
-    ) {
-        simTongApiCall {
-            commonsAPI.changePassword(
-                request = ChangePasswordRequest(
-                    password = password,
-                    newPassword = newPassword,
-                )
+    ) = simTongApiCall {
+        commonsAPI.changePassword(
+            request = ChangePasswordRequest(
+                password = password,
+                newPassword = newPassword,
             )
-        }
+        )
     }
 
     override suspend fun checkPassword(
