@@ -1,5 +1,7 @@
 package com.comit.domain.usecase.files
 
+import com.comit.domain.exception.NoInternetException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.FileRepository
 import java.io.File
 import javax.inject.Inject
@@ -14,5 +16,7 @@ class UploadFileListUseCase @Inject constructor(
         repository.uploadFileList(
             files = files,
         )
+    }.onFailure {
+        if (it is UnknownException) throw NoInternetException()
     }
 }

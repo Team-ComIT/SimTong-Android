@@ -14,7 +14,9 @@ sealed class FixPasswordInSideEffect {
 
     object OldPasswordNotCorrect : FixPasswordInSideEffect()
 
-    object FixPasswordSuccess : FixPasswordInSideEffect()
+    object PasswordFormException : FixPasswordInSideEffect()
 
-    object FixPasswordFail : FixPasswordInSideEffect()
+    object NoInputPasswordException : FixPasswordInSideEffect()
+
+    object FixPasswordSuccess : FixPasswordInSideEffect()
 }

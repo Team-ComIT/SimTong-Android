@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.format.isNickNameFormat
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
@@ -18,7 +19,7 @@ import com.comit.feature_mypage.mvi.FixNickNameSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
 import kotlinx.coroutines.InternalCoroutinesApi
 
-private const val NickNameTextException = "사용할 수 없는 닉네임입니다"
+private const val NickNameFormException = "사용할 수 없는 닉네임입니다"
 
 private const val TokenException = "토큰 만료 다시 로그인해주세요"
 
@@ -41,8 +42,8 @@ internal fun FixNickNameScreen(
             FixNickNameSideEffect.FixNickNameSuccess -> {
                 navController.popBackStack()
             }
-            FixNickNameSideEffect.NickNameTextException -> {
-                vm.inPutErrMsgNickName(msg = NickNameTextException)
+            FixNickNameSideEffect.NickNameFormException -> {
+                vm.inPutErrMsgNickName(msg = NickNameFormException)
             }
             FixNickNameSideEffect.TokenException -> {
                 vm.inPutErrMsgNickName(msg = TokenException)
@@ -74,7 +75,10 @@ internal fun FixNickNameScreen(
                 vm.inPutErrMsgNickName(null)
             },
             title = stringResource(id = R.string.nick_name_input),
-            error = fixNickNameInState.errNicknameMsg,
+            error = if (!isNickNameFormat(fixNickNameInState.nickname) &&
+                fixNickNameInState.nickname.isNotEmpty()
+            ) stringResource(id = R.string.nick_name_form)
+            else fixNickNameInState.errNicknameMsg
         )
     }
 }

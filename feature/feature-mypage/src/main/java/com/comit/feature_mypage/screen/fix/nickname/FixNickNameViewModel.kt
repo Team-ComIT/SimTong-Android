@@ -7,6 +7,7 @@ import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.ForBiddenException
 import com.comit.domain.exception.ServerException
 import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.usecase.users.ChangeNicknameUseCase
 import com.comit.feature_mypage.mvi.FixNickNameSideEffect
 import com.comit.feature_mypage.mvi.FixNickNameState
@@ -38,11 +39,12 @@ class FixNickNameViewModel @Inject constructor(
                 postSideEffect(FixNickNameSideEffect.FixNickNameSuccess)
             }.onFailure {
                 when (it) {
-                    is BadRequestException -> postSideEffect(FixNickNameSideEffect.NickNameTextException)
+                    is BadRequestException -> postSideEffect(FixNickNameSideEffect.NickNameFormException)
                     is UnAuthorizedException -> postSideEffect(FixNickNameSideEffect.TokenException)
                     is ForBiddenException -> postSideEffect(FixNickNameSideEffect.TokenException)
                     is ConflictException -> postSideEffect(FixNickNameSideEffect.SameNickNameException)
                     is ServerException -> postSideEffect(FixNickNameSideEffect.ServerException)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }

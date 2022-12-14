@@ -2,6 +2,7 @@ package com.comit.di
 
 import android.util.Log
 import com.comit.data.interceptor.AuthorizationInterceptor
+import com.comit.data.interceptor.EmptyBodyInterceptor
 import com.comit.remote.api.AuthAPI
 import com.comit.remote.api.CommonsAPI
 import com.comit.remote.api.EmailAPI
@@ -33,12 +34,14 @@ object RetrofitModule {
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
         authorizationInterceptor: AuthorizationInterceptor,
+        emptyBodyInterceptor: EmptyBodyInterceptor,
     ): OkHttpClient = synchronized(
         lock = this,
     ) {
         OkHttpClient.Builder()
             .addNetworkInterceptor(httpLoggingInterceptor)
             .addInterceptor(authorizationInterceptor)
+            .addInterceptor(emptyBodyInterceptor)
             .build()
     }
 

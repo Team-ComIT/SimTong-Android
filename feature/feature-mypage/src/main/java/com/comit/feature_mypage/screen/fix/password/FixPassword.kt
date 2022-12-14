@@ -58,9 +58,9 @@ internal fun textFieldOffset(
 @Stable
 private val TextFieldEnterAnimation = fadeIn(tween(450))
 
+private const val PasswordFormException = "잘못된 비밀번호 형식입니다"
 private const val OldPasswordNotCorrect = "비밀번호가 일치하지 않습니다."
-
-private const val FixPasswordFail = "사용할 수 없는 비밀번호입니다."
+private const val NoInputPasswordException = "비밀번호를 확인하지 못했습니다"
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
@@ -83,14 +83,17 @@ internal fun FixPassword(
             FixPasswordInSideEffect.OldPasswordCorrect -> {
                 fixPasswordStep = FixPasswordStep.PASSWORD
             }
+            FixPasswordInSideEffect.PasswordFormException -> {
+                vm.inPutErrPassword(msg = PasswordFormException)
+            }
             FixPasswordInSideEffect.OldPasswordNotCorrect -> {
                 vm.inPutErrOldPassword(msg = OldPasswordNotCorrect)
             }
+            FixPasswordInSideEffect.NoInputPasswordException -> {
+                vm.inPutErrPassword(msg = NoInputPasswordException)
+            }
             FixPasswordInSideEffect.FixPasswordSuccess -> {
                 navController.popBackStack()
-            }
-            FixPasswordInSideEffect.FixPasswordFail -> {
-                vm.inPutErrPassword(msg = FixPasswordFail)
             }
         }
     }
@@ -170,7 +173,10 @@ internal fun FixPassword(
                     modifier = Modifier.offset(y = passwordCheckOffset),
                     isPassword = true,
                     value = passwordCheck,
-                    onValueChange = { passwordCheck = it },
+                    onValueChange = {
+                        passwordCheck = it
+                        vm.inPutErrPassword(null)
+                    },
                     title = stringResource(id = R.string.password_input_again),
                     error = if (fixPasswordInState.errMsgPassword != null) "" else null,
                 )

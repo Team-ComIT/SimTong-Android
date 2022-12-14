@@ -14,11 +14,16 @@ import com.comit.feature_auth.navigation.authNavigation
 import com.comit.feature_home.navigation.homeNavigation
 import com.comit.feature_mypage.navigation.myPageNavigation
 import com.comit.navigator.SimTongRoute
+import com.comit.simtong.handler.NetworkConnection
 import com.comit.simtong.handler.SimTongExceptionHandler
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val networkCheck: NetworkConnection by lazy {
+        NetworkConnection(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,8 @@ class MainActivity : ComponentActivity() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         installSplashScreen()
+
+        networkCheck.register()
 
         setContent {
             val navController = rememberNavController()
@@ -59,5 +66,11 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        networkCheck.unregister()
     }
 }
