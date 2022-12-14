@@ -10,7 +10,7 @@ import com.comit.feature_auth.utils.AuthDeepLinkKeyUtil
 import com.comit.navigator.SimTongScreen
 import kotlin.system.exitProcess
 
-private const val InternetErrorMessage = "인터넷이 제대로 동작되지 않습니다."
+private const val InternetErrorMessage = "인터넷 연결상태가 불안정합니다.\n확인 후 다시 시도해주세요."
 
 class SimTongExceptionHandler(
     private val context: Context,
