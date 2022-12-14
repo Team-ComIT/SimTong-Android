@@ -21,6 +21,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.comit.common.SimTongBtnField
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -32,6 +33,8 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import java.sql.Date
 import java.sql.Time
 import java.util.UUID
+
+private const val AlarmErrMessage = "모든 항목에 형식이 일치하게 작성되었는지 확인해주세요."
 
 @Composable
 fun WriteScheduleScreen(
@@ -91,64 +94,38 @@ fun WriteScheduleScreen(
             SimTongTextField(
                 value = writeScheduleState.title,
                 hint = stringResource(id = R.string.title_hint),
-                onValueChange = {
-                    vm.inputTitle(msg = it)
-                    vm.inputErrMsgTitle(null)
-                    vm.inputErrMsgScheduleStart(null)
-                    vm.inputErrMsgScheduleEnd(null)
-                    vm.inputErrMsgAlarm(null)
-                },
+                onValueChange = { vm.inputTitle(msg = it) },
                 title = stringResource(id = R.string.title),
                 error = writeScheduleState.errMsgTitle,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            SimTongTextField(
+            SimTongBtnField(
+                onClick = {  },
                 value = writeScheduleState.scheduleStart,
                 hint = stringResource(id = R.string.date_start_hint),
-                onValueChange = {
-                    vm.inputScheduleStart(msg = it)
-                    vm.inputErrMsgTitle(null)
-                    vm.inputErrMsgScheduleStart(null)
-                    vm.inputErrMsgScheduleEnd(null)
-                    vm.inputErrMsgAlarm(null)
-                },
                 title = stringResource(id = R.string.date),
-                keyboardType = KeyboardType.Number,
                 error = writeScheduleState.errMsgScheduleStart,
             )
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            SimTongTextField(
+            SimTongBtnField(
+                onClick = {  },
                 value = writeScheduleState.scheduleEnd,
                 hint = stringResource(id = R.string.date_finish_hint),
-                onValueChange = {
-                    vm.inputScheduleEnd(msg = it)
-                    vm.inputErrMsgTitle(null)
-                    vm.inputErrMsgScheduleStart(null)
-                    vm.inputErrMsgScheduleEnd(null)
-                    vm.inputErrMsgAlarm(null)
-                },
-                keyboardType = KeyboardType.Number,
-                error = writeScheduleState.errMsgTitle,
+                error = writeScheduleState.errMsgScheduleEnd
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            SimTongTextField(
+            SimTongBtnField(
+                onClick = {  },
                 value = writeScheduleState.alarm,
                 hint = alarmHint,
-                onValueChange = {
-                    vm.inputAlarm(msg = it)
-                    vm.inputErrMsgTitle(null)
-                    vm.inputErrMsgScheduleStart(null)
-                    vm.inputErrMsgScheduleEnd(null)
-                    vm.inputErrMsgAlarm(null)
-                },
                 title = stringResource(id = R.string.alarm),
-                error = writeScheduleState.errMsgAlarm
+                error = writeScheduleState.errMsgAlarm,
             )
         }
 
@@ -200,7 +177,7 @@ fun WriteScheduleScreen(
                     vm.inputErrMsgTitle("")
                     vm.inputErrMsgScheduleStart("")
                     vm.inputErrMsgScheduleEnd("")
-                    vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")
+                    vm.inputErrMsgAlarm(AlarmErrMessage)
                 }
             },
             modifier = Modifier
