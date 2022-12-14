@@ -71,6 +71,7 @@ class CloseDayViewModel @Inject constructor(
                     is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
                     is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
                     is NotFoundException -> postSideEffect(CloseDaySideEffect.AlreadyWork)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }
