@@ -10,19 +10,11 @@ data class FixEmailState(
 
 sealed class FixEmailSideEffect {
 
-    object EmailTextErrorException : FixEmailSideEffect()
+    object EmailNotCorrect : FixEmailSideEffect()
 
     object SendCodeFinish : FixEmailSideEffect()
 
     object TooManyRequestsException : FixEmailSideEffect()
 
     object SameEmailException : FixEmailSideEffect()
-
-    object ServerException : FixEmailSideEffect()
-
-    object NoInternetException : FixEmailSideEffect()
-
-    object CheckCodeSuccess : FixEmailSideEffect()
-
-    object CheckCodeFail : FixEmailSideEffect()
 }

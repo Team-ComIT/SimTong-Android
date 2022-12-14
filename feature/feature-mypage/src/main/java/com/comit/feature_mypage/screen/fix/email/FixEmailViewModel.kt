@@ -22,7 +22,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FixEmailViewModel @Inject constructor(
-    private val checkEmailCodeUseCase: CheckEmailCodeUseCase,
     private val sendEmailCodeUseCase: SendEmailCodeUseCase,
 ) : ContainerHost<FixEmailState, FixEmailSideEffect>, ViewModel() {
 
@@ -38,30 +37,10 @@ class FixEmailViewModel @Inject constructor(
                 postSideEffect(FixEmailSideEffect.SendCodeFinish)
             }.onFailure {
                 when (it) {
-                    is BadRequestException -> postSideEffect(FixEmailSideEffect.EmailTextErrorException)
+                    is BadRequestException -> postSideEffect(FixEmailSideEffect.EmailNotCorrect)
                     is ConflictException -> postSideEffect(FixEmailSideEffect.SameEmailException)
                     is TooManyRequestsException -> postSideEffect(FixEmailSideEffect.TooManyRequestsException)
-                    is ServerException -> postSideEffect(FixEmailSideEffect.ServerException)
-                    is NoInternetException -> postSideEffect(FixEmailSideEffect.NoInternetException)
                 }
-            }
-        }
-    }
-
-    fun checkEmailCode(
-        email: String,
-        code: String,
-    ) = intent {
-        viewModelScope.launch {
-            checkEmailCodeUseCase(
-                params = CheckEmailCodeUseCase.Params(
-                    email = email,
-                    code = code,
-                )
-            ).onSuccess {
-                postSideEffect(FixEmailSideEffect.CheckCodeSuccess)
-            }.onFailure {
-                postSideEffect(FixEmailSideEffect.CheckCodeFail)
             }
         }
     }
@@ -70,15 +49,7 @@ class FixEmailViewModel @Inject constructor(
         reduce { state.copy(email = msg) }
     }
 
-    fun inputMsgCode(msg: String) = intent {
-        reduce { state.copy(code = msg) }
-    }
-
     fun inputErrMsgEmail(msg: String?) = intent {
         reduce { state.copy(errEmail = msg) }
-    }
-
-    fun inputErrMsgCode(msg: String?) = intent {
-        reduce { state.copy(errCode = msg) }
     }
 }
