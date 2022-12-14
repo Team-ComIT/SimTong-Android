@@ -5,14 +5,13 @@ import android.widget.Toast
 import androidx.navigation.NavController
 import com.comit.domain.exception.NeedLoginException
 import com.comit.domain.exception.NoInternetException
+import com.comit.domain.exception.UnknownException
+import com.comit.feature_auth.utils.AuthDeepLinkKeyUtil
 import com.comit.navigator.SimTongScreen
 import kotlin.system.exitProcess
 
 private const val InternetErrorMessage = "인터넷이 제대로 동작되지 않습니다."
 
-/**
- * TODO("limsaehyun - 제대로 동작되지 않음 수정 요함 SIMT-63")
- */
 class SimTongExceptionHandler(
     private val context: Context,
     private val navController: NavController,
@@ -28,8 +27,16 @@ class SimTongExceptionHandler(
                     route = SimTongScreen.Auth.SIGN_IN,
                 )
             }
+            is UnknownException -> {
+                navController.navigate(
+                    route = SimTongScreen.Auth.ERROR + "/?${AuthDeepLinkKeyUtil.MESSAGE}=${e.message}",
+                ) {
+                    launchSingleTop = true
+                }
+            }
+            else -> {
+                exitProcess(2)
+            }
         }
-
-        exitProcess(2)
     }
 }
