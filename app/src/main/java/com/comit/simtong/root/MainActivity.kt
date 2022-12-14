@@ -3,12 +3,14 @@ package com.comit.simtong.root
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.systemBarPaddings
 import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.feature_auth.navigation.authNavigation
 import com.comit.feature_home.navigation.homeNavigation
@@ -48,7 +50,8 @@ class MainActivity : ComponentActivity() {
                 darkTheme = false,
             ) {
                 NavHost(
-                    modifier = Modifier.systemBarsPadding(),
+                    modifier = Modifier
+                        .padding(systemBarPaddings),
                     navController = navController,
                     startDestination = SimTongRoute.Auth.name,
                 ) {
