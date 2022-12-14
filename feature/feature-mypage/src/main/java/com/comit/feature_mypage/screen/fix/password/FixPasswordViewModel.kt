@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.usecase.commons.ChangePasswordUseCase
 import com.comit.domain.usecase.commons.CheckOldPasswordUseCase
 import com.comit.feature_mypage.mvi.FixPasswordInSideEffect
@@ -40,6 +41,7 @@ class FixPasswordViewModel @Inject constructor(
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(FixPasswordInSideEffect.OldPasswordNotCorrect)
                     is NotFoundException -> postSideEffect(FixPasswordInSideEffect.NoInputPasswordException)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }
@@ -61,6 +63,7 @@ class FixPasswordViewModel @Inject constructor(
                 when (it) {
                     is BadRequestException -> postSideEffect(FixPasswordInSideEffect.PasswordFormException)
                     is UnAuthorizedException -> postSideEffect(FixPasswordInSideEffect.OldPasswordNotCorrect)
+                    else -> throw UnknownException(it.message)
                 }
             }
         }

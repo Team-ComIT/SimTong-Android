@@ -8,8 +8,6 @@ data class FixWorkPlaceState(
     val spotId: UUID ? = null,
 
     val errMsgSpotList: String = "근무지점을 불러오는데 실패했습니다.",
-    val errMsgSpotId: String = "근무지점을 수정하는데 실패했습니다."
-
 ) {
     data class Spot(
         val id: String,
@@ -34,7 +32,13 @@ sealed class FixWorkPlaceSideEffect {
 
     object ChangeWorkPlaceSuccess : FixWorkPlaceSideEffect()
 
-    object ChangeWorkPlaceFail : FixWorkPlaceSideEffect()
+    object NoIdException : FixWorkPlaceSideEffect()
+
+    object TokenException : FixWorkPlaceSideEffect()
+
+    object NotFoundPlaceException : FixWorkPlaceSideEffect()
+
+    object CannotChangePlaceTooMuch : FixWorkPlaceSideEffect()
 
     object FetchWorkPlaceFail : FixWorkPlaceSideEffect()
 }
