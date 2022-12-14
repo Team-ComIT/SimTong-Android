@@ -51,5 +51,5 @@
 
     <string name="sign_in_induction_msg">계정이 있으신가요? 로그인</string>
     <string name="sign_up_induction_msg">계정이 없으신가요? 회원가입</string>
-    <string name="password_format_message">8자~20자 사이의 비밀번호를 입력해주세요.\n($ 달러기호)(+,- 연산기호)(_ 언더라인)이외 특수문자는 사용이 불가 합니다.</string>
+    <string name="password_format_message">영문과 숫자가 포함되어야 합니다. (8자~20자) \n($ 달러기호)(+,- 연산기호)(_ 언더라인)이외 특수문자는 사용이 불가 합니다.</string>
 </resources>
