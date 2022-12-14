@@ -61,13 +61,13 @@ private const val SendCertificationFail = "인증코드 재정송을 실패했�
 @Composable
 fun InputCertificationScreen(
     navController: NavController,
-    vm: InputCertificationViewModel = hiltViewModel(),
+    inputCertificationViewModel: InputCertificationViewModel = hiltViewModel(),
     fixEmailViewModel: FixEmailViewModel = hiltViewModel(),
     email: String,
 ) {
     val toast = rememberToast()
 
-    val inputCertificationContainer = vm.container
+    val inputCertificationContainer = inputCertificationViewModel.container
     val inputCertificationState = inputCertificationContainer.stateFlow.collectAsState().value
     val inputCertificationEffect = inputCertificationContainer.sideEffectFlow
 
@@ -76,13 +76,13 @@ fun InputCertificationScreen(
     inputCertificationEffect.observeWithLifecycle() {
         when (it) {
             InputCertificationSideEffect.CertificationCorrect -> {
-                vm.changeEmail(email = email)
+                inputCertificationViewModel.changeEmail(email = email)
             }
             InputCertificationSideEffect.CertificationNotValid -> {
-                vm.inputErrMsgCode(msg = CertificationNotValidMessage)
+                inputCertificationViewModel.inputErrMsgCode(msg = CertificationNotValidMessage)
             }
             InputCertificationSideEffect.CertificationNotCorrect -> {
-                vm.inputErrMsgCode(msg = CertificationNotCorrectMessage)
+                inputCertificationViewModel.inputErrMsgCode(msg = CertificationNotCorrectMessage)
             }
             InputCertificationSideEffect.ChangeEmailSuccess -> {
                 navController.navigate(
@@ -100,13 +100,13 @@ fun InputCertificationScreen(
                 }
             }
             InputCertificationSideEffect.EmailFormError -> {
-                vm.inputErrMsgCode(msg = EmailFormError)
+                inputCertificationViewModel.inputErrMsgCode(msg = EmailFormError)
             }
             InputCertificationSideEffect.CheckEmailFail -> {
-                vm.inputErrMsgCode(msg = CheckEmailFail)
+                inputCertificationViewModel.inputErrMsgCode(msg = CheckEmailFail)
             }
             InputCertificationSideEffect.SameEmailException -> {
-                vm.inputErrMsgCode(msg = SameEmailException)
+                inputCertificationViewModel.inputErrMsgCode(msg = SameEmailException)
             }
         }
     }
@@ -135,8 +135,8 @@ fun InputCertificationScreen(
     fixEmailEffect.observeWithLifecycle() {
         when (it) {
             FixEmailSideEffect.SendCodeFinish -> {
-                vm.inputMsgCode(msg = "")
-                vm.inputErrMsgCode(msg = null)
+                inputCertificationViewModel.inputMsgCode(msg = "")
+                inputCertificationViewModel.inputErrMsgCode(msg = null)
                 totalTime = InputCertificationNumberTotalTime
             }
             else -> {
@@ -149,7 +149,7 @@ fun InputCertificationScreen(
         header = stringResource(id = R.string.certification_number_input),
         onPrevious = { navController.popBackStack() },
         btnText = stringResource(id = R.string.check),
-        onNext = { vm.checkCertification(email = email, code = inputCertificationState.code) },
+        onNext = { inputCertificationViewModel.checkCertification(email = email, code = inputCertificationState.code) },
         btnEnabled = btnEnabled
     ) {
 
@@ -160,8 +160,8 @@ fun InputCertificationScreen(
                 SimTongTextField(
                     value = inputCertificationState.code,
                     onValueChange = {
-                        vm.inputMsgCode(msg = it)
-                        vm.inputErrMsgCode(msg = null)
+                        inputCertificationViewModel.inputMsgCode(msg = it)
+                        inputCertificationViewModel.inputErrMsgCode(msg = null)
                     },
                     title = stringResource(id = R.string.certification_number_6),
                     error = inputCertificationState.errCode
