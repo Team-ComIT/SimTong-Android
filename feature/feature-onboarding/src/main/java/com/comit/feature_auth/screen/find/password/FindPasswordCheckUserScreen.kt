@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
@@ -42,7 +43,8 @@ fun FindPasswordCheckUserScreen(
             hintBackgroundColor = SimTongColor.Gray100,
             backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.employee_number),
-            error = fieldErrEmployeeNumber
+            error = fieldErrEmployeeNumber,
+            keyboardType = KeyboardType.Number,
         )
 
         Spacer(modifier = Modifier.height(20.dp))
@@ -56,6 +58,7 @@ fun FindPasswordCheckUserScreen(
             backgroundColor = SimTongColor.Gray50,
             hint = stringResource(id = R.string.eng_email),
             error = fieldErrEmail,
+            keyboardType = KeyboardType.Email,
         )
 
         Spacer(modifier = Modifier.height(30.dp))
@@ -63,7 +66,7 @@ fun FindPasswordCheckUserScreen(
         SimTongBigRoundButton(
             text = stringResource(id = R.string.find_password),
             onClick = checkAccountExist,
-            enabled = buttonEnabled
+            enabled = buttonEnabled,
         )
     }
 }
