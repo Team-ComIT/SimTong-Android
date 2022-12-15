@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -21,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.comit.common.SimTongBtnField
+import com.comit.common.SimTongCalendarDialog
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -77,6 +82,8 @@ fun WriteScheduleScreen(
         if (isNew) stringResource(id = R.string.alarm_hint)
         else stringResource(id = R.string.alarm_hint_should)
 
+    var calendarDialogVisible by remember { mutableStateOf(false) }
+
     Column {
         BigHeader(
             text = headerText,
@@ -99,7 +106,9 @@ fun WriteScheduleScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             SimTongBtnField(
-                onClick = { },
+                onClick = {
+                    calendarDialogVisible = true
+                },
                 value = writeScheduleState.scheduleStart,
                 hint = stringResource(id = R.string.date_start_hint),
                 title = stringResource(id = R.string.date),
@@ -109,10 +118,20 @@ fun WriteScheduleScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             SimTongBtnField(
-                onClick = { },
+                onClick = {
+                    calendarDialogVisible = true
+                },
                 value = writeScheduleState.scheduleEnd,
                 hint = stringResource(id = R.string.date_finish_hint),
                 error = writeScheduleState.errMsgScheduleEnd
+            )
+
+            SimTongCalendarDialog(
+                visible = calendarDialogVisible,
+                onDismissRequest = {
+                    calendarDialogVisible = false
+                },
+                onItemClicked = {  }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
