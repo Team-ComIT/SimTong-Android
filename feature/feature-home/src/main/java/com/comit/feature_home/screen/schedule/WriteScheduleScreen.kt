@@ -16,7 +16,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -27,10 +26,8 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
-import com.comit.feature_home.string
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
-import java.sql.Date
 import java.sql.Time
 import java.util.UUID
 
@@ -102,7 +99,7 @@ fun WriteScheduleScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             SimTongBtnField(
-                onClick = {  },
+                onClick = { },
                 value = writeScheduleState.scheduleStart,
                 hint = stringResource(id = R.string.date_start_hint),
                 title = stringResource(id = R.string.date),
@@ -112,7 +109,7 @@ fun WriteScheduleScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             SimTongBtnField(
-                onClick = {  },
+                onClick = { },
                 value = writeScheduleState.scheduleEnd,
                 hint = stringResource(id = R.string.date_finish_hint),
                 error = writeScheduleState.errMsgScheduleEnd
@@ -121,7 +118,7 @@ fun WriteScheduleScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             SimTongBtnField(
-                onClick = {  },
+                onClick = { },
                 value = writeScheduleState.alarm,
                 hint = alarmHint,
                 title = stringResource(id = R.string.alarm),
@@ -142,16 +139,16 @@ fun WriteScheduleScreen(
                         if (isNew) {
                             vm.writeSchedule(
                                 title = writeScheduleState.title,
-                                scheduleStart = Date.valueOf(writeScheduleState.scheduleStart),
-                                scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd),
+                                scheduleStart = writeScheduleState.scheduleStart,
+                                scheduleEnd = writeScheduleState.scheduleEnd,
                                 alarm = Time.valueOf(writeScheduleState.alarm).toString()
                             )
                         } else {
                             vm.changeSchedule(
                                 scheduleId = UUID.fromString(scheduleId),
                                 title = writeScheduleState.title,
-                                startAt = Date.valueOf(writeScheduleState.scheduleStart),
-                                endAt = Date.valueOf(writeScheduleState.scheduleEnd),
+                                startAt = writeScheduleState.scheduleStart,
+                                endAt = writeScheduleState.scheduleEnd,
                                 alarm = Time.valueOf(writeScheduleState.alarm).toString()
                             )
                         }
@@ -159,16 +156,16 @@ fun WriteScheduleScreen(
                         if (isNew) {
                             vm.writeSchedule(
                                 title = writeScheduleState.title,
-                                scheduleStart = Date.valueOf(writeScheduleState.scheduleStart)!!,
-                                scheduleEnd = Date.valueOf(writeScheduleState.scheduleEnd)!!,
+                                scheduleStart = writeScheduleState.scheduleStart,
+                                scheduleEnd = writeScheduleState.scheduleEnd,
                                 alarm = null
                             )
                         } else {
                             vm.changeSchedule(
                                 scheduleId = UUID.fromString(scheduleId),
                                 title = writeScheduleState.title,
-                                startAt = Date.valueOf(writeScheduleState.scheduleStart),
-                                endAt = Date.valueOf(writeScheduleState.scheduleEnd),
+                                startAt = writeScheduleState.scheduleStart,
+                                endAt = writeScheduleState.scheduleEnd,
                                 alarm = null
                             )
                         }

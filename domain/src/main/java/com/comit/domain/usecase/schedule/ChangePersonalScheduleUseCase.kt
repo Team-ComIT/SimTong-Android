@@ -3,7 +3,6 @@ package com.comit.domain.usecase.schedule
 import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.ScheduleRepository
-import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 
@@ -27,8 +26,8 @@ class ChangePersonalScheduleUseCase @Inject constructor(
     data class Params(
         val scheduleId: UUID,
         val title: String,
-        val startAt: Date,
-        val endAt: Date,
+        val startAt: String,
+        val endAt: String,
         val alarms: String?,
     )
 }

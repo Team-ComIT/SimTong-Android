@@ -3,7 +3,9 @@ package com.comit.feature_home.mvi
 data class WriteScheduleState(
     val title: String = "",
     val scheduleStart: String = "",
+    val scheduleStartText: String = "",
     val scheduleEnd: String = "",
+    val scheduleEndText: String = "",
     val alarm: String = "",
 
     val errMsgTitle: String ? = null,

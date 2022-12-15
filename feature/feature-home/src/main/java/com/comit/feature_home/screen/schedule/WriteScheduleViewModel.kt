@@ -11,7 +11,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 
@@ -25,8 +24,8 @@ class WriteScheduleViewModel @Inject constructor(
 
     fun writeSchedule(
         title: String,
-        scheduleStart: Date,
-        scheduleEnd: Date,
+        scheduleStart: String,
+        scheduleEnd: String,
         alarm: String?,
     ) = intent {
         addPersonalScheduleUseCase(
@@ -46,8 +45,8 @@ class WriteScheduleViewModel @Inject constructor(
     fun changeSchedule(
         scheduleId: UUID,
         title: String,
-        startAt: Date,
-        endAt: Date,
+        startAt: String,
+        endAt: String,
         alarm: String?,
     ) = intent {
         changePersonalScheduleUseCase(
