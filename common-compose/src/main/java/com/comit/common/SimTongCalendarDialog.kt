@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -44,7 +45,7 @@ import java.util.Calendar
 
 
 @Stable
-private val DialogSize: Dp = 280.dp
+private val DialogSize: Dp = 320.dp
 
 @Stable
 private val DialogShape: Dp = 10.dp
@@ -80,7 +81,7 @@ fun SimTongCalendarDialog(
     )
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
-    var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
+    var month by remember { mutableStateOf((calendar.get(Calendar.MONTH) + 1)) }
 
     if (visible) {
         Dialog(
@@ -101,8 +102,10 @@ fun SimTongCalendarDialog(
                         .padding(start = 16.dp, top = 18.dp, end = 20.dp)
                         .fillMaxWidth()
                 ) {
+                    val yearT = year.toString() + "년 "
+                    val monthT = month.toString() + "월"
                     Body3(
-                        text = year.toString() + "년 " + month.toString() + "월",
+                        text = yearT + monthT,
                         color = SimTongColor.Gray800
                     )
 
@@ -115,9 +118,13 @@ fun SimTongCalendarDialog(
                         IconButton(
                             onClick = {
                                 checkMonth --
-                                calendar.add(Calendar.MONTH, checkMonth)
+                                val calendar = GregorianCalendar(
+                                    today.get(Calendar.YEAR),
+                                    today.get(Calendar.MONTH) + checkMonth,
+                                    today.get(Calendar.DATE)
+                                )
                                 year = calendar.get(Calendar.YEAR)
-                                month = calendar.get(Calendar.MONTH)
+                                month = (calendar.get(Calendar.MONTH) + 1)
                             },
                             modifier = Modifier.size(SimTongCalendarDateButtonSize)
                         ) {
@@ -132,9 +139,13 @@ fun SimTongCalendarDialog(
                         IconButton(
                             onClick = {
                                 checkMonth ++
-                                calendar.add(Calendar.MONTH, checkMonth)
+                                val calendar = GregorianCalendar(
+                                    today.get(Calendar.YEAR),
+                                    today.get(Calendar.MONTH) + checkMonth,
+                                    today.get(Calendar.DATE)
+                                )
                                 year = calendar.get(Calendar.YEAR)
-                                month = calendar.get(Calendar.MONTH)
+                                month = (calendar.get(Calendar.MONTH) + 1)
                             },
                             modifier = Modifier.size(SimTongCalendarDateButtonSize)
                         ) {
@@ -145,6 +156,8 @@ fun SimTongCalendarDialog(
                         }
                     }
                 }
+                
+                Spacer(modifier = Modifier.height(12.dp))
 
                 WeekTopRow()
             }
@@ -155,7 +168,9 @@ fun SimTongCalendarDialog(
 @Composable
 fun WeekTopRow() {
     LazyRow(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 5.dp)
     ) {
         val list = listOf(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 
