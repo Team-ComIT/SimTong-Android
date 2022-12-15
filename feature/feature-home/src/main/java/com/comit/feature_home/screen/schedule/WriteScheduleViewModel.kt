@@ -1,6 +1,10 @@
 package com.comit.feature_home.screen.schedule
 
 import androidx.lifecycle.ViewModel
+import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.NotFoundException
+import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.UnknownException
 import com.comit.domain.usecase.schedule.AddPersonalScheduleUseCase
 import com.comit.domain.usecase.schedule.ChangePersonalScheduleUseCase
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
@@ -38,7 +42,11 @@ class WriteScheduleViewModel @Inject constructor(
         ).onSuccess {
             postSideEffect(WriteScheduleSideInEffect.WriteScheduleSuccess)
         }.onFailure {
-            postSideEffect(WriteScheduleSideInEffect.WriteScheduleFail)
+            when (it) {
+                is BadRequestException -> postSideEffect(WriteScheduleSideInEffect.InputTextFormError)
+                is UnAuthorizedException -> postSideEffect(WriteScheduleSideInEffect.TokenException)
+                else -> throw UnknownException(it.message)
+            }
         }
     }
 
@@ -60,7 +68,12 @@ class WriteScheduleViewModel @Inject constructor(
         ).onSuccess {
             postSideEffect(WriteScheduleSideInEffect.WriteScheduleSuccess)
         }.onFailure {
-            postSideEffect(WriteScheduleSideInEffect.WriteScheduleFail)
+            when (it) {
+                is BadRequestException -> postSideEffect(WriteScheduleSideInEffect.InputTextFormError)
+                is UnknownException -> postSideEffect(WriteScheduleSideInEffect.TokenException)
+                is NotFoundException -> postSideEffect(WriteScheduleSideInEffect.CannotFindSchedule)
+                else -> throw UnknownException(it.message)
+            }
         }
     }
 
@@ -68,31 +81,29 @@ class WriteScheduleViewModel @Inject constructor(
         reduce { state.copy(title = msg) }
     }
 
-    fun inputErrMsgTitle(msg: String?) = intent {
-        reduce { state.copy(errMsgTitle = msg) }
-    }
-
     fun inputScheduleStart(msg: String) = intent {
         reduce { state.copy(scheduleStart = msg) }
-    }
-
-    fun inputErrMsgScheduleStart(msg: String?) = intent {
-        reduce { state.copy(errMsgScheduleStart = msg) }
     }
 
     fun inputScheduleEnd(msg: String) = intent {
         reduce { state.copy(scheduleEnd = msg) }
     }
 
-    fun inputErrMsgScheduleEnd(msg: String?) = intent {
-        reduce { state.copy(errMsgScheduleEnd = msg) }
-    }
-
     fun inputAlarm(msg: String) = intent {
         reduce { state.copy(alarm = msg) }
     }
 
-    fun inputErrMsgAlarm(msg: String?) = intent {
+    fun inputErrMsgAll(msg: String) = intent {
+        reduce { state.copy(errMsgTitle = "") }
+        reduce { state.copy(errMsgScheduleStart = "") }
+        reduce { state.copy(errMsgScheduleEnd = "") }
         reduce { state.copy(errMsgAlarm = msg) }
+    }
+
+    fun cancelErrMsgAll() = intent {
+        reduce { state.copy(errMsgTitle = null) }
+        reduce { state.copy(errMsgScheduleStart = null) }
+        reduce { state.copy(errMsgScheduleEnd = null) }
+        reduce { state.copy(errMsgAlarm = null) }
     }
 }

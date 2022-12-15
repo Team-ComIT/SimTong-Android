@@ -18,5 +18,9 @@ sealed class WriteScheduleSideInEffect {
 
     object WriteScheduleSuccess : WriteScheduleSideInEffect()
 
-    object WriteScheduleFail : WriteScheduleSideInEffect()
+    object InputTextFormError : WriteScheduleSideInEffect()
+
+    object TokenException : WriteScheduleSideInEffect()
+
+    object CannotFindSchedule : WriteScheduleSideInEffect()
 }

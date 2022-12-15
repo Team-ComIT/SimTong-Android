@@ -36,7 +36,9 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import java.sql.Time
 import java.util.UUID
 
-private const val AlarmErrMessage = "모든 항목에 형식이 일치하게 작성되었는지 확인해주세요."
+private const val InputTextFormErrorMessage = "모든 항목에 형식이 일치하게 작성되었는지 확인해주세요."
+private const val TokenExceptionMessage = "토큰 만료. 다시 로그인해주세요"
+private const val CannotFindScheduleMessage = "변경할 일정을 확인할 수 없습니다"
 
 @Composable
 fun WriteScheduleScreen(
@@ -65,11 +67,14 @@ fun WriteScheduleScreen(
             WriteScheduleSideInEffect.WriteScheduleSuccess -> {
                 navController.popBackStack()
             }
-            WriteScheduleSideInEffect.WriteScheduleFail -> {
-                vm.inputErrMsgTitle("")
-                vm.inputErrMsgScheduleStart("")
-                vm.inputErrMsgScheduleEnd("")
-                vm.inputErrMsgAlarm("모든 항목에 형식이 일치하게 작성되었는지 확인해주세요.")
+            WriteScheduleSideInEffect.InputTextFormError -> {
+                vm.inputErrMsgAll(msg = InputTextFormErrorMessage)
+            }
+            WriteScheduleSideInEffect.TokenException -> {
+                vm.inputErrMsgAll(msg = TokenExceptionMessage)
+            }
+            WriteScheduleSideInEffect.CannotFindSchedule -> {
+                vm.inputErrMsgAll(msg = CannotFindScheduleMessage)
             }
         }
     }
@@ -98,7 +103,10 @@ fun WriteScheduleScreen(
             SimTongTextField(
                 value = writeScheduleState.title,
                 hint = stringResource(id = R.string.title_hint),
-                onValueChange = { vm.inputTitle(msg = it) },
+                onValueChange = {
+                    vm.inputTitle(msg = it)
+                    vm.cancelErrMsgAll()
+                },
                 title = stringResource(id = R.string.title),
                 error = writeScheduleState.errMsgTitle,
             )
@@ -108,6 +116,7 @@ fun WriteScheduleScreen(
             SimTongBtnField(
                 onClick = {
                     calendarDialogVisible = true
+                    vm.cancelErrMsgAll()
                 },
                 value = writeScheduleState.scheduleStart,
                 hint = stringResource(id = R.string.date_start_hint),
@@ -120,6 +129,7 @@ fun WriteScheduleScreen(
             SimTongBtnField(
                 onClick = {
                     calendarDialogVisible = true
+                    vm.cancelErrMsgAll()
                 },
                 value = writeScheduleState.scheduleEnd,
                 hint = stringResource(id = R.string.date_finish_hint),
@@ -130,8 +140,9 @@ fun WriteScheduleScreen(
                 visible = calendarDialogVisible,
                 onDismissRequest = {
                     calendarDialogVisible = false
+                    vm.cancelErrMsgAll()
                 },
-                onItemClicked = {  }
+                onItemClicked = { }
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -146,8 +157,8 @@ fun WriteScheduleScreen(
         }
 
         val btnEnabled = writeScheduleState.title.isNotEmpty() &&
-            writeScheduleState.scheduleStart.isNotEmpty() &&
-            writeScheduleState.scheduleEnd.isNotEmpty()
+                writeScheduleState.scheduleStart.isNotEmpty() &&
+                writeScheduleState.scheduleEnd.isNotEmpty()
 
         SimTongBigRoundButton(
             text = stringResource(id = R.string.check),
@@ -190,10 +201,7 @@ fun WriteScheduleScreen(
                         }
                     }
                 } catch (e: Exception) {
-                    vm.inputErrMsgTitle("")
-                    vm.inputErrMsgScheduleStart("")
-                    vm.inputErrMsgScheduleEnd("")
-                    vm.inputErrMsgAlarm(AlarmErrMessage)
+                    vm.inputErrMsgAll(InputTextFormErrorMessage)
                 }
             },
             modifier = Modifier
