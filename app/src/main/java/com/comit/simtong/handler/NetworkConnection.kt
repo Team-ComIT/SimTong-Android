@@ -9,6 +9,8 @@ import android.net.NetworkRequest
 
 /**
  * 네트워크 끊김을 방지하기 위한 [NetworkConnection]
+ *
+ * TODO(limsaehyun) 인터넷이 끊기지 않았음에도 오작동 함
  */
 class NetworkConnection(private val context: Context) :
     ConnectivityManager.NetworkCallback() {

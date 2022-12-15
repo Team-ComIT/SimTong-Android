@@ -33,8 +33,6 @@ class MainActivity : ComponentActivity() {
 
         installSplashScreen()
 
-        networkCheck.register()
-
         setContent {
             val navController = rememberNavController()
 
@@ -68,11 +66,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-
-        networkCheck.unregister()
     }
 }
