@@ -3,6 +3,7 @@
 
 package com.comit.feature_home.screen.schedule
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -26,6 +27,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.comit.common.SimTongBtnField
 import com.comit.common.SimTongCalendarDialog
+import com.comit.common.utils.dateToInt
+import com.comit.common.utils.stringToDate
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -54,11 +57,30 @@ fun WriteScheduleScreen(
     val writeScheduleState = writeScheduleContainer.stateFlow.collectAsState().value
     val writeScheduleSideInEffect = writeScheduleContainer.sideEffectFlow
 
+//    var startYear by remember { mutableStateOf("0") }
+//    var startMonth by remember { mutableStateOf("0") }
+//    var startDay by remember { mutableStateOf("0") }
+//    var endYear by remember { mutableStateOf("0") }
+//    var endMonth by remember { mutableStateOf("0") }
+//    var endDay by remember { mutableStateOf("0") }
+    var isChangeStartDay by remember { mutableStateOf(true) }
+
     if (!isNew) {
         LaunchedEffect(vm) {
             vm.inputTitle(msg = title)
             vm.inputScheduleStart(msg = scheduleStart)
             vm.inputScheduleEnd(msg = scheduleEnd)
+
+            Log.d("TAG", "title: "+writeScheduleState.scheduleStart)
+            Log.d("TAG", "WriteScheduleScreen: "+writeScheduleState.scheduleEnd)
+
+//            startYear = scheduleStart.substring(SubStringYearStart, SubStringYearEnd)
+//            startMonth = scheduleStart.substring(SubStringMonthStart, SubStringMonthEnd)
+//            startDay = scheduleStart.substring(SubStringDay)
+//
+//            endYear = scheduleEnd.substring(SubStringYearStart, SubStringYearEnd)
+//            endMonth = scheduleEnd.substring(SubStringMonthStart, SubStringMonthEnd)
+//            endDay = scheduleEnd.substring(SubStringDay)
         }
     }
 
@@ -79,6 +101,8 @@ fun WriteScheduleScreen(
         }
     }
 
+    var calendarDialogVisible by remember { mutableStateOf(false) }
+
     val headerText =
         if (isNew) stringResource(id = R.string.schedule_make)
         else stringResource(id = R.string.schedule_fix)
@@ -87,7 +111,6 @@ fun WriteScheduleScreen(
         if (isNew) stringResource(id = R.string.alarm_hint)
         else stringResource(id = R.string.alarm_hint_should)
 
-    var calendarDialogVisible by remember { mutableStateOf(false) }
 
     Column {
         BigHeader(
@@ -116,7 +139,7 @@ fun WriteScheduleScreen(
             SimTongBtnField(
                 onClick = {
                     calendarDialogVisible = true
-                    vm.cancelErrMsgAll()
+                    isChangeStartDay = true
                 },
                 value = writeScheduleState.scheduleStart,
                 hint = stringResource(id = R.string.date_start_hint),
@@ -129,7 +152,7 @@ fun WriteScheduleScreen(
             SimTongBtnField(
                 onClick = {
                     calendarDialogVisible = true
-                    vm.cancelErrMsgAll()
+                    isChangeStartDay = false
                 },
                 value = writeScheduleState.scheduleEnd,
                 hint = stringResource(id = R.string.date_finish_hint),
@@ -142,8 +165,25 @@ fun WriteScheduleScreen(
                     calendarDialogVisible = false
                     vm.cancelErrMsgAll()
                 },
-                onItemClicked = { }
+                onItemClicked = {
+                    if (isChangeStartDay) {
+                        vm.inputScheduleStart(stringToDate(it))
+                    } else {
+                        vm.inputScheduleEnd(stringToDate(it))
+                    }
+                    vm.cancelErrMsgAll()
+                },
+                startDay = dateToInt(writeScheduleState.scheduleStart),
+                endDay = dateToInt(writeScheduleState.scheduleEnd),
+                isChangeStartDay = isChangeStartDay
             )
+//            try {
+//
+//                )
+//            } catch (e: ) {
+//                Log.d("TAG", "WriteScheduleScreen: "+writeScheduleState.scheduleStart)
+//                Log.d("TAG", "WriteScheduleScreen: "+writeScheduleState.scheduleEnd)
+//            }
 
             Spacer(modifier = Modifier.height(8.dp))
 

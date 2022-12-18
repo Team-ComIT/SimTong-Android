@@ -38,25 +38,46 @@ import com.comit.common.WeekOfDay.Tuesday
 import com.comit.common.WeekOfDay.Wednesday
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
+import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body3
-import java.util.GregorianCalendar
-import java.util.Calendar
+import android.icu.util.GregorianCalendar
+import android.icu.util.Calendar
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.wrapContentSize
+import com.comit.common.utils.string
+import java.time.LocalDate
 
 
 @Stable
-private val DialogSize: Dp = 320.dp
+private val DialogSize: Dp = 330.dp
 
 @Stable
 private val DialogShape: Dp = 10.dp
 
 @Stable
+private val DialogItemPadding = PaddingValues(
+    horizontal = 10.dp
+)
+
+@Stable
 private val SimTongCalendarDateButtonSize: Dp = 20.dp
+
+private const val Saturday: Int = 6
+
+private const val Sunday: Int = 7
+
+private const val Week: Int = 7
 
 data class SimTongCalendarDialogData(
     val day: String,
+    val month: Int,
+    val year: Int,
     val weekend: Boolean,
     val thisMonth: Boolean,
+    val startDay: Int,
+    val endDay: Int,
 )
 
 @Composable
@@ -64,11 +85,10 @@ fun SimTongCalendarDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    startDay: Int = 0,
-    afterDay: Int = 0,
-    setStartDay: Boolean = false,
-    setEndDay: Boolean = false,
-    onItemClicked: () -> Unit,
+    startDay: Int,
+    endDay: Int,
+    isChangeStartDay: Boolean,
+    onItemClicked: (String) -> Unit,
     properties: DialogProperties = DialogProperties(),
 ) {
     var checkMonth by remember { mutableStateOf(0) }
@@ -156,10 +176,19 @@ fun SimTongCalendarDialog(
                         }
                     }
                 }
-                
-                Spacer(modifier = Modifier.height(12.dp))
+
+                Spacer(modifier = Modifier.height(14.dp))
 
                 WeekTopRow()
+                
+                Spacer(modifier = Modifier.height(8.dp))
+
+                SimTongCalendarDialogList(
+                    list = getSimTongDialogList(checkMonth, startDay, endDay),
+                    onItemClicked = onItemClicked,
+                    onDismissRequest = onDismissRequest,
+                    isChangeStartDay = isChangeStartDay,
+                )
             }
         }
     }
@@ -170,7 +199,7 @@ fun WeekTopRow() {
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp)
+            .padding(DialogItemPadding)
     ) {
         val list = listOf(Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 
@@ -190,6 +219,168 @@ fun WeekTopRow() {
             }
         }
     }
+}
+
+@Composable
+fun SimTongCalendarDialogList(
+    list: List<SimTongCalendarDialogData>,
+    onItemClicked: (String) -> Unit,
+    onDismissRequest: () -> Unit,
+    isChangeStartDay: Boolean,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(DialogItemPadding),
+    ) {
+        repeat(list.size / Week) { size ->
+            val rowList = list.subList(size * Week, size * Week + Week)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            LazyRow(modifier = Modifier.fillMaxWidth()) {
+                items(rowList) {
+                    SimTongCalendarDialogItem(
+                        day = it.day.toInt(),
+                        month = it.month,
+                        year = it.year,
+                        startDay = it.startDay,
+                        endDay = it.endDay,
+                        weekend = it.weekend,
+                        thisMonth = it.thisMonth,
+                        onItemClicked = onItemClicked,
+                        onDismissRequest = onDismissRequest,
+                        isChangeStartDay = isChangeStartDay,
+                        modifier = Modifier
+                            .fillParentMaxWidth(1.toFloat() / 7.toFloat()),
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SimTongCalendarDialogItem(
+    modifier: Modifier = Modifier,
+    day: Int,
+    month: Int,
+    year: Int,
+    startDay: Int,
+    endDay: Int,
+    weekend: Boolean,
+    thisMonth: Boolean,
+    onItemClicked: (String) -> Unit,
+    onDismissRequest: () -> Unit,
+    isChangeStartDay: Boolean,
+) {
+    val itemDate = (year.toString() +
+            string.format("%02d", month) +
+            string.format("%02d", day)).toInt()
+
+    val textColor =
+        if (!thisMonth) SimTongColor.Gray100
+        else if(startDay > itemDate && !isChangeStartDay) SimTongColor.Gray100
+        else if(endDay < itemDate && isChangeStartDay) SimTongColor.Gray100
+        else if (weekend) SimTongColor.Gray300
+        else SimTongColor.Gray800
+
+    val clickable = textColor != SimTongColor.Gray100
+
+    Box(
+        modifier = modifier
+            .height(30.dp)
+            .noRippleClickable {
+                if (clickable) {
+                    onItemClicked(itemDate.toString())
+                    onDismissRequest()
+                }
+            },
+    ) {
+        Body14(
+            text = day.toString(),
+            color = textColor,
+            modifier = Modifier
+                .fillMaxSize()
+                .wrapContentSize(Alignment.Center)
+        )
+    }
+}
+
+private fun getSimTongDialogList(
+    checkMonth: Int,
+    startDay: Int,
+    endDay: Int,
+): List<SimTongCalendarDialogData> {
+
+    val calendarList: ArrayList<SimTongCalendarDialogData> = ArrayList()
+
+    val today = GregorianCalendar()
+    val calendar = GregorianCalendar(
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH) + checkMonth, 1)
+    val min = calendar.get(Calendar.DAY_OF_WEEK) - 1
+    val max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    val year = calendar.get(Calendar.YEAR)
+    val month = calendar.get(Calendar.MONTH) + 1
+
+    val lastCalendar = GregorianCalendar(
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH) + checkMonth - 1, 1
+    )
+    val lastMax = lastCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+    for (i in min - 1 downTo 0) {
+        calendarList.add(
+            SimTongCalendarDialogData(
+                day = (lastMax - i).toString(),
+                month = month,
+                year = year,
+                weekend = false,
+                thisMonth = false,
+                startDay = startDay,
+                endDay = endDay,
+            )
+        )
+    }
+
+    for (i in 1..max) {
+        val dayOfWeek = LocalDate.of(year, month, i).dayOfWeek.value
+        val weekend = dayOfWeek == com.comit.common.Saturday ||
+                dayOfWeek == com.comit.common.Sunday
+
+        calendarList.add(
+            SimTongCalendarDialogData(
+                day = i.toString(),
+                month = month,
+                year = year,
+                weekend = weekend,
+                thisMonth = true,
+                startDay = startDay,
+                endDay = endDay,
+            )
+        )
+    }
+    for (i in 1..Week) {
+        if (calendarList.size % Week == 0)
+            break
+        else {
+            calendarList.add(
+                SimTongCalendarDialogData(
+                    day = i.toString(),
+                    month = month,
+                    year = year,
+                    weekend = false,
+                    thisMonth = false,
+                    startDay = startDay,
+                    endDay = endDay,
+                )
+            )
+        }
+    }
+
+    return calendarList.toList()
 }
 
 private object WeekOfDay {

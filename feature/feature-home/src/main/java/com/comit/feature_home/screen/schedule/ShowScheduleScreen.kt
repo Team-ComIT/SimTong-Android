@@ -195,6 +195,9 @@ fun ShowScheduleScreen(
                                 .fillMaxWidth()
                                 .height(50.dp)
                                 .simClickable {
+                                    coroutineScope.launch {
+                                        bottomSheetState.hide()
+                                    }
                                     navController.navigate(
                                         route = SimTongScreen.Home.WRITE_SCHEDULE + "isNew${false}" + "scheduleId$scheduleId" + "title$scheduleTitle" + "scheduleStart$scheduleStart" + "scheduleEnd$scheduleEnd"
                                     )
