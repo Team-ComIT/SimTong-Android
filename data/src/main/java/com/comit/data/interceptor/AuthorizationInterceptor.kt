@@ -137,6 +137,6 @@ class AuthorizationInterceptor @Inject constructor(
         const val BEARER_HEADER = "Bearer"
         const val AUTHORIZATION = "Authorization"
         const val REFRESH_TOKEN = "Refresh-Token"
-        const val REISSUE_TOKEN_URL = "http://3.39.162.197:8888/commons/token/reissue"
+        const val REISSUE_TOKEN_URL = "https://simtong-dev.comit.or.kr/commons/token/reissue"
     }
 }

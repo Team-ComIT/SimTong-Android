@@ -23,7 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
 
-    private const val BASE_URL = "http://3.39.162.197:8888/"
+    private const val BASE_URL = "https://simtong-dev.comit.or.kr/"
 
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
