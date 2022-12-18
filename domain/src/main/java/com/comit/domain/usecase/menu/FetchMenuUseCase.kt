@@ -12,10 +12,12 @@ class FetchMenuUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        date: String,
+        startAt: String,
+        endAt: String,
     ) = kotlin.runCatching {
         repository.fetchMenu(
-            date = date,
+            startAt = startAt,
+            endAt = endAt,
         ).menu.map {
             it.toEntity()
         }
