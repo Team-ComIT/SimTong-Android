@@ -29,6 +29,7 @@ class FixWorkPlaceViewModel @Inject constructor(
 
     override val container = container<FixWorkPlaceState, FixWorkPlaceSideEffect>(FixWorkPlaceState())
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun fetchWorkPlace() = intent {
         viewModelScope.launch {
             fetchSpotsUseCase()

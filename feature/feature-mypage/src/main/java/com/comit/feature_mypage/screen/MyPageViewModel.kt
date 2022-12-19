@@ -29,6 +29,7 @@ class MyPageViewModel @Inject constructor(
 
     override val container = container<MyPageState, MyPageSideEffect>(MyPageState())
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun fetchUserInformation() = intent {
         viewModelScope.launch {
             fetchUserInformationUseCase()

@@ -23,6 +23,7 @@ class WriteScheduleViewModel @Inject constructor(
 
     override val container = container<WriteScheduleState, WriteScheduleSideInEffect>(WriteScheduleState())
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun writeSchedule(
         title: String,
         scheduleStart: Date,
@@ -43,6 +44,7 @@ class WriteScheduleViewModel @Inject constructor(
         }
     }
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun changeSchedule(
         scheduleId: UUID,
         title: String,
