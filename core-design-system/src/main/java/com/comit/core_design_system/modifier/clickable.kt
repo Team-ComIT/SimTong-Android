@@ -16,11 +16,22 @@ fun Modifier.simClickable(
     rippleEnabled: Boolean = true,
     rippleColor: Color? = null,
     runIf: Boolean = true,
-    onClick: (() -> Unit)?,
-) = runIf(onClick != null && runIf) {
+    singleClick: Boolean = true,
+    onClick: () -> Unit,
+) = runIf(runIf) {
     composed {
+        val multipleEventsCutter = remember { MultipleEventsCutter.get() }
+
         clickable(
-            onClick = onClick!!,
+            onClick = {
+                if (singleClick) {
+                    multipleEventsCutter.processEvent {
+                        onClick()
+                    }
+                } else {
+                    onClick()
+                }
+            },
             indication = rememberRipple(
                 color = rippleColor ?: Color.Unspecified,
             ).takeIf {
@@ -28,28 +39,6 @@ fun Modifier.simClickable(
             },
             interactionSource = remember { MutableInteractionSource() },
         )
-    }
-}
-
-fun Modifier.noRippleClickable(
-    onClick: () -> Unit,
-): Modifier = composed {
-    clickable(
-        indication = null,
-        interactionSource = remember { MutableInteractionSource() },
-    ) {
-        onClick()
-    }
-}
-
-fun Modifier.noTempRippleClickable(
-    onClick: () -> Unit,
-): Modifier = composed {
-    clickable(
-        indication = null,
-        interactionSource = remember { MutableInteractionSource() },
-    ) {
-        onClick()
     }
 }
 
