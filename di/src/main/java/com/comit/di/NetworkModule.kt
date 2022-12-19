@@ -24,7 +24,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-object RetrofitModule {
+object NetworkModule {
 
     private const val BASE_URL = "https://simtong-dev.comit.or.kr/"
 
