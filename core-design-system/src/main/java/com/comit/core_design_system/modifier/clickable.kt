@@ -12,15 +12,37 @@ import androidx.compose.ui.platform.debugInspectorInfo
 import androidx.compose.ui.semantics.Role
 import com.comit.core_design_system.util.runIf
 
+/**
+ * Composable 에 clickable 을 설정해주는 [Modifier]
+ *
+ * @param rippleEnabled Ripple 여부 설정
+ * @param rippleColor 표시된 Ripple Color
+ * @param runIf clickable 이 발생하는 조건
+ * @param singleClick 더블 클릭 방지 여부
+ * @param onClick 컴포넌트가 클릭됐을 때 실행할 람다식
+ *
+ * @return clickable 이 적용된 [Modifier]
+ */
 fun Modifier.simClickable(
     rippleEnabled: Boolean = true,
     rippleColor: Color? = null,
     runIf: Boolean = true,
-    onClick: (() -> Unit)?,
-) = runIf(onClick != null && runIf) {
+    singleClick: Boolean = true,
+    onClick: () -> Unit,
+) = runIf(runIf) {
     composed {
+        val multipleEventsCutter = remember { MultipleEventsCutter.get() }
+
         clickable(
-            onClick = onClick!!,
+            onClick = {
+                if (singleClick) {
+                    multipleEventsCutter.processEvent {
+                        onClick()
+                    }
+                } else {
+                    onClick()
+                }
+            },
             indication = rememberRipple(
                 color = rippleColor ?: Color.Unspecified,
             ).takeIf {
@@ -28,28 +50,6 @@ fun Modifier.simClickable(
             },
             interactionSource = remember { MutableInteractionSource() },
         )
-    }
-}
-
-fun Modifier.noRippleClickable(
-    onClick: () -> Unit,
-): Modifier = composed {
-    clickable(
-        indication = null,
-        interactionSource = remember { MutableInteractionSource() },
-    ) {
-        onClick()
-    }
-}
-
-fun Modifier.noTempRippleClickable(
-    onClick: () -> Unit,
-): Modifier = composed {
-    clickable(
-        indication = null,
-        interactionSource = remember { MutableInteractionSource() },
-    ) {
-        onClick()
     }
 }
 

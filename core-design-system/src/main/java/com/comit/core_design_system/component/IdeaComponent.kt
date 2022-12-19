@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.SimTongTypography
@@ -88,7 +88,11 @@ fun IdeaItem(
             .fillMaxWidth()
             .height(IdeaItemHeight)
             .background(SimTongColor.White)
-            .noRippleClickable { onItemClicked() }
+            .simClickable(
+                rippleEnabled = false,
+            ) {
+                onItemClicked()
+            }
     ) {
 
         Body6(
@@ -135,7 +139,11 @@ fun IdeaItem(
                 contentDescription = stringResource(id = R.string.description_ic_comment),
                 modifier = Modifier
                     .padding(start = 30.dp)
-                    .noRippleClickable { onCommentClicked() }
+                    .simClickable(
+                        rippleEnabled = false,
+                    ) {
+                        onCommentClicked()
+                    }
             )
 
             Body14(
