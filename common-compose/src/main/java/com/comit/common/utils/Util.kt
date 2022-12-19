@@ -11,11 +11,11 @@ const val SubStringDay = 8
 val string = String
 
 fun dateToInt(date: String): Int {
-    val year = date.substring(SubStringYearStart, SubStringYearEnd).toInt()
-    val month = date.substring(SubStringMonthStart, SubStringMonthEnd).toInt()
-    val day = date.substring(SubStringDay).toInt()
+    val year = string.format("%02d", date.substring(SubStringYearStart, SubStringYearEnd))
+    val month = string.format("%02d", date.substring(SubStringMonthStart, SubStringMonthEnd))
+    val day = date.substring(SubStringDay)
 
-    return year + month + day
+    return (year + month + day).toInt()
 }
 
 fun stringToDate(date: String): String {
