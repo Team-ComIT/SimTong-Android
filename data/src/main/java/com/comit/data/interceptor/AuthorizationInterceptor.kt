@@ -169,16 +169,16 @@ class AuthorizationInterceptor @Inject constructor(
             val network = connectivityManager.activeNetwork
             val connection = connectivityManager.getNetworkCapabilities(network)
             return connection != null && (
-                    connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                            connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                    )
+                connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                    connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                )
         } else {
             val activeNetwork = connectivityManager.activeNetworkInfo
             if (activeNetwork != null) {
                 return (
-                        activeNetwork.type == ConnectivityManager.TYPE_WIFI ||
-                                activeNetwork.type == ConnectivityManager.TYPE_MOBILE
-                        )
+                    activeNetwork.type == ConnectivityManager.TYPE_WIFI ||
+                        activeNetwork.type == ConnectivityManager.TYPE_MOBILE
+                    )
             }
             return false
         }
