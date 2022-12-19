@@ -36,7 +36,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body11
 import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body13
@@ -355,7 +355,9 @@ fun SimTongCalendarItem(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.noRippleClickable {
+        modifier = modifier.simClickable(
+            rippleEnabled = false,
+        ) {
             if (thisMouth && !weekend) {
                 onItemClicked(day.toInt(), workState)
             }

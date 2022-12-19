@@ -42,7 +42,6 @@ import androidx.compose.ui.util.lerp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body10
 import com.comit.core_design_system.typography.Body11
@@ -141,7 +140,9 @@ fun NoticeBoardItem(
                 color = SimTongColor.Gray400,
                 modifier = Modifier
                     .padding(start = 20.dp, top = 4.dp)
-                    .noRippleClickable { }
+                    .simClickable(
+                        rippleEnabled = false,
+                    ) { }
             )
         }
     }
@@ -229,7 +230,9 @@ fun NoticeBoardItemHeartChat(
             ),
             contentDescription = stringResource(id = R.string.description_ic_heart),
             modifier = Modifier
-                .noRippleClickable {
+                .simClickable(
+                    rippleEnabled = false,
+                ) {
                     like.value = !like.value
                     heartClick(1)
                 }
@@ -243,7 +246,9 @@ fun NoticeBoardItemHeartChat(
             modifier = Modifier
                 .padding(start = 15.dp)
                 .width(NoticeBoardItemHeartChatCommentWidth)
-                .noRippleClickable { commentClick(1) }
+                .simClickable(
+                    rippleEnabled = false,
+                ) { commentClick(1) }
         )
     }
 }

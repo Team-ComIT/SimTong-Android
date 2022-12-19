@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.TooManyRequestsException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.email.SendEmailCodeUseCase
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.mvi.FixEmailState
@@ -38,7 +38,7 @@ class FixEmailViewModel @Inject constructor(
                     is BadRequestException -> postSideEffect(FixEmailSideEffect.EmailNotCorrect)
                     is ConflictException -> postSideEffect(FixEmailSideEffect.SameEmailException)
                     is TooManyRequestsException -> postSideEffect(FixEmailSideEffect.TooManyRequestsException)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

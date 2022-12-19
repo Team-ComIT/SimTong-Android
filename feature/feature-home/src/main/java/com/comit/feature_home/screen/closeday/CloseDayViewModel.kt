@@ -6,7 +6,7 @@ import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.holiday.DayOffHolidaysUseCase
 import com.comit.domain.usecase.holiday.SetAnnualUseCase
 import com.comit.domain.usecase.holiday.SetWorkUseCase
@@ -42,7 +42,7 @@ class CloseDayViewModel @Inject constructor(
                     is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
                     is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
                     is ConflictException -> postSideEffect(CloseDaySideEffect.DayOffExcess)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -71,7 +71,7 @@ class CloseDayViewModel @Inject constructor(
                     is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
                     is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
                     is NotFoundException -> postSideEffect(CloseDaySideEffect.AlreadyWork)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

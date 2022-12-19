@@ -49,7 +49,7 @@ import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
@@ -294,7 +294,9 @@ fun WriteCloseDayItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .noRippleClickable { onItemClicked(text) }
+            .simClickable(
+                rippleEnabled = false,
+            ) { onItemClicked(text) }
     ) {
         Box(
             contentAlignment = Alignment.Center,

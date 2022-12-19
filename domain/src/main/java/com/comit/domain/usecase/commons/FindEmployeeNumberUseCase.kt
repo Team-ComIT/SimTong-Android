@@ -1,7 +1,5 @@
 package com.comit.domain.usecase.commons
 
-import com.comit.domain.exception.NoInternetException
-import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.CommonsRepository
 import javax.inject.Inject
 
@@ -17,8 +15,6 @@ class FindEmployeeNumberUseCase @Inject constructor(
             spotId = params.spotId,
             email = params.email,
         )
-    }.onFailure {
-        if (it is UnknownException) throw NoInternetException()
     }
 
     data class Params(

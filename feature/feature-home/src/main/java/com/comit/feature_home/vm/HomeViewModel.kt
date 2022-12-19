@@ -3,7 +3,7 @@ package com.comit.feature_home.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.core_design_system.component.Meal
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.model.MealEntity
 import com.comit.domain.usecase.menu.FetchMenuUseCase
 import com.comit.feature_home.contract.HomeSideEffect
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
             ).onSuccess { meals ->
                 reduce { state.copy(mealList = meals.map { it.toDesignSystemModel() }) }
             }.onFailure {
-                throw UnknownException(it.message)
+                throwUnknownException(it)
             }
         }
     }

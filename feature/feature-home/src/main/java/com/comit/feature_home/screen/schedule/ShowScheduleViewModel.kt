@@ -25,6 +25,7 @@ class ShowScheduleViewModel @Inject constructor(
 
     override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun showSchedule(
         startAt: String,
         endAt: String,
@@ -45,6 +46,7 @@ class ShowScheduleViewModel @Inject constructor(
         }
     }
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun deleteSchedule(
         id: UUID
     ) = intent {
