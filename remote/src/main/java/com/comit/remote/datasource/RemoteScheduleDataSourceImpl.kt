@@ -16,10 +16,12 @@ class RemoteScheduleDataSourceImpl @Inject constructor(
 ) : RemoteScheduleDataSource {
 
     override suspend fun fetchPersonalSchedule(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ): ScheduleList = simTongApiCall {
         scheduleAPI.fetchPersonalSchedule(
-            date = date,
+            startAt = startAt,
+            endAt = endAt
         ).toModel()
     }
 

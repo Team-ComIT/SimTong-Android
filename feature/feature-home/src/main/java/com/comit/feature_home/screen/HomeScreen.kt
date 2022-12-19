@@ -2,6 +2,8 @@
 
 package com.comit.feature_home.screen
 
+import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -41,7 +43,6 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.component.MealList
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
 import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
@@ -50,7 +51,6 @@ import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.vm.HomeViewModel
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
-import java.time.LocalDate
 
 object HomeFakeData {
     val foodList = listOf(
@@ -80,6 +80,9 @@ private val HomeBottomIconLayoutHeight: Dp = 48.dp
 
 private val HomeBottomIconLayoutImageSize: Dp = 28.dp
 
+private const val StartDateAdd = -3
+private const val EndDateAdd = 3
+
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -91,11 +94,29 @@ fun HomeScreen(
     val state = container.stateFlow.collectAsState().value
     // val sideEffect = container.sideEffectFlow
 
-    val date = LocalDate.now()
+    val today = GregorianCalendar()
+    val startAt = GregorianCalendar(
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH),
+        today.get(Calendar.DATE) + StartDateAdd
+    )
+    val startYear = startAt.get(Calendar.YEAR).toString()
+    val startMonth = (startAt.get(Calendar.MONTH) + 1).toString()
+    val startDay = startAt.get(Calendar.DATE).toString()
+
+    val endAt = GregorianCalendar(
+        today.get(Calendar.YEAR),
+        today.get(Calendar.MONTH),
+        today.get(Calendar.DATE) + EndDateAdd
+    )
+    val endYear = endAt.get(Calendar.YEAR).toString()
+    val endMonth = (endAt.get(Calendar.MONTH) + 1).toString()
+    val endDay = endAt.get(Calendar.DATE).toString()
 
     LaunchedEffect(key1 = homeViewModel) {
         homeViewModel.fetchMenu(
-            date = date.toString(),
+            startAt = "$startYear-$startMonth-$startDay",
+            endAt = "$endYear-$endMonth-$endDay",
         )
     }
 
@@ -138,7 +159,9 @@ fun HomeScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(HomeCalendarHeight)
-                .noRippleClickable {
+                .simClickable(
+                    rippleEnabled = false,
+                ) {
                     navController.navigate(
                         route = SimTongScreen.Home.SHOW_SCHEDULE
                     )

@@ -1,9 +1,6 @@
 package com.comit.domain.usecase.holiday
 
-import com.comit.domain.exception.NoInternetException
-import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.HolidayRepository
-import java.util.Date
 import javax.inject.Inject
 
 class FetchHolidaysUseCase @Inject constructor(
@@ -11,12 +8,12 @@ class FetchHolidaysUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ) = kotlin.runCatching {
         repository.fetchHolidays(
-            date = date,
+            startAt = startAt,
+            endAt = endAt
         )
-    }.onFailure {
-        if (it is UnknownException) throw NoInternetException()
     }
 }

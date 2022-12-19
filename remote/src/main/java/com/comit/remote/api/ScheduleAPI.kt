@@ -10,14 +10,14 @@ import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
 import retrofit2.http.Query
-import java.util.Date
 import java.util.UUID
 
 interface ScheduleAPI {
 
     @GET("$SCHEDULE")
     suspend fun fetchPersonalSchedule(
-        @Query("date") date: Date,
+        @Query("start_at") startAt: String,
+        @Query("end_at") endAt: String,
     ): FetchPersonalScheduleResponse
 
     @POST("$SCHEDULE")

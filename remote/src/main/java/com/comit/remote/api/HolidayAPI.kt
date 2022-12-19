@@ -14,7 +14,8 @@ interface HolidayAPI {
 
     @GET("$HOLIDAYS")
     suspend fun fetchHolidays(
-        @Query("date") date: Date,
+        @Query("start_at") startAt: String,
+        @Query("end_at") endAt: String,
     ): FetchHolidaysResponse
 
     @POST("$HOLIDAYS/dayoff")

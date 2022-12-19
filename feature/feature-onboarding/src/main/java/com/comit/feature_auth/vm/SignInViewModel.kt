@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.users.SignInUseCase
 import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.feature_auth.mvi.SignInState
@@ -31,16 +31,14 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             clearErrorMessage()
 
-            try {
-                employeeNumber.toInt()
-            } catch (e: NumberFormatException) {
+            if (employeeNumber.toIntOrNull() == null) {
                 postSideEffect(SignInSideEffect.IdWasNotNumber)
             }
 
             signInUseCase(
                 params = SignInUseCase.Params(
                     employeeNumber = employeeNumber.toInt(),
-                    password = password
+                    password = password,
                 ),
             ).onSuccess {
                 postSideEffect(SignInSideEffect.NavigateToHomeScreen)
@@ -48,7 +46,7 @@ class SignInViewModel @Inject constructor(
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
                     is NotFoundException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

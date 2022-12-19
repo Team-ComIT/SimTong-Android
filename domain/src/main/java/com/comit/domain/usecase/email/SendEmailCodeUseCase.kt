@@ -1,7 +1,5 @@
 package com.comit.domain.usecase.email
 
-import com.comit.domain.exception.NoInternetException
-import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.EmailRepository
 import javax.inject.Inject
 
@@ -15,7 +13,5 @@ class SendEmailCodeUseCase @Inject constructor(
         repository.sendEmailCode(
             email = email,
         )
-    }.onFailure {
-        if (it is UnknownException) throw NoInternetException()
     }
 }

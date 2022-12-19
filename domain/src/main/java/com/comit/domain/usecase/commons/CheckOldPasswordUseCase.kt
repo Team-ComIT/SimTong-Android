@@ -1,7 +1,5 @@
 package com.comit.domain.usecase.commons
 
-import com.comit.domain.exception.NoInternetException
-import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.CommonsRepository
 import javax.inject.Inject
 
@@ -14,8 +12,6 @@ class CheckOldPasswordUseCase @Inject constructor(
         repository.checkOldPassword(
             oldPassword = params.oldPassword,
         )
-    }.onFailure {
-        if (it is UnknownException) throw NoInternetException()
     }
 
     data class Params(

@@ -11,7 +11,7 @@
     <string name="sign_up_terms_agreed_all">전체 약관 동의</string>
 
     <string name="error_opps">OOPS!</string>
-    <string name="error_unknown_message">알 수 없는 에러가 발생했습니다.\n잠시 후 다시 시도해주세요.</string>
+    <string name="error_unknown_message">에러가 발생했습니다.\n확인 후 다시 시도해주세요.</string>
     <string name="error_info_title">발생한 에러 정보</string>
     <string name="error_report_message">오류가 지속된다면 고객센터를 통해 위 에러 정보를 제보해주세요.</string>
     <string name="error_go_back">이전 페이지로 돌아가기</string>
@@ -51,5 +51,7 @@
 
     <string name="sign_in_induction_msg">계정이 있으신가요? 로그인</string>
     <string name="sign_up_induction_msg">계정이 없으신가요? 회원가입</string>
+
+    <string name="sign_up_nickname_format_message">닉네임은 8자 이하여야 합니다. (특수문자 사용 불가능)</string>
     <string name="password_format_message">영문과 숫자가 포함되어야 합니다. (8자~20자) \n($ 달러기호)(+,- 연산기호)(_ 언더라인)이외 특수문자는 사용이 불가 합니다.</string>
 </resources>

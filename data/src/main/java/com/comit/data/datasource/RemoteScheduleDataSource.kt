@@ -7,7 +7,8 @@ import java.util.UUID
 interface RemoteScheduleDataSource {
 
     suspend fun fetchPersonalSchedule(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ): ScheduleList
 
     suspend fun addPersonalSchedule(

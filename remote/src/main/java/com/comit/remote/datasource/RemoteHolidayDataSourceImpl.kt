@@ -14,10 +14,12 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
 ) : RemoteHolidayDataSource {
 
     override suspend fun fetchHolidays(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ): HolidayList = simTongApiCall {
         holidayAPI.fetchHolidays(
-            date = date,
+            startAt = startAt,
+            endAt = endAt,
         ).toModel()
     }
 

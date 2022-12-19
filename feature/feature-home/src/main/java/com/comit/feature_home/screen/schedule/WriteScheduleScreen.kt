@@ -25,10 +25,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.comit.common.SimTongBtnField
-import com.comit.common.SimTongCalendarDialog
-import com.comit.common.utils.dateToInt
-import com.comit.common.utils.stringToDate
+import com.comit.common.systemBarPaddings
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -111,8 +108,11 @@ fun WriteScheduleScreen(
         if (isNew) stringResource(id = R.string.alarm_hint)
         else stringResource(id = R.string.alarm_hint_should)
 
-
-    Column {
+    Column(
+        modifier = Modifier.padding(
+            bottom = systemBarPaddings.calculateBottomPadding(),
+        )
+    ) {
         BigHeader(
             text = headerText,
             onPrevious = { navController.popBackStack() },

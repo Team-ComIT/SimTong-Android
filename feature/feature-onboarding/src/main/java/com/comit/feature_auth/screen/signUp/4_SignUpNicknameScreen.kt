@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.comit.common.SimImageUploadLayout
 import com.comit.common.SimTongSimpleLayout
 import com.comit.common.convert.limitSize
+import com.comit.common.format.isNicknameFormat
 import com.comit.common.rememberToast
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -76,6 +77,8 @@ fun SignUpNicknameScreen(
                     onValueChange = {
                         onNicknameChanged(it)
                     },
+                    error = if (!isNicknameFormat(nickname) && nickname.isNotEmpty())
+                        stringResource(id = R.string.sign_up_nickname_format_message) else null,
                 )
             }
         },

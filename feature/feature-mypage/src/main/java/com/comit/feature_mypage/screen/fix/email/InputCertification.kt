@@ -164,7 +164,7 @@ fun InputCertificationScreen(
                         inputCertificationViewModel.inputErrMsgCode(msg = null)
                     },
                     title = stringResource(id = R.string.certification_number_6),
-                    error = inputCertificationState.errCode
+                    error = inputCertificationState.errCode,
                 )
 
                 Body10(

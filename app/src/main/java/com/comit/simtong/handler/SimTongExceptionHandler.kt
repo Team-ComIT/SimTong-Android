@@ -4,6 +4,7 @@ import android.content.Context
 import android.widget.Toast
 import androidx.navigation.NavController
 import com.comit.domain.exception.NeedLoginException
+import com.comit.domain.exception.NoConnectivityException
 import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.UnknownException
 import com.comit.feature_auth.utils.AuthDeepLinkKeyUtil
@@ -22,6 +23,11 @@ class SimTongExceptionHandler(
             is NoInternetException -> {
                 Toast.makeText(context, InternetErrorMessage, Toast.LENGTH_SHORT).show()
             }
+
+            is NoConnectivityException -> {
+                Toast.makeText(context, InternetErrorMessage, Toast.LENGTH_SHORT).show()
+            }
+
             is NeedLoginException -> {
                 navController.navigate(
                     route = SimTongScreen.Auth.SIGN_IN,
@@ -34,6 +40,7 @@ class SimTongExceptionHandler(
                     launchSingleTop = true
                 }
             }
+
             else -> {
                 exitProcess(2)
             }

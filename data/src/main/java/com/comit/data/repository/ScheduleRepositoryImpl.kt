@@ -12,10 +12,12 @@ class ScheduleRepositoryImpl @Inject constructor(
 ) : ScheduleRepository {
 
     override suspend fun fetchPersonalSchedule(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ): ScheduleList {
         return remoteScheduleDataSource.fetchPersonalSchedule(
-            date = date,
+            startAt = startAt,
+            endAt = endAt,
         )
     }
 

@@ -60,6 +60,8 @@ dependencies {
     implementation(projects.feature.featureMypage)
     implementation(projects.feature.featureHome)
     implementation(projects.coreDesignSystem)
+    implementation(projects.commonCompose)
+    implementation(projects.commonUtil)
 
     implementation(Dependency.Logger.TIMBER)
 

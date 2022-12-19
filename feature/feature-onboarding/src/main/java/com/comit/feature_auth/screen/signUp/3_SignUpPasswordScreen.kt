@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.common.SimTongSimpleLayout
@@ -129,6 +130,7 @@ fun SignUpPasswordScreen(
                         title = stringResource(id = R.string.password_again),
                         error = if (password != checkPassword)
                             stringResource(id = R.string.error_message_password) else null,
+                        keyboardType = KeyboardType.Password,
                     )
                 }
 
@@ -145,6 +147,7 @@ fun SignUpPasswordScreen(
                     error = if (!isPasswordFormat(password) && password.isNotEmpty()) stringResource(
                         id = R.string.password_format_message
                     ) else null,
+                    keyboardType = KeyboardType.Password,
                 )
 
                 Spacer(modifier = Modifier.height(24.dp))

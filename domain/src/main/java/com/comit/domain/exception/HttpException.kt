@@ -71,11 +71,6 @@ class ServerException(
 ) : RuntimeException()
 
 /**
- * 인터넷이 없을 경우 발생하는 RuntimeException
- */
-class NoInternetException : RuntimeException()
-
-/**
  * 예상치 못한 HttpException 발생할 경우의 RuntimeException
  */
 class OtherHttpException(

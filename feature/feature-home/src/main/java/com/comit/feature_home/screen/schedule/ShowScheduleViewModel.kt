@@ -14,7 +14,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 
@@ -26,12 +25,15 @@ class ShowScheduleViewModel @Inject constructor(
 
     override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun showSchedule(
-        date: Date
+        startAt: String,
+        endAt: String,
     ) = intent {
         viewModelScope.launch {
             fetchPersonalScheduleUseCase(
-                date = date
+                startAt = startAt,
+                endAt = endAt,
             ).onSuccess {
                 reduce {
                     state.copy(
@@ -44,6 +46,7 @@ class ShowScheduleViewModel @Inject constructor(
         }
     }
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun deleteSchedule(
         id: UUID
     ) = intent {
