@@ -4,7 +4,6 @@ package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import android.util.Log
 import com.comit.common.utils.dateToInt
 import com.comit.common.utils.string
 import com.comit.feature_home.SubStringDay
@@ -56,12 +55,10 @@ fun organizeList(
             if (dateToInt(element.date) < (year.toString() + string.format("%02d", month) + "00").toInt()) {
                 val day = element.date.substring(SubStringDay).toInt()
                 restDayList[day - getStartAt(checkMonth).substring(SubStringDay).toInt()] = true
-            }
-            else if(dateToInt(element.date) >  (year.toString() + string.format("%02d", month) + "31").toInt()) {
+            } else if (dateToInt(element.date) > (year.toString() + string.format("%02d", month) + "31").toInt()) {
                 val day = element.date.substring(SubStringDay).toInt()
                 restDayList[day + min + max - 1] = true
-            }
-            else {
+            } else {
                 restDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
             }
         }
