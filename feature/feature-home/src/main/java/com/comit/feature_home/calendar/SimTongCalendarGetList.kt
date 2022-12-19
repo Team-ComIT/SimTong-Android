@@ -6,8 +6,6 @@ import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.util.Log
 import com.comit.feature_home.SubStringDay
-import com.comit.feature_home.SubStringYearEnd
-import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.FetchScheduleState
 import java.time.LocalDate

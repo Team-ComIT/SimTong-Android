@@ -1,6 +1,5 @@
 package com.comit.feature_home.calendar
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column

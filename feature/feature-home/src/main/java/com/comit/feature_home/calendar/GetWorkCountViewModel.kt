@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.usecase.schedule.FetchPersonalScheduleUseCase
-import com.comit.feature_home.getStartAt
 import com.comit.feature_home.mvi.FetchScheduleState
 import com.comit.feature_home.mvi.toState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel

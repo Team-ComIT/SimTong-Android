@@ -9,7 +9,6 @@ import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.toState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.util.Date
 import javax.inject.Inject
 
 @HiltViewModel

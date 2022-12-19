@@ -14,7 +14,6 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 

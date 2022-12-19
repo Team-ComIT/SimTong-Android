@@ -63,12 +63,10 @@ import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.getEndAt
 import com.comit.feature_home.getStartAt
 import com.comit.feature_home.mvi.FetchScheduleSideEffect
-import com.comit.feature_home.string
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -260,14 +258,14 @@ fun ShowScheduleScreen(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 SimTongCalendar(
-                    onBeforeClicked = {_, _checkMonth ->
+                    onBeforeClicked = { _, _checkMonth ->
                         checkMonth = _checkMonth
                         showScheduleViewModel.showSchedule(
                             startAt = getStartAt(checkMonth),
                             endAt = getStartAt(checkMonth),
                         )
                     },
-                    onNextClicked = {_,_checkMonth ->
+                    onNextClicked = { _, _checkMonth ->
                         checkMonth = _checkMonth
                         showScheduleViewModel.showSchedule(
                             startAt = getStartAt(checkMonth),
