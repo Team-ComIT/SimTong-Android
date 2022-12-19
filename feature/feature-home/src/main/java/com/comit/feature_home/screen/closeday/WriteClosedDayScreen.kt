@@ -1,6 +1,6 @@
 @file:OptIn(
     ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
-    InternalCoroutinesApi::class
+    InternalCoroutinesApi::class, ExperimentalMaterialApi::class
 )
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
@@ -259,13 +259,13 @@ fun WriteClosedDayScreen(
             Spacer(modifier = Modifier.height(44.dp))
 
             SimTongCalendar(
-                onNextClicked = {
-                    closeDayViewModel.inputMonthState(it.toString().substring(SubStringMonthStart, SubStringMonthEnd))
-                    closeDayViewModel.inputYearState(it.toString().substring(SubStringYearStart, SubStringYearEnd))
+                onNextClicked = { date, _ ->
+                    closeDayViewModel.inputMonthState(date.toString().substring(SubStringMonthStart, SubStringMonthEnd))
+                    closeDayViewModel.inputYearState(date.toString().substring(SubStringYearStart, SubStringYearEnd))
                 },
-                onBeforeClicked = {
-                    closeDayViewModel.inputMonthState(it.toString().substring(SubStringMonthStart, SubStringMonthEnd))
-                    closeDayViewModel.inputYearState(it.toString().substring(SubStringYearStart, SubStringYearEnd))
+                onBeforeClicked = { date, _ ->
+                    closeDayViewModel.inputMonthState(date.toString().substring(SubStringMonthStart, SubStringMonthEnd))
+                    closeDayViewModel.inputYearState(date.toString().substring(SubStringYearStart, SubStringYearEnd))
                 },
                 onItemClicked = { day, _workState ->
                     workState = _workState

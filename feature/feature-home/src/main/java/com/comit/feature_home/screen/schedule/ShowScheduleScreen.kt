@@ -60,13 +60,13 @@ import com.comit.feature_home.SubStringMonthStart
 import com.comit.feature_home.SubStringYearEnd
 import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.feature_home.getEndAt
+import com.comit.feature_home.getStartAt
 import com.comit.feature_home.mvi.FetchScheduleSideEffect
-import com.comit.feature_home.string
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
-import java.sql.Date
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -103,20 +103,24 @@ fun ShowScheduleScreen(
         today.get(Calendar.MONTH),
         today.get(Calendar.DATE)
     )
+    var checkMonth by remember { mutableStateOf(0) }
 
-    var date by remember {
-        mutableStateOf<Date>(
-            Date.valueOf(
-                string.format("%02d", calendar.get(Calendar.YEAR)) +
-                    "-" +
-                    string.format("%02d", calendar.get(Calendar.MONTH) + 1) +
-                    "-01"
-            )
-        )
-    }
+//    var date by remember {
+//        mutableStateOf<Date>(
+//            Date.valueOf(
+//                string.format("%02d", calendar.get(Calendar.YEAR)) +
+//                    "-" +
+//                    string.format("%02d", calendar.get(Calendar.MONTH) + 1) +
+//                    "-01"
+//            )
+//        )
+//    }
 
     LaunchedEffect(showScheduleViewModel) {
-        showScheduleViewModel.showSchedule(date)
+        showScheduleViewModel.showSchedule(
+            startAt = getStartAt(checkMonth),
+            endAt = getEndAt(checkMonth)
+        )
     }
 
     val bottomSheetState = rememberModalBottomSheetState(
@@ -138,7 +142,10 @@ fun ShowScheduleScreen(
                 coroutineScope.launch {
                     bottomSheetState.hide()
                 }
-                showScheduleViewModel.showSchedule(date)
+                showScheduleViewModel.showSchedule(
+                    startAt = getStartAt(checkMonth),
+                    endAt = getEndAt(checkMonth)
+                )
             }
             FetchScheduleSideEffect.DeleteScheduleFail -> {
                 toast(message = "일정 삭제를 실패했습니다.")
@@ -251,13 +258,19 @@ fun ShowScheduleScreen(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 SimTongCalendar(
-                    onBeforeClicked = {
-                        date = it
-                        showScheduleViewModel.showSchedule(date)
+                    onBeforeClicked = { _, _checkMonth ->
+                        checkMonth = _checkMonth
+                        showScheduleViewModel.showSchedule(
+                            startAt = getStartAt(checkMonth),
+                            endAt = getStartAt(checkMonth),
+                        )
                     },
-                    onNextClicked = {
-                        date = it
-                        showScheduleViewModel.showSchedule(date)
+                    onNextClicked = { _, _checkMonth ->
+                        checkMonth = _checkMonth
+                        showScheduleViewModel.showSchedule(
+                            startAt = getStartAt(checkMonth),
+                            endAt = getEndAt(checkMonth)
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()

@@ -24,11 +24,13 @@ class HomeViewModel @Inject constructor(
     override val container = container<HomeState, HomeSideEffect>(HomeState())
 
     fun fetchMenu(
-        date: String,
+        startAt: String,
+        endAt: String,
     ) = intent {
         viewModelScope.launch {
             fetchMenuUseCase(
-                date = date,
+                startAt = startAt,
+                endAt = endAt,
             ).onSuccess { meals ->
                 reduce { state.copy(mealList = meals.map { it.toDesignSystemModel() }) }
             }.onFailure {
