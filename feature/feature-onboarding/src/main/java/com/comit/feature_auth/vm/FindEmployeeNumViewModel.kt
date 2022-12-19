@@ -3,7 +3,7 @@ package com.comit.feature_auth.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.NotFoundException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.commons.FetchSpotsUseCase
 import com.comit.domain.usecase.commons.FindEmployeeNumberUseCase
 import com.comit.feature_auth.mvi.FindEmployeeNumSideEffect
@@ -46,7 +46,7 @@ class FindEmployeeNumViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is NotFoundException -> postSideEffect(FindEmployeeNumSideEffect.UserInfoNotMatched)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -59,7 +59,7 @@ class FindEmployeeNumViewModel @Inject constructor(
                     reduce { state.copy(placeList = it.toUiModel()) }
                     postSideEffect(FindEmployeeNumSideEffect.FetchSpot)
                 }.onFailure {
-                    throw UnknownException(it.message)
+                    throwUnknownException(it)
                 }
         }
     }
