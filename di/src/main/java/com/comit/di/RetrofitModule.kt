@@ -1,6 +1,8 @@
 package com.comit.di
 
+import android.content.Context
 import android.util.Log
+import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.interceptor.AuthorizationInterceptor
 import com.comit.data.interceptor.EmptyBodyInterceptor
 import com.comit.remote.api.AuthAPI
@@ -13,6 +15,7 @@ import com.comit.remote.api.ScheduleAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -23,12 +26,22 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
 
-    private const val BASE_URL = "http://3.39.162.197:8888/"
+    private const val BASE_URL = "https://simtong-dev.comit.or.kr/"
 
     @Provides
     fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
         HttpLoggingInterceptor { message -> Log.v("HTTP", message) }
             .setLevel(HttpLoggingInterceptor.Level.BODY)
+
+    @Provides
+    fun provideAuthorizationInterceptor(
+        @ApplicationContext context: Context,
+        localAuthDataSource: LocalAuthDataSource,
+    ): AuthorizationInterceptor =
+        AuthorizationInterceptor(
+            localAuthDataSource = localAuthDataSource,
+            context = context,
+        )
 
     @Provides
     fun provideOkHttpClient(
