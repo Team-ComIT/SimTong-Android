@@ -6,6 +6,8 @@ import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.util.Log
 import com.comit.feature_home.SubStringDay
+import com.comit.feature_home.SubStringYearEnd
+import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.FetchScheduleState
 import java.time.LocalDate
@@ -52,10 +54,10 @@ fun organizeList(
 
     for (element in holidayList) {
         if (element.type == TypeName.HOLIDAY) {
-            restDayList[element.date.substring(SubStringDay).toInt() - 1] = true
+            restDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
         }
         if (element.type == TypeName.ANNUAL) {
-            annualDayList[element.date.substring(SubStringDay).toInt() - 1] = true
+            annualDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
         }
     }
 
