@@ -5,7 +5,10 @@ package com.comit.feature_home.calendar
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
 import android.util.Log
+import com.comit.common.utils.dateToInt
+import com.comit.common.utils.string
 import com.comit.feature_home.SubStringDay
+import com.comit.feature_home.getStartAt
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.FetchScheduleState
 import java.time.LocalDate
@@ -48,15 +51,23 @@ fun organizeList(
         workDayList.add(0)
     }
 
-    Log.d("TAG", "organizeList: $min")
-
     for (element in holidayList) {
         if (element.type == TypeName.HOLIDAY) {
-            restDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
+            if (dateToInt(element.date) < (year.toString() + string.format("%02d", month) + "00").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                restDayList[day - getStartAt(checkMonth).substring(SubStringDay).toInt()] = true
+            }
+            else if(dateToInt(element.date) >  (year.toString() + string.format("%02d", month) + "31").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                restDayList[day + min + max - 1] = true
+            }
+            else {
+                restDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
+            }
         }
-        if (element.type == TypeName.ANNUAL) {
-            annualDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
-        }
+//        if (element.type == TypeName.ANNUAL) {
+//            annualDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
+//        }
     }
 
     if (workCountList != null) {
