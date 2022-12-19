@@ -21,11 +21,13 @@ class GetHolidayViewModel @Inject constructor(
     val holidayList: LiveData<List<FetchHolidayState.Holiday>> = _holidayList
 
     fun getHolidayList(
-        date: Date
+        startAt: String,
+        endAt: String,
     ) {
         viewModelScope.launch {
             fetchHolidaysUseCase(
-                date = date
+                startAt = startAt,
+                endAt = endAt,
             ).onSuccess {
                 _holidayList.value = it.toState().holidayList
             }.onFailure {}

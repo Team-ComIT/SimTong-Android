@@ -6,7 +6,8 @@ import java.util.Date
 interface HolidayRepository {
 
     suspend fun fetchHolidays(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ): HolidayList
 
     suspend fun dayOffHolidays(

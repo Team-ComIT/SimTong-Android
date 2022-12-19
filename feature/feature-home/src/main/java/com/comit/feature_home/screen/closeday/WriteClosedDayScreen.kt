@@ -1,6 +1,6 @@
 @file:OptIn(
     ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
-    InternalCoroutinesApi::class
+    InternalCoroutinesApi::class, ExperimentalMaterialApi::class
 )
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
 

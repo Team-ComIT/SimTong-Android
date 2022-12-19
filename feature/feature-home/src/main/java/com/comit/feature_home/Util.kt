@@ -15,17 +15,17 @@ const val SubStringDay = 8
 val string = String
 
 fun getStartAt(checkMonth: Int): String {
-    Log.d("TAG", "checkMonth: $checkMonth")
     val today = GregorianCalendar()
     val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
     val min = calendar.get(Calendar.DAY_OF_WEEK) - 1
 
     val lastCalendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth - 1, 1)
     val lastMax = lastCalendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+    lastCalendar.add(Calendar.DATE, lastMax - min)
 
     val year = lastCalendar.get(Calendar.YEAR).toString()
     val month = string.format("%02d", lastCalendar.get(Calendar.MONTH) + 1)
-    val day = string.format("%02d", lastMax-min-1)
+    val day = string.format("%02d", lastCalendar.get(Calendar.DATE))
 
     return "$year-$month-$day"
 }
@@ -34,14 +34,22 @@ fun getEndAt(checkMonth: Int): String {
     val today = GregorianCalendar()
     val calendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth, 1)
     val lastDayCalendar = GregorianCalendar(today.get(Calendar.YEAR), today.get(Calendar.MONTH) + checkMonth,
-        calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
+        calendar.getActualMaximum(Calendar.DATE)
     )
 
-    val lastDay = lastDayCalendar.get(Calendar.DAY_OF_WEEK) - 1
+    val lastDay = lastDayCalendar.get(Calendar.DAY_OF_WEEK)
 
-    val year = lastDayCalendar.get(Calendar.YEAR).toString()
-    val month = string.format("%02d", lastDayCalendar.get(Calendar.MONTH) + 1)
-    val day = string.format("%02d", 7 - lastDay)
+    return if (lastDay == 7) {
+        val year = lastDayCalendar.get(Calendar.YEAR).toString()
+        val month = string.format("%02d", lastDayCalendar.get(Calendar.MONTH) + 1)
+        val day = string.format("%02d", lastDayCalendar.get(Calendar.DATE))
 
-    return "$year-$month-$day"
+        "$year-$month-$day"
+    } else {
+        val year = lastDayCalendar.get(Calendar.YEAR).toString()
+        val month = string.format("%02d", lastDayCalendar.get(Calendar.MONTH) + 2)
+        val day = string.format("%02d", 7 - lastDay)
+
+        "$year-$month-$day"
+    }
 }

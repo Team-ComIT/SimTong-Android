@@ -1,5 +1,6 @@
 package com.comit.feature_home.calendar
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,6 +44,9 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
+import com.comit.feature_home.calendar.GetHolidayViewModel
+import com.comit.feature_home.calendar.GetWorkCountViewModel
+import com.comit.feature_home.calendar.organizeList
 import com.comit.feature_home.getEndAt
 import com.comit.feature_home.getStartAt
 import com.comit.feature_home.string
@@ -122,7 +126,10 @@ fun SimTongCalendar(
     LaunchedEffect(getWorkCountViewModel) {
         getWorkCountViewModel.workCountList.observe(lifecycle) {
             workCountList = it
-            getHolidayViewModel.getHolidayList(date)
+            getHolidayViewModel.getHolidayList(
+                startAt = getStartAt(checkMonth),
+                endAt = getEndAt(checkMonth)
+            )
         }
     }
     LaunchedEffect(getHolidayViewModel) {

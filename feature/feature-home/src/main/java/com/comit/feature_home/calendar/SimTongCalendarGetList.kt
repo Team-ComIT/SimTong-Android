@@ -4,6 +4,7 @@ package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import android.util.Log
 import com.comit.feature_home.SubStringDay
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.FetchScheduleState
@@ -47,6 +48,8 @@ fun organizeList(
         workDayList.add(0)
     }
 
+    Log.d("TAG", "organizeList: $min")
+
     for (element in holidayList) {
         if (element.type == TypeName.HOLIDAY) {
             restDayList[element.date.substring(SubStringDay).toInt() - 1] = true
@@ -79,7 +82,7 @@ fun organizeList(
                 day = (lastMax - i).toString(),
                 workCount = workDayList[j],
                 weekend = false,
-                thisMouth = true,
+                thisMouth = false,
                 restDay = restDayList[j],
                 annualDay = annualDayList[j],
                 today = false
@@ -117,7 +120,7 @@ fun organizeList(
                     day = i.toString(),
                     workCount = workDayList[j],
                     weekend = false,
-                    thisMouth = true,
+                    thisMouth = false,
                     restDay = restDayList[j],
                     annualDay = annualDayList[j],
                     today = false
