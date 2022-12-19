@@ -83,6 +83,10 @@ private val ignoreRequest = listOf(
  *
  * 3. Refresh 토큰이 만료되었을 경우 exception throw
  * @throws NeedLoginException
+ *
+ * TODO(limsaehyun): 인터셉터의 분리에 관해서 고민 해봐야 함
+ * NetworkConnectionInterceptor 를 분리 할 경우 Interceptor 가 2번 호출되는 문제를 겪었음
+ * 이에 대한 개선 방법을 찾아보고 분리할 수 있다면 분리하는편이 좋음
  */
 class AuthorizationInterceptor @Inject constructor(
     private val localAuthDataSource: LocalAuthDataSource,
