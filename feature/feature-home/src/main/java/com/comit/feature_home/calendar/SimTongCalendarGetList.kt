@@ -73,10 +73,10 @@ fun organizeList(
             val end = workCountList[i].endAt.substring(SubStringDay).toInt()
 
             if (start == end) {
-                workDayList[start - 1] = workDayList[start - 1] + 1
+                workDayList[start - 1 + min] = workDayList[start - 1 + min] + 1
             } else {
                 for (j in start..end) {
-                    workDayList[j - 1] = workDayList[j - 1] + 1
+                    workDayList[j - 1 + min] = workDayList[j - 1 + min] + 1
                 }
             }
         }
