@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package com.comit.di
 
 import android.content.Context

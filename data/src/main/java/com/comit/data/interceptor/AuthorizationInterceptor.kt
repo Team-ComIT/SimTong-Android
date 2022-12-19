@@ -1,4 +1,8 @@
-@file:Suppress("UnusedPrivateMember")
+@file:Suppress(
+    "UnusedPrivateMember",
+    "SwallowedException",
+    "MagicNumber",
+)
 
 package com.comit.data.interceptor
 
@@ -41,6 +45,8 @@ internal enum class CustomRestMethod {
     DELETE,
     ALL,
 }
+
+private const val InternetAvailableTimeOutMS: Int = 1500
 
 internal fun String.toCustomRestMethod() =
     when (this) {
@@ -186,7 +192,7 @@ class AuthorizationInterceptor @Inject constructor(
 
     private fun isInternetAvailable(): Boolean {
         return try {
-            val timeoutMs = 1500
+            val timeoutMs = InternetAvailableTimeOutMS
             val sock = Socket()
             val sockaddr = InetSocketAddress("8.8.8.8", 53)
 
@@ -208,7 +214,7 @@ class AuthorizationInterceptor @Inject constructor(
         val refreshToken: String,
     )
 
-    companion object {
+    private companion object {
         const val BEARER_HEADER = "Bearer"
         const val AUTHORIZATION = "Authorization"
         const val REFRESH_TOKEN = "Refresh-Token"

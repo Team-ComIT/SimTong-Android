@@ -1,5 +1,10 @@
 package com.comit.core_design_system.modifier
 
+/**
+ * 클릭이 지연될 시간을 정의하는 변수
+ */
+private const val ClickEventDelayTime: Long = 300L
+
 internal interface MultipleEventsCutter {
     fun processEvent(event: () -> Unit)
 
@@ -16,7 +21,7 @@ private class MultipleEventsCutterImpl : MultipleEventsCutter {
     private var lastEventTimeMs: Long = 0
 
     override fun processEvent(event: () -> Unit) {
-        if (now - lastEventTimeMs >= 300L) {
+        if (now - lastEventTimeMs >= ClickEventDelayTime) {
             event.invoke()
         }
         lastEventTimeMs = now
