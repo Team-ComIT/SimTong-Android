@@ -27,11 +27,13 @@ class ShowScheduleViewModel @Inject constructor(
     override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
 
     fun showSchedule(
-        date: Date
+        startAt: String,
+        endAt: String,
     ) = intent {
         viewModelScope.launch {
             fetchPersonalScheduleUseCase(
-                date = date
+                startAt = startAt,
+                endAt = endAt,
             ).onSuccess {
                 reduce {
                     state.copy(

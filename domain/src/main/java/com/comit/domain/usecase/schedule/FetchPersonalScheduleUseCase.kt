@@ -11,10 +11,12 @@ class FetchPersonalScheduleUseCase @Inject constructor(
 ) {
 
     suspend operator fun invoke(
-        date: Date,
+        startAt: String,
+        endAt: String,
     ) = kotlin.runCatching {
         repository.fetchPersonalSchedule(
-            date = date,
+            startAt = startAt,
+            endAt = endAt,
         )
     }.onFailure {
         if (it is UnknownException) throw NoInternetException()

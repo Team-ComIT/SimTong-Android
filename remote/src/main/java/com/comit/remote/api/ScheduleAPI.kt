@@ -18,24 +18,25 @@ interface ScheduleAPI {
 
     @GET("$SCHEDULE")
     suspend fun fetchPersonalSchedule(
-        @Query("date") date: Date,
+        @Query("start_at") startAt: String,
+        @Query("end_at") endAt: String,
     ): FetchPersonalScheduleResponse
 
     @POST("$SCHEDULE")
     suspend fun addPersonalSchedule(
         @Body request: AddPersonalScheduleRequest,
-    ): Response<Unit>
+    )
 
     @PUT("$SCHEDULE/{schedule-id}")
     suspend fun changePersonalSchedule(
         @Path("schedule-id") scheduleId: UUID,
         @Body request: ChangePersonalScheduleRequest,
-    ): Response<Unit>
+    )
 
     @DELETE("$SCHEDULE/{schedule-id}")
     suspend fun deletePersonalSchedule(
         @Path("schedule-id") scheduleId: UUID,
-    ): Response<Unit>
+    )
 
     private companion object {
         const val SCHEDULE = "schedules"

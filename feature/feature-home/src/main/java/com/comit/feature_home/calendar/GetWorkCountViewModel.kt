@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.usecase.schedule.FetchPersonalScheduleUseCase
+import com.comit.feature_home.getStartAt
 import com.comit.feature_home.mvi.FetchScheduleState
 import com.comit.feature_home.mvi.toState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,11 +22,13 @@ class GetWorkCountViewModel @Inject constructor(
     val workCountList: LiveData<List<FetchScheduleState.Schedule>> = _workCountList
 
     fun getWorkCountList(
-        date: Date
+        startAt: String,
+        endAt: String,
     ) {
         viewModelScope.launch {
             fetchPersonalScheduleUseCase(
-                date = date
+                startAt = startAt,
+                endAt = endAt,
             ).onSuccess {
                 _workCountList.value = it.toState().scheduleList
             }.onFailure {

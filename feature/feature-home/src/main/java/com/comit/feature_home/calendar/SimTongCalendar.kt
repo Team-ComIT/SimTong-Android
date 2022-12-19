@@ -1,4 +1,3 @@
-
 package com.comit.feature_home.calendar
 
 import androidx.compose.foundation.background
@@ -44,6 +43,8 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
+import com.comit.feature_home.getEndAt
+import com.comit.feature_home.getStartAt
 import com.comit.feature_home.string
 import com.example.feature_home.R
 import java.sql.Date
@@ -72,8 +73,8 @@ fun SimTongCalendar(
     getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
     getWorkCountViewModel: GetWorkCountViewModel = hiltViewModel(),
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
-    onBeforeClicked: (Date) -> Unit = { },
-    onNextClicked: (Date) -> Unit = { },
+    onBeforeClicked: (Date, Int) -> Unit = { _, _ -> },
+    onNextClicked: (Date, Int) -> Unit = { _, _ -> },
     refresh: Boolean = false
 ) {
     var checkMonth by remember { mutableStateOf(0) }
@@ -100,7 +101,10 @@ fun SimTongCalendar(
     }
 
     LaunchedEffect(getWorkCountViewModel) {
-        getWorkCountViewModel.getWorkCountList(date)
+        getWorkCountViewModel.getWorkCountList(
+            startAt = getStartAt(checkMonth),
+            endAt = getEndAt(checkMonth)
+        )
     }
 
     val lifecycle = LocalLifecycleOwner.current
@@ -108,7 +112,10 @@ fun SimTongCalendar(
 
     if (refresh) {
         LaunchedEffect(getWorkCountViewModel) {
-            getWorkCountViewModel.getWorkCountList(date)
+            getWorkCountViewModel.getWorkCountList(
+                startAt = getStartAt(checkMonth),
+                endAt = getEndAt(checkMonth)
+            )
         }
     }
 
@@ -142,8 +149,11 @@ fun SimTongCalendar(
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
                 date = Date.valueOf(string.format("%02d", year) + "-" + string.format("%02d", month) + "-01")
-                getWorkCountViewModel.getWorkCountList(date)
-                onBeforeClicked(date)
+                getWorkCountViewModel.getWorkCountList(
+                    startAt = getStartAt(checkMonth),
+                    endAt = getEndAt(checkMonth)
+                )
+                onBeforeClicked(date, checkMonth)
             },
             onNextClicked = {
                 checkMonth++
@@ -151,8 +161,11 @@ fun SimTongCalendar(
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
                 date = Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")
-                getWorkCountViewModel.getWorkCountList(date)
-                onNextClicked(date)
+                getWorkCountViewModel.getWorkCountList(
+                    startAt = getStartAt(checkMonth),
+                    endAt = getEndAt(checkMonth),
+                )
+                onNextClicked(date, checkMonth)
             }
         )
 
@@ -374,7 +387,7 @@ fun SimTongCalendarItem(
                     text = stringResource(id = R.string.calendar_annual_day),
                     color = SimTongColor.White
                 )
-            } else if (thisMouth && !weekend) {
+            } else {
                 if (workCount != 0) {
                     Body11(
                         text = workCount.toString(),
