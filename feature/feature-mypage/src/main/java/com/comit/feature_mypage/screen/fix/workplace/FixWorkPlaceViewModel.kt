@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.TooManyRequestsException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.commons.FetchSpotsUseCase
 import com.comit.domain.usecase.users.ChangeSpotUseCase
 import com.comit.feature_mypage.mvi.FixWorkPlaceSideEffect
@@ -29,6 +29,7 @@ class FixWorkPlaceViewModel @Inject constructor(
 
     override val container = container<FixWorkPlaceState, FixWorkPlaceSideEffect>(FixWorkPlaceState())
 
+    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun fetchWorkPlace() = intent {
         viewModelScope.launch {
             fetchSpotsUseCase()
@@ -57,10 +58,9 @@ class FixWorkPlaceViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is BadRequestException -> postSideEffect(FixWorkPlaceSideEffect.NoIdException)
-                    is UnknownException -> postSideEffect(FixWorkPlaceSideEffect.TokenException)
                     is NotFoundException -> postSideEffect(FixWorkPlaceSideEffect.NotFoundPlaceException)
                     is TooManyRequestsException -> postSideEffect(FixWorkPlaceSideEffect.CannotChangePlaceTooMuch)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

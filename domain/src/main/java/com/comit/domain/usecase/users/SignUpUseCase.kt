@@ -1,7 +1,5 @@
 package com.comit.domain.usecase.users
 
-import com.comit.domain.exception.NoInternetException
-import com.comit.domain.exception.UnknownException
 import com.comit.domain.repository.AuthRepository
 import java.io.File
 import javax.inject.Inject
@@ -21,8 +19,6 @@ class SignUpUseCase @Inject constructor(
             nickname = params.nickname,
             profileImage = params.profileImage,
         )
-    }.onFailure {
-        if (it is UnknownException) throw NoInternetException()
     }
 
     data class Params(

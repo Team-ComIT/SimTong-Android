@@ -12,6 +12,7 @@ import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.ForBiddenException
 import com.comit.domain.exception.NeedLoginException
+import com.comit.domain.exception.NoConnectivityException
 import com.comit.domain.exception.NoInternetException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.OtherHttpException
@@ -85,12 +86,16 @@ suspend inline fun <T> simTongApiCall(
         throw TimeOutException(
             message = e.message,
         )
+    } catch (e: NeedLoginException) {
+        throw e
+    } catch (e: NoInternetException) {
+        throw NoInternetException()
+    } catch (e: NoConnectivityException) {
+        throw NoConnectivityException()
     } catch (e: Exception) {
         throw UnknownException(
             message = e.message,
         )
-    } catch (e: NeedLoginException) {
-        throw e
     }
 }
 
