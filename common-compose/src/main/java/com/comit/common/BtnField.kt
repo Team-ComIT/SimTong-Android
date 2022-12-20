@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.color.SimTongColor
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.Error
@@ -65,7 +65,10 @@ fun SimTongBtnField(
 
     Column(
         modifier = modifier
-            .noRippleClickable { onClick() }
+            .simClickable(
+                rippleEnabled = false,
+                onClick = onClick,
+            )
     ) {
         if (!title.isNullOrEmpty()) {
             Body8(

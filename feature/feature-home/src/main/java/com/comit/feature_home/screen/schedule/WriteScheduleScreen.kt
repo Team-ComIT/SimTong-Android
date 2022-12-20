@@ -25,7 +25,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.comit.common.SimTongBtnField
+import com.comit.common.SimTongCalendarDialog
 import com.comit.common.systemBarPaddings
+import com.comit.common.utils.dateToInt
+import com.comit.common.utils.stringToDate
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -68,8 +72,8 @@ fun WriteScheduleScreen(
             vm.inputScheduleStart(msg = scheduleStart)
             vm.inputScheduleEnd(msg = scheduleEnd)
 
-            Log.d("TAG", "title: "+writeScheduleState.scheduleStart)
-            Log.d("TAG", "WriteScheduleScreen: "+writeScheduleState.scheduleEnd)
+            Log.d("TAG", "title: " + writeScheduleState.scheduleStart)
+            Log.d("TAG", "WriteScheduleScreen: " + writeScheduleState.scheduleEnd)
 
 //            startYear = scheduleStart.substring(SubStringYearStart, SubStringYearEnd)
 //            startMonth = scheduleStart.substring(SubStringMonthStart, SubStringMonthEnd)
@@ -197,8 +201,8 @@ fun WriteScheduleScreen(
         }
 
         val btnEnabled = writeScheduleState.title.isNotEmpty() &&
-                writeScheduleState.scheduleStart.isNotEmpty() &&
-                writeScheduleState.scheduleEnd.isNotEmpty()
+            writeScheduleState.scheduleStart.isNotEmpty() &&
+            writeScheduleState.scheduleEnd.isNotEmpty()
 
         SimTongBigRoundButton(
             text = stringResource(id = R.string.check),

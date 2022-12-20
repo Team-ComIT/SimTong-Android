@@ -1,7 +1,6 @@
 package com.comit.data.datasource
 
 import com.comit.model.ScheduleList
-import java.util.Date
 import java.util.UUID
 
 interface RemoteScheduleDataSource {

@@ -1,15 +1,22 @@
+@file:Suppress("lexicographic")
+
 package com.comit.common
 
+import android.icu.util.Calendar
+import android.icu.util.GregorianCalendar
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -36,19 +43,13 @@ import com.comit.common.WeekOfDay.Sunday
 import com.comit.common.WeekOfDay.Thursday
 import com.comit.common.WeekOfDay.Tuesday
 import com.comit.common.WeekOfDay.Wednesday
+import com.comit.common.utils.string
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body3
-import android.icu.util.GregorianCalendar
-import android.icu.util.Calendar
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.wrapContentSize
-import com.comit.common.utils.string
 import java.time.LocalDate
-
 
 @Stable
 private val DialogSize: Dp = 330.dp
@@ -120,20 +121,20 @@ fun SimTongCalendarDialog(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .padding(start = 16.dp, top = 18.dp, end = 20.dp)
-                        .fillMaxWidth()
+                        .fillMaxWidth(),
                 ) {
                     val yearT = year.toString() + "년 "
                     val monthT = month.toString() + "월"
                     Body3(
                         text = yearT + monthT,
-                        color = SimTongColor.Gray800
+                        color = SimTongColor.Gray800,
                     )
 
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
                             .wrapContentWidth(Alignment.End)
-                            .width(60.dp)
+                            .width(60.dp),
                     ) {
                         IconButton(
                             onClick = {
@@ -146,11 +147,11 @@ fun SimTongCalendarDialog(
                                 year = calendar.get(Calendar.YEAR)
                                 month = (calendar.get(Calendar.MONTH) + 1)
                             },
-                            modifier = Modifier.size(SimTongCalendarDateButtonSize)
+                            modifier = Modifier.size(SimTongCalendarDateButtonSize),
                         ) {
                             Icon(
                                 painter = painterResource(id = SimTongIcon.Calendar_Before.drawableId),
-                                contentDescription = SimTongIcon.Calendar_Before.contentDescription
+                                contentDescription = SimTongIcon.Calendar_Before.contentDescription,
                             )
                         }
 
@@ -180,7 +181,6 @@ fun SimTongCalendarDialog(
                 Spacer(modifier = Modifier.height(14.dp))
 
                 WeekTopRow()
-                
                 Spacer(modifier = Modifier.height(8.dp))
 
                 SimTongCalendarDialogList(
@@ -275,14 +275,12 @@ fun SimTongCalendarDialogItem(
     onDismissRequest: () -> Unit,
     isChangeStartDay: Boolean,
 ) {
-    val itemDate = (year.toString() +
-            string.format("%02d", month) +
-            string.format("%02d", day)).toInt()
+    val itemDate = (year.toString() + string.format("%02d", month) + string.format("%02d", day)).toInt()
 
     val textColor =
         if (!thisMonth) SimTongColor.Gray100
-        else if(startDay > itemDate && !isChangeStartDay) SimTongColor.Gray100
-        else if(endDay < itemDate && isChangeStartDay) SimTongColor.Gray100
+        else if (startDay > itemDate && !isChangeStartDay) SimTongColor.Gray100
+        else if (endDay < itemDate && isChangeStartDay) SimTongColor.Gray100
         else if (weekend) SimTongColor.Gray300
         else SimTongColor.Gray800
 
@@ -291,7 +289,9 @@ fun SimTongCalendarDialogItem(
     Box(
         modifier = modifier
             .height(30.dp)
-            .noRippleClickable {
+            .simClickable(
+                rippleEnabled = false,
+            ) {
                 if (clickable) {
                     onItemClicked(itemDate.toString())
                     onDismissRequest()
@@ -319,7 +319,8 @@ private fun getSimTongDialogList(
     val today = GregorianCalendar()
     val calendar = GregorianCalendar(
         today.get(Calendar.YEAR),
-        today.get(Calendar.MONTH) + checkMonth, 1)
+        today.get(Calendar.MONTH) + checkMonth, 1
+    )
     val min = calendar.get(Calendar.DAY_OF_WEEK) - 1
     val max = calendar.getActualMaximum(Calendar.DAY_OF_MONTH)
     val year = calendar.get(Calendar.YEAR)
@@ -347,8 +348,7 @@ private fun getSimTongDialogList(
 
     for (i in 1..max) {
         val dayOfWeek = LocalDate.of(year, month, i).dayOfWeek.value
-        val weekend = dayOfWeek == com.comit.common.Saturday ||
-                dayOfWeek == com.comit.common.Sunday
+        val weekend = dayOfWeek == com.comit.common.Saturday || dayOfWeek == com.comit.common.Sunday
 
         calendarList.add(
             SimTongCalendarDialogData(

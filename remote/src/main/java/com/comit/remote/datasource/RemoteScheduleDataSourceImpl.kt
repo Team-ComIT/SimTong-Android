@@ -7,7 +7,6 @@ import com.comit.remote.api.ScheduleAPI
 import com.comit.remote.mapper.toModel
 import com.comit.remote.request.schedules.AddPersonalScheduleRequest
 import com.comit.remote.request.schedules.ChangePersonalScheduleRequest
-import java.util.Date
 import java.util.UUID
 import javax.inject.Inject
 
