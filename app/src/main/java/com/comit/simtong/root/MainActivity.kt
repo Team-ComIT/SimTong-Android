@@ -1,10 +1,15 @@
 package com.comit.simtong.root
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
@@ -22,13 +27,14 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        //TODO(limsaehyun): Splash API가 작동하지 않음 수정 요함
+        installSplashScreen()
         super.onCreate(savedInstanceState)
 
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        installSplashScreen()
-
         setContent {
+            setWindowInset()
+
             val navController = rememberNavController()
 
             Thread.setDefaultUncaughtExceptionHandler(
@@ -60,6 +66,24 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun setWindowInset() {
+        window.statusBarColor = MaterialTheme.colors.surface.toArgb()
+        window.navigationBarColor = MaterialTheme.colors.surface.toArgb()
+
+        @Suppress("DEPRECATION")
+        if (MaterialTheme.colors.surface.luminance() > 0.5f) {
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+
+        @Suppress("DEPRECATION")
+        if (MaterialTheme.colors.surface.luminance() > 0.5f) {
+            window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
+                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
     }
 }
