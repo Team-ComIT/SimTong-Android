@@ -23,6 +23,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun SignUpVerifyScreen(
     toPrevious: () -> Unit,
+    toSignIn: () -> Unit,
     checkVerifyCode: () -> Unit,
     fieldErrEmailCode: String? = null,
     verifyCode: String,
@@ -65,6 +66,9 @@ fun SignUpVerifyScreen(
                         stringResource(id = R.string.sign_in)
                     ),
                     color = SimTongColor.Gray400,
+                    onClick = {
+                        toSignIn()
+                    },
                 )
             }
         },

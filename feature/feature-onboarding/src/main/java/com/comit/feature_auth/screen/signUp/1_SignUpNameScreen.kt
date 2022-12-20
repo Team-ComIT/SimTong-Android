@@ -95,6 +95,7 @@ fun SignUpNameScreen(
     signUpNameStep: SignUpStep.InputUserInfo,
     navigatePage: (SignUpStep.InputUserInfo) -> Unit,
     sendVerifyCode: () -> Unit,
+    toSignIn: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
 
@@ -317,6 +318,9 @@ fun SignUpNameScreen(
                             stringResource(id = R.string.sign_in)
                         ),
                         color = SimTongColor.Gray400,
+                        onClick = {
+                            toSignIn()
+                        },
                     )
                 }
             },

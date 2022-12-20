@@ -58,6 +58,7 @@ fun SignUpPasswordScreen(
     navigatePage: (SignUpStep.InputPassword) -> Unit,
     toPrevious: () -> Unit,
     toNext: () -> Unit,
+    toSignIn: () -> Unit,
 ) {
     val toNextBtnClicked = {
         when (signUpPasswordStep) {
@@ -158,6 +159,9 @@ fun SignUpPasswordScreen(
                         stringResource(id = R.string.sign_in)
                     ),
                     color = SimTongColor.Gray400,
+                    onClick = {
+                        toSignIn()
+                    },
                 )
             }
         },

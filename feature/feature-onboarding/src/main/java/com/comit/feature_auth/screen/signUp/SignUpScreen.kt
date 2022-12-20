@@ -139,6 +139,7 @@ internal fun SignUpScreen(
                     signUpNameStep = state.signUpNameStep,
                     navigatePage = { viewModel.navigateNameStep(it) },
                     sendVerifyCode = { viewModel.sendEmailCode() },
+                    toSignIn = { navController.popBackStack() },
                 )
             }
             SIGN_UP_VERIFY -> {
@@ -153,6 +154,7 @@ internal fun SignUpScreen(
                     verifyCode = state.verifyCode,
                     onVerifyCodeChanged = { viewModel.changeVerifyCode(it) },
                     fieldErrEmailCode = state.fieldErrVerifyCode,
+                    toSignIn = { navController.popBackStack() },
                 )
             }
             SIGN_UP_PASSWORD -> {
@@ -165,6 +167,7 @@ internal fun SignUpScreen(
                     checkPassword = state.checkPassword,
                     onCheckPasswordChanged = { viewModel.changeCheckPassword(it) },
                     navigatePage = { viewModel.navigatePasswordStep(it) },
+                    toSignIn = { navController.popBackStack() },
                 )
             }
             SIGN_UP_NICKNAME -> {
