@@ -31,8 +31,8 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             clearErrorMessage()
 
-            if (employeeNumber.toIntOrNull() == null) {
-                postSideEffect(SignInSideEffect.IdWasNotNumber)
+            if (employeeNumber.toIntOrNull() == null || employeeNumber.length > 10) {
+                postSideEffect(SignInSideEffect.NumberFormat)
             }
 
             signInUseCase(

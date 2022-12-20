@@ -27,7 +27,7 @@ import org.orbitmvi.orbit.viewmodel.container
 import java.io.File
 import javax.inject.Inject
 
-private const val EmployeeNumIsNum = "사원번호는 숫자로 이루어져 있어야 합니다"
+private const val ErrMsgEmployeeNumFormat = "올바른 형식의 사원번호를 입력해주세요."
 
 internal const val ImageLimitSizeInKB: Int = 1024
 
@@ -45,9 +45,8 @@ class SignUpViewModel @Inject constructor(
         name: String,
         employeeNumber: String,
     ) = intent {
-
-        if (employeeNumber.toIntOrNull() == null) {
-            reduce { state.copy(fieldErrEmployeeNumber = EmployeeNumIsNum) }
+        if (employeeNumber.toIntOrNull() == null || employeeNumber.length > 10) {
+            reduce { state.copy(fieldErrEmployeeNumber = ErrMsgEmployeeNumFormat) }
             return@intent
         }
 
