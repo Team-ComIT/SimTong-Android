@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -185,18 +186,11 @@ fun Header(
 
         if (sideBtnText != null) {
             Body6(
-                modifier = Modifier
-                    .simClickable(
-                        rippleEnabled = false,
-                        runIf = enabledTextBtn,
-                    ) {
-                        if (onTextBtnClicked != null) {
-                            onTextBtnClicked()
-                        }
-                    }
-                    .padding(6.dp),
+                modifier = Modifier.padding(6.dp),
                 text = stringResource(id = R.string.fix),
                 color = textBtnColor.value,
+                rippleEnabled = false,
+                onClick = onTextBtnClicked,
             )
         }
     }
