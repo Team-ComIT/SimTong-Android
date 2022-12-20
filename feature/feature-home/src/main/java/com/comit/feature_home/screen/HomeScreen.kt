@@ -129,7 +129,9 @@ fun HomeScreen(
             headerText = "",
             enabledBeilBtn = true,
             onBeil = {
-                // TODO ("navigate notification")
+                navController.navigate(
+                    route = SimTongScreen.Home.ALARM,
+                )
             },
             enabledPeopleBtn = true,
             onMyPage = {
