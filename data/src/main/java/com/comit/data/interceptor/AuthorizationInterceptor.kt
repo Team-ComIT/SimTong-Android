@@ -32,12 +32,12 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import javax.inject.Inject
 
-private data class CustomRequest(
+private data class IgnoreRequest(
     val path: String,
-    val method: CustomRestMethod,
+    val method: IgnoreMethod,
 )
 
-internal enum class CustomRestMethod {
+private enum class IgnoreMethod {
     GET,
     POST,
     PUT,
@@ -48,31 +48,31 @@ internal enum class CustomRestMethod {
 
 private const val InternetAvailableTimeOutMS: Int = 1500
 
-internal fun String.toCustomRestMethod() =
+private fun String.toCustomRestMethod() =
     when (this) {
-        "GET" -> CustomRestMethod.GET
-        "POST" -> CustomRestMethod.POST
-        "PUT" -> CustomRestMethod.PUT
-        "PATCH" -> CustomRestMethod.PATCH
-        "DELETE" -> CustomRestMethod.DELETE
-        else -> CustomRestMethod.GET
+        "GET" -> IgnoreMethod.GET
+        "POST" -> IgnoreMethod.POST
+        "PUT" -> IgnoreMethod.PUT
+        "PATCH" -> IgnoreMethod.PATCH
+        "DELETE" -> IgnoreMethod.DELETE
+        else -> IgnoreMethod.GET
     }
 
 /**
  * authorization interceptor ignore request list
  */
 private val ignoreRequest = listOf(
-    CustomRequest("/users/tokens", CustomRestMethod.POST),
-    CustomRequest("/users/verification-employee", CustomRestMethod.GET),
-    CustomRequest("/users", CustomRestMethod.POST),
-    CustomRequest("/users/nickname/duplication", CustomRestMethod.GET),
-    CustomRequest("/commons/spot", CustomRestMethod.GET),
-    CustomRequest("/commons/account/existence", CustomRestMethod.GET),
-    CustomRequest("/emails/code", CustomRestMethod.POST),
-    CustomRequest("/emails", CustomRestMethod.GET),
-    CustomRequest("/files", CustomRestMethod.POST),
-    CustomRequest("/commons/password/initialization", CustomRestMethod.PUT),
-    CustomRequest("/commons/token/reissue", CustomRestMethod.PUT)
+    IgnoreRequest("/users/tokens", IgnoreMethod.POST),
+    IgnoreRequest("/users/verification-employee", IgnoreMethod.GET),
+    IgnoreRequest("/users", IgnoreMethod.POST),
+    IgnoreRequest("/users/nickname/duplication", IgnoreMethod.GET),
+    IgnoreRequest("/commons/spot", IgnoreMethod.GET),
+    IgnoreRequest("/commons/account/existence", IgnoreMethod.GET),
+    IgnoreRequest("/emails/code", IgnoreMethod.POST),
+    IgnoreRequest("/emails", IgnoreMethod.GET),
+    IgnoreRequest("/files", IgnoreMethod.POST),
+    IgnoreRequest("/commons/password/initialization", IgnoreMethod.PUT),
+    IgnoreRequest("/commons/token/reissue", IgnoreMethod.PUT)
 )
 
 /**
@@ -111,10 +111,10 @@ class AuthorizationInterceptor @Inject constructor(
         val path = request.url.encodedPath
         val method = request.method.toCustomRestMethod()
 
-        if (method == CustomRestMethod.ALL && ignoreRequest.any { it.path == path }) {
+        if (method == IgnoreMethod.ALL && ignoreRequest.any { it.path == path }) {
             return chain.proceed(request)
         }
-        if (ignoreRequest.contains(CustomRequest(path, method))) {
+        if (ignoreRequest.contains(IgnoreRequest(path, method))) {
             return chain.proceed(request)
         }
 
@@ -176,16 +176,16 @@ class AuthorizationInterceptor @Inject constructor(
             val network = connectivityManager.activeNetwork
             val connection = connectivityManager.getNetworkCapabilities(network)
             return connection != null && (
-                connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                    connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
-                )
+                    connection.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            connection.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)
+                    )
         } else {
             val activeNetwork = connectivityManager.activeNetworkInfo
             if (activeNetwork != null) {
                 return (
-                    activeNetwork.type == ConnectivityManager.TYPE_WIFI ||
-                        activeNetwork.type == ConnectivityManager.TYPE_MOBILE
-                    )
+                        activeNetwork.type == ConnectivityManager.TYPE_WIFI ||
+                                activeNetwork.type == ConnectivityManager.TYPE_MOBILE
+                        )
             }
             return false
         }
