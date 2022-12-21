@@ -31,6 +31,8 @@ private const val ErrMsgEmployeeNumFormat = "올바른 형식의 사원번호를
 
 internal const val ImageLimitSizeInKB: Int = 1024
 
+private const val EmployeeNumberSizeLimit: Int = 10
+
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val verificationEmployeeUseCase: VerificationEmployeeUseCase,
@@ -45,7 +47,7 @@ class SignUpViewModel @Inject constructor(
         name: String,
         employeeNumber: String,
     ) = intent {
-        if (employeeNumber.toIntOrNull() == null || employeeNumber.length > 10) {
+        if (employeeNumber.toIntOrNull() == null || employeeNumber.length > EmployeeNumberSizeLimit) {
             reduce { state.copy(fieldErrEmployeeNumber = ErrMsgEmployeeNumFormat) }
             return@intent
         }

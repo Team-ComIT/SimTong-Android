@@ -117,7 +117,9 @@ internal fun SignUpScreen(
         }
     }
 
-    Crossfade(targetState = state.currentPage) { page ->
+    Crossfade(
+        targetState = state.currentPage,
+    ) { page ->
         when (page) {
             SIGN_UP_NAME -> {
                 SignUpNameScreen(

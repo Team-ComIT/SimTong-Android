@@ -53,7 +53,7 @@ fun SimTongSimpleLayout(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .padding(
-                    SimpleLayoutBottomPadding
+                    paddingValues = SimpleLayoutBottomPadding,
                 )
         ) {
             bottomContent()

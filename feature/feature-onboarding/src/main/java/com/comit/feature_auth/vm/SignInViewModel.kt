@@ -17,6 +17,8 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
 
+private const val EmployeeNumberSizeLimit: Int = 10
+
 @HiltViewModel
 class SignInViewModel @Inject constructor(
     private val signInUseCase: SignInUseCase,
@@ -31,7 +33,7 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             clearErrorMessage()
 
-            if (employeeNumber.toIntOrNull() == null || employeeNumber.length > 10) {
+            if (employeeNumber.toIntOrNull() == null || employeeNumber.length > EmployeeNumberSizeLimit) {
                 postSideEffect(SignInSideEffect.NumberFormat)
             }
 

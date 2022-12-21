@@ -326,7 +326,8 @@ fun SignUpNameScreen(
             },
             bottomContent = {
                 SimTongBigRoundButton(
-                    modifier = Modifier.imePadding(),
+                    modifier = Modifier
+                        .imePadding(),
                     text = stringResource(id = R.string.next),
                     round = 0.dp,
                     enabled = btnEnabled,
