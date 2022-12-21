@@ -7,6 +7,7 @@ import com.comit.remote.response.commons.FetchSpotsResponse
 import com.comit.remote.response.commons.ReissueTokenResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.PUT
 import retrofit2.http.Query
 
@@ -21,7 +22,7 @@ interface CommonsAPI {
 
     @PUT("$COMMONS/token/reissue")
     suspend fun tokenReissue(
-        @Query("Refresh-Token") refreshToken: String,
+        @Header("Refresh-Token") refreshToken: String,
     ): ReissueTokenResponse
 
     @GET("$COMMONS/account/existence")

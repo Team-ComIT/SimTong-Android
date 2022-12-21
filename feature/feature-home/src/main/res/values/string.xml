@@ -11,7 +11,7 @@
 
     <!--휴무표 작성-->
     <string name="schedule_write">휴무표 작성</string>
-    <string name="schedule_write_content">이번 달 나의 휴무표를 직접 작성해 일정을 손쉽게 관리해 보세요.</string>
+    <string name="schedule_write_content">휴무표를 작성해 일정을 손쉽게 관리해 보세요.</string>
 
     <!--일정 작성-->
     <string name="schedule_all">전체 일정</string>

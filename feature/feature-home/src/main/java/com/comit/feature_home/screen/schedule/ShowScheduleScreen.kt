@@ -25,7 +25,6 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -73,16 +72,14 @@ import java.util.Calendar
 import java.util.GregorianCalendar
 import java.util.UUID
 
-@Stable
 private val HorizontalPadding = PaddingValues(
-    horizontal = 30.dp
+    horizontal = 30.dp,
 )
 
-private val HomeCalendarHeight: Dp = 422.dp
+private val HomeCalendarHeight: Dp = 343.dp
 
-@Stable
 private val CalendarPadding = PaddingValues(
-    horizontal = 20.dp
+    horizontal = 20.dp,
 )
 
 @OptIn(ExperimentalMaterialApi::class)
