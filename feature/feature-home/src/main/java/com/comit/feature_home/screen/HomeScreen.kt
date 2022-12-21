@@ -10,23 +10,18 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,33 +47,13 @@ import com.comit.feature_home.vm.HomeViewModel
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 
-object HomeFakeData {
-    val foodList = listOf(
-        "누룽지\n돼지불고기\n마늘\n배추김치\n달콤핫붓새빵\n바나나/딸기우유",
-        "누룽지\n돼지불고기\n마늘\n배추김치\n달콤핫붓새빵\n바나나/딸기우유",
-        "누룽지\n돼지불고기\n마늘\n배추김치\n달콤핫붓새빵\n바나나/딸기우유"
-    )
-}
-
 private val HomeScreenTopRowHeight: Dp = 34.dp
 
-@Stable
 private val HomeScreenPadding = PaddingValues(
-    horizontal = 25.dp
+    horizontal = 25.dp,
 )
 
-@Stable
-private val HomeBottomIconLayoutShape = RoundedCornerShape(
-    size = 4.dp,
-)
-
-private val HomeCalendarHeight: Dp = 422.dp
-
-private val HomeBottomIconLayoutElevation: Dp = 2.dp
-
-private val HomeBottomIconLayoutHeight: Dp = 48.dp
-
-private val HomeBottomIconLayoutImageSize: Dp = 28.dp
+private val HomeCalendarHeight: Dp = 343.dp
 
 private const val StartDateAdd = -3
 private const val EndDateAdd = 3
@@ -140,8 +115,16 @@ fun HomeScreen(
         )
 
         Row(
+            modifier = Modifier
+                .height(HomeScreenTopRowHeight)
+                .simClickable(
+                    rippleEnabled = false,
+                ) {
+                    navController.navigate(
+                        route = SimTongScreen.Home.SHOW_SCHEDULE,
+                    )
+                },
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.height(HomeScreenTopRowHeight),
         ) {
             Title3(text = stringResource(id = R.string.calendar))
 
@@ -207,7 +190,7 @@ fun HomeScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         HomeBottomIconLayout(
-            painter = painterResource(id = R.drawable.ic_home_schedule),
+            painter = painterResource(id = R.drawable.ic_home_holiday),
             title = stringResource(id = R.string.schedule_write),
             content = stringResource(id = R.string.schedule_write_content),
             onClick = {
@@ -228,53 +211,32 @@ private fun HomeBottomIconLayout(
     content: String,
     onClick: () -> Unit = {},
 ) {
-    Card(
+    Row(
         modifier = Modifier
             .fillMaxWidth()
-            .height(HomeBottomIconLayoutHeight)
+            .height(64.dp)
+            .background(
+                color = SimTongColor.White,
+                shape = RoundedCornerShape(16.dp),
+            )
             .simClickable {
                 onClick()
-            },
-        shape = HomeBottomIconLayoutShape,
-        elevation = HomeBottomIconLayoutElevation,
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(
-                    color = SimTongColor.Transparent,
-                    shape = HomeBottomIconLayoutShape,
-                ),
-        ) {
-
-            Spacer(modifier = Modifier.width(12.dp))
-
-            Image(
-                painter = painter,
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically)
-                    .size(HomeBottomIconLayoutImageSize),
-            )
-
-            Spacer(modifier = Modifier.width(11.dp))
-
-            Column(
-                modifier = Modifier
-                    .height(HomeBottomIconLayoutHeight)
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically),
-            ) {
-                Body5(
-                    text = title,
-                    color = SimTongColor.Gray800,
-                )
-                Body14(
-                    text = content,
-                    color = SimTongColor.Gray300,
-                )
             }
+            .padding(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Image(
+            modifier = Modifier
+                .size(40.dp),
+            painter = painter,
+            contentDescription = null,
+        )
+
+        Spacer(modifier = Modifier.width(8.dp))
+
+        Column {
+            Body5(text = title)
+            Body14(text = content)
         }
     }
 }
