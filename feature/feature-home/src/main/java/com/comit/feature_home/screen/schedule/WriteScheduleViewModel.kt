@@ -5,6 +5,7 @@ import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.schedule.AddPersonalScheduleUseCase
 import com.comit.domain.usecase.schedule.ChangePersonalScheduleUseCase
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
@@ -26,7 +27,6 @@ class WriteScheduleViewModel @Inject constructor(
 
     override val container = container<WriteScheduleState, WriteScheduleSideInEffect>(WriteScheduleState())
 
-    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun writeSchedule(
         title: String,
         scheduleStart: String,
@@ -46,12 +46,11 @@ class WriteScheduleViewModel @Inject constructor(
             when (it) {
                 is BadRequestException -> postSideEffect(WriteScheduleSideInEffect.InputTextFormError)
                 is UnAuthorizedException -> postSideEffect(WriteScheduleSideInEffect.TokenException)
-                else -> throw UnknownException(it.message)
+                else -> throwUnknownException(it)
             }
         }
     }
 
-    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun changeSchedule(
         scheduleId: UUID,
         title: String,
@@ -74,7 +73,7 @@ class WriteScheduleViewModel @Inject constructor(
                 is BadRequestException -> postSideEffect(WriteScheduleSideInEffect.InputTextFormError)
                 is UnknownException -> postSideEffect(WriteScheduleSideInEffect.TokenException)
                 is NotFoundException -> postSideEffect(WriteScheduleSideInEffect.CannotFindSchedule)
-                else -> throw UnknownException(it.message)
+                else -> throwUnknownException(it)
             }
         }
     }
