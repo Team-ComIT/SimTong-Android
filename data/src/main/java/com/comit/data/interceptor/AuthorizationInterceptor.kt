@@ -72,6 +72,7 @@ private val ignoreRequest = listOf(
     CustomRequest("/emails", CustomRestMethod.GET),
     CustomRequest("/files", CustomRestMethod.POST),
     CustomRequest("/commons/password/initialization", CustomRestMethod.PUT),
+    CustomRequest("/commons/token/reissue", CustomRestMethod.PUT)
 )
 
 /**
