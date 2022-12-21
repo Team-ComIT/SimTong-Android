@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.runtime.Composable
@@ -27,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
