@@ -1,12 +1,15 @@
 package com.comit.data.repository
 
+import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteCommonsDataSource
 import com.comit.domain.repository.CommonsRepository
 import com.comit.model.SpotList
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class CommonsRepositoryImpl @Inject constructor(
     private val remoteCommonsDataSource: RemoteCommonsDataSource,
+    private val localAuthDataSource: LocalAuthDataSource,
 ) : CommonsRepository {
 
     override suspend fun findEmployeeNumber(
@@ -21,13 +24,16 @@ class CommonsRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun tokenReissue(
-        refreshToken: String,
-    ) {
-        // TODO("local에 token 저장")
-        remoteCommonsDataSource.tokenReissue(
-            refreshToken = refreshToken
-        )
+    override suspend fun tokenReissue() {
+        val refreshToken = localAuthDataSource.fetchRefreshToken().first()
+
+        if (refreshToken.isNotEmpty()) {
+            remoteCommonsDataSource.tokenReissue(
+                refreshToken = refreshToken
+            ).also { token ->
+                localAuthDataSource.saveToken(token)
+            }
+        }
     }
 
     override suspend fun findAccountExist(
