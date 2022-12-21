@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -14,7 +13,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
-import com.comit.common.systemBarPaddings
+import com.comit.common.systemBarPadding
 import com.comit.core_design_system.theme.SimTongTheme
 import com.comit.feature_auth.navigation.authNavigation
 import com.comit.feature_home.navigation.homeNavigation
@@ -28,7 +27,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        //TODO(limsaehyun): Splash API가 작동하지 않음 수정 요함
         installSplashScreen()
         super.onCreate(savedInstanceState)
 
@@ -49,7 +47,7 @@ class MainActivity : ComponentActivity() {
             ) {
                 NavHost(
                     modifier = Modifier
-                        .padding(systemBarPaddings),
+                        .systemBarPadding(),
                     navController = navController,
                     startDestination = SimTongRoute.Auth.name,
                 ) {
@@ -69,6 +67,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    @Suppress("MagicNumber")
     @Composable
     private fun setWindowInset() {
         window.statusBarColor = MaterialTheme.colors.surface.toArgb()
@@ -77,13 +76,13 @@ class MainActivity : ComponentActivity() {
         @Suppress("DEPRECATION")
         if (MaterialTheme.colors.surface.luminance() > 0.5f) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
-                    View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         }
 
         @Suppress("DEPRECATION")
         if (MaterialTheme.colors.surface.luminance() > 0.5f) {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
-                    View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
     }
 }
