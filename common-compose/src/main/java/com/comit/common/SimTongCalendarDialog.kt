@@ -4,6 +4,7 @@ package com.comit.common
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -43,7 +44,9 @@ import com.comit.common.WeekOfDay.Sunday
 import com.comit.common.WeekOfDay.Thursday
 import com.comit.common.WeekOfDay.Tuesday
 import com.comit.common.WeekOfDay.Wednesday
+import com.comit.common.utils.dateToInt
 import com.comit.common.utils.string
+import com.comit.common.utils.stringToDate
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
@@ -86,8 +89,8 @@ fun SimTongCalendarDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    startDay: Int,
-    endDay: Int,
+    startDay: String,
+    endDay: String,
     isChangeStartDay: Boolean,
     onItemClicked: (String) -> Unit,
     properties: DialogProperties = DialogProperties(),
@@ -103,6 +106,9 @@ fun SimTongCalendarDialog(
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf((calendar.get(Calendar.MONTH) + 1)) }
+
+    val startDay = try { dateToInt(startDay) } catch (e: Exception) { 0 }
+    val endDay = try { dateToInt(endDay) } catch (e: Exception) { 0 }
 
     if (visible) {
         Dialog(
@@ -279,8 +285,8 @@ fun SimTongCalendarDialogItem(
 
     val textColor =
         if (!thisMonth) SimTongColor.Gray100
-        else if (startDay > itemDate && !isChangeStartDay) SimTongColor.Gray100
-        else if (endDay < itemDate && isChangeStartDay) SimTongColor.Gray100
+        else if (startDay > itemDate && !isChangeStartDay && startDay != 0) SimTongColor.Gray100
+        else if (endDay < itemDate && isChangeStartDay && endDay != 0) SimTongColor.Gray100
         else if (weekend) SimTongColor.Gray300
         else SimTongColor.Gray800
 
@@ -293,7 +299,7 @@ fun SimTongCalendarDialogItem(
                 rippleEnabled = false,
             ) {
                 if (clickable) {
-                    onItemClicked(itemDate.toString())
+                    onItemClicked(stringToDate(itemDate.toString()))
                     onDismissRequest()
                 }
             },

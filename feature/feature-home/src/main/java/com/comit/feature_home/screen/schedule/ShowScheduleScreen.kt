@@ -308,9 +308,9 @@ fun ShowScheduleScreen(
                         onClick = {
                             navController.navigate(
                                 route = SimTongScreen.Home.WRITE_SCHEDULE +
-                                    "isNew${true}" + "scheduleId${"k"}" +
-                                    "title${"s"}" + "scheduleStart${"i"}" +
-                                    "scheduleEnd${"a"}"
+                                    "isNew${true}" + "scheduleId${"0"}" +
+                                    "title${"0"}" + "scheduleStart${"0"}" +
+                                    "scheduleEnd${"0"}"
                             )
                         },
                         modifier = Modifier
