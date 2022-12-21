@@ -35,6 +35,7 @@ class SignInViewModel @Inject constructor(
 
             if (employeeNumber.toIntOrNull() == null || employeeNumber.length > EmployeeNumberSizeLimit) {
                 postSideEffect(SignInSideEffect.NumberFormat)
+                return@launch
             }
 
             signInUseCase(

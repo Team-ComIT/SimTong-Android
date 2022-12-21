@@ -129,7 +129,7 @@ fun SignUpPasswordScreen(
                             onCheckPasswordChanged(it)
                         },
                         title = stringResource(id = R.string.password_again),
-                        error = if (password != checkPassword)
+                        error = if (password != checkPassword && checkPassword.isNotEmpty())
                             stringResource(id = R.string.error_message_password) else null,
                         keyboardType = KeyboardType.Password,
                     )
