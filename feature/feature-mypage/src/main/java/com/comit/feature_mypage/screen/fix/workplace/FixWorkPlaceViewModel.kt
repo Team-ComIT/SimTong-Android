@@ -3,8 +3,11 @@ package com.comit.feature_mypage.screen.fix.workplace
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.ConflictException
+import com.comit.domain.exception.ForBiddenException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.TooManyRequestsException
+import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.commons.FetchSpotsUseCase
 import com.comit.domain.usecase.users.ChangeSpotUseCase
@@ -29,7 +32,6 @@ class FixWorkPlaceViewModel @Inject constructor(
 
     override val container = container<FixWorkPlaceState, FixWorkPlaceSideEffect>(FixWorkPlaceState())
 
-    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun fetchWorkPlace() = intent {
         viewModelScope.launch {
             fetchSpotsUseCase()
@@ -39,8 +41,15 @@ class FixWorkPlaceViewModel @Inject constructor(
                             spotList = it.toState().spotList
                         )
                     }
-                }.onFailure {
-                    postSideEffect(FixWorkPlaceSideEffect.FetchWorkPlaceFail)
+                }
+                .onFailure {
+                    when (it) {
+                        is BadRequestException,
+                        is UnAuthorizedException,
+                        is ForBiddenException,
+                        is ConflictException -> postSideEffect(FixWorkPlaceSideEffect.FetchWorkPlaceFail)
+                        else -> throwUnknownException(it)
+                    }
                 }
         }
     }
