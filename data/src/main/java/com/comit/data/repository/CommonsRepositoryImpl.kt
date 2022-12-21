@@ -1,9 +1,7 @@
 package com.comit.data.repository
 
-import com.comit.common.format.isEmailFormat
 import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteCommonsDataSource
-import com.comit.domain.exception.NeedLoginException
 import com.comit.domain.repository.CommonsRepository
 import com.comit.model.SpotList
 import kotlinx.coroutines.flow.first
@@ -29,7 +27,7 @@ class CommonsRepositoryImpl @Inject constructor(
     override suspend fun tokenReissue() {
         val refreshToken = localAuthDataSource.fetchRefreshToken().first()
 
-        if(refreshToken.isNotEmpty()) {
+        if (refreshToken.isNotEmpty()) {
             remoteCommonsDataSource.tokenReissue(
                 refreshToken = refreshToken
             ).also { token ->

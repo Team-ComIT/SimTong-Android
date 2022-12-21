@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -28,7 +27,6 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.StartSideEffect
-import com.comit.feature_auth.mvi.StartState
 import com.comit.feature_auth.vm.StartViewModel
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -78,7 +76,7 @@ fun StartScreen(
     }
 
     sideEffect.observeWithLifecycle {
-        when(it) {
+        when (it) {
             StartSideEffect.NavigateToHome -> {
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN,
