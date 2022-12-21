@@ -1,3 +1,5 @@
+@file: Suppress("TooGenericExceptionCaught", "SwallowedException")
+
 package com.comit.feature_home.calendar
 
 import android.util.Log
@@ -134,7 +136,7 @@ fun SimTongCalendar(
             try {
                 calendarList = organizeList(checkMonth, it, workCountList)
             } catch (e: Exception) {
-                //TODO 달력 리펙토링이 필요함
+                // TODO 달력 리펙토링이 필요함
                 Log.d("TAG", "달력이 아파요 ㅠㅠ")
             }
         }

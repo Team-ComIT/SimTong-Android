@@ -1,11 +1,11 @@
-@file:OptIn(InternalCoroutinesApi::class, InternalCoroutinesApi::class,
+@file:OptIn(
+    InternalCoroutinesApi::class, InternalCoroutinesApi::class,
     InternalCoroutinesApi::class
 )
-@file:Suppress("OPT_IN_IS_NOT_ENABLED", "TooGenericExceptionCaught", "SwallowedException")
+@file:Suppress("OPT_IN_IS_NOT_ENABLED", "TooGenericExceptionCaught", "SwallowedException", "MaxLineLength")
 
 package com.comit.feature_home.screen.schedule
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -30,7 +30,6 @@ import androidx.navigation.NavController
 import com.comit.common.SimTongBtnField
 import com.comit.common.SimTongCalendarDialog
 import com.comit.common.systemBarPaddings
-import com.comit.common.utils.dateToInt
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
@@ -86,7 +85,6 @@ fun WriteScheduleScreen(
 
     var calendarDialogVisible by remember { mutableStateOf(false) }
     var isChangeStartDay by remember { mutableStateOf(true) }
-
 
     val headerText =
         if (isNew) stringResource(id = R.string.schedule_make)
@@ -174,9 +172,7 @@ fun WriteScheduleScreen(
                 error = writeScheduleState.errMsgAlarm,
             )
 
-            val btnEnabled = writeScheduleState.title.isNotEmpty() &&
-                    writeScheduleState.scheduleStart.isNotEmpty() &&
-                    writeScheduleState.scheduleEnd.isNotEmpty()
+            val btnEnabled = writeScheduleState.title.isNotEmpty() && writeScheduleState.scheduleStart.isNotEmpty() && writeScheduleState.scheduleEnd.isNotEmpty()
 
             SimTongBigRoundButton(
                 text = stringResource(id = R.string.check),
@@ -239,4 +235,3 @@ fun ShowWriteSchedule() {
 //        isNew = true
 //    )
 }
-

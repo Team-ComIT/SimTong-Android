@@ -1,10 +1,9 @@
-@file:Suppress("lexicographic")
+@file:Suppress("lexicographic", "SwallowedException", "TooGenericExceptionCaught")
 
 package com.comit.common
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,11 +44,10 @@ import com.comit.common.WeekOfDay.Thursday
 import com.comit.common.WeekOfDay.Tuesday
 import com.comit.common.WeekOfDay.Wednesday
 import com.comit.common.utils.dateToInt
+import com.comit.common.utils.intToDate
 import com.comit.common.utils.string
-import com.comit.common.utils.stringToDate
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body3
 import java.time.LocalDate
@@ -259,7 +257,8 @@ fun SimTongCalendarDialogList(
                         onDismissRequest = onDismissRequest,
                         isChangeStartDay = isChangeStartDay,
                         modifier = Modifier
-                            .fillParentMaxWidth(1.toFloat() / 7.toFloat()),
+                            .fillParentMaxWidth(1.toFloat() / 7.toFloat())
+                            .height(30.dp),
                     )
                 }
             }
@@ -292,21 +291,16 @@ fun SimTongCalendarDialogItem(
 
     val clickable = textColor != SimTongColor.Gray100
 
-    Box(
-        modifier = modifier
-            .height(30.dp)
-            .simClickable(
-                rippleEnabled = false,
-            ) {
-                if (clickable) {
-                    onItemClicked(stringToDate(itemDate.toString()))
-                    onDismissRequest()
-                }
-            },
-    ) {
+    Box(modifier = modifier) {
         Body14(
             text = day.toString(),
             color = textColor,
+            onClick = {
+                if (clickable) {
+                    onItemClicked(intToDate(itemDate))
+                    onDismissRequest()
+                }
+            },
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentSize(Alignment.Center)
