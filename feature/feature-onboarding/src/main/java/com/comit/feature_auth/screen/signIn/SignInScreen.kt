@@ -70,9 +70,7 @@ fun SignInScreen(
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN
                 ) {
-                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
-                        inclusive = true
-                    }
+                    popUpTo(0)
                 }
             }
             SignInSideEffect.IdOrPasswordNotCorrect -> {

@@ -14,20 +14,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.button.SimTongButtonColor
 import com.comit.feature_auth.R
+import com.comit.feature_auth.mvi.StartSideEffect
+import com.comit.feature_auth.mvi.StartState
+import com.comit.feature_auth.vm.StartViewModel
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
 
 private val imageList = listOf(
@@ -43,11 +50,15 @@ const val Delay: Long = 3000
 
 const val Tween: Int = 600
 
-@OptIn(ExperimentalPagerApi::class)
+@OptIn(ExperimentalPagerApi::class, InternalCoroutinesApi::class)
 @Composable
 fun StartScreen(
     navController: NavController,
 ) {
+    val vm: StartViewModel = hiltViewModel()
+    val container = vm.container
+    val sideEffect = container.sideEffectFlow
+
     val pagerState = rememberPagerState(
         pageCount = imageList.size,
     )
@@ -59,6 +70,22 @@ fun StartScreen(
                 page = (pagerState.currentPage + 1) % (pagerState.pageCount),
                 animationSpec = tween(Tween)
             )
+        }
+    }
+
+    LaunchedEffect(key1 = vm) {
+        vm.authLogin()
+    }
+
+    sideEffect.observeWithLifecycle {
+        when(it) {
+            StartSideEffect.NavigateToHome -> {
+                navController.navigate(
+                    route = SimTongScreen.Home.MAIN,
+                ) {
+                    popUpTo(0)
+                }
+            }
         }
     }
 
