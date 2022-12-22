@@ -1,6 +1,7 @@
 package com.comit.core_design_system.modifier
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ripple.rememberRipple
@@ -23,26 +24,31 @@ import com.comit.core_design_system.util.runIf
  *
  * @return clickable 이 적용된 [Modifier]
  */
+@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.simClickable(
     rippleEnabled: Boolean = true,
     rippleColor: Color? = null,
     runIf: Boolean = true,
     singleClick: Boolean = true,
-    onClick: () -> Unit,
+    onLongClick: (() -> Unit)? = null,
+    onClick: (() -> Unit)?,
 ) = runIf(runIf) {
     composed {
         val multipleEventsCutter = remember { MultipleEventsCutter.get() }
 
-        clickable(
+        combinedClickable(
             onClick = {
-                if (singleClick) {
-                    multipleEventsCutter.processEvent {
-                        onClick()
+                onClick?.let {
+                    if (singleClick) {
+                        multipleEventsCutter.processEvent {
+                            it()
+                        }
+                    } else {
+                        it()
                     }
-                } else {
-                    onClick()
                 }
             },
+            onLongClick = onLongClick,
             indication = rememberRipple(
                 color = rippleColor ?: Color.Unspecified,
             ).takeIf {
