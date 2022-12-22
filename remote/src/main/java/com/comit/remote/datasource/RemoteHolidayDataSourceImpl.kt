@@ -59,4 +59,8 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
             year = year
         ).toModel()
     }
+
+    override suspend fun checkCanWriteHoliday() = simTongApiCall {
+        holidayAPI.checkCanWriteHoliday()
+    }
 }

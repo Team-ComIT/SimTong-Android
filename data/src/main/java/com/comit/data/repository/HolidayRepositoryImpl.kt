@@ -54,4 +54,8 @@ class HolidayRepositoryImpl @Inject constructor(
             year = year
         )
     }
+
+    override suspend fun checkCanWriteHoliday() {
+        remoteHolidayDataSource.checkCanWriteHoliday()
+    }
 }

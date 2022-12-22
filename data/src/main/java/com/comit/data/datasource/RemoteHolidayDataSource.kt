@@ -27,4 +27,6 @@ interface RemoteHolidayDataSource {
     suspend fun checkLeftHoliday(
         year: Int
     ): LeftHoliday
+
+    suspend fun checkCanWriteHoliday()
 }
