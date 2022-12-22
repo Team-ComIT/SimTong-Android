@@ -4,6 +4,7 @@ package com.comit.common
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -281,9 +282,12 @@ fun SimTongCalendarDialogItem(
     isChangeStartDay: Boolean,
 ) {
     val itemDate = (year.toString() + string.format("%02d", month) + string.format("%02d", day)).toInt()
+    val isStartDay = itemDate == startDay && isChangeStartDay
+    val isEndDay = itemDate == endDay && !isChangeStartDay
 
     val textColor =
-        if (!thisMonth) SimTongColor.Gray100
+        if (isStartDay || isEndDay) SimTongColor.White
+        else if (!thisMonth) SimTongColor.Gray100
         else if (startDay > itemDate && !isChangeStartDay && startDay != 0) SimTongColor.Gray100
         else if (endDay < itemDate && isChangeStartDay && endDay != 0) SimTongColor.Gray100
         else if (weekend) SimTongColor.Gray300
@@ -291,7 +295,22 @@ fun SimTongCalendarDialogItem(
 
     val clickable = textColor != SimTongColor.Gray100
 
-    Box(modifier = modifier) {
+    val backgroundCheckCircle = isStartDay || isEndDay
+
+    Box(
+        modifier = modifier
+    ) {
+        if (backgroundCheckCircle) {
+            Image(
+                painter = painterResource(id = SimTongIcon.Schedule_On.drawableId),
+                contentDescription = SimTongIcon.Schedule_On.contentDescription,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(Alignment.Center)
+                    .size(30.dp),
+            )
+        }
+
         Body14(
             text = day.toString(),
             color = textColor,
@@ -303,7 +322,7 @@ fun SimTongCalendarDialogItem(
             },
             modifier = Modifier
                 .fillMaxSize()
-                .wrapContentSize(Alignment.Center)
+                .wrapContentSize(Alignment.Center),
         )
     }
 }
