@@ -158,16 +158,14 @@ fun WriteScheduleScreen(
                     }
                     vm.cancelErrMsgAll()
                 },
-                startDay = writeScheduleState.scheduleStart,
-                endDay = writeScheduleState.scheduleEnd,
+                startDayDate = writeScheduleState.scheduleStart,
+                endDayDate = writeScheduleState.scheduleEnd,
                 isChangeStartDay = isChangeStartDay
             )
-            
             SimTongTimerDialog(
                 visible = timerDialogVisible,
                 onDismissRequest = { timerDialogVisible = false },
                 onBtnClick = { vm.inputAlarm(it) },
-                alarm = writeScheduleState.alarm,
             )
 
             SimTongBtnField(

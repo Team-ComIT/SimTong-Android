@@ -31,10 +31,10 @@ fun stringToDate(date: String): String {
 }
 
 fun intToDate(date: Int): String {
-    val date = date.toString()
-    val year = date.substring(IntSubStringYear, IntSubStringMonth)
-    val month = date.substring(IntSubStringMonth, IntSubStringDay)
-    val day = date.substring(IntSubStringDay)
+    val dateStr = date.toString()
+    val year = dateStr.substring(IntSubStringYear, IntSubStringMonth)
+    val month = dateStr.substring(IntSubStringMonth, IntSubStringDay)
+    val day = dateStr.substring(IntSubStringDay)
 
     return "$year-$month-$day"
 }

@@ -1,10 +1,10 @@
 package com.comit.common.dialog.timerdialog
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -44,25 +44,33 @@ private val DialogItemPadding = PaddingValues(
     horizontal = 25.dp
 )
 
+private const val HourStart: Int = 0
+private const val HourEnd: Int = 23
+
+private const val MinStart: Int = 0
+private const val MinEnd: Int = 59
+
+private const val SecondStart: Int = 0
+private const val SecondEnd: Int = 59
+
 @Composable
 fun SimTongTimerDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    alarm: String,
     onBtnClick: (String) -> Unit,
     properties: DialogProperties = DialogProperties(),
 ) {
-    var hour by remember { mutableStateOf(0) }
-    val hourList = ArrayList<Int>().map {
-        for(i in 1 until 24) {
+    var hour by remember { mutableStateOf("00") }
+    val hourList = (HourStart..HourEnd).map { string.format("%02d", it) }.toList()
 
-        }
-    }
+    var min by remember { mutableStateOf("00") }
+    val minList = (MinStart..MinEnd).map { string.format("%02d", it) }.toList()
 
-    Log.d("TAG", "SimTongTimerDialog: $hourList")
+    var second by remember { mutableStateOf("00") }
+    val secondList = (SecondStart..SecondEnd).map { string.format("%02d", it) }.toList()
 
-    if(visible) {
+    if (visible) {
         Dialog(
             onDismissRequest = onDismissRequest,
             properties = properties,
@@ -75,7 +83,7 @@ fun SimTongTimerDialog(
                         shape = RoundedCornerShape(DialogShape),
                     )
             ) {
-                Spacer(modifier = Modifier.height(17.dp))
+                Spacer(modifier = Modifier.height(25.dp))
 
                 Body3(
                     text = stringResource(id = R.string.alarm),
@@ -84,11 +92,31 @@ fun SimTongTimerDialog(
 
                 Spacer(modifier = Modifier.height(19.dp))
 
-//                ListItemPicker(
-//                    value = string.format("%02d", hour),
-//                    onValueChange = ,
-//                    list =
-//                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentWidth(Alignment.CenterHorizontally)
+                ) {
+                    ListItemPicker(
+                        value = hour,
+                        onValueChange = { hour = it },
+                        list = hourList,
+                    )
+
+                    ListItemPicker(
+                        value = min,
+                        onValueChange = { min = it },
+                        list = minList,
+                    )
+
+                    ListItemPicker(
+                        value = second,
+                        onValueChange = { second = it },
+                        list = secondList,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(36.dp))
 
                 Box(modifier = Modifier.fillMaxWidth()) {
                     SimTongSmallRoundButton(
@@ -108,6 +136,7 @@ fun SimTongTimerDialog(
                             .width(170.dp)
                     ) {
                         onDismissRequest()
+                        onBtnClick("$hour:$min:$second")
                     }
                 }
             }

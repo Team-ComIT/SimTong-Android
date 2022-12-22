@@ -88,8 +88,8 @@ fun SimTongCalendarDialog(
     modifier: Modifier = Modifier,
     visible: Boolean,
     onDismissRequest: () -> Unit,
-    startDay: String,
-    endDay: String,
+    startDayDate: String,
+    endDayDate: String,
     isChangeStartDay: Boolean,
     onItemClicked: (String) -> Unit,
     properties: DialogProperties = DialogProperties(),
@@ -106,8 +106,8 @@ fun SimTongCalendarDialog(
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf((calendar.get(Calendar.MONTH) + 1)) }
 
-    val startDay = try { dateToInt(startDay) } catch (e: Exception) { 0 }
-    val endDay = try { dateToInt(endDay) } catch (e: Exception) { 0 }
+    val startDay = try { dateToInt(startDayDate) } catch (e: Exception) { 0 }
+    val endDay = try { dateToInt(endDayDate) } catch (e: Exception) { 0 }
 
     if (visible) {
         Dialog(
@@ -144,13 +144,13 @@ fun SimTongCalendarDialog(
                         IconButton(
                             onClick = {
                                 checkMonth --
-                                val calendar = GregorianCalendar(
+                                val calendarAddCheckMonth = GregorianCalendar(
                                     today.get(Calendar.YEAR),
                                     today.get(Calendar.MONTH) + checkMonth,
                                     today.get(Calendar.DATE)
                                 )
-                                year = calendar.get(Calendar.YEAR)
-                                month = (calendar.get(Calendar.MONTH) + 1)
+                                year = calendarAddCheckMonth.get(Calendar.YEAR)
+                                month = (calendarAddCheckMonth.get(Calendar.MONTH) + 1)
                             },
                             modifier = Modifier.size(SimTongCalendarDateButtonSize),
                         ) {
@@ -165,13 +165,13 @@ fun SimTongCalendarDialog(
                         IconButton(
                             onClick = {
                                 checkMonth ++
-                                val calendar = GregorianCalendar(
+                                val calendarAddCheckMonth = GregorianCalendar(
                                     today.get(Calendar.YEAR),
                                     today.get(Calendar.MONTH) + checkMonth,
                                     today.get(Calendar.DATE)
                                 )
-                                year = calendar.get(Calendar.YEAR)
-                                month = (calendar.get(Calendar.MONTH) + 1)
+                                year = calendarAddCheckMonth.get(Calendar.YEAR)
+                                month = (calendarAddCheckMonth.get(Calendar.MONTH) + 1)
                             },
                             modifier = Modifier.size(SimTongCalendarDateButtonSize)
                         ) {
