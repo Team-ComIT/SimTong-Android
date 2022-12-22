@@ -1,9 +1,14 @@
 package com.comit.domain.exception
 
+import com.google.firebase.crashlytics.ktx.crashlytics
+import com.google.firebase.ktx.Firebase
+
 /**
  * 심통에서 예상 밖에 에외를 처리할 때 사용되는 함수
  *
  * NoInterNetException, NoConnectivityException 등 모든 경우에 사용되는 Exception은 별도로 처리
+ * Exception이 발생할 경우 Firebase Crashlytics에 제보합니다.
+ *
  */
 fun throwUnknownException(e: Throwable) {
     // TODO(limsaehyun): 인터넷 에러가 UnknwonException으로 감지됨 해결 필요
@@ -14,6 +19,9 @@ fun throwUnknownException(e: Throwable) {
     when (e) {
         is NoInternetException -> throw NoInternetException()
         is NoConnectivityException -> throw NoInternetException()
-        else -> throw UnknownException(e.message)
+        else -> {
+            Firebase.crashlytics.recordException(e)
+            throw UnknownException(e.message)
+        }
     }
 }
