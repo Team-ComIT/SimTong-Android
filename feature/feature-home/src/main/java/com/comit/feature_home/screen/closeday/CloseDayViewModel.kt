@@ -7,6 +7,7 @@ import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
+import com.comit.domain.usecase.holiday.CheckLeftHolidayUseCase
 import com.comit.domain.usecase.holiday.DayOffHolidaysUseCase
 import com.comit.domain.usecase.holiday.SetAnnualUseCase
 import com.comit.domain.usecase.holiday.SetWorkUseCase
@@ -27,6 +28,7 @@ class CloseDayViewModel @Inject constructor(
     private val dayOffHolidaysUseCase: DayOffHolidaysUseCase,
     private val setAnnualUseCase: SetAnnualUseCase,
     private val setWorkUseCase: SetWorkUseCase,
+    private val checkLeftHolidayUseCase: CheckLeftHolidayUseCase,
 ) : ContainerHost<CloseDayState, CloseDaySideEffect>, ViewModel() {
 
     override val container = container<CloseDayState, CloseDaySideEffect>(CloseDayState())
@@ -72,6 +74,18 @@ class CloseDayViewModel @Inject constructor(
                     is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
                     is NotFoundException -> postSideEffect(CloseDaySideEffect.AlreadyWork)
                     else -> throwUnknownException(it)
+                }
+            }
+        }
+    }
+
+    fun checkLeftHoliday(year: Int) = intent {
+        viewModelScope.launch {
+            checkLeftHolidayUseCase(
+                year = year,
+            ).onSuccess {
+                reduce {
+                    state.copy(leftHoliday = it.result)
                 }
             }
         }

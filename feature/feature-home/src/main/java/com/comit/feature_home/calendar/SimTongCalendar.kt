@@ -130,7 +130,7 @@ fun SimTongCalendar(
         LaunchedEffect(getWorkCountViewModel) {
             getWorkCountViewModel.getWorkCountList(
                 startAt = getStartAt(checkMonth),
-                endAt = getEndAt(checkMonth)
+                endAt = getEndAt(checkMonth),
             )
         }
     }
@@ -141,7 +141,7 @@ fun SimTongCalendar(
             getHolidayViewModel.getHolidayList(
                 startAt = getStartAt(checkMonth),
                 endAt = getEndAt(checkMonth),
-                status = statusName.statusName
+                status = statusName.statusName,
             )
         }
     }
@@ -391,7 +391,12 @@ fun SimTongCalendarItem(
         } else {
             Body12(
                 text = day,
-                color = textColor
+                color = textColor,
+                onClick = {
+                    if (thisMouth && !weekend) {
+                        onItemClicked(day.toInt(), workState)
+                    }
+                }
             )
         }
 

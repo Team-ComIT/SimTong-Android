@@ -1,6 +1,7 @@
 package com.comit.data.datasource
 
 import com.comit.model.HolidayList
+import com.comit.model.LeftHoliday
 import java.util.Date
 
 interface RemoteHolidayDataSource {
@@ -22,4 +23,8 @@ interface RemoteHolidayDataSource {
     suspend fun setWork(
         date: Date
     )
+
+    suspend fun checkLeftHoliday(
+        year: Int
+    ): LeftHoliday
 }
