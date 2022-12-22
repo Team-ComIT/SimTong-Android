@@ -181,7 +181,8 @@ fun Title1(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.title1,
@@ -202,7 +203,8 @@ fun Title2(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.title2,
@@ -223,7 +225,8 @@ fun Title3(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.title3,
@@ -244,7 +247,8 @@ fun Body1(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body1,
@@ -265,7 +269,8 @@ fun Body2(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body2,
@@ -286,7 +291,8 @@ fun Body3(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body3,
@@ -307,7 +313,8 @@ fun Body4(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body4,
@@ -328,7 +335,8 @@ fun Body5(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body5,
@@ -349,7 +357,8 @@ fun Body6(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body6,
@@ -370,7 +379,8 @@ fun Body7(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body7,
@@ -391,7 +401,8 @@ fun Body8(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body8,
@@ -412,7 +423,8 @@ fun Body9(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body9,
@@ -435,7 +447,8 @@ fun UnderlineBody9(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = buildAnnotatedString {
             append(text)
@@ -473,7 +486,8 @@ fun Body10(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body10,
@@ -494,7 +508,8 @@ fun Body11(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body11,
@@ -515,7 +530,8 @@ fun Body12(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body12,
@@ -538,7 +554,8 @@ fun UnderlineBody12(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = buildAnnotatedString {
             append(text)
@@ -576,7 +593,8 @@ fun Body13(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body13,
@@ -598,7 +616,8 @@ fun LineHeightBody13(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body13,
@@ -620,7 +639,8 @@ fun Body14(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body14,
@@ -641,7 +661,8 @@ fun Error(
     Text(
         modifier = modifier.simClickable(
             rippleEnabled = rippleEnabled,
-            onClick = { onClick?.let { it() } },
+            onClick = onClick,
+            runIf = onClick != null,
         ),
         text = text,
         style = SimTongTypography.body8,
