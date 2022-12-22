@@ -282,12 +282,12 @@ fun SimTongCalendarDialogItem(
     isChangeStartDay: Boolean,
 ) {
     val itemDate = (year.toString() + string.format("%02d", month) + string.format("%02d", day)).toInt()
-    val isStartDay = itemDate == startDay && isChangeStartDay
-    val isEndDay = itemDate == endDay && !isChangeStartDay
+    val isStartDay = itemDate == startDay && isChangeStartDay && thisMonth
+    val isEndDay = itemDate == endDay && !isChangeStartDay && thisMonth
 
     val textColor =
-        if (isStartDay || isEndDay) SimTongColor.White
-        else if (!thisMonth) SimTongColor.Gray100
+        if (!thisMonth) SimTongColor.Gray100
+        else if (isStartDay || isEndDay) SimTongColor.White
         else if (startDay > itemDate && !isChangeStartDay && startDay != 0) SimTongColor.Gray100
         else if (endDay < itemDate && isChangeStartDay && endDay != 0) SimTongColor.Gray100
         else if (weekend) SimTongColor.Gray300
