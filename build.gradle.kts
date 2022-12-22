@@ -37,6 +37,7 @@ buildscript {
         classpath(Dependency.GradlePlugin.GRADLE_HILT)
         classpath(Dependency.GradlePlugin.GOOGLE_SERVICE)
         classpath(Dependency.GradlePlugin.FIREBASE_DISTRIBUTION)
+        classpath(Dependency.GradlePlugin.FIREBASE_CRASHLYTICS)
     }
 }
 
