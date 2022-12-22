@@ -1,6 +1,6 @@
 @file:Suppress("lexicographic", "SwallowedException", "TooGenericExceptionCaught")
 
-package com.comit.common
+package com.comit.common.dialog
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
@@ -37,13 +37,13 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.comit.common.WeekOfDay.Friday
-import com.comit.common.WeekOfDay.Monday
-import com.comit.common.WeekOfDay.Saturday
-import com.comit.common.WeekOfDay.Sunday
-import com.comit.common.WeekOfDay.Thursday
-import com.comit.common.WeekOfDay.Tuesday
-import com.comit.common.WeekOfDay.Wednesday
+import com.comit.common.dialog.WeekOfDay.Friday
+import com.comit.common.dialog.WeekOfDay.Monday
+import com.comit.common.dialog.WeekOfDay.Saturday
+import com.comit.common.dialog.WeekOfDay.Sunday
+import com.comit.common.dialog.WeekOfDay.Thursday
+import com.comit.common.dialog.WeekOfDay.Tuesday
+import com.comit.common.dialog.WeekOfDay.Wednesday
 import com.comit.common.utils.dateToInt
 import com.comit.common.utils.intToDate
 import com.comit.common.utils.string
@@ -367,7 +367,7 @@ private fun getSimTongDialogList(
 
     for (i in 1..max) {
         val dayOfWeek = LocalDate.of(year, month, i).dayOfWeek.value
-        val weekend = dayOfWeek == com.comit.common.Saturday || dayOfWeek == com.comit.common.Sunday
+        val weekend = dayOfWeek == com.comit.common.dialog.Saturday || dayOfWeek == com.comit.common.dialog.Sunday
 
         calendarList.add(
             SimTongCalendarDialogData(

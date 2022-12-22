@@ -28,7 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.comit.common.SimTongBtnField
-import com.comit.common.SimTongCalendarDialog
+import com.comit.common.dialog.SimTongCalendarDialog
+import com.comit.common.dialog.timerdialog.SimTongTimerDialog
 import com.comit.common.systemBarPaddings
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
@@ -85,6 +86,7 @@ fun WriteScheduleScreen(
 
     var calendarDialogVisible by remember { mutableStateOf(false) }
     var isChangeStartDay by remember { mutableStateOf(true) }
+    var timerDialogVisible by remember { mutableStateOf(false) }
 
     val headerText =
         if (isNew) stringResource(id = R.string.schedule_make)
@@ -147,10 +149,7 @@ fun WriteScheduleScreen(
 
             SimTongCalendarDialog(
                 visible = calendarDialogVisible,
-                onDismissRequest = {
-                    calendarDialogVisible = false
-                    vm.cancelErrMsgAll()
-                },
+                onDismissRequest = { calendarDialogVisible = false },
                 onItemClicked = {
                     if (isChangeStartDay) {
                         vm.inputScheduleStart(it)
@@ -163,9 +162,16 @@ fun WriteScheduleScreen(
                 endDay = writeScheduleState.scheduleEnd,
                 isChangeStartDay = isChangeStartDay
             )
+            
+            SimTongTimerDialog(
+                visible = timerDialogVisible,
+                onDismissRequest = { timerDialogVisible = false },
+                onBtnClick = { vm.inputAlarm(it) },
+                alarm = writeScheduleState.alarm,
+            )
 
             SimTongBtnField(
-                onClick = { },
+                onClick = { timerDialogVisible = true },
                 value = writeScheduleState.alarm,
                 hint = alarmHint,
                 title = stringResource(id = R.string.alarm),
