@@ -12,10 +12,11 @@ import java.util.Date
 
 interface HolidayAPI {
 
-    @GET("$HOLIDAYS")
+    @GET("$HOLIDAYS/individual")
     suspend fun fetchHolidays(
         @Query("start_at") startAt: String,
         @Query("end_at") endAt: String,
+        @Query("status") status: String,
     ): FetchHolidaysResponse
 
     @POST("$HOLIDAYS/dayoff")

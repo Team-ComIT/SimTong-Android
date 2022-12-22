@@ -62,9 +62,17 @@ fun organizeList(
                 restDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
             }
         }
-//        if (element.type == TypeName.ANNUAL) {
-//            annualDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
-//        }
+        if (element.type == TypeName.ANNUAL) {
+            if (dateToInt(element.date) < (year.toString() + string.format("%02d", month) + "00").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                annualDayList[day - getStartAt(checkMonth).substring(SubStringDay).toInt()] = true
+            } else if (dateToInt(element.date) > (year.toString() + string.format("%02d", month) + "31").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                annualDayList[day + min + max - 1] = true
+            } else {
+                annualDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
+            }
+        }
     }
 
     if (workCountList != null) {

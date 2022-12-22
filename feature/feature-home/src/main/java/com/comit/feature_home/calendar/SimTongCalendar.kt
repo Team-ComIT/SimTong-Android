@@ -64,6 +64,18 @@ data class SimTongCalendarData(
     val today: Boolean
 )
 
+enum class SimTongCalendarStatus(
+    val statusName: String,
+) {
+    WRITTEN(
+        statusName = "WRITTEN"
+    ),
+
+    COMPLETED(
+        statusName = "COMPLETED"
+    ),
+}
+
 private const val Week: Int = 7
 
 @Stable
@@ -78,7 +90,8 @@ fun SimTongCalendar(
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
     onBeforeClicked: (Date, Int) -> Unit = { _, _ -> },
     onNextClicked: (Date, Int) -> Unit = { _, _ -> },
-    refresh: Boolean = false
+    refresh: Boolean = false,
+    statusName: SimTongCalendarStatus = SimTongCalendarStatus.COMPLETED
 ) {
     var checkMonth by remember { mutableStateOf(0) }
 
@@ -127,7 +140,8 @@ fun SimTongCalendar(
             workCountList = it
             getHolidayViewModel.getHolidayList(
                 startAt = getStartAt(checkMonth),
-                endAt = getEndAt(checkMonth)
+                endAt = getEndAt(checkMonth),
+                status = statusName.statusName
             )
         }
     }

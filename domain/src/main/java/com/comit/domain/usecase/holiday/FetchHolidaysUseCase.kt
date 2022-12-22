@@ -10,10 +10,12 @@ class FetchHolidaysUseCase @Inject constructor(
     suspend operator fun invoke(
         startAt: String,
         endAt: String,
+        status: String,
     ) = kotlin.runCatching {
         repository.fetchHolidays(
             startAt = startAt,
-            endAt = endAt
+            endAt = endAt,
+            status = status,
         )
     }
 }

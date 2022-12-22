@@ -8,6 +8,7 @@ interface RemoteHolidayDataSource {
     suspend fun fetchHolidays(
         startAt: String,
         endAt: String,
+        status: String,
     ): HolidayList
 
     suspend fun dayOffHolidays(
