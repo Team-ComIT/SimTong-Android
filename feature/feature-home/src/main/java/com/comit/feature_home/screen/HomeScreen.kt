@@ -1,7 +1,4 @@
-@file:OptIn(
-    ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
-    InternalCoroutinesApi::class, InternalCoroutinesApi::class
-)
+@file:OptIn(ExperimentalMaterialApi::class, InternalCoroutinesApi::class,)
 
 package com.comit.feature_home.screen
 

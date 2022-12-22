@@ -14,10 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -116,6 +118,8 @@ fun SimTongCalendar(
         )
     }
 
+    var changePage by remember { mutableStateOf(false) }
+
     LaunchedEffect(getWorkCountViewModel) {
         getWorkCountViewModel.getWorkCountList(
             startAt = getStartAt(checkMonth),
@@ -149,6 +153,7 @@ fun SimTongCalendar(
         getHolidayViewModel.holidayList.observe(lifecycle) {
             try {
                 calendarList = organizeList(checkMonth, it, workCountList)
+                changePage = false
             } catch (e: Exception) {
                 // TODO 달력 리펙토링이 필요함
                 Log.d("TAG", "달력이 아파요 ㅠㅠ")
@@ -171,6 +176,7 @@ fun SimTongCalendar(
             onBeforeClicked = {
                 checkMonth--
                 calendar.add(Calendar.MONTH, checkMonth)
+                changePage = true
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
                 date = Date.valueOf(string.format("%02d", year) + "-" + string.format("%02d", month) + "-01")
@@ -183,6 +189,7 @@ fun SimTongCalendar(
             onNextClicked = {
                 checkMonth++
                 calendar.add(Calendar.MONTH, checkMonth)
+                changePage = true
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
                 date = Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")
@@ -203,10 +210,19 @@ fun SimTongCalendar(
         ) {
             WeekTopRow()
 
-            SimTongCalendarList(
-                list = calendarList,
-                onItemClicked = onItemClicked
-            )
+            if (changePage) {
+                CircularProgressIndicator(
+                    color = SimTongColor.MainColor,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.Center),
+                )
+            } else {
+                SimTongCalendarList(
+                    list = calendarList,
+                    onItemClicked = onItemClicked
+                )
+            }
         }
     }
 }
