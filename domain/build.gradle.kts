@@ -48,6 +48,9 @@ dependencies {
     implementation(Dependency.Hilt.INJECT)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
 
+    implementation(Dependency.FIREBASE.FIREBASE_CRASHLYTICS)
+    implementation(Dependency.FIREBASE.FIREBASE_ANALYTICS)
+
     implementation(Dependency.Kotlin.COROUTINES_CORE)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)
 
