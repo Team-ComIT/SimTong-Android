@@ -40,6 +40,9 @@ interface HolidayAPI {
         @Query("year") year: Int
     ): CheckLeftHolidayResponse
 
+    @GET("$HOLIDAYS/verification-period")
+    suspend fun checkCanWriteHoliday()
+
     private companion object {
         const val HOLIDAYS = "holidays"
     }
