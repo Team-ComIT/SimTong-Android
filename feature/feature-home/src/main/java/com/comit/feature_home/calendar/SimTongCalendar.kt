@@ -1,5 +1,8 @@
+@file:Suppress("TooGenericExceptionCaught", "SwallowedException")
+
 package com.comit.feature_home.calendar
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -130,7 +133,12 @@ fun SimTongCalendar(
     }
     LaunchedEffect(getHolidayViewModel) {
         getHolidayViewModel.holidayList.observe(lifecycle) {
-            calendarList = organizeList(checkMonth, it, workCountList)
+            try {
+                calendarList = organizeList(checkMonth, it, workCountList)
+            } catch (e: Exception) {
+                // TODO 달력 리펙토링이 필요함
+                Log.d("TAG", "달력이 아파요 ㅠㅠ")
+            }
         }
     }
 

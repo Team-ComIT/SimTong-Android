@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
@@ -185,18 +184,11 @@ fun Header(
 
         if (sideBtnText != null) {
             Body6(
-                modifier = Modifier
-                    .simClickable(
-                        rippleEnabled = false,
-                        runIf = enabledTextBtn,
-                    ) {
-                        if (onTextBtnClicked != null) {
-                            onTextBtnClicked()
-                        }
-                    }
-                    .padding(6.dp),
+                modifier = Modifier.padding(6.dp),
                 text = stringResource(id = R.string.fix),
                 color = textBtnColor.value,
+                rippleEnabled = false,
+                onClick = onTextBtnClicked,
             )
         }
     }
