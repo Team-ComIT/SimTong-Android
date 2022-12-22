@@ -13,10 +13,12 @@ class HolidayRepositoryImpl @Inject constructor(
     override suspend fun fetchHolidays(
         startAt: String,
         endAt: String,
+        status: String
     ): HolidayList {
         return remoteHolidayDataSource.fetchHolidays(
             startAt = startAt,
-            endAt = endAt
+            endAt = endAt,
+            status = status,
         )
     }
 

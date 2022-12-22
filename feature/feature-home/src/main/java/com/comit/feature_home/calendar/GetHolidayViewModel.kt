@@ -22,11 +22,13 @@ class GetHolidayViewModel @Inject constructor(
     fun getHolidayList(
         startAt: String,
         endAt: String,
+        status: String,
     ) {
         viewModelScope.launch {
             fetchHolidaysUseCase(
                 startAt = startAt,
                 endAt = endAt,
+                status = status,
             ).onSuccess {
                 _holidayList.value = it.toState().holidayList
             }.onFailure {}
