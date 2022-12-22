@@ -1,4 +1,4 @@
-@file: Suppress("TooGenericExceptionCaught", "SwallowedException")
+@file:Suppress("TooGenericExceptionCaught", "SwallowedException")
 
 package com.comit.feature_home.calendar
 

@@ -3,7 +3,9 @@ package com.comit.feature_mypage.screen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.common.unit.sizeInKb
+import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.NeedLoginException
+import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.users.ChangeProfileImageUseCase
 import com.comit.domain.usecase.users.FetchUserInformationUseCase
@@ -29,7 +31,6 @@ class MyPageViewModel @Inject constructor(
 
     override val container = container<MyPageState, MyPageSideEffect>(MyPageState())
 
-    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun fetchUserInformation() = intent {
         viewModelScope.launch {
             fetchUserInformationUseCase()
@@ -45,13 +46,18 @@ class MyPageViewModel @Inject constructor(
                     }
                 }
                 .onFailure {
-                    reduce {
-                        state.copy(
-                            name = EmailException.ERROR_MESSAGE_NAME,
-                            nickname = EmailException.ERROR_MESSAGE_NICKNAME,
-                            email = EmailException.ERROR_MESSAGE_EMAIL,
-                            spot = EmailException.ERROR_MESSAGE_SPOT,
-                        )
+                    when (it) {
+                        is BadRequestException, is UnAuthorizedException -> {
+                            reduce {
+                                state.copy(
+                                    name = EmailException.ERROR_MESSAGE_NAME,
+                                    nickname = EmailException.ERROR_MESSAGE_NICKNAME,
+                                    email = EmailException.ERROR_MESSAGE_EMAIL,
+                                    spot = EmailException.ERROR_MESSAGE_SPOT,
+                                )
+                            }
+                        }
+                        else -> throwUnknownException(it)
                     }
                 }
         }
