@@ -4,6 +4,7 @@ data class CloseDayState(
     val year: String = "",
     val month: String = "",
     val day: String = "",
+    val leftHoliday: Int = 0,
 )
 
 sealed class CloseDaySideEffect {

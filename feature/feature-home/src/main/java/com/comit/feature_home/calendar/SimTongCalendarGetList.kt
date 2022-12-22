@@ -1,4 +1,4 @@
-@file:Suppress("ComplexMethod", "NestedBlockDepth")
+@file:Suppress("ComplexMethod", "NestedBlockDepth", "LongMethod")
 
 package com.comit.feature_home.calendar
 

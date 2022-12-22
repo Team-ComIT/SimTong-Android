@@ -1,6 +1,7 @@
 package com.comit.remote.api
 
 import com.comit.remote.request.holidays.DayOffRequest
+import com.comit.remote.response.holidays.CheckLeftHolidayResponse
 import com.comit.remote.response.holidays.FetchHolidaysResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -33,6 +34,11 @@ interface HolidayAPI {
     suspend fun setWork(
         @Query("date") date: Date
     )
+
+    @GET("$HOLIDAYS/annual/count")
+    suspend fun checkLeftHoliday(
+        @Query("year") year: Int
+    ): CheckLeftHolidayResponse
 
     private companion object {
         const val HOLIDAYS = "holidays"

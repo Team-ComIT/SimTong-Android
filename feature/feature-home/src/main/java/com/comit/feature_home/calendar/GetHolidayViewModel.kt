@@ -31,7 +31,9 @@ class GetHolidayViewModel @Inject constructor(
                 status = status,
             ).onSuccess {
                 _holidayList.value = it.toState().holidayList
-            }.onFailure {}
+            }.onFailure {
+                _holidayList.value = listOf()
+            }
         }
     }
 }
