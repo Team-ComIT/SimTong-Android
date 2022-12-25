@@ -10,7 +10,9 @@ import com.google.firebase.ktx.Firebase
  * Exception이 발생할 경우 Firebase Crashlytics에 제보합니다.
  *
  */
-fun throwUnknownException(e: Throwable) {
+fun throwUnknownException(
+    e: Throwable,
+) {
     // TODO(limsaehyun): 인터넷 에러가 UnknwonException으로 감지됨 해결 필요
     // TODO(limsaehyun): 임시로 message text 로 구분
     if (e.message?.contains("NoInternetException") == true) throw NoInternetException()

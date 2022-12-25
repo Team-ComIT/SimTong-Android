@@ -84,6 +84,13 @@ fun StartScreen(
                     popUpTo(0)
                 }
             }
+            StartSideEffect.NavigateToSignIn -> {
+                navController.navigate(
+                    route = SimTongScreen.Auth.SIGN_IN,
+                ) {
+                    popUpTo(0)
+                }
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package com.comit.data.repository
 
 import com.comit.data.datasource.LocalAuthDataSource
 import com.comit.data.datasource.RemoteCommonsDataSource
+import com.comit.domain.exception.RefreshTokenNotFound
 import com.comit.domain.repository.CommonsRepository
 import com.comit.model.SpotList
 import kotlinx.coroutines.flow.first
@@ -33,6 +34,8 @@ class CommonsRepositoryImpl @Inject constructor(
             ).also { token ->
                 localAuthDataSource.saveToken(token)
             }
+        } else {
+            throw RefreshTokenNotFound()
         }
     }
 
@@ -65,7 +68,7 @@ class CommonsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun checkOldPassword(
-        oldPassword: String
+        oldPassword: String,
     ) {
         remoteCommonsDataSource.checkPassword(
             oldPassword = oldPassword,
@@ -79,7 +82,7 @@ class CommonsRepositoryImpl @Inject constructor(
     override suspend fun initializationPassword(
         email: String,
         employeeNumber: Int,
-        newPassword: String
+        newPassword: String,
     ) {
         remoteCommonsDataSource.initializationPassword(
             email = email,
