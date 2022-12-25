@@ -7,8 +7,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.comit.feature_mypage.screen.MyPageScreen
+import com.comit.feature_mypage.screen.fix.email.FixEmailInputCertificationScreen
 import com.comit.feature_mypage.screen.fix.email.FixEmailScreen
-import com.comit.feature_mypage.screen.fix.email.InputCertificationScreen
 import com.comit.feature_mypage.screen.fix.nickname.FixNickNameScreen
 import com.comit.feature_mypage.screen.fix.password.FixPassword
 import com.comit.feature_mypage.screen.fix.workplace.FixWorkPlaceScreen
@@ -50,7 +50,7 @@ fun NavGraphBuilder.myPageNavigation(
         ) {
             val email = it.arguments?.getString("email") ?: ""
 
-            InputCertificationScreen(
+            FixEmailInputCertificationScreen(
                 navController = navController,
                 email = email,
             )

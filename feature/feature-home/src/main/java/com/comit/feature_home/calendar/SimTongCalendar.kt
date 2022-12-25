@@ -51,6 +51,8 @@ import com.comit.core_design_system.typography.UnderlineBody12
 import com.comit.feature_home.getEndAt
 import com.comit.feature_home.getStartAt
 import com.comit.feature_home.string
+import com.comit.feature_home.vm.GetHolidayViewModel
+import com.comit.feature_home.vm.GetWorkCountViewModel
 import com.example.feature_home.R
 import java.sql.Date
 import java.util.Calendar

@@ -1,4 +1,4 @@
-package com.comit.feature_home.screen.closeday
+package com.comit.feature_home.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -35,6 +35,8 @@ import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.mvi.InputCertificationSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
+import com.comit.feature_mypage.vm.FixEmailViewModel
+import com.comit.feature_mypage.vm.InputCertificationViewModel
 import com.comit.navigator.SimTongScreen
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.delay
@@ -59,7 +61,7 @@ private const val SameEmailException = "이미 사용중인 이메일입니다"
 private const val SendCertificationFail = "인증코드 재정송을 실패했습니다"
 
 @Composable
-fun InputCertificationScreen(
+fun FixEmailInputCertificationScreen(
     navController: NavController,
     inputCertificationViewModel: InputCertificationViewModel = hiltViewModel(),
     fixEmailViewModel: FixEmailViewModel = hiltViewModel(),

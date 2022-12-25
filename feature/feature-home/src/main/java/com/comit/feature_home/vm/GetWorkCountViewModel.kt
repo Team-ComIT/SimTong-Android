@@ -1,4 +1,4 @@
-package com.comit.feature_home.calendar
+package com.comit.feature_home.vm
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

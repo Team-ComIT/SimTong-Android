@@ -1,4 +1,4 @@
-package com.comit.feature_mypage.screen.fix.workplace
+package com.comit.feature_mypage.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
