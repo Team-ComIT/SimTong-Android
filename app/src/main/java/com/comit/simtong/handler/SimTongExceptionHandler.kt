@@ -31,7 +31,9 @@ class SimTongExceptionHandler(
             is NeedLoginException -> {
                 navController.navigate(
                     route = SimTongScreen.Auth.SIGN_IN,
-                )
+                ) {
+                    popUpTo(0)
+                }
             }
             is UnknownException -> {
                 navController.navigate(

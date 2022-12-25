@@ -8,4 +8,6 @@ sealed class StartState {
 sealed class StartSideEffect {
 
     object NavigateToHome : StartSideEffect()
+
+    object NavigateToSignIn : StartSideEffect()
 }

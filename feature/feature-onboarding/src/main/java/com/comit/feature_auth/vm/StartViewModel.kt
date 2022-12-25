@@ -2,6 +2,8 @@ package com.comit.feature_auth.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.exception.NeedLoginException
+import com.comit.domain.exception.RefreshTokenNotFound
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.commons.TokenReissueUseCase
 import com.comit.feature_auth.mvi.StartSideEffect
@@ -27,7 +29,11 @@ class StartViewModel @Inject constructor(
                 .onSuccess {
                     postSideEffect(StartSideEffect.NavigateToHome)
                 }.onFailure {
-                    throwUnknownException(it)
+                    when (it) {
+                        is NeedLoginException -> postSideEffect(StartSideEffect.NavigateToSignIn)
+                        is RefreshTokenNotFound -> Unit
+                        else -> throwUnknownException(it)
+                    }
                 }
         }
     }
