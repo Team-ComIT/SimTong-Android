@@ -1,7 +1,7 @@
 plugins {
     id(BuildPlugins.KT_LINT) version Versions.KT_LINT
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
-    id("com.android.library") version "7.2.1" apply false
+    id("com.android.library") version "7.3.0" apply false
     id("org.jetbrains.kotlin.android") version ProjectProperties.KOTLIN_VERSION apply false
 }
 
@@ -37,6 +37,7 @@ buildscript {
         classpath(Dependency.GradlePlugin.GRADLE_HILT)
         classpath(Dependency.GradlePlugin.GOOGLE_SERVICE)
         classpath(Dependency.GradlePlugin.FIREBASE_DISTRIBUTION)
+        classpath(Dependency.GradlePlugin.FIREBASE_CRASHLYTICS)
     }
 }
 

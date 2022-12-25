@@ -1,11 +1,11 @@
-package com.comit.feature_mypage.screen.fix.email
+package com.comit.feature_mypage.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.email.CheckEmailCodeUseCase
 import com.comit.domain.usecase.users.ChangeEmailUseCase
 import com.comit.feature_mypage.mvi.InputCertificationSideEffect
@@ -43,7 +43,7 @@ class InputCertificationViewModel @Inject constructor(
                 when (it) {
                     is BadRequestException -> postSideEffect(InputCertificationSideEffect.CertificationNotValid)
                     is UnAuthorizedException -> postSideEffect(InputCertificationSideEffect.CertificationNotCorrect)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -64,7 +64,7 @@ class InputCertificationViewModel @Inject constructor(
                     is BadRequestException -> postSideEffect(InputCertificationSideEffect.EmailFormError)
                     is UnAuthorizedException -> postSideEffect(InputCertificationSideEffect.CheckEmailFail)
                     is ConflictException -> postSideEffect(InputCertificationSideEffect.SameEmailException)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

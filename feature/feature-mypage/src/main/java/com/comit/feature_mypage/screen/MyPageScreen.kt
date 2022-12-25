@@ -53,6 +53,8 @@ import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.MyPageSideEffect
+import com.comit.feature_mypage.vm.ImageLimitSizeInKB
+import com.comit.feature_mypage.vm.MyPageViewModel
 import com.comit.navigator.SimTongScreen
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.io.File
@@ -217,6 +219,7 @@ private fun MyPageProfileImage(
                     onError(TakePhotoError)
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
+
                 onError(TakePhotoError)
             }
         }
@@ -232,14 +235,25 @@ private fun MyPageProfileImage(
     ) {
 
         if (bitmap == null) {
-            AsyncImage(
-                model = image,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape),
-            )
+            if (!image.isNullOrEmpty()) {
+                AsyncImage(
+                    model = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape),
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = SimTongIcon.Profile_Big.drawableId),
+                    contentDescription = SimTongIcon.Profile_Big.contentDescription,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape),
+                )
+            }
         } else {
             AsyncImage(
                 model = bitmap,
@@ -356,108 +370,9 @@ private fun MyPageDescriptionImage(
     }
 }
 
-/* if (!editMode) {
-
-    )
-    MyPageDescription(
-        title = stringResource(
-            id = R.string.kr_change_password,
-        ),
-        // TODO: SIMT-55
-        content = "*********",
-        onClick = {
-            navController.navigate(
-                route = SimTongScreen.MyPage.FIX_PASSWORD,
-            )
-        }
-    )
-} else {
-    Spacer(modifier = Modifier.height(19.dp))
-
-    Body3(
-        text = MyPageFakeData.nickname,
-        color = SimTongColor.Black,
-    )
-
-    Spacer(modifier = Modifier.height(4.dp))
-
-    Body5(
-        text = MyPageFakeData.nickname,
-        color = SimTongColor.Gray300,
-    )
-
-    Spacer(modifier = Modifier.height(45.dp))
-
-    Column(
-        verticalArrangement = Arrangement.spacedBy(29.dp)
-    ) {
-        MyPageEditModeMenu(
-            title = stringResource(
-                id = R.string.kr_my_page_edit_my_information,
-            ),
-            content = stringResource(
-                id = R.string.kr_my_page_edit_my_information_description,
-            ),
-            enabledNextIcon = true,
-        ) {
-        }
-
-        MyPageEditModeMenu(
-            title = stringResource(id = R.string.kr_my_page_sign_in),
-            titleColor = SimTongColor.MainColor,
-            content = stringResource(
-                id = R.string.kr_my_page_sign_in_description,
-            ),
-        )
-    } */
-
-/* @Composable
-private fun MyPageEditModeMenu(
-    title: String,
-    titleColor: Color = SimTongColor.Black,
-    content: String,
-    enabledNextIcon: Boolean = false,
-    onClick: (() -> Unit)? = null,
-) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick ?: {})
-    ) {
-        Column(
-            modifier = Modifier.align(Alignment.CenterStart),
-        ) {
-            Body5(
-                text = title,
-                color = titleColor,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Body13(
-                text = content,
-                color = SimTongColor.Gray300,
-            )
-        }
-
-        if (enabledNextIcon) {
-            Icon(
-                modifier = Modifier.align(Alignment.CenterEnd),
-                painter = painterResource(
-                    id = SimTongIcon.Next.drawableId,
-                ),
-                contentDescription = SimTongIcon.Next.contentDescription,
-            )
-        }
-    }
-} */
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
-//    MyPageScreen(
-//        navController = rememberNavController()
-//    )
 
     MyPageProfileImage(
         imageFile = {},

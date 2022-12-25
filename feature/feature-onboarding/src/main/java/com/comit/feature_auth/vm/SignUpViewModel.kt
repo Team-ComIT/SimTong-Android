@@ -9,7 +9,7 @@ import com.comit.common.unit.sizeInKb
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.email.CheckEmailCodeUseCase
 import com.comit.domain.usecase.email.SendEmailCodeUseCase
 import com.comit.domain.usecase.users.SignUpUseCase
@@ -27,9 +27,11 @@ import org.orbitmvi.orbit.viewmodel.container
 import java.io.File
 import javax.inject.Inject
 
-private const val EmployeeNumIsNum = "사원번호는 숫자로 이루어져 있어야 합니다"
+private const val ErrMsgEmployeeNumFormat = "올바른 형식의 사원번호를 입력해주세요."
 
 internal const val ImageLimitSizeInKB: Int = 1024
+
+private const val EmployeeNumberSizeLimit: Int = 10
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
@@ -45,9 +47,8 @@ class SignUpViewModel @Inject constructor(
         name: String,
         employeeNumber: String,
     ) = intent {
-
-        if (employeeNumber.toIntOrNull() == null) {
-            reduce { state.copy(fieldErrEmployeeNumber = EmployeeNumIsNum) }
+        if (employeeNumber.toIntOrNull() == null || employeeNumber.length > EmployeeNumberSizeLimit) {
+            reduce { state.copy(fieldErrEmployeeNumber = ErrMsgEmployeeNumFormat) }
             return@intent
         }
 
@@ -64,7 +65,7 @@ class SignUpViewModel @Inject constructor(
                     is UnAuthorizedException -> {
                         postSideEffect(SignUpSideEffect.UserInfoMatchingFailed)
                     }
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -87,7 +88,7 @@ class SignUpViewModel @Inject constructor(
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.EmailVerifyAlready)
                     is TooManyRequestException -> postSideEffect(SignUpSideEffect.TooManyRequest)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -108,7 +109,7 @@ class SignUpViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(SignUpSideEffect.EmailCodeNotCorrect)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -143,7 +144,7 @@ class SignUpViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is ConflictException -> postSideEffect(SignUpSideEffect.SignUpConflict)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

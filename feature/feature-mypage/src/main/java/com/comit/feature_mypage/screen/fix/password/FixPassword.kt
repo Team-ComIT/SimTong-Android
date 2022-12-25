@@ -29,6 +29,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixPasswordInSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
+import com.comit.feature_mypage.vm.FixPasswordViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlin.math.abs
 

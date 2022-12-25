@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.users.SignInUseCase
 import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.feature_auth.mvi.SignInState
@@ -16,6 +16,8 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
+
+private const val EmployeeNumberSizeLimit: Int = 10
 
 @HiltViewModel
 class SignInViewModel @Inject constructor(
@@ -31,16 +33,15 @@ class SignInViewModel @Inject constructor(
         viewModelScope.launch {
             clearErrorMessage()
 
-            try {
-                employeeNumber.toInt()
-            } catch (e: NumberFormatException) {
-                postSideEffect(SignInSideEffect.IdWasNotNumber)
+            if (employeeNumber.toIntOrNull() == null || employeeNumber.length > EmployeeNumberSizeLimit) {
+                postSideEffect(SignInSideEffect.NumberFormat)
+                return@launch
             }
 
             signInUseCase(
                 params = SignInUseCase.Params(
                     employeeNumber = employeeNumber.toInt(),
-                    password = password
+                    password = password,
                 ),
             ).onSuccess {
                 postSideEffect(SignInSideEffect.NavigateToHomeScreen)
@@ -48,7 +49,7 @@ class SignInViewModel @Inject constructor(
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
                     is NotFoundException -> postSideEffect(SignInSideEffect.IdOrPasswordNotCorrect)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

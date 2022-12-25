@@ -1,10 +1,13 @@
-@file:Suppress("ComplexMethod", "NestedBlockDepth")
+@file:Suppress("ComplexMethod", "NestedBlockDepth", "LongMethod")
 
 package com.comit.feature_home.calendar
 
 import android.icu.util.Calendar
 import android.icu.util.GregorianCalendar
+import com.comit.common.utils.dateToInt
+import com.comit.common.utils.string
 import com.comit.feature_home.SubStringDay
+import com.comit.feature_home.getStartAt
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.FetchScheduleState
 import java.time.LocalDate
@@ -16,9 +19,9 @@ private const val Sunday: Int = 7
 
 private const val Week: Int = 7
 
-private const val MonthStart: Int = 1
+private const val CalendarStart: Int = 1
 
-private const val MonthEnd: Int = 31
+private const val CalendarEnd: Int = 48
 
 fun organizeList(
     checkMonth: Int,
@@ -41,7 +44,7 @@ fun organizeList(
     val annualDayList = ArrayList<Boolean>()
     val workDayList = ArrayList<Int>()
 
-    for (i in MonthStart..MonthEnd) {
+    for (i in CalendarStart..CalendarEnd) {
         restDayList.add(false)
         annualDayList.add(false)
         workDayList.add(0)
@@ -49,10 +52,26 @@ fun organizeList(
 
     for (element in holidayList) {
         if (element.type == TypeName.HOLIDAY) {
-            restDayList[element.date.substring(SubStringDay).toInt() - 1] = true
+            if (dateToInt(element.date) < (year.toString() + string.format("%02d", month) + "00").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                restDayList[day - getStartAt(checkMonth).substring(SubStringDay).toInt()] = true
+            } else if (dateToInt(element.date) > (year.toString() + string.format("%02d", month) + "31").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                restDayList[day + min + max - 1] = true
+            } else {
+                restDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
+            }
         }
         if (element.type == TypeName.ANNUAL) {
-            annualDayList[element.date.substring(SubStringDay).toInt() - 1] = true
+            if (dateToInt(element.date) < (year.toString() + string.format("%02d", month) + "00").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                annualDayList[day - getStartAt(checkMonth).substring(SubStringDay).toInt()] = true
+            } else if (dateToInt(element.date) > (year.toString() + string.format("%02d", month) + "31").toInt()) {
+                val day = element.date.substring(SubStringDay).toInt()
+                annualDayList[day + min + max - 1] = true
+            } else {
+                annualDayList[element.date.substring(SubStringDay).toInt() - 1 + min] = true
+            }
         }
     }
 
@@ -62,27 +81,30 @@ fun organizeList(
             val end = workCountList[i].endAt.substring(SubStringDay).toInt()
 
             if (start == end) {
-                workDayList[start - 1] = workDayList[start - 1] + 1
+                workDayList[start - 1 + min] = workDayList[start - 1 + min] + 1
             } else {
                 for (j in start..end) {
-                    workDayList[j - 1] = workDayList[j - 1] + 1
+                    workDayList[j - 1 + min] = workDayList[j - 1 + min] + 1
                 }
             }
         }
     }
 
+    var j = 0
+
     for (i in min - 1 downTo 0) {
         calendarList.add(
             SimTongCalendarData(
                 day = (lastMax - i).toString(),
-                workCount = 0,
+                workCount = workDayList[j],
                 weekend = false,
                 thisMouth = false,
-                restDay = false,
-                annualDay = false,
+                restDay = restDayList[j],
+                annualDay = annualDayList[j],
                 today = false
             )
         )
+        j++
     }
 
     for (i in 1..max) {
@@ -94,14 +116,15 @@ fun organizeList(
         calendarList.add(
             SimTongCalendarData(
                 day = i.toString(),
-                workCount = workDayList[i - 1],
+                workCount = workDayList[j],
                 weekend = weekend,
                 thisMouth = true,
-                restDay = restDayList[i - 1],
-                annualDay = annualDayList[i - 1],
+                restDay = restDayList[j],
+                annualDay = annualDayList[j],
                 today = todayCheck
             )
         )
+        j++
     }
 
     for (i in 1..Week) {
@@ -111,15 +134,16 @@ fun organizeList(
             calendarList.add(
                 SimTongCalendarData(
                     day = i.toString(),
-                    workCount = 0,
+                    workCount = workDayList[j],
                     weekend = false,
                     thisMouth = false,
-                    restDay = false,
-                    annualDay = false,
+                    restDay = restDayList[j],
+                    annualDay = annualDayList[j],
                     today = false
                 )
             )
         }
+        j++
     }
 
     return calendarList

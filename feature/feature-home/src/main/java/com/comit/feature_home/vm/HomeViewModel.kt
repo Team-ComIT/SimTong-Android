@@ -3,8 +3,11 @@ package com.comit.feature_home.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.core_design_system.component.Meal
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.NotFoundException
+import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.model.MealEntity
+import com.comit.domain.usecase.holiday.CheckCanWriteHolidayUseCase
 import com.comit.domain.usecase.menu.FetchMenuUseCase
 import com.comit.feature_home.contract.HomeSideEffect
 import com.comit.feature_home.contract.HomeState
@@ -12,6 +15,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import javax.inject.Inject
@@ -19,21 +23,39 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val fetchMenuUseCase: FetchMenuUseCase,
+    private val checkCanWriteHolidayUseCase: CheckCanWriteHolidayUseCase,
 ) : ContainerHost<HomeState, HomeSideEffect>, ViewModel() {
 
     override val container = container<HomeState, HomeSideEffect>(HomeState())
 
     fun fetchMenu(
-        date: String,
+        startAt: String,
+        endAt: String,
     ) = intent {
         viewModelScope.launch {
             fetchMenuUseCase(
-                date = date,
+                startAt = startAt,
+                endAt = endAt,
             ).onSuccess { meals ->
                 reduce { state.copy(mealList = meals.map { it.toDesignSystemModel() }) }
             }.onFailure {
-                throw UnknownException(it.message)
+                throwUnknownException(it)
             }
+        }
+    }
+
+    fun checkCanWriteHoliday() = intent {
+        viewModelScope.launch {
+            checkCanWriteHolidayUseCase()
+                .onSuccess {
+                    postSideEffect(HomeSideEffect.CanWriteHoliday)
+                }.onFailure {
+                    when (it) {
+                        is UnAuthorizedException -> postSideEffect(HomeSideEffect.TokenException)
+                        is NotFoundException -> postSideEffect(HomeSideEffect.CannotWriteHoliday)
+                        else -> throwUnknownException(it)
+                    }
+                }
         }
     }
 

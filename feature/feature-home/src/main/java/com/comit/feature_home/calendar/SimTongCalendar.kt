@@ -1,6 +1,8 @@
+@file:Suppress("TooGenericExceptionCaught", "SwallowedException")
 
 package com.comit.feature_home.calendar
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,10 +14,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -37,14 +41,18 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body11
 import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
+import com.comit.feature_home.getEndAt
+import com.comit.feature_home.getStartAt
 import com.comit.feature_home.string
+import com.comit.feature_home.vm.GetHolidayViewModel
+import com.comit.feature_home.vm.GetWorkCountViewModel
 import com.example.feature_home.R
 import java.sql.Date
 import java.util.Calendar
@@ -60,6 +68,18 @@ data class SimTongCalendarData(
     val today: Boolean
 )
 
+enum class SimTongCalendarStatus(
+    val statusName: String,
+) {
+    WRITTEN(
+        statusName = "WRITTEN"
+    ),
+
+    COMPLETED(
+        statusName = "COMPLETED"
+    ),
+}
+
 private const val Week: Int = 7
 
 @Stable
@@ -72,9 +92,10 @@ fun SimTongCalendar(
     getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
     getWorkCountViewModel: GetWorkCountViewModel = hiltViewModel(),
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
-    onBeforeClicked: (Date) -> Unit = { },
-    onNextClicked: (Date) -> Unit = { },
-    refresh: Boolean = false
+    onBeforeClicked: (Date, Int) -> Unit = { _, _ -> },
+    onNextClicked: (Date, Int) -> Unit = { _, _ -> },
+    refresh: Boolean = false,
+    statusName: SimTongCalendarStatus = SimTongCalendarStatus.COMPLETED
 ) {
     var checkMonth by remember { mutableStateOf(0) }
 
@@ -99,8 +120,13 @@ fun SimTongCalendar(
         )
     }
 
+    var changePage by remember { mutableStateOf(false) }
+
     LaunchedEffect(getWorkCountViewModel) {
-        getWorkCountViewModel.getWorkCountList(date)
+        getWorkCountViewModel.getWorkCountList(
+            startAt = getStartAt(checkMonth),
+            endAt = getEndAt(checkMonth)
+        )
     }
 
     val lifecycle = LocalLifecycleOwner.current
@@ -108,19 +134,32 @@ fun SimTongCalendar(
 
     if (refresh) {
         LaunchedEffect(getWorkCountViewModel) {
-            getWorkCountViewModel.getWorkCountList(date)
+            getWorkCountViewModel.getWorkCountList(
+                startAt = getStartAt(checkMonth),
+                endAt = getEndAt(checkMonth),
+            )
         }
     }
 
     LaunchedEffect(getWorkCountViewModel) {
         getWorkCountViewModel.workCountList.observe(lifecycle) {
             workCountList = it
-            getHolidayViewModel.getHolidayList(date)
+            getHolidayViewModel.getHolidayList(
+                startAt = getStartAt(checkMonth),
+                endAt = getEndAt(checkMonth),
+                status = statusName.statusName,
+            )
         }
     }
     LaunchedEffect(getHolidayViewModel) {
         getHolidayViewModel.holidayList.observe(lifecycle) {
-            calendarList = organizeList(checkMonth, it, workCountList)
+            try {
+                calendarList = organizeList(checkMonth, it, workCountList)
+                changePage = false
+            } catch (e: Exception) {
+                // TODO 달력 리펙토링이 필요함
+                Log.d("TAG", "달력이 아파요 ㅠㅠ")
+            }
         }
     }
 
@@ -139,20 +178,28 @@ fun SimTongCalendar(
             onBeforeClicked = {
                 checkMonth--
                 calendar.add(Calendar.MONTH, checkMonth)
+                changePage = true
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
                 date = Date.valueOf(string.format("%02d", year) + "-" + string.format("%02d", month) + "-01")
-                getWorkCountViewModel.getWorkCountList(date)
-                onBeforeClicked(date)
+                getWorkCountViewModel.getWorkCountList(
+                    startAt = getStartAt(checkMonth),
+                    endAt = getEndAt(checkMonth)
+                )
+                onBeforeClicked(date, checkMonth)
             },
             onNextClicked = {
                 checkMonth++
                 calendar.add(Calendar.MONTH, checkMonth)
+                changePage = true
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
                 date = Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")
-                getWorkCountViewModel.getWorkCountList(date)
-                onNextClicked(date)
+                getWorkCountViewModel.getWorkCountList(
+                    startAt = getStartAt(checkMonth),
+                    endAt = getEndAt(checkMonth),
+                )
+                onNextClicked(date, checkMonth)
             }
         )
 
@@ -165,10 +212,19 @@ fun SimTongCalendar(
         ) {
             WeekTopRow()
 
-            SimTongCalendarList(
-                list = calendarList,
-                onItemClicked = onItemClicked
-            )
+            if (changePage) {
+                CircularProgressIndicator(
+                    color = SimTongColor.MainColor,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.Center),
+                )
+            } else {
+                SimTongCalendarList(
+                    list = calendarList,
+                    onItemClicked = onItemClicked
+                )
+            }
         }
     }
 }
@@ -336,7 +392,9 @@ fun SimTongCalendarItem(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.noRippleClickable {
+        modifier = modifier.simClickable(
+            rippleEnabled = false,
+        ) {
             if (thisMouth && !weekend) {
                 onItemClicked(day.toInt(), workState)
             }
@@ -351,7 +409,12 @@ fun SimTongCalendarItem(
         } else {
             Body12(
                 text = day,
-                color = textColor
+                color = textColor,
+                onClick = {
+                    if (thisMouth && !weekend) {
+                        onItemClicked(day.toInt(), workState)
+                    }
+                }
             )
         }
 
@@ -374,7 +437,7 @@ fun SimTongCalendarItem(
                     text = stringResource(id = R.string.calendar_annual_day),
                     color = SimTongColor.White
                 )
-            } else if (thisMouth && !weekend) {
+            } else {
                 if (workCount != 0) {
                     Body11(
                         text = workCount.toString(),

@@ -1,11 +1,14 @@
-package com.comit.feature_mypage.screen.fix.workplace
+package com.comit.feature_mypage.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.ConflictException
+import com.comit.domain.exception.ForBiddenException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.TooManyRequestsException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.commons.FetchSpotsUseCase
 import com.comit.domain.usecase.users.ChangeSpotUseCase
 import com.comit.feature_mypage.mvi.FixWorkPlaceSideEffect
@@ -38,8 +41,15 @@ class FixWorkPlaceViewModel @Inject constructor(
                             spotList = it.toState().spotList
                         )
                     }
-                }.onFailure {
-                    postSideEffect(FixWorkPlaceSideEffect.FetchWorkPlaceFail)
+                }
+                .onFailure {
+                    when (it) {
+                        is BadRequestException,
+                        is UnAuthorizedException,
+                        is ForBiddenException,
+                        is ConflictException -> postSideEffect(FixWorkPlaceSideEffect.FetchWorkPlaceFail)
+                        else -> throwUnknownException(it)
+                    }
                 }
         }
     }
@@ -57,10 +67,9 @@ class FixWorkPlaceViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is BadRequestException -> postSideEffect(FixWorkPlaceSideEffect.NoIdException)
-                    is UnknownException -> postSideEffect(FixWorkPlaceSideEffect.TokenException)
                     is NotFoundException -> postSideEffect(FixWorkPlaceSideEffect.NotFoundPlaceException)
                     is TooManyRequestsException -> postSideEffect(FixWorkPlaceSideEffect.CannotChangePlaceTooMuch)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }

@@ -17,6 +17,7 @@ import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixNickNameSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
+import com.comit.feature_mypage.vm.FixNickNameViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 
 private const val NickNameFormException = "사용할 수 없는 닉네임입니다"

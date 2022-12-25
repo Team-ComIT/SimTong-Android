@@ -1,6 +1,10 @@
 object Versions {
     const val GOOGLE_SERVICE = "4.3.10"
+
     const val FIREBASE_DISTRIBUTION = "3.0.1"
+    const val GRADLE_FIREBASE_CRASHLYTICS = "2.9.2"
+    const val FIREBASE_CRASHLYTICS = "18.3.2"
+    const val FIREBASE_ANALYTICS = "21.2.0"
 
     const val KT_LINT = "10.2.0"
 

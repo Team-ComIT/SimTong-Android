@@ -8,6 +8,7 @@ object BuildPlugins {
     const val KT_LINT = "org.jlleitschuh.gradle.ktlint"
 
     const val FIREBASE_DISTRIBUTION = "com.google.firebase.appdistribution"
+    const val FIREBASE_CRASHLYTICS = "com.google.firebase.crashlytics"
     const val GOOGLE_SERVICE = "com.google.gms.google-services"
 
 }

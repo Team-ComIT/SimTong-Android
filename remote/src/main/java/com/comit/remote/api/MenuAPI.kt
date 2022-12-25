@@ -10,7 +10,8 @@ interface MenuAPI {
 
     @GET("$MENU")
     suspend fun fetchMenu(
-        @Query("date") date: String,
+        @Query("start_at") startAt: String,
+        @Query("end_at") endAt: String,
     ): MenuResponse
 
     @GET("$MENU/public")

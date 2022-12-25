@@ -28,7 +28,7 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noTempRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9
@@ -52,7 +52,7 @@ private val TextBtnPadding = PaddingValues(
 )
 
 private const val ErrMsgIdOrPasswordNotCorrect = "사원번호나 비밀번호가 일치하지 않습니다."
-private const val ErrMsgIdIsNotNumber = "사원번호는 숫자로만 이루어져 있어야 합니다."
+private const val ErrMsgNumberFormat = "올바른 사원 번호를 입력해주세요."
 
 @OptIn(InternalCoroutinesApi::class)
 @Composable
@@ -70,9 +70,7 @@ fun SignInScreen(
                 navController.navigate(
                     route = SimTongScreen.Home.MAIN
                 ) {
-                    popUpTo(route = SimTongScreen.Auth.SIGN_IN) {
-                        inclusive = true
-                    }
+                    popUpTo(0)
                 }
             }
             SignInSideEffect.IdOrPasswordNotCorrect -> {
@@ -80,9 +78,9 @@ fun SignInScreen(
                     msg = ErrMsgIdOrPasswordNotCorrect,
                 )
             }
-            SignInSideEffect.IdWasNotNumber -> {
+            SignInSideEffect.NumberFormat -> {
                 vm.inputErrMsgEmployeeNumber(
-                    msg = ErrMsgIdIsNotNumber,
+                    msg = ErrMsgNumberFormat,
                 )
             }
         }
@@ -144,7 +142,9 @@ fun SignInScreen(
 
         Body8(
             modifier = Modifier
-                .noTempRippleClickable {
+                .simClickable(
+                    rippleEnabled = false,
+                ) {
                     navController.navigate(
                         route = SimTongScreen.Auth.AUTH_FIND,
                     )

@@ -5,6 +5,7 @@ plugins {
     id(BuildPlugins.KOTLIN_KAPT)
     id(BuildPlugins.FIREBASE_DISTRIBUTION)
     id(BuildPlugins.GOOGLE_SERVICE)
+    id(BuildPlugins.FIREBASE_CRASHLYTICS)
 }
 android {
     compileSdk = ProjectProperties.COMPILE_SDK_VERSION
@@ -61,11 +62,15 @@ dependencies {
     implementation(projects.feature.featureHome)
     implementation(projects.coreDesignSystem)
     implementation(projects.commonCompose)
+    implementation(projects.commonUtil)
 
     implementation(Dependency.Logger.TIMBER)
 
     implementation(Dependency.Hilt.HILT_ANDROID)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
+
+    implementation(Dependency.FIREBASE.FIREBASE_CRASHLYTICS)
+    implementation(Dependency.FIREBASE.FIREBASE_ANALYTICS)
 
     implementation(Dependency.Kotlin.COROUTINES_CORE)
     implementation(Dependency.Kotlin.COROUTINES_ANDROID)

@@ -20,6 +20,7 @@ import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixEmailSideEffect
 import com.comit.feature_mypage.screen.fix.FixBaseScreen
 import com.comit.feature_mypage.utils.MyPageDeepLinkKeyUtil
+import com.comit.feature_mypage.vm.FixEmailViewModel
 import com.comit.navigator.SimTongScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.InternalCoroutinesApi

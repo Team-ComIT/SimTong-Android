@@ -1,6 +1,7 @@
 package com.comit.remote.api
 
 import com.comit.remote.request.holidays.DayOffRequest
+import com.comit.remote.response.holidays.CheckLeftHolidayResponse
 import com.comit.remote.response.holidays.FetchHolidaysResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -12,9 +13,11 @@ import java.util.Date
 
 interface HolidayAPI {
 
-    @GET("$HOLIDAYS")
+    @GET("$HOLIDAYS/individual")
     suspend fun fetchHolidays(
-        @Query("date") date: Date,
+        @Query("start_at") startAt: String,
+        @Query("end_at") endAt: String,
+        @Query("status") status: String,
     ): FetchHolidaysResponse
 
     @POST("$HOLIDAYS/dayoff")
@@ -31,6 +34,14 @@ interface HolidayAPI {
     suspend fun setWork(
         @Query("date") date: Date
     )
+
+    @GET("$HOLIDAYS/annual/count")
+    suspend fun checkLeftHoliday(
+        @Query("year") year: Int
+    ): CheckLeftHolidayResponse
+
+    @GET("$HOLIDAYS/verification-period")
+    suspend fun checkCanWriteHoliday()
 
     private companion object {
         const val HOLIDAYS = "holidays"

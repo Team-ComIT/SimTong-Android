@@ -12,7 +12,7 @@ import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.NotFoundException
 import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.commons.FindAccountExistUseCase
 import com.comit.domain.usecase.commons.InitializationPasswordUseCase
 import com.comit.domain.usecase.email.CheckEmailCodeUseCase
@@ -54,7 +54,7 @@ class FindPasswordViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(FindPasswordSideEffect.NavigateToSignIn)
             }.onFailure {
-                throw UnknownException(it.message)
+                throwUnknownException(it)
             }
         }
     }
@@ -74,7 +74,7 @@ class FindPasswordViewModel @Inject constructor(
                 when (it) {
                     is ConflictException -> postSideEffect(FindPasswordSideEffect.EmailVerifyAlready)
                     is TooManyRequestException -> postSideEffect(FindPasswordSideEffect.TooManyRequest)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -95,7 +95,7 @@ class FindPasswordViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is UnAuthorizedException -> postSideEffect(FindPasswordSideEffect.EmailCodeNotCorrect)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -124,7 +124,7 @@ class FindPasswordViewModel @Inject constructor(
                 when (it) {
                     is BadRequestException -> postSideEffect(FindPasswordSideEffect.EmailValidError)
                     is NotFoundException -> postSideEffect(FindPasswordSideEffect.UserNotFound)
-                    else -> throw UnknownException(it.message)
+                    else -> throwUnknownException(it)
                 }
             }
         }
@@ -145,7 +145,6 @@ class FindPasswordViewModel @Inject constructor(
     fun inputEmail(
         email: String,
     ) = intent {
-        println("INPUT EMAIL $email")
         reduce { state.copy(email = email) }
     }
 

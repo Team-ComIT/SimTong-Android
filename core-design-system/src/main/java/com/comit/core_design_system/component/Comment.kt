@@ -39,7 +39,7 @@ import androidx.compose.ui.unit.sp
 import com.comit.core_design_system.R
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body12
 import com.comit.core_design_system.typography.Body9
 import com.comit.core_design_system.typography.notoSansFamily
@@ -196,7 +196,11 @@ fun CommentItem(
                     Body12(
                         text = stringResource(id = R.string.comment_write),
                         modifier = Modifier
-                            .noRippleClickable { commentClick(index) }
+                            .simClickable(
+                                rippleEnabled = false,
+                            ) {
+                                commentClick(index)
+                            }
                     )
                 }
             }
@@ -215,7 +219,9 @@ fun CommentItem(
                     .padding(end = 20.dp)
                     .height(CommentItemHeartSize)
                     .width(CommentItemHeartSize)
-                    .noRippleClickable {
+                    .simClickable(
+                        rippleEnabled = false,
+                    ) {
                         if (like.value) {
                             onLikeDownClicked(index)
                             likeNum.value--

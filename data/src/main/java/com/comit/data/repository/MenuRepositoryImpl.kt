@@ -11,10 +11,12 @@ class MenuRepositoryImpl @Inject constructor(
 ) : MenuRepository {
 
     override suspend fun fetchMenu(
-        date: String
+        startAt: String,
+        endAt: String,
     ): MenuList {
         return remoteMenuDataSource.fetchMenu(
-            date = date,
+            startAt = startAt,
+            endAt = endAt,
         )
     }
 

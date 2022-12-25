@@ -1,10 +1,10 @@
 @file:OptIn(
-    ExperimentalMaterialApi::class, ExperimentalMaterialApi::class,
-    InternalCoroutinesApi::class
+    ExperimentalMaterialApi::class,
+    InternalCoroutinesApi::class,
 )
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
-package com.comit.feature_home.screen.closeday
+package com.comit.feature_home.vm
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -49,7 +49,7 @@ import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.dialog.SimBottomSheetDialog
 import com.comit.core_design_system.icon.SimTongIcon
-import com.comit.core_design_system.modifier.noRippleClickable
+import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
@@ -59,6 +59,7 @@ import com.comit.feature_home.SubStringMonthStart
 import com.comit.feature_home.SubStringYearEnd
 import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.feature_home.calendar.SimTongCalendarStatus
 import com.comit.feature_home.mvi.CloseDaySideEffect
 import com.comit.feature_home.string
 import com.example.feature_home.R
@@ -141,7 +142,7 @@ fun WriteClosedDayScreen(
             val saveColor =
                 if (saveEnabled) SimTongColor.MainColor400 else SimTongColor.MainColor100
 
-            Column() {
+            Column {
 
                 val workClose = stringResource(id = R.string.work_close)
                 val workAnnual = stringResource(id = R.string.work_annual)
@@ -155,6 +156,10 @@ fun WriteClosedDayScreen(
                     val yearT = closeDayState.year + stringResource(id = R.string.calendar_year) + " "
                     val monthT = closeDayState.month + stringResource(id = R.string.calendar_month) + " "
                     val dayT = closeDayState.day + stringResource(id = R.string.calendar_day) + "은 "
+
+                    if (closeDayState.year.isNotEmpty()) {
+                        closeDayViewModel.checkLeftHoliday(year = closeDayState.year.toInt())
+                    }
 
                     Body6(
                         text = "$yearT$monthT$dayT\"$workStateText\"입니다.",
@@ -188,7 +193,18 @@ fun WriteClosedDayScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(30.dp))
+                Spacer(modifier = Modifier.height(9.dp))
+
+                Row(modifier = Modifier.padding(start = 20.dp)) {
+                    Body6(text = "남은 연차: ")
+
+                    Body6(
+                        text = closeDayState.leftHoliday.toString() + "개",
+                        color = SimTongColor.FocusBlue,
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
 
                 Row(
                     modifier = Modifier
@@ -259,13 +275,13 @@ fun WriteClosedDayScreen(
             Spacer(modifier = Modifier.height(44.dp))
 
             SimTongCalendar(
-                onNextClicked = {
-                    closeDayViewModel.inputMonthState(it.toString().substring(SubStringMonthStart, SubStringMonthEnd))
-                    closeDayViewModel.inputYearState(it.toString().substring(SubStringYearStart, SubStringYearEnd))
+                onNextClicked = { date, _ ->
+                    closeDayViewModel.inputMonthState(date.toString().substring(SubStringMonthStart, SubStringMonthEnd))
+                    closeDayViewModel.inputYearState(date.toString().substring(SubStringYearStart, SubStringYearEnd))
                 },
-                onBeforeClicked = {
-                    closeDayViewModel.inputMonthState(it.toString().substring(SubStringMonthStart, SubStringMonthEnd))
-                    closeDayViewModel.inputYearState(it.toString().substring(SubStringYearStart, SubStringYearEnd))
+                onBeforeClicked = { date, _ ->
+                    closeDayViewModel.inputMonthState(date.toString().substring(SubStringMonthStart, SubStringMonthEnd))
+                    closeDayViewModel.inputYearState(date.toString().substring(SubStringYearStart, SubStringYearEnd))
                 },
                 onItemClicked = { day, _workState ->
                     workState = _workState
@@ -275,6 +291,7 @@ fun WriteClosedDayScreen(
                         bottomSheetState.show()
                     }
                 },
+                statusName = SimTongCalendarStatus.WRITTEN,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(HomeCalendarHeight)
@@ -294,7 +311,9 @@ fun WriteCloseDayItem(
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
-            .noRippleClickable { onItemClicked(text) }
+            .simClickable(
+                rippleEnabled = false,
+            ) { onItemClicked(text) }
     ) {
         Box(
             contentAlignment = Alignment.Center,

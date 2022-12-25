@@ -43,6 +43,7 @@ import com.comit.core_design_system.typography.Body4
 import com.comit.core_design_system.typography.Body8
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.FixWorkPlaceSideEffect
+import com.comit.feature_mypage.vm.FixWorkPlaceViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.util.UUID
 

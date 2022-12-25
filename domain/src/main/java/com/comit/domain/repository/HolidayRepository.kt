@@ -1,12 +1,15 @@
 package com.comit.domain.repository
 
 import com.comit.model.HolidayList
+import com.comit.model.LeftHoliday
 import java.util.Date
 
 interface HolidayRepository {
 
     suspend fun fetchHolidays(
-        date: Date,
+        startAt: String,
+        endAt: String,
+        status: String,
     ): HolidayList
 
     suspend fun dayOffHolidays(
@@ -20,4 +23,10 @@ interface HolidayRepository {
     suspend fun setWork(
         date: Date
     )
+
+    suspend fun checkLeftHoliday(
+        year: Int,
+    ): LeftHoliday
+
+    suspend fun checkCanWriteHoliday()
 }
