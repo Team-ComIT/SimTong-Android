@@ -2,7 +2,7 @@ import org.gradle.api.JavaVersion
 
 object ProjectProperties{
     const val VERSION_CODE = 1
-    const val VERSION_NAME = "0.0.3-alpha"
+    const val VERSION_NAME = "1.0.0"
 
     const val APPLICATION_ID =  "com.comit.simtong"
 
