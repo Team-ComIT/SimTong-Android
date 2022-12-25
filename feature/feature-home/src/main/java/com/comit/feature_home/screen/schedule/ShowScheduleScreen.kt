@@ -199,6 +199,9 @@ fun ShowScheduleScreen(
                                 .fillMaxWidth()
                                 .height(50.dp)
                                 .simClickable {
+                                    coroutineScope.launch {
+                                        bottomSheetState.hide()
+                                    }
                                     navController.navigate(
                                         route = SimTongScreen.Home.WRITE_SCHEDULE + "isNew${false}" + "scheduleId$scheduleId" + "title$scheduleTitle" + "scheduleStart$scheduleStart" + "scheduleEnd$scheduleEnd"
                                     )
@@ -305,9 +308,9 @@ fun ShowScheduleScreen(
                         onClick = {
                             navController.navigate(
                                 route = SimTongScreen.Home.WRITE_SCHEDULE +
-                                    "isNew${true}" + "scheduleId${"k"}" +
-                                    "title${"s"}" + "scheduleStart${"i"}" +
-                                    "scheduleEnd${"a"}"
+                                    "isNew${true}" + "scheduleId${"0"}" +
+                                    "title${"0"}" + "scheduleStart${"0"}" +
+                                    "scheduleEnd${"0"}"
                             )
                         },
                         modifier = Modifier
@@ -359,15 +362,14 @@ fun ScheduleItem(
     val now = localDateNow.substring(SubStringYearStart, SubStringYearEnd) +
         localDateNow.substring(SubStringMonthStart, SubStringMonthEnd) +
         localDateNow.substring(SubStringDay)
-    val start = startAt.substring(SubStringYearStart, SubStringYearStart) +
+    val start = startAt.substring(SubStringYearStart, SubStringYearEnd) +
         startAt.substring(SubStringMonthStart, SubStringMonthEnd) +
         startAt.substring(SubStringDay)
     val end = endAt.substring(SubStringYearStart, SubStringYearEnd) +
         endAt.substring(SubStringMonthStart, SubStringMonthEnd) +
         endAt.substring(SubStringDay)
 
-    if (start.toInt() <= now.toInt() && end >= now)
-        today = true
+    if (start.toInt() <= now.toInt() && end.toInt() >= now.toInt()) today = true
 
     val titleColor = if (today) SimTongColor.Gray800 else SimTongColor.Gray300
     val dateColor = if (today) SimTongColor.MainColor400 else SimTongColor.Gray300

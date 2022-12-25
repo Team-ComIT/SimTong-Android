@@ -217,6 +217,7 @@ private fun MyPageProfileImage(
                     onError(TakePhotoError)
                 }
             } else if (result.resultCode != Activity.RESULT_CANCELED) {
+
                 onError(TakePhotoError)
             }
         }
@@ -232,14 +233,25 @@ private fun MyPageProfileImage(
     ) {
 
         if (bitmap == null) {
-            AsyncImage(
-                model = image,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(100.dp)
-                    .clip(CircleShape),
-            )
+            if (!image.isNullOrEmpty()) {
+                AsyncImage(
+                    model = image,
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape),
+                )
+            } else {
+                Image(
+                    painter = painterResource(id = SimTongIcon.Profile_Big.drawableId),
+                    contentDescription = SimTongIcon.Profile_Big.contentDescription,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(CircleShape),
+                )
+            }
         } else {
             AsyncImage(
                 model = bitmap,

@@ -23,11 +23,11 @@
     <string name="title">제목</string>
     <string name="title_hint">제목을 입력해주세요.</string>
     <string name="date">날짜</string>
-    <string name="date_start_hint">XXXX-XX-XX (부터)</string>
-    <string name="date_finish_hint">XXXX-XX-XX (까지)</string>
+    <string name="date_start_hint">XXXX-XX-XX 부터</string>
+    <string name="date_finish_hint">XXXX-XX-XX 까지</string>
     <string name="alarm">알림</string>
-    <string name="alarm_hint">HH:mm:ss (필수 x)</string>
-    <string name="alarm_hint_should">HH:mm:ss (필수)</string>
+    <string name="alarm_hint">hh시 mm분 ss초 (필수 x)</string>
+    <string name="alarm_hint_should">hh시 mm분 ss초 (필수)</string>
     <string name="check">확인</string>
 
     <!--달력-->
