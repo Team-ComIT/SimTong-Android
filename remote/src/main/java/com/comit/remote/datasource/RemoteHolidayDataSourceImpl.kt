@@ -3,6 +3,7 @@ package com.comit.remote.datasource
 import com.comit.data.datasource.RemoteHolidayDataSource
 import com.comit.data.util.simTongApiCall
 import com.comit.model.HolidayList
+import com.comit.model.LeftHoliday
 import com.comit.remote.api.HolidayAPI
 import com.comit.remote.mapper.toModel
 import com.comit.remote.request.holidays.DayOffRequest
@@ -16,10 +17,12 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
     override suspend fun fetchHolidays(
         startAt: String,
         endAt: String,
+        status: String
     ): HolidayList = simTongApiCall {
         holidayAPI.fetchHolidays(
             startAt = startAt,
             endAt = endAt,
+            status = status,
         ).toModel()
     }
 
@@ -47,5 +50,17 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
         holidayAPI.setWork(
             date = date,
         )
+    }
+
+    override suspend fun checkLeftHoliday(
+        year: Int
+    ): LeftHoliday = simTongApiCall {
+        holidayAPI.checkLeftHoliday(
+            year = year
+        ).toModel()
+    }
+
+    override suspend fun checkCanWriteHoliday() = simTongApiCall {
+        holidayAPI.checkCanWriteHoliday()
     }
 }

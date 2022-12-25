@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class)
+@file:OptIn(ExperimentalMaterialApi::class, InternalCoroutinesApi::class,)
 
 package com.comit.feature_home.screen
 
@@ -34,6 +34,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.comit.common.rememberToast
+import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
 import com.comit.core_design_system.component.MealList
@@ -43,9 +45,11 @@ import com.comit.core_design_system.typography.Body14
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title3
 import com.comit.feature_home.calendar.SimTongCalendar
+import com.comit.feature_home.contract.HomeSideEffect
 import com.comit.feature_home.vm.HomeViewModel
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
+import kotlinx.coroutines.InternalCoroutinesApi
 
 private val HomeScreenTopRowHeight: Dp = 34.dp
 
@@ -58,6 +62,9 @@ private val HomeCalendarHeight: Dp = 343.dp
 private const val StartDateAdd = -3
 private const val EndDateAdd = 3
 
+private const val TokenException = "토큰 오류. 다시로그인해주세요"
+private const val CannotWriteHoliday = "현재 휴무표를 작성할 수 있는 기간이 아닙니다"
+
 @Composable
 fun HomeScreen(
     navController: NavController,
@@ -65,9 +72,11 @@ fun HomeScreen(
 ) {
     val scrollState = rememberScrollState()
 
+    val toast = rememberToast()
+
     val container = homeViewModel.container
     val state = container.stateFlow.collectAsState().value
-    // val sideEffect = container.sideEffectFlow
+    val sideEffect = container.sideEffectFlow
 
     val today = GregorianCalendar()
     val startAt = GregorianCalendar(
@@ -95,6 +104,17 @@ fun HomeScreen(
         )
     }
 
+    sideEffect.observeWithLifecycle() {
+        when (it) {
+            HomeSideEffect.CanWriteHoliday -> {
+                navController.navigate(
+                    route = SimTongScreen.Home.CLOSE_DAY,
+                )
+            }
+            HomeSideEffect.TokenException -> toast(message = TokenException)
+            HomeSideEffect.CannotWriteHoliday -> toast(message = CannotWriteHoliday)
+        }
+    }
     Column(
         modifier = Modifier
             .padding(HomeScreenPadding)
@@ -195,11 +215,7 @@ fun HomeScreen(
             painter = painterResource(id = R.drawable.ic_home_holiday),
             title = stringResource(id = R.string.schedule_write),
             content = stringResource(id = R.string.schedule_write_content),
-            onClick = {
-                navController.navigate(
-                    route = SimTongScreen.Home.CLOSE_DAY,
-                )
-            }
+            onClick = { homeViewModel.checkCanWriteHoliday() }
         )
 
         Spacer(modifier = Modifier.height(46.dp))

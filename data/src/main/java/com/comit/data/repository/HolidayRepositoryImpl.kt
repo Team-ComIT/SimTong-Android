@@ -3,6 +3,7 @@ package com.comit.data.repository
 import com.comit.data.datasource.RemoteHolidayDataSource
 import com.comit.domain.repository.HolidayRepository
 import com.comit.model.HolidayList
+import com.comit.model.LeftHoliday
 import java.util.Date
 import javax.inject.Inject
 
@@ -13,10 +14,12 @@ class HolidayRepositoryImpl @Inject constructor(
     override suspend fun fetchHolidays(
         startAt: String,
         endAt: String,
+        status: String
     ): HolidayList {
         return remoteHolidayDataSource.fetchHolidays(
             startAt = startAt,
-            endAt = endAt
+            endAt = endAt,
+            status = status,
         )
     }
 
@@ -42,5 +45,17 @@ class HolidayRepositoryImpl @Inject constructor(
         remoteHolidayDataSource.setWork(
             date = date,
         )
+    }
+
+    override suspend fun checkLeftHoliday(
+        year: Int
+    ): LeftHoliday {
+        return remoteHolidayDataSource.checkLeftHoliday(
+            year = year
+        )
+    }
+
+    override suspend fun checkCanWriteHoliday() {
+        remoteHolidayDataSource.checkCanWriteHoliday()
     }
 }
