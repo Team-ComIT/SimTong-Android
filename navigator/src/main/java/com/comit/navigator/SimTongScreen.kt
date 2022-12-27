@@ -27,6 +27,7 @@ sealed class SimTongScreen(
         const val FIX_NICKNAME = "FIX_NICKNAME"
         const val FIX_PASSWORD = "FIX_PASSWORD"
         const val FIX_WORKPLACE = "FIX_WORKPLACE"
+        const val PRIVACY_POLICY = "PRIVACY_POLICY"
     }
 }
 

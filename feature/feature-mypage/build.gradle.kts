@@ -64,6 +64,7 @@ dependencies {
     implementation(Dependency.Compose.COMPOSE_ANI_NAV)
     implementation(Dependency.Compose.COMPOSE_LANDSCAPIST)
     implementation(Dependency.Compose.COMPOSE_HILT_NAV)
+    implementation(Dependency.Compose.COMPOSE_WEBVOEW)
 
     implementation(Dependency.COIL.COIL)
 
