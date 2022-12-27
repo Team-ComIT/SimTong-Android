@@ -1,5 +1,5 @@
 object Versions {
-    const val GOOGLE_SERVICE = "4.3.10"
+    const val GOOGLE_SERVICE = "4.3.14"
 
     const val FIREBASE_DISTRIBUTION = "3.0.1"
     const val GRADLE_FIREBASE_CRASHLYTICS = "2.9.2"
