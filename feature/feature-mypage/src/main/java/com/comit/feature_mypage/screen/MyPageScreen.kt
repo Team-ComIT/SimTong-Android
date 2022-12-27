@@ -158,6 +158,17 @@ fun MyPageScreen(
                 )
             }
         )
+        MyPageDescription(
+            title = stringResource(
+                id = R.string.privacy_policy,
+            ),
+            content = null,
+            onClick = {
+                navController.navigate(
+                    route = SimTongScreen.MyPage.PRIVACY_POLICY,
+                )
+            }
+        )
         MyPageDescriptionImage(
             title = stringResource(
                 id = R.string.password_fix
@@ -310,7 +321,7 @@ private fun MyPageDescriptionNoClickable(
 @Composable
 private fun MyPageDescription(
     title: String,
-    content: String,
+    content: String?,
     onClick: (() -> Unit)? = null,
 ) {
     Row(
@@ -330,10 +341,12 @@ private fun MyPageDescription(
 
         Spacer(modifier = Modifier.weight(1f))
 
-        Body5(
-            text = content,
-            color = SimTongColor.Gray300
-        )
+        if (content != null) {
+            Body5(
+                text = content,
+                color = SimTongColor.Gray300
+            )
+        }
     }
 }
 
