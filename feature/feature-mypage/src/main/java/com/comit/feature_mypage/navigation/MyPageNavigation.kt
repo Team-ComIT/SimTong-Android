@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.comit.feature_mypage.screen.MyPageScreen
+import com.comit.feature_mypage.screen.PrivacyPolicyScreen
 import com.comit.feature_mypage.screen.fix.email.FixEmailInputCertificationScreen
 import com.comit.feature_mypage.screen.fix.email.FixEmailScreen
 import com.comit.feature_mypage.screen.fix.nickname.FixNickNameScreen
@@ -78,6 +79,14 @@ fun NavGraphBuilder.myPageNavigation(
             FixWorkPlaceScreen(
                 navController = navController,
             )
+        }
+
+        composable(
+            route = SimTongScreen.MyPage.PRIVACY_POLICY,
+        ) {
+            PrivacyPolicyScreen {
+                navController.popBackStack()
+            }
         }
     }
 }

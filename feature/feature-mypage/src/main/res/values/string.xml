@@ -5,6 +5,7 @@
     <string name="kr_workplace">근무지점</string>
     <string name="kr_change_password">비밀번호 변경</string>
     <string name="kr_edit">수정</string>
+    <string name="privacy_policy">개인정보처리방침</string>
     <string name="check">확인</string>
     <string name="next">다음</string>
     <string name="left_time">남은 시간</string>
@@ -30,7 +31,6 @@
     <string name="certification_number_input">인증번호 입력</string>
     <string name="certification_number_6">인증번호(6자리)</string>
     <string name="certification_number">인증번호</string>
-
 
     <string name="password_fix">비밀번호 수정</string>
     <string name="password_old_input">기존 비밀번호 입력</string>
