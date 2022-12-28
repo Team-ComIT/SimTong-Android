@@ -4,7 +4,7 @@
 )
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
-package com.comit.feature_home.vm
+package com.comit.feature_home.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -62,6 +62,7 @@ import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.calendar.SimTongCalendarStatus
 import com.comit.feature_home.mvi.CloseDaySideEffect
 import com.comit.feature_home.string
+import com.comit.feature_home.vm.CloseDayViewModel
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
