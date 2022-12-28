@@ -57,8 +57,6 @@ private val HomeScreenPadding = PaddingValues(
     horizontal = 25.dp,
 )
 
-private val HomeCalendarHeight: Dp = 343.dp
-
 private const val StartDateAdd = -3
 private const val EndDateAdd = 3
 
@@ -163,7 +161,6 @@ fun HomeScreen(
         SimTongCalendar(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(HomeCalendarHeight)
                 .simClickable(
                     rippleEnabled = false,
                 ) {
