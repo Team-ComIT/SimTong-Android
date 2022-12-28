@@ -15,9 +15,15 @@ sealed class CloseDaySideEffect {
 
     object TokenException : CloseDaySideEffect()
 
-    object DayOffExcess : CloseDaySideEffect()
+    object AlreadyHoliday : CloseDaySideEffect()
 
-    object AnnualDayChangeFail : CloseDaySideEffect()
+    object TooManyHoliday : CloseDaySideEffect()
+
+    object TooManyAnnualDay : CloseDaySideEffect()
+
+    object AlreadyAnnualDay : CloseDaySideEffect()
 
     object AlreadyWork : CloseDaySideEffect()
+
+    object CannotChangeWorkState : CloseDaySideEffect()
 }
