@@ -10,10 +10,10 @@ import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.comit.feature_home.screen.HomeScreen
 import com.comit.feature_home.screen.SalaryWebViewScreen
+import com.comit.feature_home.screen.WriteClosedDayScreen
 import com.comit.feature_home.screen.alarm.AlarmScreen
 import com.comit.feature_home.screen.schedule.ShowScheduleScreen
 import com.comit.feature_home.screen.schedule.WriteScheduleScreen
-import com.comit.feature_home.screen.WriteClosedDayScreen
 import com.comit.navigator.SimTongScreen
 
 fun NavGraphBuilder.homeNavigation(
