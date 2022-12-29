@@ -4,7 +4,7 @@
 )
 @file:Suppress("OPT_IN_IS_NOT_ENABLED")
 
-package com.comit.feature_home.vm
+package com.comit.feature_home.screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -62,6 +62,7 @@ import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.calendar.SimTongCalendarStatus
 import com.comit.feature_home.mvi.CloseDaySideEffect
 import com.comit.feature_home.string
+import com.comit.feature_home.vm.CloseDayViewModel
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
@@ -78,8 +79,12 @@ private val CalendarPadding = PaddingValues(
 
 private const val DateInputWrongMessage = "잘못된 날짜 입력입니다"
 private const val TokenExceptionMessage = "토큰 만료. 다시 로그인해주세요"
-private const val DayOffExcessMessage = "일주일에 휴무일은 최대 2회입니다"
+private const val AlreadyHoliday = "이미 휴무일입니다"
+private const val TooManyHoliday = "휴무일은 일주일에 2번만 가능합니다"
+private const val AlreadyAnnualDay = "이미 연차입니다"
+private const val TooManyAnnualDay = "연차 개수가 부족합니다"
 private const val AlreadyWorkMessage = "이미 근무일입니다"
+private const val CannotChangeWorkState = "더 이상 변경할 수 없는 일정입니다"
 
 @Composable
 fun WriteClosedDayScreen(
@@ -122,14 +127,23 @@ fun WriteClosedDayScreen(
             CloseDaySideEffect.TokenException -> {
                 toast(message = TokenExceptionMessage)
             }
-            CloseDaySideEffect.DayOffExcess -> {
-                toast(message = DayOffExcessMessage)
+            CloseDaySideEffect.AlreadyHoliday -> {
+                toast(message = AlreadyHoliday)
             }
-            CloseDaySideEffect.AnnualDayChangeFail -> {
-                toast(message = "서비스 준비중입니다")
+            CloseDaySideEffect.TooManyHoliday -> {
+                toast(message = TooManyHoliday)
+            }
+            CloseDaySideEffect.AlreadyAnnualDay -> {
+                toast(message = AlreadyAnnualDay)
+            }
+            CloseDaySideEffect.TooManyAnnualDay -> {
+                toast(message = TooManyAnnualDay)
             }
             CloseDaySideEffect.AlreadyWork -> {
                 toast(message = AlreadyWorkMessage)
+            }
+            CloseDaySideEffect.CannotChangeWorkState -> {
+                toast(message = CannotChangeWorkState)
             }
         }
     }

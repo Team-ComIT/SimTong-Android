@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.holiday.FetchHolidaysUseCase
 import com.comit.feature_home.mvi.FetchHolidayState
 import com.comit.feature_home.mvi.toState
@@ -32,7 +35,11 @@ class GetHolidayViewModel @Inject constructor(
             ).onSuccess {
                 _holidayList.value = it.toState().holidayList
             }.onFailure {
-                _holidayList.value = listOf()
+                when (it) {
+                    is BadRequestException -> _holidayList.value = listOf()
+                    is UnAuthorizedException -> _holidayList.value = listOf()
+                    else -> throwUnknownException(it)
+                }
             }
         }
     }

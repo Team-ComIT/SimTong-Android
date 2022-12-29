@@ -133,9 +133,6 @@ fun ShowScheduleScreen(
 
     showScheduleSideEffect.observeWithLifecycle() {
         when (it) {
-            FetchScheduleSideEffect.FetchScheduleFail -> {
-                toast(message = "일정을 불러오는데 실패했습니다.")
-            }
             FetchScheduleSideEffect.DeleteScheduleSuccess -> {
                 coroutineScope.launch {
                     bottomSheetState.hide()
@@ -145,8 +142,14 @@ fun ShowScheduleScreen(
                     endAt = getEndAt(checkMonth)
                 )
             }
-            FetchScheduleSideEffect.DeleteScheduleFail -> {
-                toast(message = "일정 삭제를 실패했습니다.")
+            FetchScheduleSideEffect.DeleteScheduleDateError -> {
+                toast(message = "삭제할 일정을 찾지 못했습니다")
+            }
+            FetchScheduleSideEffect.DeleteScheduleCannotFound -> {
+                toast(message = "일정이 존재하지 않습니다")
+            }
+            FetchScheduleSideEffect.TokenError -> {
+                toast(message = "토큰 만료. 다시 로그인해주세요")
             }
         }
     }

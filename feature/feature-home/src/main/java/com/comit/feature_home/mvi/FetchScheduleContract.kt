@@ -28,9 +28,11 @@ fun ScheduleList.Schedule.toStateSchedule() = FetchScheduleState.Schedule(
 
 sealed class FetchScheduleSideEffect {
 
-    object FetchScheduleFail : FetchScheduleSideEffect()
+    object DeleteScheduleDateError : FetchScheduleSideEffect()
+
+    object DeleteScheduleCannotFound : FetchScheduleSideEffect()
 
     object DeleteScheduleSuccess : FetchScheduleSideEffect()
 
-    object DeleteScheduleFail : FetchScheduleSideEffect()
+    object TokenError : FetchScheduleSideEffect()
 }

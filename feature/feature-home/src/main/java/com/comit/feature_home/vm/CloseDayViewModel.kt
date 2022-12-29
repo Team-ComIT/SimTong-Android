@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.NotFoundException
+import com.comit.domain.exception.TooManyRequestsException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.holiday.CheckLeftHolidayUseCase
@@ -43,7 +44,8 @@ class CloseDayViewModel @Inject constructor(
                 when (it) {
                     is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
                     is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
-                    is ConflictException -> postSideEffect(CloseDaySideEffect.DayOffExcess)
+                    is ConflictException -> postSideEffect(CloseDaySideEffect.AlreadyHoliday)
+                    is TooManyRequestsException -> postSideEffect(CloseDaySideEffect.TooManyHoliday)
                     else -> throwUnknownException(it)
                 }
             }
@@ -57,7 +59,13 @@ class CloseDayViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(CloseDaySideEffect.CloseDayChangeSuccess)
             }.onFailure {
-                postSideEffect(CloseDaySideEffect.AnnualDayChangeFail)
+                when (it) {
+                    is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
+                    is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
+                    is ConflictException -> postSideEffect(CloseDaySideEffect.AlreadyAnnualDay)
+                    is TooManyRequestsException -> postSideEffect(CloseDaySideEffect.TooManyAnnualDay)
+                    else -> throwUnknownException(it)
+                }
             }
         }
     }
@@ -73,6 +81,7 @@ class CloseDayViewModel @Inject constructor(
                     is BadRequestException -> postSideEffect(CloseDaySideEffect.DateInputWrong)
                     is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
                     is NotFoundException -> postSideEffect(CloseDaySideEffect.AlreadyWork)
+                    is ConflictException -> postSideEffect(CloseDaySideEffect.CannotChangeWorkState)
                     else -> throwUnknownException(it)
                 }
             }
@@ -86,6 +95,11 @@ class CloseDayViewModel @Inject constructor(
             ).onSuccess {
                 reduce {
                     state.copy(leftHoliday = it.result)
+                }
+            }.onFailure {
+                when (it) {
+                    is UnAuthorizedException -> postSideEffect(CloseDaySideEffect.TokenException)
+                    else -> throwUnknownException(it)
                 }
             }
         }
