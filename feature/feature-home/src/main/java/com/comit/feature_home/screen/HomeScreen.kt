@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterialApi::class, InternalCoroutinesApi::class,)
+@file:OptIn(ExperimentalMaterialApi::class, InternalCoroutinesApi::class)
 
 package com.comit.feature_home.screen
 
@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -35,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.comit.common.rememberToast
+import com.comit.common.utils.string
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.Header
@@ -56,8 +58,6 @@ private val HomeScreenTopRowHeight: Dp = 34.dp
 private val HomeScreenPadding = PaddingValues(
     horizontal = 25.dp,
 )
-
-private val HomeCalendarHeight: Dp = 343.dp
 
 private const val StartDateAdd = -3
 private const val EndDateAdd = 3
@@ -84,23 +84,35 @@ fun HomeScreen(
         today.get(Calendar.MONTH),
         today.get(Calendar.DATE) + StartDateAdd
     )
-    val startYear = startAt.get(Calendar.YEAR).toString()
-    val startMonth = (startAt.get(Calendar.MONTH) + 1).toString()
-    val startDay = startAt.get(Calendar.DATE).toString()
+    val startYear = startAt.get(Calendar.YEAR)
+    val startMonth = (startAt.get(Calendar.MONTH) + 1)
+    val startDay = startAt.get(Calendar.DATE)
 
     val endAt = GregorianCalendar(
         today.get(Calendar.YEAR),
         today.get(Calendar.MONTH),
         today.get(Calendar.DATE) + EndDateAdd
     )
-    val endYear = endAt.get(Calendar.YEAR).toString()
-    val endMonth = (endAt.get(Calendar.MONTH) + 1).toString()
-    val endDay = endAt.get(Calendar.DATE).toString()
+    val endYear = endAt.get(Calendar.YEAR)
+    val endMonth = (endAt.get(Calendar.MONTH) + 1)
+    val endDay = endAt.get(Calendar.DATE)
 
     LaunchedEffect(key1 = homeViewModel) {
         homeViewModel.fetchMenu(
-            startAt = "$startYear-$startMonth-$startDay",
-            endAt = "$endYear-$endMonth-$endDay",
+            startAt = buildAnnotatedString {
+                append(startYear.toString())
+                append("-")
+                append(string.format("%02d", startMonth))
+                append("-")
+                append(string.format("%02d", startDay))
+            }.toString(),
+            endAt = buildAnnotatedString {
+                append(endYear.toString())
+                append("-")
+                append(string.format("%02d", endMonth))
+                append("-")
+                append(string.format("%02d", endDay))
+            }.toString()
         )
     }
 
@@ -163,7 +175,6 @@ fun HomeScreen(
         SimTongCalendar(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(HomeCalendarHeight)
                 .simClickable(
                     rippleEnabled = false,
                 ) {

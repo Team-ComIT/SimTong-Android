@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -69,15 +68,11 @@ import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.Calendar
-import java.util.GregorianCalendar
 import java.util.UUID
 
 private val HorizontalPadding = PaddingValues(
     horizontal = 30.dp,
 )
-
-private val HomeCalendarHeight: Dp = 343.dp
 
 private val CalendarPadding = PaddingValues(
     horizontal = 20.dp,
@@ -95,24 +90,7 @@ fun ShowScheduleScreen(
     val showScheduleState = showScheduleContainer.stateFlow.collectAsState().value
     val showScheduleSideEffect = showScheduleContainer.sideEffectFlow
 
-    val today = GregorianCalendar()
-    val calendar = GregorianCalendar(
-        today.get(Calendar.YEAR),
-        today.get(Calendar.MONTH),
-        today.get(Calendar.DATE)
-    )
     var checkMonth by remember { mutableStateOf(0) }
-
-//    var date by remember {
-//        mutableStateOf<Date>(
-//            Date.valueOf(
-//                string.format("%02d", calendar.get(Calendar.YEAR)) +
-//                    "-" +
-//                    string.format("%02d", calendar.get(Calendar.MONTH) + 1) +
-//                    "-01"
-//            )
-//        )
-//    }
 
     LaunchedEffect(showScheduleViewModel) {
         showScheduleViewModel.showSchedule(
@@ -133,9 +111,6 @@ fun ShowScheduleScreen(
 
     showScheduleSideEffect.observeWithLifecycle() {
         when (it) {
-            FetchScheduleSideEffect.FetchScheduleFail -> {
-                toast(message = "일정을 불러오는데 실패했습니다.")
-            }
             FetchScheduleSideEffect.DeleteScheduleSuccess -> {
                 coroutineScope.launch {
                     bottomSheetState.hide()
@@ -145,8 +120,14 @@ fun ShowScheduleScreen(
                     endAt = getEndAt(checkMonth)
                 )
             }
-            FetchScheduleSideEffect.DeleteScheduleFail -> {
-                toast(message = "일정 삭제를 실패했습니다.")
+            FetchScheduleSideEffect.DeleteScheduleDateError -> {
+                toast(message = "삭제할 일정을 찾지 못했습니다")
+            }
+            FetchScheduleSideEffect.DeleteScheduleCannotFound -> {
+                toast(message = "일정이 존재하지 않습니다")
+            }
+            FetchScheduleSideEffect.TokenError -> {
+                toast(message = "토큰 만료. 다시 로그인해주세요")
             }
         }
     }
@@ -259,6 +240,9 @@ fun ShowScheduleScreen(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 SimTongCalendar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(CalendarPadding),
                     onBeforeClicked = { _, _checkMonth ->
                         checkMonth = _checkMonth
                         showScheduleViewModel.showSchedule(
@@ -273,10 +257,6 @@ fun ShowScheduleScreen(
                             endAt = getEndAt(checkMonth)
                         )
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(HomeCalendarHeight)
-                        .padding(CalendarPadding),
                 )
 
                 Spacer(modifier = Modifier.height(7.dp))

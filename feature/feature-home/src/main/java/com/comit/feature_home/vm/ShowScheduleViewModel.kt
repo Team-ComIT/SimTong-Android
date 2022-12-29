@@ -2,6 +2,10 @@ package com.comit.feature_home.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comit.domain.exception.BadRequestException
+import com.comit.domain.exception.NotFoundException
+import com.comit.domain.exception.UnAuthorizedException
+import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.schedule.DeletePersonalScheduleUseCase
 import com.comit.domain.usecase.schedule.FetchPersonalScheduleUseCase
 import com.comit.feature_home.mvi.FetchScheduleSideEffect
@@ -25,7 +29,6 @@ class ShowScheduleViewModel @Inject constructor(
 
     override val container = container<FetchScheduleState, FetchScheduleSideEffect>(FetchScheduleState())
 
-    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun showSchedule(
         startAt: String,
         endAt: String,
@@ -41,12 +44,14 @@ class ShowScheduleViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                postSideEffect(FetchScheduleSideEffect.FetchScheduleFail)
+                when (it) {
+                    is UnAuthorizedException -> postSideEffect(FetchScheduleSideEffect.TokenError)
+                    else -> throwUnknownException(it)
+                }
             }
         }
     }
 
-    // TODO(limsaehyun): 예상치 못한 예외 시 throwUnknownException 반환 필요
     fun deleteSchedule(
         id: UUID
     ) = intent {
@@ -56,7 +61,12 @@ class ShowScheduleViewModel @Inject constructor(
             ).onSuccess {
                 postSideEffect(FetchScheduleSideEffect.DeleteScheduleSuccess)
             }.onFailure {
-                postSideEffect(FetchScheduleSideEffect.DeleteScheduleFail)
+                when (it) {
+                    is BadRequestException -> postSideEffect(FetchScheduleSideEffect.DeleteScheduleDateError)
+                    is UnAuthorizedException -> postSideEffect(FetchScheduleSideEffect.TokenError)
+                    is NotFoundException -> postSideEffect(FetchScheduleSideEffect.DeleteScheduleCannotFound)
+                    else -> throwUnknownException(it)
+                }
             }
         }
     }

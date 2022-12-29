@@ -80,6 +80,7 @@ enum class SimTongCalendarStatus(
     ),
 }
 
+private val CalendarLoadingHeight: Dp = 255.dp
 private const val Week: Int = 7
 
 @Stable
@@ -216,7 +217,8 @@ fun SimTongCalendar(
                 CircularProgressIndicator(
                     color = SimTongColor.MainColor,
                     modifier = Modifier
-                        .fillMaxSize()
+                        .fillMaxWidth()
+                        .height(CalendarLoadingHeight)
                         .wrapContentSize(Alignment.Center),
                 )
             } else {
@@ -224,6 +226,7 @@ fun SimTongCalendar(
                     list = calendarList,
                     onItemClicked = onItemClicked
                 )
+                Spacer(modifier = Modifier.height(40.dp))
             }
         }
     }
@@ -327,9 +330,7 @@ fun SimTongCalendarList(
     list: List<SimTongCalendarData>,
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize()
-    ) {
+    Column {
         repeat(list.size / Week) { size ->
             val rowList = list.subList(size * Week, size * Week + Week)
 
