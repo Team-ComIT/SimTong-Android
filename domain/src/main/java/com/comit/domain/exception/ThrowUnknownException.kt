@@ -17,6 +17,9 @@ fun throwUnknownException(
     if (e.message?.contains("NoInternetException") == true) throw NoInternetException()
     if (e.message?.contains("NoConnectivityException") == true) throw NoInternetException()
 
+    // TODO(limsaehyun): 홈 화면에 재접속 할 경우 Job 에러가 발생. 임시로 무시해놓은 상태 처리해야 함
+    if (e.message?.contains("Job was cancelled") == true) return
+
     when (e) {
         is NoInternetException -> throw NoInternetException()
         is NoConnectivityException -> throw NoInternetException()
