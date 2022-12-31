@@ -17,6 +17,15 @@ fun SalaryWebViewScreen() {
 
     WebView(
         state = webViewState,
+        onCreated = { webView ->
+            with(webView) {
+                settings.run {
+                    javaScriptEnabled = true
+                    domStorageEnabled = true
+                    javaScriptCanOpenWindowsAutomatically = false
+                }
+            }
+        },
     )
 }
 
