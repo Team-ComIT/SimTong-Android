@@ -46,4 +46,14 @@ class LocalAuthDataSourceImpl @Inject constructor(
         saveRefreshToken(token.refreshToken)
         saveExpiredAt(token.accessTokenExp)
     }
+
+    override suspend fun fetchDeviceToken(): Flow<String> {
+        return authPreference.fetchDeviceToken()
+    }
+
+    override suspend fun saveDeviceToken(token: String) {
+        authPreference.saveDeviceToken(
+            token = token,
+        )
+    }
 }
