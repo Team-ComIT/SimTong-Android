@@ -1,15 +1,15 @@
 package com.comit.remote.api
 
 import com.comit.remote.request.holidays.DayOffRequest
+import com.comit.remote.request.holidays.SetAnnualRequest
+import com.comit.remote.request.holidays.SetWorkRequest
 import com.comit.remote.response.holidays.CheckLeftHolidayResponse
 import com.comit.remote.response.holidays.FetchHolidaysResponse
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Query
-import java.util.Date
 
 interface HolidayAPI {
 
@@ -25,14 +25,14 @@ interface HolidayAPI {
         @Body dayOffRequest: DayOffRequest
     )
 
-    @PUT("$HOLIDAYS/annual")
+    @POST("$HOLIDAYS/annual")
     suspend fun setAnnual(
-        @Query("date") date: Date,
+        @Body setAnnualRequest: SetAnnualRequest,
     )
 
-    @DELETE("$HOLIDAYS/work")
+    @PUT("$HOLIDAYS/work")
     suspend fun setWork(
-        @Query("date") date: Date
+        @Body setWorkRequest: SetWorkRequest
     )
 
     @GET("$HOLIDAYS/annual/count")
