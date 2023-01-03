@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.comit.common.systemBarPadding
@@ -32,6 +33,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             setWindowInset()
+            saveDeviceToken(hiltViewModel())
 
             val navController = rememberNavController()
 
@@ -84,5 +86,11 @@ class MainActivity : ComponentActivity() {
             window.decorView.systemUiVisibility = window.decorView.systemUiVisibility or
                 View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
+    }
+
+    private fun saveDeviceToken(
+        vm: MainViewModel,
+    ) {
+        vm.saveDeviceToken()
     }
 }
