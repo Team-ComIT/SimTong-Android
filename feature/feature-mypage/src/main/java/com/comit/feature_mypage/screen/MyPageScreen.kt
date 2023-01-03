@@ -184,7 +184,7 @@ fun MyPageScreen(
             title = stringResource(
                 id = R.string.kr_my_page_sign_in
             ),
-            color = SimTongColor.MainColor300,
+            color = SimTongColor.MainColor,
             onClick = {
                 // TODO: Token 삭제, 전체 popUp
                 navController.navigate(
