@@ -10,8 +10,10 @@ object Dependency {
     }
 
     object FIREBASE {
+        const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE_BOM}"
         const val FIREBASE_CRASHLYTICS = "com.google.firebase:firebase-crashlytics-ktx:${Versions.FIREBASE_CRASHLYTICS}"
         const val FIREBASE_ANALYTICS = "com.google.firebase:firebase-analytics-ktx:${Versions.FIREBASE_ANALYTICS}"
+        const val FIREBASE_MESSAGING = "com.google.firebase:firebase-messaging-ktx"
     }
 
     object Kotlin {
