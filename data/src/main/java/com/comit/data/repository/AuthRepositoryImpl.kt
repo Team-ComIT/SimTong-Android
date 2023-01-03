@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package com.comit.data.repository
 
 import com.comit.data.datasource.LocalAuthDataSource
@@ -6,6 +8,7 @@ import com.comit.data.datasource.RemoteFileDataSource
 import com.comit.data.util.FormDataUtil
 import com.comit.domain.repository.AuthRepository
 import com.comit.model.User
+import kotlinx.coroutines.flow.first
 import java.io.File
 import java.util.UUID
 import javax.inject.Inject
@@ -23,6 +26,7 @@ class AuthRepositoryImpl @Inject constructor(
         remoteAuthDataSource.signIn(
             employeeNumber = employeeNumber,
             password = password,
+            deviceToken = getDeviceToken(),
         ).also {
             localAuthDataSource.saveToken(it)
         }
@@ -44,7 +48,7 @@ class AuthRepositoryImpl @Inject constructor(
         email: String,
         password: String,
         nickname: String?,
-        profileImage: File?
+        profileImage: File?,
     ) {
         val profileImagePath = profileImage?.let {
             getImagePathByFile(
@@ -59,6 +63,7 @@ class AuthRepositoryImpl @Inject constructor(
             password = password,
             nickname = nickname,
             profileImagePath = profileImagePath,
+            deviceToken = getDeviceToken(),
         ).also {
             localAuthDataSource.saveToken(it)
         }
@@ -106,6 +111,16 @@ class AuthRepositoryImpl @Inject constructor(
 
     override suspend fun fetchUserInformation(): User {
         return remoteAuthDataSource.fetchUserInformation()
+    }
+
+    override suspend fun saveDeviceToken(token: String) {
+        localAuthDataSource.saveDeviceToken(
+            token = token,
+        )
+    }
+
+    private suspend fun getDeviceToken(): String {
+        return localAuthDataSource.fetchDeviceToken().first()
     }
 
     private suspend fun getImagePathByFile(

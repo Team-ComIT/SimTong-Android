@@ -9,6 +9,7 @@ interface RemoteAuthDataSource {
     suspend fun signIn(
         employeeNumber: Int,
         password: String,
+        deviceToken: String,
     ): Token
 
     suspend fun verificationEmployee(
@@ -23,6 +24,7 @@ interface RemoteAuthDataSource {
         password: String,
         nickname: String?,
         profileImagePath: String?,
+        deviceToken: String,
     ): Token
 
     suspend fun checkNicknameDuplication(
