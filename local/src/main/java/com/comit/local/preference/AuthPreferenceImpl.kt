@@ -61,6 +61,18 @@ class AuthPreferenceImpl @Inject constructor(
         }
     }
 
+    override suspend fun fetchDeviceToken(): Flow<String> {
+        return context.fetchStringPreference(
+            key = DEVICE_TOKEN,
+        )
+    }
+
+    override suspend fun saveDeviceToken(token: String) {
+        context.datastore.edit { preference ->
+            preference[DEVICE_TOKEN] = token
+        }
+    }
+
     companion object {
         val ACCESS_TOKEN = stringPreferencesKey(
             name = "ACCESS_TOKEN",
@@ -71,7 +83,11 @@ class AuthPreferenceImpl @Inject constructor(
         )
 
         val EXPIRED_AT = longPreferencesKey(
-            name = "EXPIRED_AT"
+            name = "EXPIRED_AT",
+        )
+
+        val DEVICE_TOKEN = stringPreferencesKey(
+            name = "DEVICE_TOKEN",
         )
     }
 }

@@ -68,7 +68,10 @@ dependencies {
 
     implementation(Dependency.Hilt.HILT_ANDROID)
     kapt(Dependency.Hilt.HILT_ANDROID_COMPILER)
+    implementation(Dependency.Compose.COMPOSE_HILT_NAV)
 
+    implementation(platform(Dependency.FIREBASE.FIREBASE_BOM))
+    implementation(Dependency.FIREBASE.FIREBASE_MESSAGING)
     implementation(Dependency.FIREBASE.FIREBASE_CRASHLYTICS)
     implementation(Dependency.FIREBASE.FIREBASE_ANALYTICS)
 

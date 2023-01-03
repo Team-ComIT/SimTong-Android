@@ -21,12 +21,14 @@ class RemoteAuthDataSourceImpl @Inject constructor(
 
     override suspend fun signIn(
         employeeNumber: Int,
-        password: String
+        password: String,
+        deviceToken: String,
     ): Token = simTongApiCall {
         authAPI.signIn(
             request = SignInRequest(
                 employeeNumber = employeeNumber,
                 password = password,
+                deviceToken = deviceToken,
             )
         ).toModel()
     }
@@ -47,7 +49,8 @@ class RemoteAuthDataSourceImpl @Inject constructor(
         email: String,
         password: String,
         nickname: String?,
-        profileImagePath: String?
+        profileImagePath: String?,
+        deviceToken: String,
     ): Token = simTongApiCall {
         authAPI.signUp(
             request = SignUpRequest(
@@ -57,6 +60,7 @@ class RemoteAuthDataSourceImpl @Inject constructor(
                 password = password,
                 nickname = nickname,
                 profileImagePath = profileImagePath,
+                deviceToken = deviceToken,
             )
         ).toModel()
     }

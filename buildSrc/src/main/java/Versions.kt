@@ -5,6 +5,7 @@ object Versions {
     const val GRADLE_FIREBASE_CRASHLYTICS = "2.9.2"
     const val FIREBASE_CRASHLYTICS = "18.3.2"
     const val FIREBASE_ANALYTICS = "21.2.0"
+    const val FIREBASE_BOM = "31.1.1"
 
     const val KT_LINT = "10.2.0"
 

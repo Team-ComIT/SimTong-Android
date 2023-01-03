@@ -9,4 +9,7 @@ data class SignInRequest(
 
     @field:SerializedName("password")
     val password: String,
+
+    @field:SerializedName("device_token")
+    val deviceToken: String,
 )
