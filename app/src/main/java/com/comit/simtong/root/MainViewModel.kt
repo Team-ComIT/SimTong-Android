@@ -3,9 +3,6 @@ package com.comit.simtong.root
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.usecase.users.SaveDeviceTokenUseCase
-import com.comit.simtong.firebase.getDeviceToken
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch

@@ -43,7 +43,7 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
     ) = simTongApiCall {
         holidayAPI.setAnnual(
             setAnnualRequest = SetAnnualRequest(
-                date = date,
+                date = date.toString(),
             )
         )
     }
@@ -53,7 +53,7 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
     ) = simTongApiCall {
         holidayAPI.setWork(
             setWorkRequest = SetWorkRequest(
-                date = date,
+                date = date.toString(),
             )
         )
     }
