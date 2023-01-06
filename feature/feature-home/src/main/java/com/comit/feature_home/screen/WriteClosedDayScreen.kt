@@ -102,7 +102,7 @@ fun WriteClosedDayScreen(
     if (closeDayState.year.isEmpty()) {
         val today = GregorianCalendar()
         closeDayViewModel.inputYearState(today.get(Calendar.YEAR).toString())
-        closeDayViewModel.inputMonthState((today.get(Calendar.MONTH) + 1).toString())
+        closeDayViewModel.inputMonthState(string.format("%02d", today.get(Calendar.MONTH) + 1))
     }
 
     var workState by remember { mutableStateOf("") }
