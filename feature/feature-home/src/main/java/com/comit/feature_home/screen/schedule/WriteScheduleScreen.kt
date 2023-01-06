@@ -168,6 +168,7 @@ fun WriteScheduleScreen(
                 onDismissRequest = { timerDialogVisible = false },
                 onBtnClick = { vm.inputAlarm(it) },
             )
+            Spacer(modifier = Modifier.height(8.dp))
 
             SimTongBtnField(
                 onClick = { timerDialogVisible = true },
