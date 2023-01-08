@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ import androidx.navigation.NavController
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.button.SimTongButtonColor
+import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.feature_auth.R
 import com.comit.feature_auth.mvi.StartSideEffect
 import com.comit.feature_auth.vm.StartViewModel
@@ -131,9 +133,11 @@ fun StartScreen(
                     modifier = Modifier.size(108.dp, 53.dp)
                 )
                 Image(
-                    painter = painterResource(id = R.drawable.ic_splash_logo),
+                    modifier = Modifier
+                        .size(66.dp)
+                        .offset(x = (-8).dp),
+                    painter = painterResource(id = SimTongIcon.Logo.drawableId),
                     contentDescription = null,
-                    modifier = Modifier.size(48.dp, 38.dp)
                 )
             }
 
