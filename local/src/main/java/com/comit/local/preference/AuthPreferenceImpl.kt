@@ -73,21 +73,28 @@ class AuthPreferenceImpl @Inject constructor(
         }
     }
 
+    override suspend fun clearAccessToken() {
+        context.datastore.edit { preference ->
+            preference.remove(ACCESS_TOKEN)
+        }
+    }
+
+    override suspend fun clearRefreshToken() {
+        context.datastore.edit { preference ->
+            preference.remove(REFRESH_TOKEN)
+        }
+    }
+
+    override suspend fun clearExpiredAt() {
+        context.datastore.edit { preference ->
+            preference.remove(EXPIRED_AT)
+        }
+    }
+
     companion object {
-        val ACCESS_TOKEN = stringPreferencesKey(
-            name = "ACCESS_TOKEN",
-        )
-
-        val REFRESH_TOKEN = stringPreferencesKey(
-            name = "REFRESH_TOKEN",
-        )
-
-        val EXPIRED_AT = longPreferencesKey(
-            name = "EXPIRED_AT",
-        )
-
-        val DEVICE_TOKEN = stringPreferencesKey(
-            name = "DEVICE_TOKEN",
-        )
+        val ACCESS_TOKEN = stringPreferencesKey("ACCESS_TOKEN")
+        val REFRESH_TOKEN = stringPreferencesKey("REFRESH_TOKEN")
+        val EXPIRED_AT = longPreferencesKey("EXPIRED_AT")
+        val DEVICE_TOKEN = stringPreferencesKey("DEVICE_TOKEN")
     }
 }

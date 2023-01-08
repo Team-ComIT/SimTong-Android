@@ -13,6 +13,10 @@ interface AuthPreference {
     suspend fun saveRefreshToken(token: String)
     suspend fun saveExpiredAt(expiredAt: LocalDateTime)
 
+    suspend fun clearAccessToken()
+    suspend fun clearRefreshToken()
+    suspend fun clearExpiredAt()
+
     suspend fun fetchDeviceToken(): Flow<String>
     suspend fun saveDeviceToken(token: String)
 }

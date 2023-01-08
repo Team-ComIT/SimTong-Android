@@ -119,6 +119,10 @@ class AuthRepositoryImpl @Inject constructor(
         )
     }
 
+    override suspend fun clearToken() {
+        localAuthDataSource.clearToken()
+    }
+
     private suspend fun getDeviceToken(): String {
         return localAuthDataSource.fetchDeviceToken().first()
     }
