@@ -15,6 +15,8 @@ interface LocalAuthDataSource {
     suspend fun saveExpiredAt(expiredAt: LocalDateTime)
     suspend fun saveToken(token: Token)
 
+    suspend fun clearToken()
+
     suspend fun fetchDeviceToken(): Flow<String>
     suspend fun saveDeviceToken(token: String)
 }

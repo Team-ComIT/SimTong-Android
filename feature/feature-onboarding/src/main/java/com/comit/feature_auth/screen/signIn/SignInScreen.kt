@@ -27,7 +27,6 @@ import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
@@ -182,9 +181,9 @@ private fun SignInTopLayout() {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        Body1(
-            text = stringResource(id = R.string.mind_share),
-            color = SimTongColor.OtherColor.Gray7E,
+        Image(
+            painter = painterResource(R.drawable.ic_sign_in_title),
+            contentDescription = null,
         )
 
         Row(
