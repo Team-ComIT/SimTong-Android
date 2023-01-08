@@ -8,6 +8,7 @@ import com.comit.domain.exception.NeedLoginException
 import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.users.ChangeProfileImageUseCase
+import com.comit.domain.usecase.users.ClearTokenUseCase
 import com.comit.domain.usecase.users.FetchUserInformationUseCase
 import com.comit.feature_mypage.mvi.MyPageSideEffect
 import com.comit.feature_mypage.mvi.MyPageState
@@ -27,6 +28,7 @@ internal const val ImageLimitSizeInKB: Int = 1024
 class MyPageViewModel @Inject constructor(
     private val fetchUserInformationUseCase: FetchUserInformationUseCase,
     private val changeProfileImageUseCase: ChangeProfileImageUseCase,
+    private val clearTokenUseCase: ClearTokenUseCase,
 ) : ContainerHost<MyPageState, MyPageSideEffect>, ViewModel() {
 
     override val container = container<MyPageState, MyPageSideEffect>(MyPageState())
@@ -80,6 +82,12 @@ class MyPageViewModel @Inject constructor(
                     else -> throwUnknownException(it)
                 }
             }
+        }
+    }
+
+    fun clearToken() {
+        viewModelScope.launch {
+            clearTokenUseCase()
         }
     }
 
