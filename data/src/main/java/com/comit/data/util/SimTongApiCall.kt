@@ -49,7 +49,7 @@ suspend inline fun <T> simTongApiCall(
         throw when (e.code()) {
             400 -> BadRequestException(
                 message = message,
-                fieldErrors = emptyList(),
+                fieldErrors = getFieldErrorMessage(e),
             )
             401 -> {
                 if (e.message == ExpiredTokenMessage) {
@@ -105,25 +105,51 @@ private data class ErrorResponse(
 
     @field:SerializedName("message")
     val message: String,
-)
+
+    @field:SerializedName("field_errors")
+    val fieldErrors: List<FieldError>
+) {
+    data class FieldError(
+        @field:SerializedName("field")
+        val field: String,
+
+        @field:SerializedName("value")
+        val value: String,
+
+        @field:SerializedName("reason")
+        val reason: String,
+    )
+}
+
+private const val UnknownErrorMessage: String = "알 수 없는 오류가 발생했습니다"
+
+fun getErrorMessage(exception: HttpException): String {
+    val response = getError(exception)
+
+    return "[${response?.status ?: -1}] ${response?.message ?: UnknownErrorMessage}"
+}
+
+fun getFieldErrorMessage(exception: HttpException): List<Pair<String, String>> {
+    val response = getError(exception)
+
+    return response?.fieldErrors?.map { error ->
+        Pair(error.field, error.reason)
+    }?.toList() ?: emptyList()
+}
 
 /**
  * 서버에서 보내주는 Error 를 Parsing 하는 역할을 담당합니다.
  *
  * @param exception parsing 할 HttpException
  *
- * @return 서버로부터 전달된 error message
+ * @return 서버로부터 전달된 ErrorResponse
  */
-
-private const val UnknownErrorMessage: String = "알 수 없는 오류가 발생했습니다"
-
-fun getErrorMessage(exception: HttpException): String {
+private fun getError(exception: HttpException): ErrorResponse? {
     val errorString = exception.response()?.errorBody()?.string()
-    val errorDto: ErrorResponse? = Gson().fromJson(
+
+    return Gson().fromJson(
         errorString, ErrorResponse::class.java
     )
-
-    return "[${errorDto?.status ?: -1}] ${errorDto?.message ?: UnknownErrorMessage}"
 }
 
 suspend inline fun <T> trySafeReissueToken(

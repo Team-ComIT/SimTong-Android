@@ -12,7 +12,7 @@ package com.comit.domain.exception
  */
 class BadRequestException(
     override val message: String?,
-    private val fieldErrors: List<Pair<String, String>>,
+    val fieldErrors: List<Pair<String, String>>?,
 ) : RuntimeException()
 
 /**
