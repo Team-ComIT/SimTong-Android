@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.common.format.isEmailFormat
 import com.comit.common.unit.sizeInKb
+import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.ConflictException
 import com.comit.domain.exception.TooManyRequestException
 import com.comit.domain.exception.UnAuthorizedException
@@ -33,6 +34,26 @@ internal const val ImageLimitSizeInKB: Int = 1024
 
 private const val EmployeeNumberSizeLimit: Int = 10
 
+/**
+ * SignUp 의 Field 정보를 정의합니다.
+ *
+ * Server 에서 fieldErrors 를 받아 처리하는 용도로 사용합니다.
+ *
+ * @param originalField server 에서 받아온 error field
+ */
+enum class SignUpField(
+    val originalField: String
+) {
+    EMPLOYEE_NUMBER("employeeNumber"),
+    NAME(""),
+    EMAIL("");
+
+    companion object {
+        fun toField(fieldName: String): SignUpField =
+            values().first { it.originalField == fieldName }
+    }
+}
+
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     private val verificationEmployeeUseCase: VerificationEmployeeUseCase,
@@ -42,6 +63,21 @@ class SignUpViewModel @Inject constructor(
 ) : ContainerHost<SignUpState, SignUpSideEffect>, ViewModel() {
 
     override val container = container<SignUpState, SignUpSideEffect>(SignUpState())
+
+    private fun errorHandlingMultiField(
+        fieldErrors: List<Pair<String, String>>?,
+    ) = intent {
+        fieldErrors?.forEach { error ->
+            val field = SignUpField.toField(error.first)
+            val message = error.second
+
+            when (field) {
+                SignUpField.EMPLOYEE_NUMBER -> {}
+                SignUpField.NAME -> {}
+                SignUpField.EMAIL -> {}
+            }
+        }
+    }
 
     fun verificationEmployee(
         name: String,
@@ -62,6 +98,7 @@ class SignUpViewModel @Inject constructor(
                 postSideEffect(SignUpSideEffect.ChangeStepToInputEmail)
             }.onFailure {
                 when (it) {
+                    is BadRequestException -> errorHandlingMultiField(it.fieldErrors)
                     is UnAuthorizedException -> {
                         postSideEffect(SignUpSideEffect.UserInfoMatchingFailed)
                     }
