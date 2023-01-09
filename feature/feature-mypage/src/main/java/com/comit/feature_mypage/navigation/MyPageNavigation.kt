@@ -74,10 +74,19 @@ fun NavGraphBuilder.myPageNavigation(
         }
 
         composable(
-            route = SimTongScreen.MyPage.FIX_WORKPLACE,
+            route = SimTongScreen.MyPage.FIX_WORKPLACE + MyPageDeepLinkKeyUtil.WORK_PLACE + "{work place}",
+            arguments = listOf(
+                navArgument(MyPageDeepLinkKeyUtil.WORK_PLACE) {
+                    type = NavType.StringType
+                    defaultValue = ""
+                }
+            ),
         ) {
+            val currentWorkPlace = it.arguments?.getString(MyPageDeepLinkKeyUtil.WORK_PLACE) ?: ""
+
             FixWorkPlaceScreen(
                 navController = navController,
+                currentWorkPlace = currentWorkPlace,
             )
         }
 

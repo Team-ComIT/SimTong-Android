@@ -53,6 +53,7 @@ import com.comit.core_design_system.modifier.simClickable
 import com.comit.core_design_system.typography.Body5
 import com.comit.feature_mypage.R
 import com.comit.feature_mypage.mvi.MyPageSideEffect
+import com.comit.feature_mypage.utils.MyPageDeepLinkKeyUtil
 import com.comit.feature_mypage.vm.ImageLimitSizeInKB
 import com.comit.feature_mypage.vm.MyPageViewModel
 import com.comit.navigator.SimTongScreen
@@ -154,7 +155,7 @@ fun MyPageScreen(
             content = myPageInState.spot,
             onClick = {
                 navController.navigate(
-                    route = SimTongScreen.MyPage.FIX_WORKPLACE,
+                    route = SimTongScreen.MyPage.FIX_WORKPLACE + MyPageDeepLinkKeyUtil.WORK_PLACE + myPageInState.spot,
                 )
             }
         )

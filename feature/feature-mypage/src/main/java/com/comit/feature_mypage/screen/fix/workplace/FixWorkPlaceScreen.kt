@@ -65,6 +65,7 @@ private const val CannotChangePlaceTooMuch = "근무지점은 90일 동안 3회 
 @Composable
 fun FixWorkPlaceScreen(
     navController: NavController,
+    currentWorkPlace: String = "",
     vm: FixWorkPlaceViewModel = hiltViewModel(),
 ) {
     val toast = rememberToast()
@@ -109,20 +110,27 @@ fun FixWorkPlaceScreen(
 
         Spacer(modifier = Modifier.height(15.dp))
 
-        LazyColumn() {
+        LazyColumn {
             itemsIndexed(fixWorkPlaceState.spotList) { index, item ->
+                val checkCurrentWorkPlace = item.name == currentWorkPlace
                 Box(
                     modifier = Modifier
                         .height(FixWorkPlaceHeight)
                         .simSelectable(
                             selected = isSelect(index),
                             onClick = {
-                                selectedValue = index
-                                vm.inPutSpotId(UUID.fromString(item.id))
+                                if (!checkCurrentWorkPlace) {
+                                    selectedValue = index
+                                    vm.inPutSpotId(msg = UUID.fromString(item.id))
+                                }
                             },
                             role = Role.RadioButton,
                         )
                 ) {
+                    val textColor =
+                        if (checkCurrentWorkPlace) SimTongColor.Gray500
+                        else SimTongColor.Gray800
+
                     Column(
                         modifier = Modifier
                             .padding(
@@ -133,15 +141,16 @@ fun FixWorkPlaceScreen(
 
                         Body4(
                             text = item.name,
-                            color = SimTongColor.Gray800,
+                            color = textColor,
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
 
                         Body8(
                             text = item.location,
-                            color = SimTongColor.Gray800,
+                            color = textColor,
                         )
+
                         Canvas(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -165,21 +174,24 @@ fun FixWorkPlaceScreen(
                             )
                         }
                     }
-                    SimRadioButton(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .wrapContentWidth(Alignment.End)
-                            .fillMaxHeight()
-                            .wrapContentHeight(Alignment.CenterVertically)
-                            .padding(
-                                end = 33.dp,
-                            ),
-                        checked = isSelect(index),
-                        onCheckedChange = {
-                            selectedValue = index
-                            vm.inPutSpotId(UUID.fromString(item.id))
-                        },
-                    )
+
+                    if (!checkCurrentWorkPlace) {
+                        SimRadioButton(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .wrapContentWidth(Alignment.End)
+                                .fillMaxHeight()
+                                .wrapContentHeight(Alignment.CenterVertically)
+                                .padding(
+                                    end = 33.dp,
+                                ),
+                            checked = isSelect(index),
+                            onCheckedChange = {
+                                selectedValue = index
+                                vm.inPutSpotId(msg = UUID.fromString(item.id))
+                            },
+                        )
+                    }
                 }
             }
         }
