@@ -258,13 +258,13 @@ class SimTongIcon private constructor(
         @Stable
         val Logo = SimTongIcon(
             drawableId = R.drawable.ic_logo,
-            contentDescription = "logo icon"
+            contentDescription = "logo icon",
         )
 
         @Stable
         val Profile_Big = SimTongIcon(
             drawableId = R.drawable.ic_profile_big,
-            contentDescription = "profile big"
+            contentDescription = "profile big",
         )
     }
 }

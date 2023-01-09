@@ -39,7 +39,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -69,8 +68,6 @@ import kotlinx.coroutines.launch
 import java.sql.Date
 import java.util.Calendar
 import java.util.GregorianCalendar
-
-private val HomeCalendarHeight: Dp = 422.dp
 
 @Stable
 private val CalendarPadding = PaddingValues(
@@ -105,7 +102,7 @@ fun WriteClosedDayScreen(
     if (closeDayState.year.isEmpty()) {
         val today = GregorianCalendar()
         closeDayViewModel.inputYearState(today.get(Calendar.YEAR).toString())
-        closeDayViewModel.inputMonthState((today.get(Calendar.MONTH) + 1).toString())
+        closeDayViewModel.inputMonthState(string.format("%02d", today.get(Calendar.MONTH) + 1))
     }
 
     var workState by remember { mutableStateOf("") }
@@ -308,7 +305,6 @@ fun WriteClosedDayScreen(
                 statusName = SimTongCalendarStatus.WRITTEN,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(HomeCalendarHeight)
                     .padding(CalendarPadding),
                 refresh = refresh
             )

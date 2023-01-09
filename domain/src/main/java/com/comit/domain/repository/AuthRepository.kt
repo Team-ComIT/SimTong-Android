@@ -46,4 +46,8 @@ interface AuthRepository {
     )
 
     suspend fun fetchUserInformation(): User
+
+    suspend fun saveDeviceToken(token: String)
+
+    suspend fun clearToken()
 }

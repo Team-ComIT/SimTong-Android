@@ -7,6 +7,8 @@ import com.comit.model.LeftHoliday
 import com.comit.remote.api.HolidayAPI
 import com.comit.remote.mapper.toModel
 import com.comit.remote.request.holidays.DayOffRequest
+import com.comit.remote.request.holidays.SetAnnualRequest
+import com.comit.remote.request.holidays.SetWorkRequest
 import java.util.Date
 import javax.inject.Inject
 
@@ -31,7 +33,7 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
     ) = simTongApiCall {
         holidayAPI.dayOffHolidays(
             dayOffRequest = DayOffRequest(
-                date = date
+                date = date,
             )
         )
     }
@@ -40,7 +42,9 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
         date: Date,
     ) = simTongApiCall {
         holidayAPI.setAnnual(
-            date = date,
+            setAnnualRequest = SetAnnualRequest(
+                date = date.toString(),
+            )
         )
     }
 
@@ -48,7 +52,9 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
         date: Date,
     ) = simTongApiCall {
         holidayAPI.setWork(
-            date = date,
+            setWorkRequest = SetWorkRequest(
+                date = date.toString(),
+            )
         )
     }
 
@@ -56,7 +62,7 @@ class RemoteHolidayDataSourceImpl @Inject constructor(
         year: Int
     ): LeftHoliday = simTongApiCall {
         holidayAPI.checkLeftHoliday(
-            year = year
+            year = year,
         ).toModel()
     }
 

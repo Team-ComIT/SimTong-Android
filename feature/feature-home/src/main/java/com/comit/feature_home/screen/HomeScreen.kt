@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -247,6 +248,9 @@ private fun HomeBottomIconLayout(
             .background(
                 color = SimTongColor.White,
                 shape = RoundedCornerShape(16.dp),
+            )
+            .clip(
+                shape = RoundedCornerShape(16.dp)
             )
             .simClickable {
                 onClick()

@@ -171,33 +171,28 @@ fun MyPageScreen(
         )
         MyPageDescriptionImage(
             title = stringResource(
-                id = R.string.password_fix
+                id = R.string.password_fix,
             ),
             color = SimTongColor.Gray800,
             onClick = {
                 navController.navigate(
-                    route = SimTongScreen.MyPage.FIX_PASSWORD
+                    route = SimTongScreen.MyPage.FIX_PASSWORD,
                 )
             }
         )
         MyPageDescriptionImage(
             title = stringResource(
-                id = R.string.kr_my_page_sign_in
+                id = R.string.kr_my_page_sign_in,
             ),
-            color = SimTongColor.MainColor300,
+            color = SimTongColor.MainColor,
             onClick = {
-                // TODO: Token 삭제, 전체 popUp
+                vm.clearToken()
                 navController.navigate(
-                    route = SimTongScreen.Auth.SIGN_IN
+                    route = SimTongScreen.Auth.SPLASH,
                 ) {
-                    popUpTo(route = SimTongScreen.MyPage.MAIN) {
-                        inclusive = true
-                    }
-                    popUpTo(route = SimTongScreen.Home.MAIN) {
-                        inclusive = true
-                    }
+                    popUpTo(0)
                 }
-            }
+            },
         )
     }
 }

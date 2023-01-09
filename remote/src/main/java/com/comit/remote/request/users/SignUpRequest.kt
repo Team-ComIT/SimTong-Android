@@ -20,4 +20,7 @@ data class SignUpRequest(
 
     @field:SerializedName("profile_image_path")
     val profileImagePath: String?,
+
+    @field:SerializedName("device_token")
+    val deviceToken: String,
 )

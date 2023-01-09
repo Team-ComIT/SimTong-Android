@@ -1,35 +1,34 @@
 package com.comit.feature_auth.screen.signIn
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.comit.core.observeWithLifecycle
 import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.modifier.simClickable
-import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body8
 import com.comit.core_design_system.typography.UnderlineBody9
 import com.comit.feature_auth.R
@@ -37,8 +36,6 @@ import com.comit.feature_auth.mvi.SignInSideEffect
 import com.comit.feature_auth.vm.SignInViewModel
 import com.comit.navigator.SimTongScreen
 import kotlinx.coroutines.InternalCoroutinesApi
-
-private val SignInTopRowHeight = 43.dp
 
 private val SignInScreenPadding = PaddingValues(
     start = 40.dp,
@@ -54,6 +51,7 @@ private val TextBtnPadding = PaddingValues(
 private const val ErrMsgIdOrPasswordNotCorrect = "사원번호나 비밀번호가 일치하지 않습니다."
 private const val ErrMsgNumberFormat = "올바른 사원 번호를 입력해주세요."
 
+@Suppress("MagicNumber") // 화면의 미세한 offset 을 조정하기 위함
 @OptIn(InternalCoroutinesApi::class)
 @Composable
 fun SignInScreen(
@@ -92,8 +90,46 @@ fun SignInScreen(
             .padding(SignInScreenPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Column(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(start = 6.dp)
+                    .height(26.dp),
+                painter = painterResource(R.drawable.ic_sign_in_title),
+                contentDescription = null,
+                contentScale = ContentScale.FillHeight,
+            )
 
-        SignInTopLayout()
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    modifier = Modifier.size(43.dp),
+                    painter = painterResource(
+                        id = R.drawable.ic_sim,
+                    ),
+                    contentDescription = stringResource(id = R.string.description_ic_sim),
+                )
+                Image(
+                    modifier = Modifier.size(43.dp),
+                    painter = painterResource(
+                        id = R.drawable.ic_dang,
+                    ),
+                    contentDescription = stringResource(id = R.string.description_ic_dang),
+                )
+                Image(
+                    modifier = Modifier
+                        .size(66.dp)
+                        .offset(x = (-8).dp),
+                    painter = painterResource(id = SimTongIcon.Logo.drawableId),
+                    contentDescription = SimTongIcon.Logo.contentDescription,
+                )
+            }
+        }
 
         Spacer(modifier = Modifier.height(40.dp))
 
@@ -177,51 +213,4 @@ fun SignInScreen(
 
         Spacer(modifier = Modifier.height(30.dp))
     }
-}
-
-@Composable
-private fun SignInTopLayout() {
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Body1(
-            text = stringResource(id = R.string.mind_share),
-            color = SimTongColor.OtherColor.Gray7E,
-        )
-
-        Row(
-            modifier = Modifier
-                .height(SignInTopRowHeight),
-        ) {
-            Image(
-                painter = painterResource(
-                    id = R.drawable.ic_sim,
-                ),
-                contentDescription = stringResource(id = R.string.description_ic_sim),
-            )
-
-            Image(
-                painter = painterResource(
-                    id = R.drawable.ic_dang,
-                ),
-                contentDescription = stringResource(id = R.string.description_ic_dang),
-            )
-
-            Image(
-                painter = painterResource(id = SimTongIcon.Logo.drawableId),
-                contentDescription = SimTongIcon.Logo.contentDescription,
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.CenterVertically),
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSignInScreen() {
-    SignInScreen(
-        navController = rememberNavController()
-    )
 }
