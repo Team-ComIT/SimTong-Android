@@ -50,6 +50,7 @@ const val Delay: Long = 3000
 
 const val Tween: Int = 600
 
+@Suppress("MagicNumber") // 화면의 미세한 offset 을 조정하기 위함
 @OptIn(ExperimentalPagerApi::class, InternalCoroutinesApi::class)
 @Composable
 fun StartScreen(

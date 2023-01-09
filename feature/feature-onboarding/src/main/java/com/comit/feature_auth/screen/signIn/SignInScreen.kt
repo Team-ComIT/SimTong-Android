@@ -51,6 +51,7 @@ private val TextBtnPadding = PaddingValues(
 private const val ErrMsgIdOrPasswordNotCorrect = "사원번호나 비밀번호가 일치하지 않습니다."
 private const val ErrMsgNumberFormat = "올바른 사원 번호를 입력해주세요."
 
+@Suppress("MagicNumber") // 화면의 미세한 offset 을 조정하기 위함
 @OptIn(InternalCoroutinesApi::class)
 @Composable
 fun SignInScreen(
