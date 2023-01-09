@@ -65,7 +65,7 @@ private const val CannotChangePlaceTooMuch = "근무지점은 90일 동안 3회 
 @Composable
 fun FixWorkPlaceScreen(
     navController: NavController,
-    currentWorkPlace: String = "성심당본점",
+    currentWorkPlace: String = "",
     vm: FixWorkPlaceViewModel = hiltViewModel(),
 ) {
     val toast = rememberToast()
