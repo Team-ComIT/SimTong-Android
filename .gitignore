@@ -40,3 +40,5 @@ app/google-services.json
 fastlane/.env
 
 fastlane/api-key.json
+
+simtong-key
