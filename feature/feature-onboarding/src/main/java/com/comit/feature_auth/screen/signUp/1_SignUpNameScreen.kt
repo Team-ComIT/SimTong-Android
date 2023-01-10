@@ -60,7 +60,7 @@ private const val TextFieldMargin: Int = 8
 
 /**
  * 약관 목록을 정의합니다.
- * 해당 약관 목록은 [SignUpNameScreen] 의 약관 동의 BottomSheet 에서 사용도비니다.
+ * 해당 약관 목록은 [SignUpNameScreen] 의 약관 동의 BottomSheet 에서 사용됩니다.
  */
 private val agreedList: List<String> =
     listOf(

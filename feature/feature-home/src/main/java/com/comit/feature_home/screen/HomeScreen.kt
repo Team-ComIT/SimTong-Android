@@ -49,6 +49,7 @@ import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Title3
 import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.contract.HomeSideEffect
+import com.comit.feature_home.util.HomeMessage
 import com.comit.feature_home.vm.HomeViewModel
 import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
@@ -62,9 +63,6 @@ private val HomeScreenPadding = PaddingValues(
 
 private const val StartDateAdd = -3
 private const val EndDateAdd = 3
-
-private const val TokenException = "토큰 오류. 다시로그인해주세요"
-private const val CannotWriteHoliday = "현재 휴무표를 작성할 수 있는 기간이 아닙니다"
 
 @Composable
 fun HomeScreen(
@@ -117,15 +115,15 @@ fun HomeScreen(
         )
     }
 
-    sideEffect.observeWithLifecycle() {
+    sideEffect.observeWithLifecycle {
         when (it) {
             HomeSideEffect.CanWriteHoliday -> {
                 navController.navigate(
                     route = SimTongScreen.Home.CLOSE_DAY,
                 )
             }
-            HomeSideEffect.TokenException -> toast(message = TokenException)
-            HomeSideEffect.CannotWriteHoliday -> toast(message = CannotWriteHoliday)
+
+            HomeSideEffect.CannotWriteHoliday -> toast(HomeMessage.Holiday.HolidayApplyDeny)
         }
     }
     Column(

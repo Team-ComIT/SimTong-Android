@@ -22,15 +22,14 @@ import androidx.navigation.NavController
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body8
+import com.comit.feature_home.util.HomeMessage
 import com.example.feature_home.R
-
-private const val NoAlarmText = "도착한 알림이 없습니다"
 
 @Composable
 fun AlarmScreen(
     navController: NavController,
 ) {
-    Column() {
+    Column {
         Spacer(modifier = Modifier.height(22.5.dp))
 
         Row(
@@ -58,7 +57,7 @@ fun AlarmScreen(
         }
 
         Body8(
-            text = NoAlarmText,
+            text = HomeMessage.Alarm.AlarmNotFound,
             modifier = Modifier
                 .fillMaxSize()
                 .wrapContentWidth(Alignment.CenterHorizontally)

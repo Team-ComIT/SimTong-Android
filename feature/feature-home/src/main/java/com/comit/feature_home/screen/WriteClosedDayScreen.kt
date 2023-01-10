@@ -26,7 +26,6 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -53,14 +52,15 @@ import com.comit.core_design_system.typography.Body1
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body5
 import com.comit.core_design_system.typography.Body6
-import com.comit.feature_home.SubStringMonthEnd
-import com.comit.feature_home.SubStringMonthStart
-import com.comit.feature_home.SubStringYearEnd
-import com.comit.feature_home.SubStringYearStart
 import com.comit.feature_home.calendar.SimTongCalendar
 import com.comit.feature_home.calendar.SimTongCalendarStatus
 import com.comit.feature_home.mvi.CloseDaySideEffect
-import com.comit.feature_home.string
+import com.comit.feature_home.util.HomeMessage
+import com.comit.feature_home.util.SubStringMonthEnd
+import com.comit.feature_home.util.SubStringMonthStart
+import com.comit.feature_home.util.SubStringYearEnd
+import com.comit.feature_home.util.SubStringYearStart
+import com.comit.feature_home.util.toDateFormat
 import com.comit.feature_home.vm.CloseDayViewModel
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -69,19 +69,9 @@ import java.sql.Date
 import java.util.Calendar
 import java.util.GregorianCalendar
 
-@Stable
 private val CalendarPadding = PaddingValues(
     horizontal = 20.dp
 )
-
-private const val DateInputWrongMessage = "잘못된 날짜 입력입니다"
-private const val TokenExceptionMessage = "토큰 만료. 다시 로그인해주세요"
-private const val AlreadyHoliday = "이미 휴무일입니다"
-private const val TooManyHoliday = "휴무일은 일주일에 2번만 가능합니다"
-private const val AlreadyAnnualDay = "이미 연차입니다"
-private const val TooManyAnnualDay = "연차 개수가 부족합니다"
-private const val AlreadyWorkMessage = "이미 근무일입니다"
-private const val CannotChangeWorkState = "더 이상 변경할 수 없는 일정입니다"
 
 @Composable
 fun WriteClosedDayScreen(
@@ -102,7 +92,7 @@ fun WriteClosedDayScreen(
     if (closeDayState.year.isEmpty()) {
         val today = GregorianCalendar()
         closeDayViewModel.inputYearState(today.get(Calendar.YEAR).toString())
-        closeDayViewModel.inputMonthState(string.format("%02d", today.get(Calendar.MONTH) + 1))
+        closeDayViewModel.inputMonthState((today.get(Calendar.MONTH) + 1).toDateFormat())
     }
 
     var workState by remember { mutableStateOf("") }
@@ -110,7 +100,7 @@ fun WriteClosedDayScreen(
 
     var refresh by remember { mutableStateOf(false) }
 
-    closeDaySideEffect.observeWithLifecycle() {
+    closeDaySideEffect.observeWithLifecycle {
         when (it) {
             CloseDaySideEffect.CloseDayChangeSuccess -> {
                 coroutineScope.launch {
@@ -118,29 +108,33 @@ fun WriteClosedDayScreen(
                 }
                 refresh = true
             }
+
             CloseDaySideEffect.DateInputWrong -> {
-                toast(message = DateInputWrongMessage)
+                toast(HomeMessage.Holiday.DateBadRequest)
             }
-            CloseDaySideEffect.TokenException -> {
-                toast(message = TokenExceptionMessage)
-            }
+
             CloseDaySideEffect.AlreadyHoliday -> {
-                toast(message = AlreadyHoliday)
+                toast(HomeMessage.Holiday.AlreadyHoliday)
             }
+
             CloseDaySideEffect.TooManyHoliday -> {
-                toast(message = TooManyHoliday)
+                toast(HomeMessage.Holiday.TooManyHoliday)
             }
+
             CloseDaySideEffect.AlreadyAnnualDay -> {
-                toast(message = AlreadyAnnualDay)
+                toast(HomeMessage.Holiday.AnnualAlready)
             }
+
             CloseDaySideEffect.TooManyAnnualDay -> {
-                toast(message = TooManyAnnualDay)
+                toast(HomeMessage.Holiday.TooManyAnnual)
             }
+
             CloseDaySideEffect.AlreadyWork -> {
-                toast(message = AlreadyWorkMessage)
+                toast(HomeMessage.Holiday.AlreadyWork)
             }
+
             CloseDaySideEffect.CannotChangeWorkState -> {
-                toast(message = CannotChangeWorkState)
+                toast(HomeMessage.Holiday.CannotChangeWork)
             }
         }
     }
@@ -164,8 +158,10 @@ fun WriteClosedDayScreen(
                         .padding(start = 20.dp, end = 30.dp, top = 17.dp)
                         .wrapContentHeight(Alignment.CenterVertically)
                 ) {
-                    val yearT = closeDayState.year + stringResource(id = R.string.calendar_year) + " "
-                    val monthT = closeDayState.month + stringResource(id = R.string.calendar_month) + " "
+                    val yearT =
+                        closeDayState.year + stringResource(id = R.string.calendar_year) + " "
+                    val monthT =
+                        closeDayState.month + stringResource(id = R.string.calendar_month) + " "
                     val dayT = closeDayState.day + stringResource(id = R.string.calendar_day) + "은 "
 
                     if (closeDayState.year.isNotEmpty()) {
@@ -181,7 +177,8 @@ fun WriteClosedDayScreen(
                         text = stringResource(id = R.string.save),
                         color = saveColor,
                         onClick = {
-                            val date = Date.valueOf("${closeDayState.year}-${closeDayState.month}-${closeDayState.day}")
+                            val date =
+                                Date.valueOf("${closeDayState.year}-${closeDayState.month}-${closeDayState.day}")
                             refresh = false
 
                             if (saveEnabled) {
@@ -189,9 +186,11 @@ fun WriteClosedDayScreen(
                                     workClose -> {
                                         closeDayViewModel.setHoliday(date.toString())
                                     }
+
                                     workAnnual -> {
                                         closeDayViewModel.setAnnualDay(date)
                                     }
+
                                     else -> {
                                         closeDayViewModel.setWorkDay(date)
                                     }
@@ -287,17 +286,25 @@ fun WriteClosedDayScreen(
 
             SimTongCalendar(
                 onNextClicked = { date, _ ->
-                    closeDayViewModel.inputMonthState(date.toString().substring(SubStringMonthStart, SubStringMonthEnd))
-                    closeDayViewModel.inputYearState(date.toString().substring(SubStringYearStart, SubStringYearEnd))
+                    closeDayViewModel.inputMonthState(
+                        date.toString().substring(SubStringMonthStart, SubStringMonthEnd)
+                    )
+                    closeDayViewModel.inputYearState(
+                        date.toString().substring(SubStringYearStart, SubStringYearEnd)
+                    )
                 },
                 onBeforeClicked = { date, _ ->
-                    closeDayViewModel.inputMonthState(date.toString().substring(SubStringMonthStart, SubStringMonthEnd))
-                    closeDayViewModel.inputYearState(date.toString().substring(SubStringYearStart, SubStringYearEnd))
+                    closeDayViewModel.inputMonthState(
+                        date.toString().substring(SubStringMonthStart, SubStringMonthEnd)
+                    )
+                    closeDayViewModel.inputYearState(
+                        date.toString().substring(SubStringYearStart, SubStringYearEnd)
+                    )
                 },
                 onItemClicked = { day, _workState ->
                     workState = _workState
                     workStateText = _workState
-                    closeDayViewModel.inputDayState(string.format("%02d", day))
+                    closeDayViewModel.inputDayState(day.toDateFormat())
                     coroutineScope.launch {
                         bottomSheetState.show()
                     }

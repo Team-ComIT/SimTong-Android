@@ -2,7 +2,12 @@
     InternalCoroutinesApi::class, InternalCoroutinesApi::class,
     InternalCoroutinesApi::class
 )
-@file:Suppress("OPT_IN_IS_NOT_ENABLED", "TooGenericExceptionCaught", "SwallowedException", "MaxLineLength")
+@file:Suppress(
+    "OPT_IN_IS_NOT_ENABLED",
+    "TooGenericExceptionCaught",
+    "SwallowedException",
+    "MaxLineLength",
+)
 
 package com.comit.feature_home.screen.schedule
 
@@ -23,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -36,16 +40,14 @@ import com.comit.core_design_system.button.SimTongBigRoundButton
 import com.comit.core_design_system.component.BigHeader
 import com.comit.core_design_system.component.SimTongTextField
 import com.comit.feature_home.mvi.WriteScheduleSideInEffect
+import com.comit.feature_home.util.HomeMessage
 import com.comit.feature_home.vm.WriteScheduleViewModel
 import com.example.feature_home.R
 import kotlinx.coroutines.InternalCoroutinesApi
 import java.sql.Time
 import java.util.UUID
 
-private const val InputTextFormErrorMessage = "모든 항목에 형식이 일치하게 작성되었는지 확인해주세요."
-private const val TokenExceptionMessage = "토큰 만료. 다시 로그인해주세요"
-private const val CannotFindScheduleMessage = "변경할 일정을 확인할 수 없습니다"
-
+@OptIn(InternalCoroutinesApi::class)
 @Composable
 fun WriteScheduleScreen(
     navController: NavController,
@@ -68,19 +70,18 @@ fun WriteScheduleScreen(
         }
     }
 
-    writeScheduleSideInEffect.observeWithLifecycle() {
+    writeScheduleSideInEffect.observeWithLifecycle {
         when (it) {
             WriteScheduleSideInEffect.WriteScheduleSuccess -> {
                 navController.popBackStack()
             }
+
             WriteScheduleSideInEffect.InputTextFormError -> {
-                vm.inputErrMsgAll(msg = InputTextFormErrorMessage)
+                vm.inputErrMsgAll(HomeMessage.Schedule.ScheduleBadRequest)
             }
-            WriteScheduleSideInEffect.TokenException -> {
-                vm.inputErrMsgAll(msg = TokenExceptionMessage)
-            }
+
             WriteScheduleSideInEffect.CannotFindSchedule -> {
-                vm.inputErrMsgAll(msg = CannotFindScheduleMessage)
+                vm.inputErrMsgAll(HomeMessage.Schedule.ChangeScheduleNotFound)
             }
         }
     }
@@ -178,9 +179,14 @@ fun WriteScheduleScreen(
                 error = writeScheduleState.errMsgAlarm,
             )
 
-            val btnEnabled = writeScheduleState.title.isNotEmpty() && writeScheduleState.scheduleStart.isNotEmpty() && writeScheduleState.scheduleEnd.isNotEmpty()
+            val btnEnabled =
+                writeScheduleState.title.isNotEmpty() && writeScheduleState.scheduleStart.isNotEmpty() && writeScheduleState.scheduleEnd.isNotEmpty()
 
             SimTongBigRoundButton(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .wrapContentHeight(Alignment.Bottom)
+                    .imePadding(),
                 text = stringResource(id = R.string.check),
                 enabled = btnEnabled,
                 onClick = {
@@ -191,7 +197,7 @@ fun WriteScheduleScreen(
                                     title = writeScheduleState.title,
                                     scheduleStart = writeScheduleState.scheduleStart,
                                     scheduleEnd = writeScheduleState.scheduleEnd,
-                                    alarm = Time.valueOf(writeScheduleState.alarm).toString()
+                                    alarm = Time.valueOf(writeScheduleState.alarm).toString(),
                                 )
                             } else {
                                 vm.changeSchedule(
@@ -199,7 +205,7 @@ fun WriteScheduleScreen(
                                     title = writeScheduleState.title,
                                     startAt = writeScheduleState.scheduleStart,
                                     endAt = writeScheduleState.scheduleEnd,
-                                    alarm = Time.valueOf(writeScheduleState.alarm).toString()
+                                    alarm = Time.valueOf(writeScheduleState.alarm).toString(),
                                 )
                             }
                         } else {
@@ -208,7 +214,7 @@ fun WriteScheduleScreen(
                                     title = writeScheduleState.title,
                                     scheduleStart = writeScheduleState.scheduleStart,
                                     scheduleEnd = writeScheduleState.scheduleEnd,
-                                    alarm = null
+                                    alarm = null,
                                 )
                             } else {
                                 vm.changeSchedule(
@@ -216,28 +222,15 @@ fun WriteScheduleScreen(
                                     title = writeScheduleState.title,
                                     startAt = writeScheduleState.scheduleStart,
                                     endAt = writeScheduleState.scheduleEnd,
-                                    alarm = null
+                                    alarm = null,
                                 )
                             }
                         }
                     } catch (e: Exception) {
-                        vm.inputErrMsgAll(msg = InputTextFormErrorMessage)
+                        vm.inputErrMsgAll(msg = HomeMessage.Schedule.ScheduleBadRequest)
                     }
                 },
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .wrapContentHeight(Alignment.Bottom)
-                    .imePadding()
             )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ShowWriteSchedule() {
-//    WriteScheduleScreen(
-//        navController = rememberNavController(),
-//        isNew = true
-//    )
 }

@@ -48,9 +48,9 @@ import com.comit.core_design_system.typography.Body13
 import com.comit.core_design_system.typography.Body3
 import com.comit.core_design_system.typography.Body6
 import com.comit.core_design_system.typography.UnderlineBody12
-import com.comit.feature_home.getEndAt
-import com.comit.feature_home.getStartAt
-import com.comit.feature_home.string
+import com.comit.feature_home.util.getEndAt
+import com.comit.feature_home.util.getStartAt
+import com.comit.feature_home.util.toDateFormat
 import com.comit.feature_home.vm.GetHolidayViewModel
 import com.comit.feature_home.vm.GetWorkCountViewModel
 import com.example.feature_home.R
@@ -109,7 +109,7 @@ fun SimTongCalendar(
 
     var year by remember { mutableStateOf(calendar.get(Calendar.YEAR)) }
     var month by remember { mutableStateOf(calendar.get(Calendar.MONTH) + 1) }
-    var date by remember { mutableStateOf(Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")) }
+    var date by remember { mutableStateOf(Date.valueOf(year.toString() + "-" + month.toDateFormat() + "-01")) }
 
     var calendarList by remember {
         mutableStateOf(
@@ -182,7 +182,12 @@ fun SimTongCalendar(
                 changePage = true
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-                date = Date.valueOf(string.format("%02d", year) + "-" + string.format("%02d", month) + "-01")
+                date = Date.valueOf(
+                    year.toDateFormat() + "-" + String.format(
+                        "%02d",
+                        month
+                    ) + "-01"
+                )
                 getWorkCountViewModel.getWorkCountList(
                     startAt = getStartAt(checkMonth),
                     endAt = getEndAt(checkMonth)
@@ -195,7 +200,7 @@ fun SimTongCalendar(
                 changePage = true
                 month = calendar.get(Calendar.MONTH) + 1
                 year = calendar.get(Calendar.YEAR)
-                date = Date.valueOf(year.toString() + "-" + string.format("%02d", month) + "-01")
+                date = Date.valueOf(year.toString() + "-" + month.toDateFormat() + "-01")
                 getWorkCountViewModel.getWorkCountList(
                     startAt = getStartAt(checkMonth),
                     endAt = getEndAt(checkMonth),
