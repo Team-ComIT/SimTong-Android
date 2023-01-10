@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.NotFoundException
-import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.schedule.DeletePersonalScheduleUseCase
 import com.comit.domain.usecase.schedule.FetchPersonalScheduleUseCase
@@ -44,10 +43,7 @@ class ShowScheduleViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                when (it) {
-                    is UnAuthorizedException -> postSideEffect(FetchScheduleSideEffect.TokenError)
-                    else -> throwUnknownException(it)
-                }
+                throwUnknownException(it)
             }
         }
     }
@@ -63,7 +59,6 @@ class ShowScheduleViewModel @Inject constructor(
             }.onFailure {
                 when (it) {
                     is BadRequestException -> postSideEffect(FetchScheduleSideEffect.DeleteScheduleDateError)
-                    is UnAuthorizedException -> postSideEffect(FetchScheduleSideEffect.TokenError)
                     is NotFoundException -> postSideEffect(FetchScheduleSideEffect.DeleteScheduleCannotFound)
                     else -> throwUnknownException(it)
                 }

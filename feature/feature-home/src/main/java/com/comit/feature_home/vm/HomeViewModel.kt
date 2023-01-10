@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comit.core_design_system.component.Meal
 import com.comit.domain.exception.NotFoundException
-import com.comit.domain.exception.UnAuthorizedException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.model.MealEntity
 import com.comit.domain.usecase.holiday.CheckCanWriteHolidayUseCase
@@ -51,7 +50,6 @@ class HomeViewModel @Inject constructor(
                     postSideEffect(HomeSideEffect.CanWriteHoliday)
                 }.onFailure {
                     when (it) {
-                        is UnAuthorizedException -> postSideEffect(HomeSideEffect.TokenException)
                         is NotFoundException -> postSideEffect(HomeSideEffect.CannotWriteHoliday)
                         else -> throwUnknownException(it)
                     }

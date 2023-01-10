@@ -10,7 +10,5 @@ data class HomeState(
 sealed class HomeSideEffect {
     object CanWriteHoliday : HomeSideEffect()
 
-    object TokenException : HomeSideEffect()
-
     object CannotWriteHoliday : HomeSideEffect()
 }

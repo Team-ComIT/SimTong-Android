@@ -3,8 +3,6 @@ package com.comit.feature_home.vm
 import androidx.lifecycle.ViewModel
 import com.comit.domain.exception.BadRequestException
 import com.comit.domain.exception.NotFoundException
-import com.comit.domain.exception.UnAuthorizedException
-import com.comit.domain.exception.UnknownException
 import com.comit.domain.exception.throwUnknownException
 import com.comit.domain.usecase.schedule.AddPersonalScheduleUseCase
 import com.comit.domain.usecase.schedule.ChangePersonalScheduleUseCase
@@ -45,7 +43,6 @@ class WriteScheduleViewModel @Inject constructor(
         }.onFailure {
             when (it) {
                 is BadRequestException -> postSideEffect(WriteScheduleSideInEffect.InputTextFormError)
-                is UnAuthorizedException -> postSideEffect(WriteScheduleSideInEffect.TokenException)
                 else -> throwUnknownException(it)
             }
         }
@@ -71,7 +68,6 @@ class WriteScheduleViewModel @Inject constructor(
         }.onFailure {
             when (it) {
                 is BadRequestException -> postSideEffect(WriteScheduleSideInEffect.InputTextFormError)
-                is UnknownException -> postSideEffect(WriteScheduleSideInEffect.TokenException)
                 is NotFoundException -> postSideEffect(WriteScheduleSideInEffect.CannotFindSchedule)
                 else -> throwUnknownException(it)
             }

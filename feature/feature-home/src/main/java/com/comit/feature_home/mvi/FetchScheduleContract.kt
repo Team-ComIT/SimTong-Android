@@ -33,6 +33,4 @@ sealed class FetchScheduleSideEffect {
     object DeleteScheduleCannotFound : FetchScheduleSideEffect()
 
     object DeleteScheduleSuccess : FetchScheduleSideEffect()
-
-    object TokenError : FetchScheduleSideEffect()
 }

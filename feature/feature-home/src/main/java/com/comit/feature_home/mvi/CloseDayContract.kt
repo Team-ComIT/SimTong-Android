@@ -13,8 +13,6 @@ sealed class CloseDaySideEffect {
 
     object DateInputWrong : CloseDaySideEffect()
 
-    object TokenException : CloseDaySideEffect()
-
     object AlreadyHoliday : CloseDaySideEffect()
 
     object TooManyHoliday : CloseDaySideEffect()
