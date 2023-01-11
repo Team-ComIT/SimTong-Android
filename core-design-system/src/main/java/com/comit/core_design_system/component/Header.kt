@@ -24,6 +24,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.comit.core_design_system.R
+import com.comit.core_design_system.button.SimTongButtonColor
+import com.comit.core_design_system.button.SimTongIconButton
 import com.comit.core_design_system.color.SimTongColor
 import com.comit.core_design_system.icon.SimTongIcon
 import com.comit.core_design_system.typography.Body1
@@ -221,19 +223,31 @@ fun BigHeader(
             .padding(BigHeaderHorizontalPadding),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(
-            onClick = onPrevious,
+//        IconButton(
+//            onClick = onPrevious,
+//            modifier = Modifier
+//                .size(24.dp),
+//        ) {
+//            Icon(
+//                painter = painterResource(
+//                    id = SimTongIcon.Back_Big.drawableId,
+//                ),
+//                contentDescription = stringResource(
+//                    id = R.string.description_ic_back,
+//                )
+//            )
+//        }
+
+        SimTongIconButton(
+            painter = painterResource(
+                id = SimTongIcon.Back_Big.drawableId
+            ),
+            contentDescription = SimTongIcon.Back_Big.contentDescription,
+            color = SimTongButtonColor.GRAY,
             modifier = Modifier
-                .size(24.dp),
+                .size(24.dp)
         ) {
-            Icon(
-                painter = painterResource(
-                    id = SimTongIcon.Back_Big.drawableId,
-                ),
-                contentDescription = stringResource(
-                    id = R.string.description_ic_back,
-                )
-            )
+            onPrevious()
         }
 
         Spacer(modifier = Modifier.width(15.dp))
