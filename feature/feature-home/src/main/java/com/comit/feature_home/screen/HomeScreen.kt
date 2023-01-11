@@ -175,14 +175,10 @@ fun HomeScreen(
 
         SimTongCalendar(
             modifier = Modifier
-                .fillMaxWidth()
-                .simClickable(
-                    rippleEnabled = false,
-                ) {
-                    navController.navigate(
-                        route = SimTongScreen.Home.SHOW_SCHEDULE
-                    )
-                },
+                .fillMaxWidth(),
+            onCalendarClicked = {
+                navController.navigate(route = SimTongScreen.Home.SHOW_SCHEDULE)
+            },
             onItemClicked = { _, _ ->
                 navController.navigate(route = SimTongScreen.Home.SHOW_SCHEDULE)
             }

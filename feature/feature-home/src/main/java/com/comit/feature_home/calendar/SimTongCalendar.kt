@@ -53,6 +53,7 @@ import com.comit.feature_home.getStartAt
 import com.comit.feature_home.string
 import com.comit.feature_home.vm.GetHolidayViewModel
 import com.comit.feature_home.vm.GetWorkCountViewModel
+import com.comit.navigator.SimTongScreen
 import com.example.feature_home.R
 import java.sql.Date
 import java.util.Calendar
@@ -92,6 +93,7 @@ fun SimTongCalendar(
     modifier: Modifier = Modifier,
     getHolidayViewModel: GetHolidayViewModel = hiltViewModel(),
     getWorkCountViewModel: GetWorkCountViewModel = hiltViewModel(),
+    onCalendarClicked: (() -> Unit)? = null,
     onItemClicked: (Int, String) -> Unit = { _, _ -> },
     onBeforeClicked: (Date, Int) -> Unit = { _, _ -> },
     onNextClicked: (Date, Int) -> Unit = { _, _ -> },
@@ -170,6 +172,11 @@ fun SimTongCalendar(
                 color = SimTongColor.Gray50,
                 shape = SimTongCalendarTotalRound
             )
+            .simClickable(
+                rippleEnabled = false,
+            ) {
+                onCalendarClicked?.let { it() }
+            }
     ) {
         Spacer(modifier = Modifier.height(15.dp))
 
