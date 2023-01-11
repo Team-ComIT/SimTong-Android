@@ -55,6 +55,14 @@ enum class SimTongButtonColor(
         textColor = SimTongColor.Gray300,
         disabledTextColor = SimTongColor.Gray300,
     ),
+
+    TRANSPARENT(
+        backgroundColor = SimTongColor.Transparent,
+        pressedBackgroundColor = SimTongColor.Gray600,
+        disabledBackgroundColor = SimTongColor.Transparent,
+        textColor = SimTongColor.Gray800,
+        disabledTextColor = SimTongColor.Gray800,
+    )
 }
 
 /**
@@ -281,6 +289,7 @@ fun ButtonPreview() {
                 id = SimTongIcon.Next.drawableId,
             ),
             contentDescription = SimTongIcon.Next.contentDescription,
+            color = SimTongButtonColor.TRANSPARENT,
         ) {
         }
 
